@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>ITEMS</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"></link>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Items de Usuario</h1>
+        <table class="responsive-table highlight centered">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Descripcion</th>
+                <th>Categoria</th>
+                <th>Usuario</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.name}">Item</td>
+                <td th:text="${item.description}">Descripcion</td>
+                <td th:text="${item.category}">Categoria</td>
+                <td th:text="${item.user}">Usuario</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<div class="container">-->
+        <!--<h1>Registro de Item</h1>-->
+        <!--&lt;!&ndash;Para trabajar con formularios usaremos th:action="@/url" para indicar la-->
+        <!--URL a la enviaremos los datos del formulario al presionar el botón Submit. th:object="${atributo}"-->
+        <!--nos permite establecer a que atributo del modelo estará enlazado el formulario, th:field="*{campo}" nos-->
+        <!--permite enlazar una propiedad del objeto al que este vinculado el formulario a un elemento de este-->
+        <!--formulario, por ejemplo, enlazar un campo de texto a la propiedad nombre.&ndash;&gt;-->
+
+        <!--<form th:action="@{/items}" th:object="${item}" method="post">-->
+            <!--<div class="container">-->
+                <!--<label for="name">Nombre</label>-->
+                <!--<input type="text" id="name" th:field="*{name}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<label for="description">Nombre</label>-->
+                <!--<textarea placeholder="Descripcion" id="description" th:field="*{description}"></textarea>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<label for="user">Nombre</label>-->
+                <!--<input type="text" id="user" th:field="*{user}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<label for="category">Nombre</label>-->
+                <!--<input type="text" id="category" th:field="*{category}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<input type="submit" value="Registrar"></input>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+</body>
+
+</html>
