@@ -37,12 +37,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!--Si no tienen descargado MYSQL usen esta BD embebida-->
-		<!--<dependency>-->
-		<!--<groupId>org.apache.derby</groupId>-->
-		<!--<artifactId>derby</artifactId>-->
-		<!--<scope>runtime</scope>-->
-		<!--</dependency>-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
