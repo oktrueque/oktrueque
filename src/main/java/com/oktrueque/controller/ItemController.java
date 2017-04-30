@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Facundo on 27/04/2017.
  */
@@ -22,8 +27,14 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET , value="/items")
     public String getItems(Model model){
         model.addAttribute("items", itemService.getItems());
-        return "items";
+        return "table";
     }
+
+//    private List<Item> items = new ArrayList<>(Arrays.asList(
+//            new Item(1,"bicicleta","decripcion","Nico","vehiculo"),
+//            new Item(1,"ropero","decripcion","Nico","mueble"),
+//            new Item(1,"zapatillas","decripcion","Nico","ropa")
+//    ));
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
     public String createItem(@ModelAttribute Item item, Model model) {
