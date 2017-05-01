@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>ITEMS</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"></link>
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Items de Usuario</h1>
+        <table class="responsive-table highlight centered">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Descripcion</th>
+                <th>Categoria</th>
+                <th>Usuario</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.name}">Item</td>
+                <td th:text="${item.description}">Descripcion</td>
+                <td th:text="${item.category.name}">Categoria</td>
+                <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--FORMULARIO CASI LISTO-->
+    <!--<div class="container">-->
+        <!--<form th:action="@{/items}" th:object="${item}" th:method="POST">-->
+            <!--<div class="container">-->
+                <!--<label for="name"> Nombre</label>-->
+                <!--<input type="text" id="name" th:field="*{name}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<label for="description"> Descripcion</label>-->
+                <!--<input type="text" id="description" th:field="*{description}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<label for="category"> Categoria</label>-->
+                <!--<input type="text" id="category" th:field="*{category}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<label for="user"> Usuario</label>-->
+                <!--<input type="text" id="user" th:field="*{user}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<input type="submit" value="Registrar"> </input>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+</body>
+
+</html>
