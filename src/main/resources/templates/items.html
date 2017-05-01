@@ -25,39 +25,33 @@
             <tr th:each="item : ${items}">
                 <td th:text="${item.name}">Item</td>
                 <td th:text="${item.description}">Descripcion</td>
-                <td th:text="${item.category}">Categoria</td>
-                <td th:text="${item.user}">Usuario</td>
+                <td th:text="${item.category.name}">Categoria</td>
+                <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
             </tr>
             </tbody>
         </table>
     </div>
+    <!--FORMULARIO CASI LISTO-->
     <!--<div class="container">-->
-        <!--<h1>Registro de Item</h1>-->
-        <!--&lt;!&ndash;Para trabajar con formularios usaremos th:action="@/url" para indicar la-->
-        <!--URL a la enviaremos los datos del formulario al presionar el botón Submit. th:object="${atributo}"-->
-        <!--nos permite establecer a que atributo del modelo estará enlazado el formulario, th:field="*{campo}" nos-->
-        <!--permite enlazar una propiedad del objeto al que este vinculado el formulario a un elemento de este-->
-        <!--formulario, por ejemplo, enlazar un campo de texto a la propiedad nombre.&ndash;&gt;-->
-
-        <!--<form th:action="@{/items}" th:object="${item}" method="post">-->
+        <!--<form th:action="@{/items}" th:object="${item}" th:method="POST">-->
             <!--<div class="container">-->
-                <!--<label for="name">Nombre</label>-->
+                <!--<label for="name"> Nombre</label>-->
                 <!--<input type="text" id="name" th:field="*{name}"></input>-->
             <!--</div>-->
             <!--<div class="container">-->
-                <!--<label for="description">Nombre</label>-->
-                <!--<textarea placeholder="Descripcion" id="description" th:field="*{description}"></textarea>-->
+                <!--<label for="description"> Descripcion</label>-->
+                <!--<input type="text" id="description" th:field="*{description}"></input>-->
             <!--</div>-->
             <!--<div class="container">-->
-                <!--<label for="user">Nombre</label>-->
-                <!--<input type="text" id="user" th:field="*{user}"></input>-->
-            <!--</div>-->
-            <!--<div class="container">-->
-                <!--<label for="category">Nombre</label>-->
+                <!--<label for="category"> Categoria</label>-->
                 <!--<input type="text" id="category" th:field="*{category}"></input>-->
             <!--</div>-->
             <!--<div class="container">-->
-                <!--<input type="submit" value="Registrar"></input>-->
+                <!--<label for="user"> Usuario</label>-->
+                <!--<input type="text" id="user" th:field="*{user}"></input>-->
+            <!--</div>-->
+            <!--<div class="container">-->
+                <!--<input type="submit" value="Registrar"> </input>-->
             <!--</div>-->
         <!--</form>-->
     <!--</div>-->

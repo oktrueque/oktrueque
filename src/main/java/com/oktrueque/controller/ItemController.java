@@ -27,19 +27,15 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET , value="/items")
     public String getItems(Model model){
         model.addAttribute("items", itemService.getItems());
-        return "table";
+        model.addAttribute("item", new Item());
+        return "items";
     }
 
-//    private List<Item> items = new ArrayList<>(Arrays.asList(
-//            new Item(1,"bicicleta","decripcion","Nico","vehiculo"),
-//            new Item(1,"ropero","decripcion","Nico","mueble"),
-//            new Item(1,"zapatillas","decripcion","Nico","ropa")
-//    ));
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
     public String createItem(@ModelAttribute Item item, Model model) {
         model.addAttribute("item",item);
         itemService.addItem(item);
-        return "items";
+        return "redirect:/items";
     }
 }

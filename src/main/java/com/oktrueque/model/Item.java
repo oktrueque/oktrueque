@@ -1,6 +1,7 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
+import javax.websocket.OnError;
 
 /**
  * Created by Facundo on 27/04/2017.
@@ -11,32 +12,37 @@ public class Item {
 
     //Definicion de Atributos
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String name;
     private String description;
-    //Por ahora declaro un User como string
-    //Falta la relacion JPA ManyToOne
-    private long id_user;
-    //Por ahora declaro una categoria como string
-    //Falta la relacion JPA OneToOne
-    private int id_category;
-
+    @ManyToOne
+    @JoinColumn(name="id_user")
+    private User user;
+    @OneToOne
+    @JoinColumn(name="id_category")
+    private Category category;
 
 
     //Constructores
     public Item() {
-
     }
-    public Item(long id, String name, String description, long id_user, int id_category) {
+
+    public Item(Long id, String name, String description, User user, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.id_user = id_user;
-        this.id_category = id_category;
+        this.user = user;
+        this.category = category;
+    }
+    //Getters and Setters
+
+    public Long getId() {
+        return id;
     }
 
-    //Getters and Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -54,27 +60,19 @@ public class Item {
         this.description = description;
     }
 
-    public long getId_user() {
-        return id_user;
+    public User getUser() {
+        return user;
     }
 
-    public void setId_user(long id_user) {
-        this.id_user = id_user;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getId_category() {
-        return id_category;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setId_category(int id_category) {
-        this.id_category = id_category;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
