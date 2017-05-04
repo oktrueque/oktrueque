@@ -12,6 +12,7 @@ public class Item {
 
     //Definicion de Atributos
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;

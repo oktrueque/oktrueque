@@ -26,6 +26,9 @@ public class ItemService {
     public void addItem(Item item){
         itemRepository.save(item);
     }
+    public Item getItem(Long id){
+        return itemRepository.findOne(id);
+    }
 
 
 }
