@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" >
 <head>
 </head>
 <body>
@@ -15,8 +15,13 @@
                 <p>Are you sure about this?</p>
             </div>
             <div class="modal-footer">
+
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+
+                <form th:action="@{'/items/' + ${item.id}}" th:method="DELETE" role="button">
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                </form>
+
             </div>
         </div>
     </div>
