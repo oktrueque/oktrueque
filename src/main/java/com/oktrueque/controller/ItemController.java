@@ -36,11 +36,10 @@ public class ItemController {
         model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
         model.addAttribute("item", new Item());
         user = list.get(0).getUser();
-        return "table";
+        return "items";
     }
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
-//    BindingResult result, Model model
     public String createItem(@ModelAttribute Item item, BindingResult result) {
         if(result.hasErrors()) {
             return "items";
@@ -49,14 +48,14 @@ public class ItemController {
         itemService.addItem(item);
         return "redirect:/items";
     }
-    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
-    public String updateItem(@PathVariable long id, Model model){
-        Item itemForUpdate = itemService.getItem(id);
-        model.addAttribute("item", itemForUpdate);
-        model.addAttribute("items", itemService.getItems());
-        model.addAttribute("categories",categoryService.getCategories());
-        return "items";
-    }
+//    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
+//    public String updateItem(@PathVariable long id, Model model){
+//        Item itemForUpdate = itemService.getItem(id);
+//        model.addAttribute("item", itemForUpdate);
+//        model.addAttribute("items", itemService.getItems());
+//        model.addAttribute("categories",categoryService.getCategories());
+//        return "items";
+//    }
 
     @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
     public String deleteItems(@PathVariable long id){
@@ -65,7 +64,7 @@ public class ItemController {
         // itemToDelete.setUser(user);
         // User userFromItem = userService.getUser(id);
         // itemService.deleteItemWithUser(itemToDelete, userFromItem);
-        return "table";
+        return "redirect:/items";
     }
 
 }
