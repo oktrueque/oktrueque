@@ -28,15 +28,15 @@ public class ItemController {
     @Autowired
     private CategoryService categoryService;
     private User user = new User();
+
     @RequestMapping(method = RequestMethod.GET , value="/items")
     public String getItems(Model model){
         List<Item> list = itemService.getItems();
         model.addAttribute("items", list);
-        //no creo q sea lo mas eficiente
-        model.addAttribute("categories",categoryService.getCategories());
+        model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
         model.addAttribute("item", new Item());
         user = list.get(0).getUser();
-        return "items";
+        return "table";
     }
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
@@ -56,6 +56,16 @@ public class ItemController {
         model.addAttribute("items", itemService.getItems());
         model.addAttribute("categories",categoryService.getCategories());
         return "items";
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
+    public String deleteItems(@PathVariable long id){
+        // Item itemToDelete = itemService.getItem(id);
+        itemService.deleteItemAlone(id);
+        // itemToDelete.setUser(user);
+        // User userFromItem = userService.getUser(id);
+        // itemService.deleteItemWithUser(itemToDelete, userFromItem);
+        return "table";
     }
 
 }

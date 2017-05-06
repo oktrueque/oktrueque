@@ -26,9 +26,12 @@ public class ItemService {
     public void addItem(Item item){
         itemRepository.save(item);
     }
+
     public Item getItem(Long id){
         return itemRepository.findOne(id);
     }
 
+    public void deleteItemAlone(Long id) { itemRepository.delete(id);    }
 
+    public void deleteItemWithUser(Item item) { itemRepository.delete(item);    } //Hay que decidir cual de estos dos delete usar...
 }

@@ -192,7 +192,7 @@
                                         <th>Item</th>
                                         <th>Descripcion</th>
                                         <th>Categoria</th>
-                                        <th>Usuario</th>
+                                        <th>Acción</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -201,7 +201,11 @@
                                             <td class="col-md-1" th:text="${item.name}"></td>
                                             <td class="col-md-1" th:text="${item.description}"></td>
                                             <td class="col-md-1" th:text="${item.category.name}"></td>
-                                            <!--<td class="col-md-1" th:text="${item.user.name} +' ' + ${item.user.last_name}"></td>-->
+                                            <td class="col-md-1"> <a class="btn btn-success" href="http://localhost:8080" role="button">Editar</a>
+                                                <a class="btn btn-danger" href="http://localhost:8080/items" role="button">Eliminar</a> </td>
+
+                                            <!--<input name="_method" type="hidden" value="PUT" />-->
+
                                         </tr>
                                     </th:block>
                                     </tbody>
