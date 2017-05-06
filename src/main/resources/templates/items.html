@@ -1,91 +1,99 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" )>
+
 <head>
     <meta charset="UTF-8"></meta>
     <title>ITEMS</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous"></link>
     <!-- </link>Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous"></link>
     <!-- Latest compiled and minified JavaScript -->
     <script src="../static/js/jquery-1.10.2.js" type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Items de Usuario</h1>
-        <table class="table table-hover table-responsive">
-            <thead>
-            <tr>
-                <th>Item</th>
-                <th>Descripcion</th>
-                <th>Categoria</th>
-                <th>Usuario</th>
+<div class="container">
+    <h1>Items de Usuario</h1>
+    <table class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Descripcion</th>
+            <th>Categoria</th>
+            <th>Usuario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="item : ${items}">
+            <tr class="items-table" th:attr="data-id=${item.id}">
+                <td th:text="${item.name}">Item</td>
+                <td th:text="${item.description}">Descripcion</td>
+                <td th:text="${item.category.name}">Categoria</td>
+                <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
+                <td>
+                    <form th:action="@{'/items/' + ${item.id}}" th:method="DELETE" role="button">
+                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                    </form>
+                    <form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">
+                        <button class="btn btn-success" type="submit">Editar</button>
+                    </form>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            <th:block th:each="item : ${items}">
-                <tr class="items-table" th:attr="data-id=${item.id}">
-                    <td th:text="${item.name}">Item</td>
-                    <td th:text="${item.description}">Descripcion</td>
-                    <td th:text="${item.category.name}">Categoria</td>
-                    <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
-                    <td>
-                        <form th:action="@{'/items/' + ${item.id}}" th:method="DELETE" role="button">
-                            <button class="btn btn-danger" type="submit">Eliminar</button>
-                        </form>
-                        <form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">
-                            <button class="btn btn-success" type="submit">Editar</button>
-                        </form>
-                    </td>
+        </th:block>
+        </tbody>
+    </table>
+</div>
 
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
-    </div>
+<div class="container">
+    <form class="form-horizontal" role="form" th:action="@{/items}" th:object="${item}" th:method="POST">
+        <!--<div class="container">-->
+        <!--<label for="id"> ID</label>-->
+        <!--<input type="number" id="id" th:field="*{id}"></input>-->
+        <!--</div>-->
+        <div class="form-group">
+            <label for="name" class="col-sm-2">Nombre</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="name" th:field="*{name}"></input>
+                <span class="help-block">Deberia ser lo mas descriptivo posible, esto es un help-block</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-2">Descripción</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="5" id="description" placeholder="Ingrese una breve descripción"
+                          th:field="*{description}"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2" for="categories"> Categorias</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="categories" th:field="*{category}">
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
 
-    <div class="container">
-        <form class="form-horizontal" role="form" th:action="@{/items}" th:object="${item}" th:method="POST">
-            <!--<div class="container">-->
-                <!--<label for="id"> ID</label>-->
-                <!--<input type="number" id="id" th:field="*{id}"></input>-->
-            <!--</div>-->
-            <div class="form-group">
-                <label for="name" class="col-sm-2">Nombre</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" id="name" th:field="*{name}"></input>
-                    <span class="help-block">Deberia ser lo mas descriptivo posible, esto es un help-block</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description" class="col-sm-2">Descripción</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="5" id="description" placeholder="Ingrese una breve descripción" th:field="*{description}"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2" for="categories"> Categorias</label>
-                <div class="col-sm-10">
-                    <select class="form-control" id="categories" th:field="*{category}">
-                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-                    </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
-    </div>
 </body>
 
-
 <!--<script type="text/javascript">-->
-    <!--$(function() {-->
-        <!--$(".items-table").on("click", function(e){-->
-            <!--e.preventDefault();-->
-            <!--var id = $(this).data("id");-->
-            <!--window.location ="/items/" + id;-->
-        <!--});-->
-    <!--});-->
+<!--$(function() {-->
+<!--$(".items-table").on("click", function(e){-->
+<!--e.preventDefault();-->
+<!--var id = $(this).data("id");-->
+<!--window.location ="/items/" + id;-->
+<!--});-->
+<!--});-->
 <!--</script>-->
 
 </html>
