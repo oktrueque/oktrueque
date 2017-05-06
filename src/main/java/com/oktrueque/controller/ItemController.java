@@ -55,11 +55,12 @@ public class ItemController {
         if (items == null){
             items = itemService.getItems();
         }
-        items.forEach(item -> {
-            if (id.equals(item.getId())) {
-                model.addAttribute("item", item);
-            }
-        });
+        //Expresion Lambda para buscar el item q queremos editar
+        Item itemForUpdate =  items.stream()
+                .filter(item -> item.getId() == id)
+                .findFirst()
+                .orElse(null);
+        model.addAttribute("item" , itemForUpdate);
         model.addAttribute("items", items);
         model.addAttribute("categories",categoryService.getCategories());
         return "items";
@@ -67,11 +68,7 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
     public String deleteItems(@PathVariable long id){
-        // Item itemToDelete = itemService.getItem(id);
         itemService.deleteItemAlone(id);
-        // itemToDelete.setUser(user);
-        // User userFromItem = userService.getUser(id);
-        // itemService.deleteItemWithUser(itemToDelete, userFromItem);
         return "redirect:/items";
     }
 
