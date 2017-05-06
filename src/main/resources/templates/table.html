@@ -188,16 +188,26 @@
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
                                     <thead>
-                                    	<th>Nombre</th>
-                                    	<th>Descripción</th>
-                                    	<th>Categoría</th>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Descripcion</th>
+                                        <th>Categoria</th>
+                                        <th>Acción</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="item : ${items}">
-                                        <td th:text="${item.name}">Guitarra</td>
-                                        <td th:text="${item.description}">Gibson repiolawa8</td>
-                                        <td th:text="${item.category}">Instrumentos</td>
-                                    </tr>
+                                    <th:block th:each="item : ${items}">
+                                        <tr class="moderator-row" th:attr="data-id=${item.id}">
+                                            <td class="col-md-1" th:text="${item.name}"></td>
+                                            <td class="col-md-1" th:text="${item.description}"></td>
+                                            <td class="col-md-1" th:text="${item.category.name}"></td>
+                                            <td class="col-md-1"> <a class="btn btn-success" href="http://localhost:8080" role="button">Editar</a>
+                                                <a class="btn btn-danger" href="http://localhost:8080/items" role="button">Eliminar</a> </td>
+
+                                            <!--<input name="_method" type="hidden" value="PUT" />-->
+
+                                        </tr>
+                                    </th:block>
                                     </tbody>
                                 </table>
                             </div>

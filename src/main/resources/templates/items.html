@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8"></meta>
     <title>ITEMS</title>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css"></link>
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></link>
+    <!-- </link>Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"></link>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="../static/js/jquery-1.10.2.js" type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
         <h1>Items de Usuario</h1>
-        <table class="responsive-table highlight centered">
+        <table class="table table-hover table-responsive">
             <thead>
             <tr>
                 <th>Item</th>
@@ -22,39 +24,65 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${items}">
-                <td th:text="${item.name}">Item</td>
-                <td th:text="${item.description}">Descripcion</td>
-                <td th:text="${item.category.name}">Categoria</td>
-                <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
-            </tr>
+            <th:block th:each="item : ${items}">
+                <tr class="items-table" th:attr="data-id=${item.id}">
+                    <td th:text="${item.name}">Item</td>
+                    <td th:text="${item.description}">Descripcion</td>
+                    <td th:text="${item.category.name}">Categoria</td>
+                    <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
+                    <!--<td>-->
+                        <!--&lt;!&ndash;<a class="btn btn-danger"  th:href="@{'/items/' + ${item.id}}" th:method="Delete" role="button">Eliminar</a>&ndash;&gt;-->
+                        <!--<form th:action="@{'/items/' + ${item.id}}" th:method="delete" role="button">-->
+                            <!--<button class="btn btn-danger" type="submit">Eliminar</button>-->
+                        <!--</form>-->
+                    <!--</td>-->
+                </tr>
+            </th:block>
             </tbody>
         </table>
     </div>
-    <!--FORMULARIO CASI LISTO-->
-    <!--<div class="container">-->
-        <!--<form th:action="@{/items}" th:object="${item}" th:method="POST">-->
+
+    <div class="container">
+        <form class="form-horizontal" role="form" th:action="@{/items}" th:object="${item}" th:method="POST">
             <!--<div class="container">-->
-                <!--<label for="name"> Nombre</label>-->
-                <!--<input type="text" id="name" th:field="*{name}"></input>-->
+                <!--<label for="id"> ID</label>-->
+                <!--<input type="number" id="id" th:field="*{id}"></input>-->
             <!--</div>-->
-            <!--<div class="container">-->
-                <!--<label for="description"> Descripcion</label>-->
-                <!--<input type="text" id="description" th:field="*{description}"></input>-->
-            <!--</div>-->
-            <!--<div class="container">-->
-                <!--<label for="category"> Categoria</label>-->
-                <!--<input type="text" id="category" th:field="*{category}"></input>-->
-            <!--</div>-->
-            <!--<div class="container">-->
-                <!--<label for="user"> Usuario</label>-->
-                <!--<input type="text" id="user" th:field="*{user}"></input>-->
-            <!--</div>-->
-            <!--<div class="container">-->
-                <!--<input type="submit" value="Registrar"> </input>-->
-            <!--</div>-->
-        <!--</form>-->
-    <!--</div>-->
+            <div class="form-group">
+                <label for="name" class="col-sm-2">Nombre</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="name" th:field="*{name}"></input>
+                    <span class="help-block">Deberia ser lo mas descriptivo posible, esto es un help-block</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-sm-2">Descripción</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="5" id="description" placeholder="Ingrese una breve descripción" th:field="*{description}"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2" for="categories"> Categorias</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="categories" th:field="*{category}">
+                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        </form>
+    </div>
 </body>
+
+
+<script type="text/javascript">
+    $(function() {
+        $(".items-table").on("click", function(e){
+            e.preventDefault();
+            var id = $(this).data("id");
+            window.location ="/items/" + id;
+        });
+    });
+</script>
 
 </html>

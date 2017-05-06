@@ -1,9 +1,6 @@
 package com.oktrueque.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Facundo on 01/05/2017.
