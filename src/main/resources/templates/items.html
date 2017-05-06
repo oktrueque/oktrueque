@@ -30,12 +30,15 @@
                     <td th:text="${item.description}">Descripcion</td>
                     <td th:text="${item.category.name}">Categoria</td>
                     <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
-                    <!--<td>-->
-                        <!--&lt;!&ndash;<a class="btn btn-danger"  th:href="@{'/items/' + ${item.id}}" th:method="Delete" role="button">Eliminar</a>&ndash;&gt;-->
-                        <!--<form th:action="@{'/items/' + ${item.id}}" th:method="delete" role="button">-->
-                            <!--<button class="btn btn-danger" type="submit">Eliminar</button>-->
-                        <!--</form>-->
-                    <!--</td>-->
+                    <td>
+                        <form th:action="@{'/items/' + ${item.id}}" th:method="DELETE" role="button">
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                        </form>
+                        <form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">
+                            <button class="btn btn-success" type="submit">Editar</button>
+                        </form>
+                    </td>
+
                 </tr>
             </th:block>
             </tbody>
@@ -75,14 +78,14 @@
 </body>
 
 
-<script type="text/javascript">
-    $(function() {
-        $(".items-table").on("click", function(e){
-            e.preventDefault();
-            var id = $(this).data("id");
-            window.location ="/items/" + id;
-        });
-    });
-</script>
+<!--<script type="text/javascript">-->
+    <!--$(function() {-->
+        <!--$(".items-table").on("click", function(e){-->
+            <!--e.preventDefault();-->
+            <!--var id = $(this).data("id");-->
+            <!--window.location ="/items/" + id;-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
 
 </html>

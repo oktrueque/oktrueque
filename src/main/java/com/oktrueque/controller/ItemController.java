@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,14 +29,15 @@ public class ItemController {
     @Autowired
     private CategoryService categoryService;
     private User user = new User();
+    private List<Item> items = null;
 
     @RequestMapping(method = RequestMethod.GET , value="/items")
     public String getItems(Model model){
-        List<Item> list = itemService.getItems();
-        model.addAttribute("items", list);
+        items = itemService.getItems();
+        model.addAttribute("items", items);
         model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
         model.addAttribute("item", new Item());
-        user = list.get(0).getUser();
+        user = items.get(0).getUser();
         return "items";
     }
 
@@ -48,14 +50,20 @@ public class ItemController {
         itemService.addItem(item);
         return "redirect:/items";
     }
-//    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
-//    public String updateItem(@PathVariable long id, Model model){
-//        Item itemForUpdate = itemService.getItem(id);
-//        model.addAttribute("item", itemForUpdate);
-//        model.addAttribute("items", itemService.getItems());
-//        model.addAttribute("categories",categoryService.getCategories());
-//        return "items";
-//    }
+    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
+    public String updateItem(@PathVariable Long id, Model model){
+        if (items == null){
+            items = itemService.getItems();
+        }
+        items.forEach(item -> {
+            if (id.equals(item.getId())) {
+                model.addAttribute("item", item);
+            }
+        });
+        model.addAttribute("items", items);
+        model.addAttribute("categories",categoryService.getCategories());
+        return "items";
+    }
 
     @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
     public String deleteItems(@PathVariable long id){
