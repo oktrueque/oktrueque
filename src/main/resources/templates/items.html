@@ -34,7 +34,7 @@
         </thead>
         <tbody>
         <th:block th:each="item : ${items}">
-            <tr class="items-table" th:attr="data-id=${item.id}">
+            <tr class="items-table">
                 <td th:text="${item.name}">Item</td>
                 <td th:text="${item.description}">Descripcion</td>
                 <td th:text="${item.category.name}">Categoria</td>
@@ -42,7 +42,7 @@
                 <td>
                     <div class="col-sm-6">
 
-                        <button class="btn btn-danger" type="submit" data-toggle="modal" data-target="#confirmDelete">
+                        <button class="btn btn-danger btn_delete" type="submit" th:attr="data-id=${item.id}">
                             Eliminar
                         </button>
 
@@ -113,9 +113,9 @@
             <div class="modal-footer">
 
 
-                <form th:action="@{'/items/' + id}" th:method="DELETE" role="button">
+                <form id="confirm_form" th:action="@{'/items/' + id}" th:method="DELETE" role="button">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" id="btn_confirm_delete">Eliminar</button>
                 </form>
 
 
@@ -125,30 +125,20 @@
 </div>
 
 <!-- Dialog show event handler -->
-<script type="text/javascript" th:inline="javascript">
-    $('#confirmDelete').on('show.bs.modal', function (e) {
-        /*<![CDATA[*/
+<script type="text/javascript">
+        $(function() {
+            $(".btn_delete").on("click", function(e){
+                e.preventDefault();
+                var id = $(this).data("id");
+                console.log(id);
+                $("#confirm_form").attr('action', '/items/' + id);
+                $("#confirmDelete").modal('show');
+            });
+        });
 
-
-        var id = [[${item.id}]];
-
-
-        /*]]>*/
-        console.log(id);
-        $message = $(e.relatedTarget).attr('data-message');
-        $(this).find('.modal-body p').text($message);
-        $title = $(e.relatedTarget).attr('data-title');
-        $(this).find('.modal-title').text($title);
-        // Pass form reference to modal for submission on yes/ok
-        var form = $(e.relatedTarget).closest('form');
-        $(this).find('.modal-footer #confirm').data('form', form);
-    });
-
-    <!-- Form confirm (yes/ok) handler, submits form -->
-    $('#confirmDelete').find('.modal-footer #confirm').on('click', function () {
-
-        $(this).data('form').submit();
-
+    $("#btn_confirm_delete").on('click', function(){
+        console.log('Hola 2');
+        $('#confirm_form').submit();
     });
 
 </script>
