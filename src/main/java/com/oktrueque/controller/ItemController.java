@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -32,14 +29,21 @@ public class ItemController {
     private List<Item> items = null;
 
     @RequestMapping(method = RequestMethod.GET , value="/items")
-    public String getItems(Model model){
-        items = itemService.getItems();
+    public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, Model model){
+        if(id_category == null) items = itemService.getItems();
+        else{
+            try{
+                items = itemService.getItemsByCategory(id_category);
+            }
+            catch(Exception e){}
+        }
         model.addAttribute("items", items);
         model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
         model.addAttribute("item", new Item());
-        user = items.get(0).getUser();
+        //user = items.get(0).getUser();
         return "items";
     }
+
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
     public String createItem(@ModelAttribute Item item, BindingResult result) {
