@@ -114,8 +114,12 @@
 
 
                 <form id="confirm_form" th:action="@{'/items/' + id}" th:method="DELETE" role="button">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal" id="btn_confirm_delete">Eliminar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" id="btn_confirm_delete">
+                        Eliminar
+                    </button>
                 </form>
 
 
@@ -137,7 +141,6 @@
         });
 
     $("#btn_confirm_delete").on('click', function(){
-        console.log('Hola 2');
         $('#confirm_form').submit();
     });
 
