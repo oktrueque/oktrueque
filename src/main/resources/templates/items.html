@@ -8,74 +8,73 @@
     <title>ITEMS</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous"></link>
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous"></link>
     <!-- </link>Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    crossorigin="anonymous"></link>
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous"></link>
     <!-- Latest compiled and minified JavaScript -->
     <script src="../static/js/jquery-1.10.2.js" type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-            <h1>Items de Usuario</h1>
-            <form class="form-inline" th:action="@{'/items'}" th:method="GET" role="button">
-                <select class="form-control" id="categories" name="id_category">
-                    <option value="0">Buscar</option>
-                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-                </select>
-                <button class="btn btn-success" type="submit">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </button>
+    <h1>Items de Usuario</h1>
+    <form class="form-inline" th:action="@{'/items'}" th:method="GET" role="button">
+        <select class="form-control" id="categories" name="id_category">
+            <option value="0">Buscar</option>
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
+        <button class="btn btn-success" type="submit">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
 
-            </form>
-        <br></br>
-        <table class="table table-hover table-responsive">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Descripcion</th>
-                    <th>Categoria</th>
-                    <th>Usuario</th>
-                </tr>
-            </thead>
-            <tbody>
-                <th:block th:each="item : ${items}">
-                <tr class="items-table">
-                    <td th:text="${item.name}">Item</td>
-                    <td th:text="${item.description}">Descripcion</td>
-                    <td th:text="${item.category.name}">Categoria</td>
-                    <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
-                    <td>
-                        <div class="col-sm-6">
+    </form>
+    <br></br>
+    <table class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Item</th>
+            <th>Descripcion</th>
+            <th>Categoria</th>
+            <th>Usuario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="item : ${items}">
+            <tr class="items-table">
+                <td th:text="${item.name}">Item</td>
+                <td th:text="${item.description}">Descripcion</td>
+                <td th:text="${item.category.name}">Categoria</td>
+                <td th:text="${item.user.name} +' ' + ${item.user.last_name}">Usuario</td>
+                <td>
+                    <div class="col-sm-6">
 
-                            <button class="btn btn-danger btn_delete" type="submit" th:attr="data-id=${item.id}">
-                                Eliminar
-                            </button>
+                        <button class="btn btn-danger btn_delete" type="submit" th:attr="data-id=${item.id}">
+                            Eliminar
+                        </button>
 
-                        </div>
-                        <div class="col-sm-6">
-                            <form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">
-                                <button class="btn btn-success" type="submit">Editar</button>
-                            </form>
-                        </div>
-                    </td>
-
-
-                </tr>
+                    </div>
+                    <div class="col-sm-6">
+                        <form th:action="@{'/items/' + ${item.id}}" th:method="GET" role="button">
+                            <button class="btn btn-success" type="submit">Editar</button>
+                        </form>
+                    </div>
+                </td>
 
 
+            </tr>
 
-            </th:block>
+
+        </th:block>
         </tbody>
     </table>
 </div>
-
+<!--FORMULARIO POST ITEMS-->
 <div class="container">
     <form class="form-horizontal" role="form" th:action="@{/items}" th:object="${item}" th:method="POST">
         <div class="form-group">
@@ -85,7 +84,7 @@
         <div class="form-group">
             <label for="name" class="col-sm-2">Nombre</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" id="name" th:field="*{name}"></input>
+                <input class="form-control" type="text" id="name" th:field="*{name}" required="true"></input>
                 <span class="help-block">Deberia ser lo mas descriptivo posible, esto es un help-block</span>
             </div>
         </div>
@@ -93,14 +92,14 @@
             <label for="description" class="col-sm-2">Descripción</label>
             <div class="col-sm-10">
                 <textarea class="form-control" rows="5" id="description" placeholder="Ingrese una breve descripción"
-                th:field="*{description}"></textarea>
+                          th:field="*{description}" required="true"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2" for="categories"> Categorias</label>
             <div class="col-sm-10">
                 <select class="form-control" id="categories" th:field="*{category}">
-                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}" required="true"></option>
                 </select>
             </div>
         </div>
@@ -142,8 +141,8 @@
 
 <!-- Dialog show event handler -->
 <script type="text/javascript">
-    $(function() {
-        $(".btn_delete").on("click", function(e){
+    $(function () {
+        $(".btn_delete").on("click", function (e) {
             e.preventDefault();
             var id = $(this).data("id");
             console.log(id);
@@ -152,10 +151,9 @@
         });
     });
 
-    $("#btn_confirm_delete").on('click', function(){
+    $("#btn_confirm_delete").on('click', function () {
         $('#confirm_form').submit();
     });
-
 </script>
 <!--<script type="text/javascript">-->
 <!--$(function() {-->

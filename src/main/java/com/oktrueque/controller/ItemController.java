@@ -29,6 +29,7 @@ public class ItemController {
     private List<Item> items = null;
 
     @RequestMapping(method = RequestMethod.GET , value="/items")
+    @Valid
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, Model model){
         if(id_category == null) items = itemService.getItems();
         else{
@@ -40,7 +41,7 @@ public class ItemController {
         model.addAttribute("items", items);
         model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
         model.addAttribute("item", new Item());
-        //user = items.get(0).getUser();
+        user = items.get(0).getUser();
         return "items";
     }
 
