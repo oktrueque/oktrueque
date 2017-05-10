@@ -1,41 +1,49 @@
 package com.oktrueque.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
- * Created by Facundo on 01/05/2017.
+ * Created by Felipe on 7/5/2017.
  */
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Long id;
     @Column(name="name")
     private String name;
     @Column(name="last_name")
-    private String lastName;
+    private String last_name;
     @Column(name="email")
     private String email;
     @Column(name="password")
     private String password;
+    @Column(name="status")
+    private Integer status;
 
-    //Constructores
+
     public User() {
     }
 
-    public User(Long id, String name, String last_name, String email, String password) {
+    public User(Long id, String name, String last_name, String email, String password, int status, String photo1) {
         this.id = id;
         this.name = name;
-        this.lastName = last_name;
+        this.last_name = last_name;
         this.email = email;
         this.password = password;
     }
-    //Getters and Setters
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }
@@ -53,11 +61,12 @@ public class User {
     }
 
     public String getLast_name() {
-        return lastName;
+
+        return last_name;
     }
 
     public void setLast_name(String last_name) {
-        this.lastName = last_name;
+        this.last_name = last_name;
     }
 
     public String getEmail() {
