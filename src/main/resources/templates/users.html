@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+
+<body>
+
+
+    <table>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>last name</th>
+            <th>email</th>
+            <th>password</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.last_name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.password}"></td>
+        </tr>
+    </table>
+
+
+    <form th:action="@{/users}" th:object="${user}" method="post">
+
+        <input class="form-control" type="hidden" th:field="*{id}"></input>
+
+        nombre
+        <input type="text" th:field="*{name}"/>
+
+        apellido
+        <input type="text" th:field="*{last_name}"/>
+
+        email
+        <input type="text" th:field="*{email}"/>
+
+        password
+        <input type="password" th:field="*{password}"/>
+
+        <input type="submit" value="Registrar"/>
+    </form>
+
+</body>
+
+</html>
