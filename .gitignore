@@ -20,7 +20,6 @@ nbproject/private/
 build/
 nbbuild/
 nbdist/
-dist/
 .nb-gradle/
 
 # Compiled class file

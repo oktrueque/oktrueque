@@ -1,6 +1,8 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Felipe on 7/5/2017.
@@ -23,6 +25,9 @@ public class User {
     private String password;
     @Column(name="status")
     private Integer status;
+    @OneToMany(mappedBy = "user")
+    private List<Item> items;
+
 
 
     public User() {
@@ -34,6 +39,7 @@ public class User {
         this.last_name = last_name;
         this.email = email;
         this.password = password;
+        this.items = new ArrayList<Item>();
     }
 
     public Integer getStatus() {
@@ -83,5 +89,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }
