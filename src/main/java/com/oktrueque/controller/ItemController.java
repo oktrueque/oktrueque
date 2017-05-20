@@ -42,7 +42,7 @@ public class ItemController {
         model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
         model.addAttribute("item", new Item());
         user = items.get(0).getUser();
-        return "items2";
+        return "itemsCatalog";
     }
 
 
@@ -68,7 +68,7 @@ public class ItemController {
         model.addAttribute("item" , itemForUpdate);
         model.addAttribute("items", items);
         model.addAttribute("categories",categoryService.getCategories());
-        return "items";
+        return "itemView";
     }
 
     @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
