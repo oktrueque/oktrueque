@@ -73,7 +73,7 @@ module.exports = function(Chart) {
 				line._datasetIndex = me.index;
 				// Data
 				line._children = points;
-				// model
+				// Model
 				line._model = {
 					// Appearance
 					// The default behavior of lines is to break at null values, according
