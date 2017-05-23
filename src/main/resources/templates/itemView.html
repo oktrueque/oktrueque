@@ -58,7 +58,7 @@
             <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
         </a>
     </div>
-    <div class="left-menu-inner scroll-pane">
+    <div class="left-menu-inner">
         <ul class="left-menu-list left-menu-list-root list-unstyled">
             <li>
                 <a class="left-menu-link" href="/users">
@@ -133,30 +133,27 @@
             <div class="panel-body">
                 <div class="row">
                     <!--Visor de imagenes de la parte izquierda-->
-                    <div class="col-lg-4">
+                    <div class="col-lg-8">
                         <div class="cui-ecommerce--catalog--item">
                             <div class="cui-ecommerce--catalog--item--img">
                                 <a href="javascript: void(0);">
-                                    <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                    <img th:src="${item.photo1}" />
                                 </a>
                             </div>
                         </div>
                         <div class="cui-ecommerce--product--photos clearfix">
                             <div class="cui-ecommerce--product--photos-item cui-ecommerce--product--photos-item__active">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                <img th:src="${item.photo1}"/>
                             </div>
                             <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                <img th:src="${item.photo2}"/>
                             </div>
                             <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
-                            </div>
-                            <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                <img th:src="${item.photo3}"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         <!--CODIGO Y ESTRELLAS DE LA DERECHA ARRIBA-->
                         <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;sku">-->
                             <!--SKU: #0000235-->

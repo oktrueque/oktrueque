@@ -22,6 +22,9 @@ public class Item {
     @OneToOne
     @JoinColumn(name="id_category")
     private Category category;
+    private String photo1;
+    private String photo2;
+    private String photo3;
 
 
     //Constructores
@@ -35,6 +38,17 @@ public class Item {
         this.user = user;
         this.category = category;
     }
+
+    public Item(String name, String description, User user, Category category, String photo1, String photo2, String photo3) {
+        this.name = name;
+        this.description = description;
+        this.user = user;
+        this.category = category;
+        this.photo1 = photo1;
+        this.photo2 = photo2;
+        this.photo3 = photo3;
+    }
+
     //Getters and Setters
 
     public Long getId() {
@@ -75,5 +89,29 @@ public class Item {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getPhoto1() {
+        return photo1;
+    }
+
+    public void setPhoto1(String photo1) {
+        this.photo1 = photo1;
+    }
+
+    public String getPhoto2() {
+        return photo2;
+    }
+
+    public void setPhoto2(String photo2) {
+        this.photo2 = photo2;
+    }
+
+    public String getPhoto3() {
+        return photo3;
+    }
+
+    public void setPhoto3(String photo3) {
+        this.photo3 = photo3;
     }
 }
