@@ -1,7 +1,7 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
-import javax.websocket.OnError;
+
 
 /**
  * Created by Facundo on 27/04/2017.
