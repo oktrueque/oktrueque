@@ -11,7 +11,7 @@
     <link href="../static/common/img/favicon.72x72.png" th:href="@{/common/img/favicon.72x72.png}" rel="apple-touch-icon" type="image/png" sizes="72x72"/>
     <link href="../static/common/img/favicon.57x57.png" th:href="@{/common/img/favicon.57x57.png}" rel="apple-touch-icon" type="image/png"/>
     <link href="../static/common/img/favicon.png" th:href="@{/common/img/favicon.png}" rel="icon" type="image/png"/>
-    <link href="favicon.ico" rel="shortcut icon"/>
+    <!--<link href="favicon.ico" rel="shortcut icon"/>-->
 
     <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -58,7 +58,7 @@
             <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
         </a>
     </div>
-    <div class="left-menu-inner scroll-pane">
+    <div class="left-menu-inner">
         <ul class="left-menu-list left-menu-list-root list-unstyled">
             <li>
                 <a class="left-menu-link" href="/users">
@@ -122,14 +122,7 @@
 </nav>
 <section class="page-content">
     <div class="page-content-inner">
-
-        <!-- Ecommerce Products Catalog -->
         <section class="panel panel-with-borders">
-            <div class="panel-heading">
-                <h2>
-                    Products Catalog
-                </h2>
-            </div>
             <div class="panel-body">
                 <div class="cui-ecommerce--catalog">
                     <div class="row">
@@ -137,22 +130,11 @@
                             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                                 <div class="cui-ecommerce--catalog--item">
                                     <div class="cui-ecommerce--catalog--item--img">
-                                        <!--El estado borde superior izquierdo-->
-                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;status">-->
-                                        <!--<span class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;status&#45;&#45;title">New</span>-->
-                                        <!--</div>-->
-                                        <!--El like con el corazon-->
-                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like__selected">-->
-                                        <!--<i class="icmn-heart3 cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like&#45;&#45;liked">&lt;!&ndash; &ndash;&gt;</i>-->
-                                        <!--<i class="icmn-heart4 cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like&#45;&#45;unliked">&lt;!&ndash; &ndash;&gt;</i>-->
-                                        <!--</div>-->
-                                        <!--Aca va la imagen gatoooo-->
-                                        <a href="javascript: void(0);">
-                                            <img th:src="@{/common/img/temp/ecommerce/001.jpg}"/>
+                                        <a th:href="@{'/items/' + ${item.id}}">
+                                            <img th:src="${item.photo1}"/>
                                         </a>
                                     </div>
                                     <div class="cui-ecommerce--catalog--item--title">
-                                        <!--<a href="javascript: void(0);" th:text="${item.name}"></a>-->
                                         <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}"></a>
                                     </div>
                                     <div class="cui-ecommerce--catalog--item--descr">
@@ -161,18 +143,11 @@
                                 </div>
                             </div>
                         </th:block>
-
                     </div>
                 </div>
             </div>
         </section>
-        <!-- End Ecommerce Products Catalog -->
-
     </div>
-
-
-
-    <!-- Page Scripts -->
     <script>
 
         $(function () {
@@ -186,9 +161,8 @@
         });
 
     </script>
-    <!-- End Page Scripts -->
 </section>
-<!--&lt;!&ndash; Page Scripts &ndash;&gt;-->
+<!-- Page Scripts -->
 <!--<script>-->
 <!--$(function(){-->
 <!--$('#example2').DataTable({-->
