@@ -13,7 +13,7 @@ module.exports = function(Chart) {
 			xAxes: [{
 				type: "category",
 
-				// Specific to Bar controller
+				// Specific to Bar Controller
 				categoryPercentage: 0.8,
 				barPercentage: 0.9,
 
@@ -293,7 +293,7 @@ module.exports = function(Chart) {
 				position: "left",
 				type: "category",
 
-				// Specific to Horizontal Bar controller
+				// Specific to Horizontal Bar Controller
 				categoryPercentage: 0.8,
 				barPercentage: 0.9,
 

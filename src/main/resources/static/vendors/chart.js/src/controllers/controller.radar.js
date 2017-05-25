@@ -51,7 +51,7 @@ module.exports = function(Chart) {
 				// Data
 				_children: points,
 				_loop: true,
-				// model
+				// Model
 				_model: {
 					// Appearance
 					tension: custom.tension ? custom.tension : helpers.getValueOrDefault(dataset.lineTension, lineElementOptions.tension),

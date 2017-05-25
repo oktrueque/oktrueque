@@ -2268,7 +2268,7 @@ function setupModuleLoader(window) {
            * @name angular.Module#value
            * @module ng
            * @param {string} name service name
-           * @param {*} object service instance object.
+           * @param {*} object Service instance object.
            * @description
            * See {@link auto.$provide#value $provide.value()}.
            */
@@ -2354,9 +2354,9 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#controller
            * @module ng
-           * @param {string|Object} name controller name, or an object map of controllers where the
+           * @param {string|Object} name Controller name, or an object map of controllers where the
            *    keys are the names and the values are the constructors.
-           * @param {Function} constructor controller constructor function.
+           * @param {Function} constructor Controller constructor function.
            * @description
            * See {@link ng.$controllerProvider#register $controllerProvider.register()}.
            */
@@ -4355,11 +4355,11 @@ function annotate(fn, strictDi, name) {
  * are constructor functions, whose instances are responsible for "providing" a factory for a
  * service.
  *
- * service provider names start with the name of the service they provide followed by `Provider`.
+ * Service provider names start with the name of the service they provide followed by `Provider`.
  * For example, the {@link ng.$log $log} service has a provider called
  * {@link ng.$logProvider $logProvider}.
  *
- * service provider objects can have additional methods which allow configuration of the provider
+ * Service provider objects can have additional methods which allow configuration of the provider
  * and its service. Importantly, you can configure what kind of service is created by the `$get`
  * method, or how that service will act. For example, the {@link ng.$logProvider $logProvider} has a
  * method {@link ng.$logProvider#debugEnabled debugEnabled}
@@ -9742,7 +9742,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
         if (!value && !optional) {
           throw $compileMinErr('ctreq',
-              'controller \'{0}\', required by directive \'{1}\', can\'t be found!',
+              'Controller \'{0}\', required by directive \'{1}\', can\'t be found!',
               name, directiveName);
         }
       } else if (isArray(require)) {
@@ -10591,7 +10591,7 @@ function $ControllerProvider() {
   /**
    * @ngdoc method
    * @name $controllerProvider#has
-   * @param {string} name controller name to check.
+   * @param {string} name Controller name to check.
    */
   this.has = function(name) {
     return controllers.hasOwnProperty(name);
@@ -10600,9 +10600,9 @@ function $ControllerProvider() {
   /**
    * @ngdoc method
    * @name $controllerProvider#register
-   * @param {string|Object} name controller name, or an object map of controllers where the keys are
+   * @param {string|Object} name Controller name, or an object map of controllers where the keys are
    *    the names and the values are the constructors.
-   * @param {Function|Array} constructor controller constructor fn (optionally decorated with DI
+   * @param {Function|Array} constructor Controller constructor fn (optionally decorated with DI
    *    annotations in the array notation).
    */
   this.register = function(name, constructor) {
@@ -10649,7 +10649,7 @@ function $ControllerProvider() {
      *    as the specified property on the `scope`; the `scope` must be injected into `locals` param for this
      *    to work correctly.
      *
-     * @param {Object} locals Injection locals for controller.
+     * @param {Object} locals Injection locals for Controller.
      * @return {Object} Instance of given controller.
      *
      * @description

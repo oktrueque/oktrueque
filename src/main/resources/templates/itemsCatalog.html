@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-    <title>Clean UI Admin Template</title>
+    <title>OKTrueque</title>
 
     <link href="../static/common/img/favicon.144x144.png" th:href="@{/common/img/favicon.144x144.png}" rel="apple-touch-icon" type="image/png" sizes="144x144"/>
     <link href="../static/common/img/favicon.114x114.png" th:href="@{/common/img/favicon.114x114.png}" rel="apple-touch-icon" type="image/png" sizes="114x114"/>
@@ -32,7 +32,7 @@
     <!-- Vendors Scripts -->
     <!-- v1.0.0 -->
     <script src="../static/vendors/jquery/jquery.min.js" th:src="@{/vendors/jquery/jquery.min.js}"></script>
-
+    <script src="../static/vendors/tether/dist/js/tether.min.js" th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
     <script src="../static/vendors/bootstrap/dist/js/bootstrap.min.js" th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script src="../static/vendors/html5-form-validation/dist/jquery.validation.min.js" th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"></script>
     <script src="../static/vendors/autosize/dist/autosize.min.js" th:src="@{/vendors/autosize/dist/autosize.min.js}"></script>
@@ -152,14 +152,11 @@
                                         </a>
                                     </div>
                                     <div class="cui-ecommerce--catalog--item--title">
-                                        <a href="javascript: void(0);" th:text="${item.name}"></a>
-                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;price" >-->
-                                        <h6 th:text="${item.category.name}"></h6>
-                                        <!--</div>-->
+                                        <!--<a href="javascript: void(0);" th:text="${item.name}"></a>-->
+                                        <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}"></a>
                                     </div>
-
                                     <div class="cui-ecommerce--catalog--item--descr">
-                                        <P th:text="${item.description}"></P>
+                                        <P th:text="${item.category.name}"></P>
                                     </div>
                                 </div>
                             </div>
