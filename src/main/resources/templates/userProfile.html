@@ -92,7 +92,7 @@
             <div class="dropdown dropdown-avatar">
                 <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="avatar" href="javascript:void(0);">
-                        <img src="../assets/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}"  alt="Alternative text to the image"/>
+                        <img src="../assets/common/img/temp/avatars/1.jpg" th:src="${user.photo1}"   alt="Alternative text to the image"/>
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
@@ -157,18 +157,15 @@
                         <br />
 
                         <span class="avatar" href="javascript:void(0);">
-                        <img src="../assets/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}"  alt="Alternative text to the image"/>
+                        <img src="../assets/common/img/temp/avatars/1.jpg" th:src="${user.photo1}"  alt="Alternative text to the image"/>
                         </span>
 
                         <div class="container">
-
-                            <th:block th:each="user : ${user}">
 
                                 <h1>Bienvenido!</h1>
                                 <h2 th:text="${user.name}"></h2>
                                 <h2 th:text="${user.last_name}"></h2>
 
-                            </th:block>
                         </div>
                         <div class="btn-group btn-group-justified" aria-label="" role="group">
                             <div class="btn-group">
