@@ -23,11 +23,13 @@ public class ItemService {
         return items;
     }
 
+    public Item getItemById(Long id){ return itemRepository.findOne(id);}
+
     public void addItem(Item item){
         itemRepository.save(item);
     }
 
-    public void deleteItemAlone(Long id) { itemRepository.delete(id);    }
+    public void deleteItemAlone(Long id) { itemRepository.delete(id);}
 
     public List<Item> getItemsByCategory(int id_category) {
         return itemRepository.findByCategory_Id(id_category);

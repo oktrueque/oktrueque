@@ -23,8 +23,8 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
-    @Autowired
-    private CategoryService categoryService;
+//    @Autowired
+//    private CategoryService categoryService;
     private User user = new User();
     private List<Item> items = null;
 
@@ -39,12 +39,16 @@ public class ItemController {
             catch(Exception e){}
         }
         model.addAttribute("items", items);
-        model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
-        model.addAttribute("item", new Item());
-        user = items.get(0).getUser();
+//        model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
+//        model.addAttribute("item", new Item());
+//        user = items.get(0).getUser();
         return "itemsCatalog";
     }
-
+    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
+    public String getItemById(@PathVariable Long id, Model model){
+        model.addAttribute("item" , itemService.getItemById(id));
+        return "itemView";
+    }
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
     public String createItem(@ModelAttribute Item item, BindingResult result) {
@@ -55,26 +59,27 @@ public class ItemController {
         itemService.addItem(item);
         return "redirect:/items";
     }
-    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
-    public String updateItem(@PathVariable Long id, Model model){
-        if (items == null){
-            items = itemService.getItems();
-        }
-        //Expresion Lambda para buscar el item q queremos editar
-        Item itemForUpdate =  items.stream()
-                .filter(item -> item.getId() == id)
-                .findFirst()
-                .orElse(null);
-        model.addAttribute("item" , itemForUpdate);
-        model.addAttribute("items", items);
-        model.addAttribute("categories",categoryService.getCategories());
-        return "itemView";
-    }
 
-    @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
-    public String deleteItems(@PathVariable long id){
-        itemService.deleteItemAlone(id);
-        return "redirect:/items";
-    }
+//    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
+//    public String updateItem(@PathVariable Long id, Model model){
+//        if (items == null){
+//            items = itemService.getItems();
+//        }
+//        //Expresion Lambda para buscar el item q queremos editar
+//        Item itemForUpdate =  items.stream()
+//                .filter(item -> item.getId() == id)
+//                .findFirst()
+//                .orElse(null);
+//        model.addAttribute("item" , itemForUpdate);
+//        model.addAttribute("items", items);
+//        model.addAttribute("categories",categoryService.getCategories());
+//        return "itemView";
+//    }
+
+//    @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
+//    public String deleteItems(@PathVariable long id){
+//        itemService.deleteItemAlone(id);
+//        return "redirect:/items";
+//    }
 
 }

@@ -11,7 +11,7 @@
     <link href="../static/common/img/favicon.72x72.png" th:href="@{/common/img/favicon.72x72.png}" rel="apple-touch-icon" type="image/png" sizes="72x72"/>
     <link href="../static/common/img/favicon.57x57.png" th:href="@{/common/img/favicon.57x57.png}" rel="apple-touch-icon" type="image/png"/>
     <link href="../static/common/img/favicon.png" th:href="@{/common/img/favicon.png}" rel="icon" type="image/png"/>
-    <link href="favicon.ico" rel="shortcut icon"/>
+    <!--<link href="favicon.ico" rel="shortcut icon"/>-->
 
     <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -58,7 +58,7 @@
             <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
         </a>
     </div>
-    <div class="left-menu-inner scroll-pane">
+    <div class="left-menu-inner">
         <ul class="left-menu-list left-menu-list-root list-unstyled">
             <li>
                 <a class="left-menu-link" href="/users">
@@ -133,30 +133,27 @@
             <div class="panel-body">
                 <div class="row">
                     <!--Visor de imagenes de la parte izquierda-->
-                    <div class="col-lg-4">
+                    <div class="col-lg-8">
                         <div class="cui-ecommerce--catalog--item">
                             <div class="cui-ecommerce--catalog--item--img">
                                 <a href="javascript: void(0);">
-                                    <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                    <img th:src="${item.photo1}" />
                                 </a>
                             </div>
                         </div>
                         <div class="cui-ecommerce--product--photos clearfix">
                             <div class="cui-ecommerce--product--photos-item cui-ecommerce--product--photos-item__active">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                <img th:src="${item.photo1}"/>
                             </div>
                             <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                <img th:src="${item.photo2}"/>
                             </div>
                             <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
-                            </div>
-                            <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="@{/common/img/temp/ecommerce/001.jpg}" />
+                                <img th:src="${item.photo3}"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         <!--CODIGO Y ESTRELLAS DE LA DERECHA ARRIBA-->
                         <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;sku">-->
                             <!--SKU: #0000235-->
@@ -230,24 +227,24 @@
 
 
     <!-- Page Scripts -->
-    <script>
+    <!--<script>-->
 
-        $(function () {
+        <!--$(function () {-->
 
-            // Heart toggle
-            $('.cui-ecommerce--catalog--item--like').on('click', function(){
-                $(this).toggleClass('cui-ecommerce--catalog--item--like__selected')
-            });
+            <!--// Heart toggle-->
+            <!--$('.cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like').on('click', function(){-->
+                <!--$(this).toggleClass('cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like__selected')-->
+            <!--});-->
 
-            // Tooltip
-            $("[data-toggle=tooltip]").tooltip();
+            <!--// Tooltip-->
+            <!--$("[data-toggle=tooltip]").tooltip();-->
 
-            // Select 2
-            $('.select2').select2();
+            <!--// Select 2-->
+            <!--$('.select2').select2();-->
 
-        });
+        <!--});-->
 
-    </script>
+    <!--</script>-->
     <!-- End Page Scripts -->
 </section>
 <!--&lt;!&ndash; Page Scripts &ndash;&gt;-->
