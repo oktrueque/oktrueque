@@ -27,7 +27,8 @@ public class User {
     private Integer status;
     @OneToMany(mappedBy = "user")
     private List<Item> items;
-
+    @Column(name = "photo1")
+    private String photo1;
 
 
     public User() {
@@ -97,5 +98,13 @@ public class User {
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public String getPhoto1() {
+        return photo1;
+    }
+
+    public void setPhoto1(String photo1) {
+        this.photo1 = photo1;
     }
 }
