@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface ItemRepository extends CrudRepository<Item, Long> {
     List<Item> findByCategory_Id(int id);
+    List<Item> findByName(String name);
 }

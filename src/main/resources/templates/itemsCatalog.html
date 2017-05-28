@@ -51,116 +51,133 @@
     <script src="../static/common/js/demo.temp.js" th:src="@{/common/js/demo.temp.js}"></script>
 </head>
 <body class="theme-default">
-<nav class="left-menu" left-menu="true">
-    <div class="logo-container">
-        <a href="index.html" class="logo">
-            <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
-            <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
-        </a>
-    </div>
-    <div class="left-menu-inner">
-        <ul class="left-menu-list left-menu-list-root list-unstyled">
-            <li>
-                <a class="left-menu-link" href="/users">
-                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Usuarios</span>
-                </a>
-            </li>
-            <li>
-                <a class="left-menu-link" href="/categories">
-                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Categorias</span>
-                </a>
-            </li>
-            <li>
-                <a class="left-menu-link" href="#">
-                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                    <span class="menu-top-hidden">Items</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<nav class="top-menu">
-    <div class="menu-icon-container hidden-md-up">
-        <div class="animate-menu-button left-menu-toggle">
-            <div><!-- --></div>
+    <nav class="left-menu" left-menu="true">
+        <div class="logo-container">
+            <a href="index.html" class="logo">
+                <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
+                <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
+            </a>
         </div>
-    </div>
-    <div class="menu">
-        <div class="menu-user-block">
-            <div class="dropdown dropdown-avatar">
-                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="avatar" href="javascript:void(0);">
-                        <img src="../static/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}" alt="Alternative text to the image"/>
-                    </span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i> Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-header">Home</div>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> System Dashboard</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> User Boards</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> Issue Navigator (35 New)</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i> Logout</a>
-                </ul>
+        <div class="left-menu-inner">
+            <ul class="left-menu-list left-menu-list-root list-unstyled">
+                <li>
+                    <a class="left-menu-link" href="/users">
+                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                        <span class="menu-top-hidden">Usuarios</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="left-menu-link" href="/categories">
+                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                        <span class="menu-top-hidden">Categorias</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="left-menu-link" href="#">
+                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                        <span class="menu-top-hidden">Items</span>
+                    </a>
+                </li>
+                <li class="left-menu-list-separator"></li>
+
+            </ul>
+        </div>
+    </nav>
+    <nav class="top-menu">
+        <div class="menu-icon-container hidden-md-up">
+            <div class="animate-menu-button left-menu-toggle">
+                <div><!-- --></div>
             </div>
         </div>
-        <div class="menu-info-block">
-            <div class="right hidden-md-down margin-left-20">
-                <div class="search-block">
-                    <div class="form-input-icon form-input-icon-right">
-                        <i class="icmn-search"></i>
-                        <input type="text" class="form-control form-control-sm form-control-rounded" placeholder="Search..."/>
-                        <button type="submit" class="search-block-submit"></button>
+        <div class="menu">
+            <div class="menu-user-block">
+                <div class="dropdown dropdown-avatar">
+                    <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar" href="javascript:void(0);">
+                            <img src="../static/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}" alt="Alternative text to the image"/>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i> Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-header">Home</div>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> System Dashboard</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> User Boards</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> Issue Navigator (35 New)</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu-info-block">
+                <div class="right hidden-md-down margin-left-20">
+                    <div class="search-block">
+                        <form action="/items" th:method="GET">
+                            <div class="form-input-icon form-input-icon-right">
+                                <i class="icmn-search"></i>
+                                <input type="text" class="form-control form-control-sm form-control-rounded" placeholder="Search..." name="item_name" />
+                                <button type="submit" class="search-block-submit"></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</nav>
-<section class="page-content">
-    <div class="page-content-inner">
-        <section class="panel panel-with-borders">
+    </nav>
+    <section class="page-content">
+        <div class="page-content-inner">
+            <section class="panel panel-with-borders">
+                <div class="panel-heading">
+                    <h3>¡Encuentra lo que estás buscando!</h3>
+                    <th:block th:each="category : ${categories}">
+                    <a th:href="@{/items(id_category=${category.id})}" class="btn btn-default margin-inline" th:text="${category.name}">
+                        Categoria
+                        <span class="label">1</span>
+                    </a>
+                </th:block>
+            </div>
             <div class="panel-body">
                 <div class="cui-ecommerce--catalog">
+                    <div th:if="${category != null}">
+                        <h3 th:text="${category.name}">Category Name</h3>
+                        <hr/>
+                    </div>
                     <div class="row">
                         <th:block th:each="item : ${items}">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                                <div class="cui-ecommerce--catalog--item">
-                                    <div class="cui-ecommerce--catalog--item--img">
-                                        <a th:href="@{'/items/' + ${item.id}}">
-                                            <img th:src="${item.photo1}"/>
-                                        </a>
-                                    </div>
-                                    <div class="cui-ecommerce--catalog--item--title">
-                                        <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}"></a>
-                                    </div>
-                                    <div class="cui-ecommerce--catalog--item--descr">
-                                        <P th:text="${item.category.name}"></P>
-                                    </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                            <div class="cui-ecommerce--catalog--item">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <a th:href="@{'/items/' + ${item.id}}">
+                                        <img th:src="${item.photo1}"/>
+                                    </a>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--title">
+                                    <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}"></a>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--descr">
+                                    <P th:text="${item.category.name}"></P>
                                 </div>
                             </div>
-                        </th:block>
-                    </div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
-        </section>
-    </div>
-    <script>
+        </div>
+    </section>
+</div>
+<script>
 
-        $(function () {
+    $(function () {
 
-            $('.cui-ecommerce--catalog--item--like').on('click', function(){
-                $(this).toggleClass('cui-ecommerce--catalog--item--like__selected')
-            });
-
-            $("[data-toggle=tooltip]").tooltip();
-
+        $('.cui-ecommerce--catalog--item--like').on('click', function(){
+            $(this).toggleClass('cui-ecommerce--catalog--item--like__selected')
         });
 
-    </script>
+        $("[data-toggle=tooltip]").tooltip();
+
+    });
+
+</script>
 </section>
 <!-- Page Scripts -->
 <!--<script>-->

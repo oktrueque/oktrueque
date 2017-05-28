@@ -1,5 +1,6 @@
 package com.oktrueque.controller;
 
+import com.oktrueque.model.Category;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.User;
 import com.oktrueque.service.CategoryService;
@@ -23,25 +24,32 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
-//    @Autowired
-//    private CategoryService categoryService;
-    private User user = new User();
+    @Autowired
+    private CategoryService categoryService;
+
     private List<Item> items = null;
 
     @RequestMapping(method = RequestMethod.GET , value="/items")
     @Valid
-    public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, Model model){
-        if(id_category == null) items = itemService.getItems();
-        else{
+    public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, @RequestParam(value = "item_name", required = false) String item_name, Model model){
+        if(id_category == null && item_name == null) items = itemService.getItems();
+        if(id_category != null)
+        {
             try{
                 items = itemService.getItemsByCategory(id_category);
+                model.addAttribute("category", categoryService.getCategory(id_category));
+            }
+            catch(Exception e){}
+        }
+        if(item_name != null){
+            try{
+                items = itemService.getItemsByName(item_name);
+                model.addAttribute("item_name", item_name);
             }
             catch(Exception e){}
         }
         model.addAttribute("items", items);
-//        model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
-//        model.addAttribute("item", new Item());
-//        user = items.get(0).getUser();
+        model.addAttribute("categories",categoryService.getCategories());
         return "itemsCatalog";
     }
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
@@ -51,35 +59,10 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST , value="/items")
-    public String createItem(@ModelAttribute Item item, BindingResult result) {
-        if(result.hasErrors()) {
-            return "items";
-        }
-        item.setUser(user);
+    public String createItem(@ModelAttribute Item item) {
         itemService.addItem(item);
         return "redirect:/items";
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
-//    public String updateItem(@PathVariable Long id, Model model){
-//        if (items == null){
-//            items = itemService.getItems();
-//        }
-//        //Expresion Lambda para buscar el item q queremos editar
-//        Item itemForUpdate =  items.stream()
-//                .filter(item -> item.getId() == id)
-//                .findFirst()
-//                .orElse(null);
-//        model.addAttribute("item" , itemForUpdate);
-//        model.addAttribute("items", items);
-//        model.addAttribute("categories",categoryService.getCategories());
-//        return "itemView";
-//    }
-
-//    @RequestMapping(method = RequestMethod.DELETE , value="/items/{id}")
-//    public String deleteItems(@PathVariable long id){
-//        itemService.deleteItemAlone(id);
-//        return "redirect:/items";
-//    }
 
 }
