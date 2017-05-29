@@ -27,4 +27,10 @@ public class UserServiceImpl implements UserService {
     public void addUser(User user) {
         userRepository.save(user);
     }
+    @Override
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+
 }

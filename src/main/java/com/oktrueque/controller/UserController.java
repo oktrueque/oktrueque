@@ -48,5 +48,21 @@ public class UserController {
 
     }
 
+    // obtengo el usuario para poder upgradiarlo
+    @RequestMapping("/users/edit{id}")
+    public String getCategory(@PathVariable long id, Model model){
+        model.addAttribute("user" , userService.getUserById(id));
+        return "updateProfile";
+
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
+    public String updateCategory(@ModelAttribute User user,Model model){
+
+        userService.updateUser(user);
+        return "/userProfile";
+    }
+
+
 
 }

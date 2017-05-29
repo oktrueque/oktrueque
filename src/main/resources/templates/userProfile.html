@@ -198,11 +198,13 @@
                 <div class="panel-body">
                     <h6>Actions</h6>
                     <div class="btn-group-vertical btn-group-justified">
-                        <button type="button" class="btn">Send Message</button>
-                        <button type="button" class="btn">Send File</button>
-                        <button type="button" class="btn">Access History</button>
-                        <button type="button" class="btn">Rename User</button>
-                        <button type="button" class="btn">Ban User</button>
+
+                        <button type="button" class="btn">
+                            <a th:href="@{'/users/edit' + ${user.id}}" th:method="PUT" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">Editar</i></a>
+                        </button>
+
+                        <button type="button" class="btn">Accion 2</button>
+
                     </div>
                 </div>
             </section>
@@ -220,16 +222,17 @@
                         Tus Items
                     </h2>
                 </div>
+
+
                 <div class="panel-body">
                     <div class="cui-ecommerce--catalog">
                         <div class="row">
-                            <th:block th:each="item : ${items}">
+                            <th:block th:each="item:${items}">
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                     <div class="cui-ecommerce--catalog--item">
                                         <div class="cui-ecommerce--catalog--item--img">
-                                            <!--Aca va la imagen gatoooo -->
                                             <a href="javascript: void(0);">
-                                                <img  th:src="@{/common/img/temp/ecommerce/001.jpg}"  />
+                                                <img th:src="${item.photo1}" />
                                             </a>
                                         </div>
                                         <div class="cui-ecommerce--catalog--item--title">

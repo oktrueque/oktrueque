@@ -11,4 +11,11 @@ public interface UserService {
 
     void addUser(User user);
 
+    //Editar un usuario
+    void updateUser(User user);
+
+
+
+
+
 }
