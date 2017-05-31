@@ -27,11 +27,10 @@ public class ItemController {
     @Autowired
     private CategoryService categoryService;
 
-    private List<Item> items = null;
-
     @RequestMapping(method = RequestMethod.GET , value="/items")
     @Valid
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category, @RequestParam(value = "item_name", required = false) String item_name, Model model){
+        List<Item> items = null;
         if(id_category == null && item_name == null) items = itemService.getItems();
         if(id_category != null)
         {
