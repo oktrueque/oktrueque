@@ -29,9 +29,13 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public void deleteItemAlone(Long id) { itemRepository.delete(id);}
+    public void deleteItem(Long id) { itemRepository.delete(id);}
 
     public List<Item> getItemsByCategory(int id_category) {
         return itemRepository.findByCategory_Id(id_category);
+    }
+
+    public List<Item> getItemsByName(String name){
+        return itemRepository.findByName(name);
     }
 }

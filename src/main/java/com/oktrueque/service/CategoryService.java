@@ -25,5 +25,9 @@ public class CategoryService {
         return categories;
     }
 
+    public Category getCategory(Integer id){
+        return categoryRepository.findOne(id);
+    }
+
 
 }
