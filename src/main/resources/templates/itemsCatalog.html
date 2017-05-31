@@ -53,9 +53,9 @@
 <body class="theme-default">
     <nav class="left-menu" left-menu="true">
         <div class="logo-container">
-            <a href="index.html" class="logo">
-                <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
-                <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
+            <a href="/items" class="logo">
+                <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Oktrueque.com" />
+                <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Oktrueque.com" />
             </a>
         </div>
         <div class="left-menu-inner">
@@ -73,7 +73,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="left-menu-link" href="#">
+                    <a class="left-menu-link" href="javascript: void(0);">
                         <i class="left-menu-link-icon icmn-home2"><!-- --></i>
                         <span class="menu-top-hidden">Items</span>
                     </a>
@@ -132,7 +132,6 @@
                     <th:block th:each="category : ${categories}">
                     <a th:href="@{/items(id_category=${category.id})}" class="btn btn-default margin-inline" th:text="${category.name}">
                         Categoria
-                        <span class="label">1</span>
                     </a>
                 </th:block>
             </div>
@@ -141,6 +140,9 @@
                     <div th:if="${category != null}">
                         <h3 th:text="${category.name}">Category Name</h3>
                         <hr/>
+                        <div th:if="${items.isEmpty()}">
+                            <p>Lo sentimos, no tenemos items para mostrarte en este momento, ¡Inténtalo nuevamente más tarde!</p>
+                        </div>
                     </div>
                     <div class="row">
                         <th:block th:each="item : ${items}">
