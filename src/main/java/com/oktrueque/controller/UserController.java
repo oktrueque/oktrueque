@@ -57,10 +57,12 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
-    public String updateCategory(@ModelAttribute User user,Model model){
+    public String updateCategory(@ModelAttribute User user,@PathVariable Long id){
+
 
         userService.updateUser(user);
-        return "/userProfile";
+        return "redirect:/users/"+ id;
+
     }
 
 
