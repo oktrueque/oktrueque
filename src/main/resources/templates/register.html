@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
    <meta charset="UTF-8"/>
    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
    <title>Clean UI Admin Template</title>
 
-   <link th:href="@{/static/common/img/favicon.144x144.png}" href="../static/common/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144"/>
-   <link th:href="@{/static/common/img/favicon.114x114.png}" href="../static/common/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114"/>
-   <link th:href="@{/static/common/img/favicon.72x72.png}" href="../static/common/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72"/>
-   <link th:href="@{/static/common/img/favicon.57x57.png}" href="../static/common/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png"/>
-   <link th:href="@{/static/common/img/favicon.png}" href="../static/common/img/favicon.png" rel="icon" type="image/png"/>
+   <link th:href="@{/common/img/favicon.144x144.png}" href="../static/common/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144"/>
+   <link th:href="@{/common/img/favicon.114x114.png}" href="../static/common/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114"/>
+   <link th:href="@{/common/img/favicon.72x72.png}" href="../static/common/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72"/>
+   <link th:href="@{/common/img/favicon.57x57.png}" href="../static/common/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png"/>
+   <link th:href="@{/common/img/favicon.png}" href="../static/common/img/favicon.png" rel="icon" type="image/png"/>
    <link th:href="@{favicon.ico}" href="favicon.ico" rel="shortcut icon"/>
 
    <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
@@ -19,92 +19,95 @@
    <script th:src="@{https://oss.maxcdn.com/respond/1.4.2/respond.min.js}" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
    <![endif]-->
 
+    <script th:src="@{/common/js/custom/oktrueque.js}" src="../static/common/js/custom/oktrueque.js"></script>
    <!-- Vendors Styles -->
    <!-- v1.0.0 -->
-   <link th:href="@{/static/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap/dist/css/bootstrap.min.css"/>
-   <link th:href="@{/static/vendors/jscrollpane/style/jquery.jscrollpane.css}" rel="stylesheet" type="text/css" href="../static/vendors/jscrollpane/style/jquery.jscrollpane.css"/>
-   <link th:href="@{/static/vendors/ladda/dist/ladda-themeless.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/ladda/dist/ladda-themeless.min.css"/>
-   <link th:href="@{/static/vendors/select2/dist/css/select2.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/select2/dist/css/select2.min.css"/>
-   <link th:href="@{/static/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
-   <link th:href="@{/static/vendors/fullcalendar/dist/fullcalendar.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/fullcalendar/dist/fullcalendar.min.css"/>
-   <link th:href="@{/static/vendors/cleanhtmlaudioplayer/src/player.css}" rel="stylesheet" type="text/css" href="../static/vendors/cleanhtmlaudioplayer/src/player.css"/>
-   <link th:href="@{/static/vendors/cleanhtmlvideoplayer/src/player.css}" rel="stylesheet" type="text/css" href="../static/vendors/cleanhtmlvideoplayer/src/player.css"/>
-   <link th:href="@{/static/vendors/bootstrap-sweetalert/dist/sweetalert.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap-sweetalert/dist/sweetalert.css"/>
-   <link th:href="@{/static/vendors/summernote/dist/summernote.css}" rel="stylesheet" type="text/css" href="../static/vendors/summernote/dist/summernote.css"/>
-   <link th:href="@{/static/vendors/owl.carousel/dist/static/owl.carousel.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/owl.carousel/dist/static/owl.carousel.min.css"/>
-   <link th:href="@{/static/vendors/ionrangeslider/css/ion.rangeSlider.css}" rel="stylesheet" type="text/css" href="../static/vendors/ionrangeslider/css/ion.rangeSlider.css"/>
-   <link th:href="@{/static/vendors/datatables/media/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/datatables/media/css/dataTables.bootstrap4.min.css"/>
-   <link th:href="@{/static/vendors/c3/c3.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/c3/c3.min.css"/>
-   <link th:href="@{/static/vendors/chartist/dist/chartist.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/chartist/dist/chartist.min.css"/>
+   <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap/dist/css/bootstrap.min.css"/>
+   <link th:href="@{/vendors/jscrollpane/style/jquery.jscrollpane.css}" rel="stylesheet" type="text/css" href="../static/vendors/jscrollpane/style/jquery.jscrollpane.css"/>
+   <link th:href="@{/vendors/ladda/dist/ladda-themeless.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/ladda/dist/ladda-themeless.min.css"/>
+   <link th:href="@{/vendors/select2/dist/css/select2.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/select2/dist/css/select2.min.css"/>
+   <link th:href="@{/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+   <link th:href="@{/vendors/fullcalendar/dist/fullcalendar.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/fullcalendar/dist/fullcalendar.min.css"/>
+   <link th:href="@{/vendors/cleanhtmlaudioplayer/src/player.css}" rel="stylesheet" type="text/css" href="../static/vendors/cleanhtmlaudioplayer/src/player.css"/>
+   <link th:href="@{/vendors/cleanhtmlvideoplayer/src/player.css}" rel="stylesheet" type="text/css" href="../static/vendors/cleanhtmlvideoplayer/src/player.css"/>
+   <link th:href="@{/vendors/bootstrap-sweetalert/dist/sweetalert.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap-sweetalert/dist/sweetalert.css"/>
+   <link th:href="@{/vendors/summernote/dist/summernote.css}" rel="stylesheet" type="text/css" href="../static/vendors/summernote/dist/summernote.css"/>
+   <link th:href="@{/vendors/owl.carousel/dist/static/owl.carousel.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/owl.carousel/dist/static/owl.carousel.min.css"/>
+   <link th:href="@{/vendors/ionrangeslider/css/ion.rangeSlider.css}" rel="stylesheet" type="text/css" href="../static/vendors/ionrangeslider/css/ion.rangeSlider.css"/>
+   <link th:href="@{/vendors/datatables/media/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/datatables/media/css/dataTables.bootstrap4.min.css"/>
+   <link th:href="@{/vendors/c3/c3.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/c3/c3.min.css"/>
+   <link th:href="@{/vendors/chartist/dist/chartist.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/chartist/dist/chartist.min.css"/>
    <!-- v1.4.0 -->
-   <link th:href="@{/static/vendors/nprogress/nprogress.css}" rel="stylesheet" type="text/css" href="../static/vendors/nprogress/nprogress.css"/>
-   <link th:href="@{/static/vendors/jquery-steps/demo/css/jquery.steps.css}" rel="stylesheet" type="text/css" href="../static/vendors/jquery-steps/demo/css/jquery.steps.css"/>
+   <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet" type="text/css" href="../static/vendors/nprogress/nprogress.css"/>
+   <link th:href="@{/vendors/jquery-steps/demo/css/jquery.steps.css}" rel="stylesheet" type="text/css" href="../static/vendors/jquery-steps/demo/css/jquery.steps.css"/>
    <!-- v1.4.2 -->
-   <link th:href="@{/static/vendors/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap-select/dist/css/bootstrap-select.min.css"/>
+   <link th:href="@{/vendors/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap-select/dist/css/bootstrap-select.min.css"/>
    <!-- v1.7.0 -->
-   <link th:href="@{/static/vendors/dropify/dist/css/dropify.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/dropify/dist/css/dropify.min.css"/>
+   <link th:href="@{/vendors/dropify/dist/css/dropify.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/dropify/dist/css/dropify.min.css"/>
 
    <!-- Clean UI Styles -->
-   <link th:href="@{/static/common/css/source/main.css}" rel="stylesheet" type="text/css" href="../static/common/css/source/main.css"/>
+   <link th:href="@{/common/css/source/main.css}" rel="stylesheet" type="text/css" href="../static/common/css/source/main.css"/>
+
+   <link th:href="@{/common/css/source/custom/oktrueque-register.css}" href="../static/common/css/source/custom/oktrueque-register.css" rel="stylesheet" type="text/css" />
 
    <!-- Vendors Scripts -->
    <!-- v1.0.0 -->
-   <script th:src="@{/static/vendors/jquery/jquery.min.js}" src="../static/vendors/jquery/jquery.min.js"></script>
-   <script th:src="@{/static/vendors/tether/dist/js/tether.min.js}" src="../static/vendors/tether/dist/js/tether.min.js"></script>
-   <script th:src="@{/static/vendors/bootstrap/dist/js/bootstrap.min.js}" src="../static/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-   <script th:src="@{/static/vendors/jquery-mousewheel/jquery.mousewheel.min.js}" src="../static/vendors/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-   <script th:src="@{/static/vendors/jscrollpane/script/jquery.jscrollpane.min.js}" src="../static/vendors/jscrollpane/script/jquery.jscrollpane.min.js"></script>
-   <script th:src="@{/static/vendors/spin.js/spin.js}" src="../static/vendors/spin.js/spin.js"></script>
-   <script th:src="@{/static/vendors/ladda/dist/ladda.min.js}" src="../static/vendors/ladda/dist/ladda.min.js"></script>
-   <script th:src="@{/static/vendors/select2/dist/js/select2.full.min.js}" src="../static/vendors/select2/dist/js/select2.full.min.js"></script>
-   <script th:src="@{/static/vendors/html5-form-validation/dist/jquery.validation.min.js}" src="../static/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
-   <script th:src="@{/static/vendors/jquery-typeahead/dist/jquery.typeahead.min.js}" src="../static/vendors/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
-   <script th:src="@{/static/vendors/jquery-mask-plugin/dist/jquery.mask.min.js}" src="../static/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
-   <script th:src="@{/static/vendors/autosize/dist/autosize.min.js}" src="../static/vendors/autosize/dist/autosize.min.js"></script>
-   <script th:src="@{/static/vendors/bootstrap-show-password/bootstrap-show-password.min.js}" src="../static/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
-   <script th:src="@{/static/vendors/moment/min/moment.min.js}" src="../static/vendors/moment/min/moment.min.js"></script>
-   <script th:src="@{/static/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js}" src="../static/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-   <script th:src="@{/static/vendors/fullcalendar/dist/fullcalendar.min.js}" src="../static/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
-   <script th:src="@{/static/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js}" src="../static/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js"></script>
-   <script th:src="@{/static/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js}" src="../static/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js"></script>
-   <script th:src="@{/static/vendors/bootstrap-sweetalert/dist/sweetalert.min.js}" src="../static/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
-   <script th:src="@{/static/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js}" src="../static/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
-   <script th:src="@{/static/vendors/summernote/dist/summernote.min.js}" src="../static/vendors/summernote/dist/summernote.min.js"></script>
-   <script th:src="@{/static/vendors/owl.carousel/dist/owl.carousel.min.js}" src="../static/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
-   <script th:src="@{/static/vendors/ionrangeslider/js/ion.rangeSlider.min.js}" src="../static/vendors/ionrangeslider/js/ion.rangeSlider.min.js"></script>
-   <script th:src="@{/static/vendors/nestable/jquery.nestable.js}" src="../static/vendors/nestable/jquery.nestable.js"></script>
-   <script th:src="@{/static/vendors/datatables/media/js/jquery.dataTables.min.js}" src="../static/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
-   <script th:src="@{/static/vendors/datatables/media/js/dataTables.bootstrap4.min.js}" src="../static/vendors/datatables/media/js/dataTables.bootstrap4.min.js"></script>
-   <script th:src="@{/static/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js}" src="../static/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
-   <script th:src="@{/static/vendors/datatables-responsive/js/dataTables.responsive.js}" src="../static/vendors/datatables-responsive/js/dataTables.responsive.js"></script>
-   <script th:src="@{/static/vendors/editable-table/mindmup-editabletable.js}" src="../static/vendors/editable-table/mindmup-editabletable.js"></script>
-   <script th:src="@{/static/vendors/d3/d3.min.js}" src="../static/vendors/d3/d3.min.js"></script>
-   <script th:src="@{/static/vendors/c3/c3.min.js}" src="../static/vendors/c3/c3.min.js"></script>
-   <script th:src="@{/static/vendors/chartist/dist/chartist.min.js}" src="../static/vendors/chartist/dist/chartist.min.js"></script>
-   <script th:src="@{/static/vendors/peity/jquery.peity.min.js}" src="../static/vendors/peity/jquery.peity.min.js"></script>
+   <script th:src="@{/vendors/jquery/jquery.min.js}" src="../static/vendors/jquery/jquery.min.js"></script>
+   <script th:src="@{/vendors/tether/dist/js/tether.min.js}" src="../static/vendors/tether/dist/js/tether.min.js"></script>
+   <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}" src="../static/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+   <script th:src="@{/vendors/jquery-mousewheel/jquery.mousewheel.min.js}" src="../static/vendors/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+   <script th:src="@{/vendors/jscrollpane/script/jquery.jscrollpane.min.js}" src="../static/vendors/jscrollpane/script/jquery.jscrollpane.min.js"></script>
+   <script th:src="@{/vendors/spin.js/spin.js}" src="../static/vendors/spin.js/spin.js"></script>
+   <script th:src="@{/vendors/ladda/dist/ladda.min.js}" src="../static/vendors/ladda/dist/ladda.min.js"></script>
+   <script th:src="@{/vendors/select2/dist/js/select2.full.min.js}" src="../static/vendors/select2/dist/js/select2.full.min.js"></script>
+   <script th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}" src="../static/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
+   <script th:src="@{/vendors/jquery-typeahead/dist/jquery.typeahead.min.js}" src="../static/vendors/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
+   <script th:src="@{/vendors/jquery-mask-plugin/dist/jquery.mask.min.js}" src="../static/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+   <script th:src="@{/vendors/autosize/dist/autosize.min.js}" src="../static/vendors/autosize/dist/autosize.min.js"></script>
+   <script th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}" src="../static/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
+   <script th:src="@{/vendors/moment/min/moment.min.js}" src="../static/vendors/moment/min/moment.min.js"></script>
+   <script th:src="@{/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js}" src="../static/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+   <script th:src="@{/vendors/fullcalendar/dist/fullcalendar.min.js}" src="../static/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
+   <script th:src="@{/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js}" src="../static/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js"></script>
+   <script th:src="@{/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js}" src="../static/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js"></script>
+   <script th:src="@{/vendors/bootstrap-sweetalert/dist/sweetalert.min.js}" src="../static/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
+   <script th:src="@{/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js}" src="../static/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
+   <script th:src="@{/vendors/summernote/dist/summernote.min.js}" src="../static/vendors/summernote/dist/summernote.min.js"></script>
+   <script th:src="@{/vendors/owl.carousel/dist/owl.carousel.min.js}" src="../static/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+   <script th:src="@{/vendors/ionrangeslider/js/ion.rangeSlider.min.js}" src="../static/vendors/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+   <script th:src="@{/vendors/nestable/jquery.nestable.js}" src="../static/vendors/nestable/jquery.nestable.js"></script>
+   <script th:src="@{/vendors/datatables/media/js/jquery.dataTables.min.js}" src="../static/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
+   <script th:src="@{/vendors/datatables/media/js/dataTables.bootstrap4.min.js}" src="../static/vendors/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+   <script th:src="@{/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js}" src="../static/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+   <script th:src="@{/vendors/datatables-responsive/js/dataTables.responsive.js}" src="../static/vendors/datatables-responsive/js/dataTables.responsive.js"></script>
+   <script th:src="@{/vendors/editable-table/mindmup-editabletable.js}" src="../static/vendors/editable-table/mindmup-editabletable.js"></script>
+   <script th:src="@{/vendors/d3/d3.min.js}" src="../static/vendors/d3/d3.min.js"></script>
+   <script th:src="@{/vendors/c3/c3.min.js}" src="../static/vendors/c3/c3.min.js"></script>
+   <script th:src="@{/vendors/chartist/dist/chartist.min.js}" src="../static/vendors/chartist/dist/chartist.min.js"></script>
+   <script th:src="@{/vendors/peity/jquery.peity.min.js}" src="../static/vendors/peity/jquery.peity.min.js"></script>
    <!-- v1.0.1 -->
-   <script th:src="@{/static/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js}" src="../static/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
+   <script th:src="@{/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js}" src="../static/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
    <!-- v1.1.1 -->
-   <script th:src="@{/static/vendors/gsap/src/minified/TweenMax.min.js}" src="../static/vendors/gsap/src/minified/TweenMax.min.js"></script>
-   <script th:src="@{/static/vendors/hackertyper/hackertyper.js}" src="../static/vendors/hackertyper/hackertyper.js"></script>
-   <script th:src="@{/static/vendors/jquery-countTo/jquery.countTo.js}" src="../static/vendors/jquery-countTo/jquery.countTo.js"></script>
+   <script th:src="@{/vendors/gsap/src/minified/TweenMax.min.js}" src="../static/vendors/gsap/src/minified/TweenMax.min.js"></script>
+   <script th:src="@{/vendors/hackertyper/hackertyper.js}" src="../static/vendors/hackertyper/hackertyper.js"></script>
+   <script th:src="@{/vendors/jquery-countTo/jquery.countTo.js}" src="../static/vendors/jquery-countTo/jquery.countTo.js"></script>
    <!-- v1.4.0 -->
-   <script th:src="@{/static/vendors/nprogress/nprogress.js}" src="../static/vendors/nprogress/nprogress.js"></script>
-   <script th:src="@{/static/vendors/jquery-steps/build/jquery.steps.min.js}" src="../static/vendors/jquery-steps/build/jquery.steps.min.js"></script>
+   <script th:src="@{/vendors/nprogress/nprogress.js}" src="../static/vendors/nprogress/nprogress.js"></script>
+   <script th:src="@{/vendors/jquery-steps/build/jquery.steps.min.js}" src="../static/vendors/jquery-steps/build/jquery.steps.min.js"></script>
    <!-- v1.4.2 -->
-   <script th:src="@{/static/vendors/bootstrap-select/dist/js/bootstrap-select.min.js}" src="../static/vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-   <script th:src="@{/static/vendors/chart.js/src/Chart.bundle.min.js}" src="../static/vendors/chart.js/src/Chart.bundle.min.js"></script>
+   <script th:src="@{/vendors/bootstrap-select/dist/js/bootstrap-select.min.js}" src="../static/vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+   <script th:src="@{/vendors/chart.js/src/Chart.bundle.min.js}" src="../static/vendors/chart.js/src/Chart.bundle.min.js"></script>
    <!-- v1.7.0 -->
-   <script th:src="@{/static/vendors/dropify/dist/js/dropify.min.js}" src="../static/vendors/dropify/dist/js/dropify.min.js"></script>
+   <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}" src="../static/vendors/dropify/dist/js/dropify.min.js"></script>
 
    <!-- Clean UI Scripts -->
-   <script th:src="@{/static/common/js/common.js}" src="../static/common/js/common.js"></script>
-   <script th:src="@{/static/common/js/demo.temp.js}" src="../static/common/js/demo.temp.js"></script>
+   <script th:src="@{/common/js/common.js}" src="../static/common/js/common.js"></script>
+   <script th:src="@{/common/js/demo.temp.js}" src="../static/common/js/demo.temp.js"></script>
 </head>
-<body class="theme-default">
+<body class="theme-default" onload="icons()">
 
 <section class="page-content">
-   <div class="page-content-inner" style="background-image: url(../static/common/img/temp/login/2.jpg)">
+   <div class="page-content-inner" style="background-image: url(../static/common/img/simbolo.png)">
 
       <!-- Register Page -->
       <div class="single-page-block-header">
@@ -134,7 +137,7 @@
                   Registro
                </h3>
                <br />
-               <form id="form-validation" name="form-validation" th:action="@{/users}" th:object="${user}" method="POST">
+               <form id="form-validation" name="form-validation" th:action="@{/register}" th:object="${user}" method="POST" onsubmit="return checkPass()">
                   <div class="form-group">
                      <div class="form-input-icon form-input-icon-right">
                         <input th:field="*{name}"
@@ -153,7 +156,6 @@
                   </div>
                   <div class="form-group">
                      <div class="form-input-icon form-input-icon-right">
-                        <i class="icmn-spinner11 util-spin"></i>
                         <input th:field="*{email}"
                                id="validation-email"
                                class="form-control"
@@ -164,20 +166,26 @@
                      </div>
                   </div>
                   <div class="form-group">
-                     <input type="password" class="form-control" placeholder="Repetir Email"/>
-                  </div>
-                  <div class="form-group">
                      <input th:field="*{password}"
-                            id="validation-password"
+                            id="validation[password]"
                             class="form-control password"
                             name="validation[password]"
                             type="password" data-validation="[L>=6]"
                             data-validation-message="$ must be at least 6 characters"
                             placeholder="Contraseña"/>
                   </div>
-                  <div class="form-group">
-                     <input type="password" class="form-control" placeholder="Repetir Contraseña"/>
+
+                  <div id="div-pass2" class="form-group form-input-icon form-input-icon-right">
+                      <i id="cross" class="icmn-cross"></i>
+                      <i id="check" class="icmn-checkmark"></i>
+                     <input id="pass2"
+                            name="pass2"
+                            type="password"
+                            class="form-control"
+                            placeholder="Repetir Contraseña"
+                            onkeyup="checkPass(); return false;"/>
                   </div>
+
                   <div class="form-actions">
                      <div>
                         <label>
@@ -185,7 +193,7 @@
                            Acepto los terminos y condiciones
                         </label>
                      </div>
-                     <button type="submit" class="btn btn-primary width-150">Registrarse!</button>
+                     <button id="btnReg" type="submit" value="Registrarse!" class="btn btn-primary width-150">Registrarse!></button>
                   </div>
                </form>
             </div>
@@ -245,7 +253,8 @@
                });
            };
 
-           setImage();
+
+   setImage();
            changeImgPositon();
 
            $(window).on('resize', function(){
@@ -266,6 +275,9 @@
        });
 
    </script>
+
+
+
    <!-- End Page Scripts -->
 </section>
 
