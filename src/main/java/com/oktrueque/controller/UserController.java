@@ -23,19 +23,19 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
+    @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String getUserById(Model model){
         User user1 = new User();
         model.addAttribute("user", user1);
-        return "/users";
+        return "/register";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/users")
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     public String addUser(Model model, @ModelAttribute User user)
     {
         user.setStatus(0);
         userService.addUser(user);
-        return "redirect:/users";
+        return "redirect:/register";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{id}")
