@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>OKTrueque</title>
+
+    <link href="../static/common/img/favicon.144x144.png" th:href="@{/common/img/favicon.144x144.png}" rel="apple-touch-icon" type="image/png" sizes="144x144"/>
+    <link href="../static/common/img/favicon.114x114.png" th:href="@{/common/img/favicon.114x114.png}" rel="apple-touch-icon" type="image/png" sizes="114x114"/>
+    <link href="../static/common/img/favicon.72x72.png" th:href="@{/common/img/favicon.72x72.png}" rel="apple-touch-icon" type="image/png" sizes="72x72"/>
+    <link href="../static/common/img/favicon.57x57.png" th:href="@{/common/img/favicon.57x57.png}" rel="apple-touch-icon" type="image/png"/>
+    <link href="../static/common/img/favicon.png" th:href="@{/common/img/favicon.png}" rel="icon" type="image/png"/>
+    <!--<link href="favicon.ico" rel="shortcut icon"/>-->
+
+    <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Vendors Styles -->
+    <!-- v1.0.0 -->
+    <link rel="stylesheet" type="text/css" href="../static/vendors/bootstrap/dist/css/bootstrap.min.css" th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/vendors/datatables/media/css/dataTables.bootstrap4.min.css" th:href="@{/vendors/datatables/media/css/dataTables.bootstrap4.min.css}"/>
+    <!-- v1.7.0 -->
+    <link rel="stylesheet" type="text/css" href="../static/vendors/dropify/dist/css/dropify.min.css" th:href="@{/vendors/dropify/dist/css/dropify.min.css}"/>
+
+    <!-- Clean UI Styles -->
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/main.css" th:href="@{/common/css/source/main.css}"/>
+
+    <!-- Font Awesome -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/fac.css" th:href="@{/common/css/source/custom/fac.css}"/>
+
+    <!-- Vendors Scripts -->
+    <!-- v1.0.0 -->
+    <script src="../static/vendors/jquery/jquery.min.js" th:src="@{/vendors/jquery/jquery.min.js}"></script>
+    <script src="../static/vendors/tether/dist/js/tether.min.js" th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
+    <script src="../static/vendors/bootstrap/dist/js/bootstrap.min.js" th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script src="../static/vendors/html5-form-validation/dist/jquery.validation.min.js" th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"></script>
+    <script src="../static/vendors/autosize/dist/autosize.min.js" th:src="@{/vendors/autosize/dist/autosize.min.js}"></script>
+    <script src="../static/vendors/bootstrap-show-password/bootstrap-show-password.min.js" th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
+    <script src="../static/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js" th:src="@{/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js}"></script>
+    <script src="../static/vendors/datatables/media/js/jquery.dataTables.min.js" th:src="@{/vendors/datatables/media/js/jquery.dataTables.min.js}"></script>
+    <script src="../static/vendors/datatables/media/js/dataTables.bootstrap4.min.js" th:src="@{/vendors/datatables/media/js/dataTables.bootstrap4.min.js}"></script>
+    <script src="../static/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js" th:src="@{/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js}"></script>
+    <script src="../static/vendors/datatables-responsive/js/dataTables.responsive.js" th:src="@{/vendors/datatables-responsive/js/dataTables.responsive.js}"></script>
+    <script src="../static/vendors/editable-table/mindmup-editabletable.js" th:src="@{/vendors/editable-table/mindmup-editabletable.js}"></script>
+    <!-- v1.7.0 -->
+    <script src="../static/vendors/dropify/dist/js/dropify.min.js" th:src="@{/vendors/dropify/dist/js/dropify.min.js}"></script>
+
+    <!-- Clean UI Scripts -->
+    <script src="../static/common/js/common.js" th:src="@{/common/js/common.js}"></script>
+    <script src="../static/common/js/demo.temp.js" th:src="@{/common/js/demo.temp.js}"></script>
+</head>
+<body class="theme-default">
+<nav class="left-menu" left-menu="true">
+    <div class="logo-container">
+        <a href="index.html" class="logo">
+            <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}" alt="Clean UI Admin Template" />
+            <img class="logo-inverse" src="../static/common/img/logo-inverse.png" th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template" />
+        </a>
+    </div>
+    <div class="left-menu-inner">
+        <ul class="left-menu-list left-menu-list-root list-unstyled">
+            <li>
+                <a class="left-menu-link" href="/users">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Usuarios</span>
+                </a>
+            </li>
+            <li>
+                <a class="left-menu-link" href="/categories">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Categorias</span>
+                </a>
+            </li>
+            <li>
+                <a class="left-menu-link" href="#">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Items</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<nav class="top-menu">
+    <div class="menu-icon-container hidden-md-up">
+        <div class="animate-menu-button left-menu-toggle">
+            <div><!-- --></div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="menu-user-block">
+            <div class="dropdown dropdown-avatar">
+                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar" href="javascript:void(0);">
+                        <img src="../static/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}" alt="Alternative text to the image"/>
+                    </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i> Perfil
+                        <div class="cui-ecommerce--product--rating">
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-half"></i>
+                        </div>
+                    </a>
+                        
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Home</div>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> System Dashboard</a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> User Boards</a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> Issue Navigator (35 New)</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                </ul>
+            </div>
+        </div>
+        <div class="menu-info-block">
+            <div class="right hidden-md-down margin-left-20">
+                <div class="search-block">
+                    <form action="/items" th:method="GET">
+                        <div class="form-input-icon form-input-icon-right">
+                            <i class="icmn-search"></i>
+                            <input type="text" class="form-control form-control-sm form-control-rounded" placeholder="Search..." name="item_name" />
+                            <button type="submit" class="search-block-submit"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="page-content">
+    <div class="page-content-inner">
+
+       <!-- Ecommerce Product Details -->
+    <div class="col-md-6">
+    <section class="panel panel-with-borders">
+        <div class="panel-heading">
+            <!-- <button type="button" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar</button> -->
+            <h2>Sus items</h2>
+        </div>
+        <div class="panel-body">
+            <div class="cui-ecommerce--catalog">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <!-- <div class="cui-ecommerce--catalog--item--status">
+                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                                </div> -->
+                                <div class="cui-ecommerce--catalog--item--like">
+                                    
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/001.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                
+                                <div><div class="fac fac-checkbox fac-primary "><span></span>
+    <input id="box2-fac-checkbox " type="checkbox" value="1" checked=""><label for="box2-fac-checkbox " class="checkbox-title">Elliot Glasses</label></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--status">
+                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--like">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/002.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Maxtor Chair</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/003.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Manroad Glasses</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--status">
+                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--like">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/004.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Align Glasses</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</div>
+<div class="col-md-6">
+    <section class="panel panel-with-borders">
+        <div class="panel-heading">
+            <h2>
+                Tus items
+            </h2>
+        </div>
+        <div class="panel-body">
+            <div class="cui-ecommerce--catalog">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--status">
+                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/001.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Elliot Glasses</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--status">
+                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--like">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/002.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Maxtor Chair</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/003.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Manroad Glasses</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
+                        <div class="cui-ecommerce--catalog--item">
+                            <div class="cui-ecommerce--catalog--item--img">
+                                <div class="cui-ecommerce--catalog--item--status">
+                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--like">
+                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                </div>
+                                <a href="javascript: void(0);">
+                                    <img src="../static/common/img/temp/ecommerce/004.jpg" />
+                                </a>
+                            </div>
+                            <div class="cui-ecommerce--catalog--item--title">
+                                <a href="javascript: void(0);">Align Glasses</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar</button>
+            </div>
+    </section>
+    </div>
+    </div>
+
+    <!-- End Ecommerce Product Details -->
+    </div>
+<script>
+
+    $(function () {
+
+        // Heart toggle
+        $('.cui-ecommerce--catalog--item--like').on('click', function(){
+            $(this).toggleClass('cui-ecommerce--catalog--item--like__selected')
+        });
+
+        // Tooltip
+        $("[data-toggle=tooltip]").tooltip();
+
+    });
+
+</script>
+</section>
+</body>
+</html>
