@@ -38,4 +38,6 @@ public class ItemService {
     public List<Item> getItemsByName(String name){
         return itemRepository.findByName(name);
     }
+
+    public List<Item> getItemsByUserId(Long userId){return itemRepository.findByUser_Id(userId);}
 }

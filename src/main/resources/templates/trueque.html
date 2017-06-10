@@ -30,7 +30,7 @@
     <link rel="stylesheet" type="text/css" href="../static/common/css/source/main.css" th:href="@{/common/css/source/main.css}"/>
 
     <!-- Font Awesome -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/fac.css" th:href="@{/common/css/source/custom/fac.css}"/>
 
     <!-- Vendors Scripts -->
@@ -148,82 +148,24 @@
         <div class="panel-body">
             <div class="cui-ecommerce--catalog">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <!-- <div class="cui-ecommerce--catalog--item--status">
-                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
-                                </div> -->
-                                <div class="cui-ecommerce--catalog--item--like">
-                                    
+                        <th:block th:each="item : ${itemsUserOffer}">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="cui-ecommerce--catalog--item">
+                                    <div class="cui-ecommerce--catalog--item--img">
+                                        <div class="cui-ecommerce--catalog--item--like">
+
+                                        </div>
+                                        <a href="javascript: void(0);">
+                                            <img th:src="${item.photo1}" />
+                                        </a>
+                                    </div>
+                                    <div class="cui-ecommerce--catalog--item--title">
+                                        <div><div class="fac fac-checkbox fac-primary "><span></span>
+            <input id="box2-fac-checkbox " type="checkbox" value="1" checked=""/><label for="box2-fac-checkbox " class="checkbox-title" th:text="${item.name}">Elliot Glasses</label></div></div>
+                                    </div>
                                 </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/001.jpg" />
-                                </a>
                             </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                
-                                <div><div class="fac fac-checkbox fac-primary "><span></span>
-    <input id="box2-fac-checkbox " type="checkbox" value="1" checked=""><label for="box2-fac-checkbox " class="checkbox-title">Elliot Glasses</label></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--status">
-                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item--like">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/002.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Maxtor Chair</a>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/003.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Manroad Glasses</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--status">
-                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item--like">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/004.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Align Glasses</a>
-                            </div>
-                        </div>
-                    </div>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -239,81 +181,25 @@
         <div class="panel-body">
             <div class="cui-ecommerce--catalog">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--status">
-                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
+                    <th:block th:each="item : ${itemsUserDemand}">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="cui-ecommerce--catalog--item">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <div class="cui-ecommerce--catalog--item--like">
+
+                                    </div>
+                                    <a href="javascript: void(0);">
+                                        <img th:src="${item.photo1}" />
+                                    </a>
                                 </div>
-                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                <div class="cui-ecommerce--catalog--item--title">
+
+                                    <div><div class="fac fac-checkbox fac-primary "><span></span>
+                                        <input id="box2-fac-checkbox " type="checkbox" value="1" checked=""/><label for="box2-fac-checkbox " class="checkbox-title" th:text="${item.name}">Elliot Glasses</label></div></div>
                                 </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/001.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Elliot Glasses</a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--status">
-                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item--like">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/002.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Maxtor Chair</a>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/003.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Manroad Glasses</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-12">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--status">
-                                    <span class="cui-ecommerce--catalog--item--status--title">New</span>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item--like">
-                                    <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                    <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../static/common/img/temp/ecommerce/004.jpg" />
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Align Glasses</a>
-                            </div>
-                        </div>
-                    </div>
+                    </th:block>
                     </div>
                 </div>
             </div>
@@ -324,8 +210,6 @@
     </div>
     </div>
 
-    <!-- End Ecommerce Product Details -->
-    </div>
 <script>
 
     $(function () {

@@ -54,6 +54,9 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
     public String getItemById(@PathVariable Long id, Model model){
         model.addAttribute("item" , itemService.getItemById(id));
+
+        //Borrar la siguiente linea cuando tengamos el Iniciar Sesion y el id del user se guarde en local storage
+        model.addAttribute("user_id", 351);
         return "itemView";
     }
 

@@ -156,44 +156,16 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <!--CODIGO Y ESTRELLAS DE LA DERECHA ARRIBA-->
-                        <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;sku">-->
-                            <!--SKU: #0000235-->
-                            <!--<br />-->
-                            <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;rating">-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-empty"></i>-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
-                       <!--PRECIOS-->
-                        <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;price">-->
-                            <!--$189.95-->
-                            <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;price-before">-->
-                                <!--$220.95-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<hr/>-->
-                        <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;descr">-->
-                            <!--<p th:text="${item.description}"></p>-->
-                        <!--</div>-->
                         <div class="cui-ecommerce--product--controls">
-                            <button type="button" class="btn btn-icon btn-primary btn-lg margin-right-15">
-                                <i class="icmn-forward margin-right-5"></i>
-                                Trueque Ya
-                            </button>
-                            <!--AÑADIR A LA LISTA DE DESEOS-->
-                            <!--<a href="javascript: void(0);" class="btn btn-link">-->
-                                <!--<i class="icmn-heart4"></i>-->
-                                <!--Add to Wishlist-->
-                            <!--</a>-->
-                            <!--<a href="javascript: void(0);" class="btn btn-link">-->
-                                <!--<i class="icmn-stats-bars2"></i>-->
-                                <!--Add to Compare-->
-                            <!--</a>-->
+                            <form id="form-trueque" action="/trueques" th:method="GET">
+                                <input type="hidden" id="id-user-offerer" name="id-user-offerer"/>
+                                <input type="hidden" id="id-user-demandant" name="id-user-demandant" th:value="${item.user.id}"/>
+                                <button type="submit" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15">
+                                    <i class="icmn-forward margin-right-5"></i>
+                                    Trueque Ya
+                                </button>
+                            </form>
                         </div>
                         <div class="cui-ecommerce--product--info">
                             <div class="nav-tabs-horizontal">
@@ -226,38 +198,22 @@
         </section>
         <!-- End Ecommerce Product Details -->
     </div>
-
-
-    <!-- Page Scripts -->
-    <!--<script>-->
-
-        <!--$(function () {-->
-
-            <!--// Heart toggle-->
-            <!--$('.cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like').on('click', function(){-->
-                <!--$(this).toggleClass('cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like__selected')-->
-            <!--});-->
-
-            <!--// Tooltip-->
-            <!--$("[data-toggle=tooltip]").tooltip();-->
-
-            <!--// Select 2-->
-            <!--$('.select2').select2();-->
-
-        <!--});-->
-
-    <!--</script>-->
-    <!-- End Page Scripts -->
 </section>
-<!--&lt;!&ndash; Page Scripts &ndash;&gt;-->
-<!--<script>-->
-<!--$(function(){-->
-<!--$('#example2').DataTable({-->
-<!--autoWidth: true,-->
-<!--scrollX: true,-->
-<!--fixedColumns: true-->
-<!--});-->
-<!--});-->
-<!--</script>-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    // Guardo un username ejemplo simulando que el usuario ya inicio sesion.
+    var user_id = [[${user_id}]];
+    console.log(user_id)
+    localStorage.setItem('ok_user_id', user_id);
+
+    /*]]>*/
+</script>
+<script>
+    $(document).ready(function(){
+        var user_id = localStorage.getItem('ok_user_id');
+        $('#id-user-offerer').val(user_id);
+    });
+</script>
 </body>
 </html>
