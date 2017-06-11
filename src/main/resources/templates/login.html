@@ -25,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="../assets/vendors/jscrollpane/style/jquery.jscrollpane.css" th:href="@{/vendors/jscrollpane/style/jquery.jscrollpane.css}"/>
     <link rel="stylesheet" type="text/css" href="../assets/vendors/ladda/dist/ladda-themeless.min.css" th:href="@{/vendors/ladda/dist/ladda-themeless.min.css}"/>
     <link rel="stylesheet" type="text/css" href="../assets/vendors/select2/dist/css/select2.min.css" th:href="@{/vendors/select2/dist/css/select2.min.css}"/>
-    <link rel="stylesheet" type="text/css" href="../assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" th:href="@{/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" th:href="@{/build/css/bootstrap-datetimepicker.min.css}"/>
     <link rel="stylesheet" type="text/css" href="../assets/vendors/fullcalendar/dist/fullcalendar.min.css" th:href="@{/vendors/fullcalendar/dist/fullcalendar.min.css}"/>
     <link rel="stylesheet" type="text/css" href="../assets/vendors/cleanhtmlaudioplayer/src/player.css" th:href="@{/vendors/cleanhtmlaudioplayer/src/player.css}"/>
     <link rel="stylesheet" type="text/css" href="../assets/vendors/cleanhtmlvideoplayer/src/player.css" th:href="@{/vendors/cleanhtmlvideoplayer/src/player.css}"/>
@@ -99,12 +99,15 @@
     <!-- Clean UI Scripts -->
     <script src="../assets/common/js/common.js" th:src="@{/common/js/common.js}"></script>
     <script src="../assets/common/js/demo.temp.js" th:src="@{/common/js/demo.temp.js}"></script>
+
+
+
 </head>
 <body class="theme-default single-page single-page-inverse">
 
 <section class="page-content">
 
-    <div class="page-content-inner" style="background-image: url(../assets/common/img/temp/login/4.jpg)" th:src="@{common/img/temp/login/4.jpg}">
+    <div class="page-content-inner" style="background-image: url(../assets/common/img/temp/login/4.jpg)">
 
         <!-- Login Omega Page -->
         <div class="single-page-block-header">
@@ -112,7 +115,7 @@
                 <div class="col-lg-4">
                     <div class="logo">
                         <a href="javascript: history.back();">
-                            <img src="../static/common/img/simbolo.png" th:src="@{/common/img/simbolo.png}" alt="OK Trueque"/>
+                            <img src="../static/common/img/logo-v1.png" th:src="@{/common/img/logo-v1.png}" alt="oKTrueque"/>
                         </a>
                     </div>
                 </div>
@@ -137,9 +140,7 @@
                         Login Form
                     </h3>
 
-
-
-                    <form  action="/probar"  id="form-validation" method="post" name="user">
+                    <form  action="/login"  id="form-validation" method="post" name="user">
                         <div class="form-group">
                             <input id="validation-email" class="form-control" placeholder="Email or Username" name="email" type="text" data-validation="[EMAIL]" />
 

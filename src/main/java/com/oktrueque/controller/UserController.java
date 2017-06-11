@@ -69,7 +69,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/probar")
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password)
     {
         User us = userService.getUserByEmail(email);
