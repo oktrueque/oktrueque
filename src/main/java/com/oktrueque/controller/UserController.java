@@ -3,12 +3,10 @@ package com.oktrueque.controller;
 import com.oktrueque.model.User;
 import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Felipe on 7/5/2017.
@@ -31,7 +29,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
-    public String addUser(Model model, @ModelAttribute User user)
+    public String addUser(@ModelAttribute User user)
     {
         user.setStatus(0);
         userService.addUser(user);
@@ -50,20 +48,39 @@ public class UserController {
 
     // obtengo el usuario para poder upgradiarlo
     @RequestMapping("/users/edit{id}")
-    public String getCategory(@PathVariable long id, Model model){
+    public String getUser(@PathVariable long id, Model model){
         model.addAttribute("user" , userService.getUserById(id));
         return "updateProfile";
 
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
-    public String updateCategory(@ModelAttribute User user,@PathVariable Long id){
-
-
+    public String updateUser(@ModelAttribute User user, @PathVariable long id)
+    {
+        user.setStatus(0);
         userService.updateUser(user);
-        return "redirect:/users/"+ id;
-
+        return "redirect:/users/"+id;
     }
+
+
+    @RequestMapping("/login")
+    public String loginUser(){
+        return "login";
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/probar")
+    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password)
+    {
+        User us = userService.getUserByEmail(email);
+        if (us!=null && us.getPassword().equals(password)) {
+
+            return "correcto-login";
+        }
+        else return "error-login";
+    }
+
+
 
 
 
