@@ -70,16 +70,20 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password)
-    {
-        User us = userService.getUserByEmail(email);
+    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password){
+        User us;
+        if (userService.getUserByEmail(email) == null) {
+             us = userService.getUserByUserName(email);
+        }
+
+        else us = userService.getUserByEmail(email);
+
         if (us!=null && us.getPassword().equals(password)) {
 
             return "correcto-login";
         }
         else return "error-login";
     }
-
 
 
 
