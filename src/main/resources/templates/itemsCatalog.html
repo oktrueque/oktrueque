@@ -49,8 +49,19 @@
     <!-- Clean UI Scripts -->
     <script src="../static/common/js/common.js" th:src="@{/common/js/common.js}"></script>
     <script src="../static/common/js/demo.temp.js" th:src="@{/common/js/demo.temp.js}"></script>
+
+    <!--<script>-->
+        <!--function save(){-->
+            <!--var fieldValue = ;-->
+            <!--localStorage.setItem('email',fieldValue);-->
+        <!--}-->
+
+    <!--</script>-->
+
+
 </head>
-<body class="theme-default">
+<body class="theme-default" >
+
     <nav class="left-menu" left-menu="true">
         <div class="logo-container">
             <a href="/items" class="logo">
@@ -93,9 +104,7 @@
             <div class="menu-user-block">
                 <div class="dropdown dropdown-avatar">
                     <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="avatar" href="javascript:void(0);">
-                            <img src="../static/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}" alt="Alternative text to the image"/>
-                        </span>
+                        <!--<img th:src="${user.photo1}"/>-->
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
                         <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i> Profile</a>
@@ -141,9 +150,9 @@
                         <h3 th:text="${category.name}">Category Name</h3>
                         <hr/>
                     </div>
-                    <div th:if="${items.isEmpty()}">
-                        <p>Lo sentimos, no tenemos items para mostrarte en este momento, ¡Inténtalo nuevamente más tarde!</p>
-                    </div>
+                    <!--<div th:if="${items.isEmpty()}">-->
+                        <!--<p>Lo sentimos, no tenemos items para mostrarte en este momento, ¡Inténtalo nuevamente más tarde!</p>-->
+                    <!--</div>-->
                     <div class="row">
                         <th:block th:each="item : ${items}">
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">

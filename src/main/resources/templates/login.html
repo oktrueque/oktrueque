@@ -102,6 +102,16 @@
 
 
 
+    <script>
+        function save(){
+            var fieldValue = document.getElementById("validation-email").value;
+            localStorage.setItem('email',fieldValue);
+
+        }
+
+
+    </script>
+
 </head>
 <body class="theme-default single-page single-page-inverse">
 
@@ -142,33 +152,34 @@
 
                     <form  action="/login"  id="form-validation" method="post" name="user">
                         <div class="form-group">
-                            <input id="validation-email" class="form-control" placeholder="Email or Username" name="email" type="text"/>
+                            <input id="validation-email" class="form-control" placeholder="Email or Username" name="email" type="text" required="true"/>
                             <!--data-validation="[EMAIL]"-->
-
                         </div>
 
                         <div class="form-group">
                             <div class="input-append input-group">
 
-                                <input id="validation-password" class="form-control password" name="password" type="password" data-validation="[L>=6]" data-validation-message="$ must be at least 6 characters" placeholder="Password" />
+                                <input id="validation-password" class="form-control password" name="password" type="password" data-validation="[L>=6]" data-validation-message="$ must be at least 6 characters" placeholder="Password" required="true"/>
 
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <a href="javascript: void(0);" class="pull-right">Forgot Password?</a>
+                            <a href="javascript: void(0);" class="pull-right">Olvidaste tu contraseña?</a>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="example6" checked=""/>
-                                    Remember me
+                                    Recordarme
                                 </label>
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary width-150">Sign In</button>
+                            <button type="submit" class="btn btn-primary width-150" onclick="save()">Iniciar Sesión</button>
                         </div>
                     </form>
-
+                    <div th:if="${loginError!= null}">
+                        <p style="color:red">Usuario o contraseña incorrectos!, vuelva a intentar</p>
+                        <hr/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -185,9 +196,6 @@
 
     </div>
 
-    <script>
-        localStorage.setItem("Email","email")
-    </script>
 
     <!-- Page Scripts -->
     <script>

@@ -5,6 +5,7 @@ import com.oktrueque.model.Item;
 import com.oktrueque.model.User;
 import com.oktrueque.service.CategoryService;
 import com.oktrueque.service.ItemService;
+import com.oktrueque.service.UserService;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,8 @@ public class ItemController {
         }
         model.addAttribute("items", items);
         model.addAttribute("categories",categoryService.getCategories());
+
+
         return "itemsCatalog";
     }
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
