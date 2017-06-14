@@ -73,7 +73,7 @@
                 </a>
             </li>
             <li>
-                <a class="left-menu-link" href="javascript:void(0)">
+                <a class="left-menu-link" href="/items">
                     <i class="left-menu-link-icon icmn-home2"><!-- --></i>
                     <span class="menu-top-hidden">Items</span>
                 </a>
@@ -231,7 +231,7 @@
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                     <div class="cui-ecommerce--catalog--item">
                                         <div class="cui-ecommerce--catalog--item--img">
-                                            <a href="javascript: void(0);">
+                                            <a th:href="@{'/items/' + ${item.id}}">
                                                 <img th:src="${item.photo1}" />
                                             </a>
                                         </div>
