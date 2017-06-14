@@ -45,6 +45,9 @@
     <link rel="stylesheet" type="text/css" href="../assets/vendors/dropify/dist/css/dropify.min.css" th:href="@{/vendors/dropify/dist/css/dropify.min.css}"/>
 
     <!-- Clean UI Styles -->
+    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/custom/login.css" th:href="@{/common/css/source/custom/login.css}"/>
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../assets/common/css/source/main.css" th:href="@{/common/css/source/main.css}"/>
 
     <!-- Vendors Scripts -->
@@ -106,7 +109,7 @@
 
 <section class="page-content">
 
-    <div class="page-content-inner" style="background-image: url(../assets/common/img/temp/login/4.jpg)">
+    <div class="page-content-inner background-img">
 
         <!-- Login Omega Page -->
         <div class="single-page-block-header">
@@ -146,11 +149,9 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="input-append input-group">
 
                                 <input id="validation-password" class="form-control password" name="password" type="password" data-validation="[L>=6]" data-validation-message="$ must be at least 6 characters" placeholder="Password" required="true"/>
-
-                            </div>
+                            
                         </div>
                         <div class="form-group">
                             <a href="javascript: void(0);" class="pull-right">Olvidaste tu contraseña?</a>
