@@ -146,12 +146,29 @@
                     </div>
                 </div>
             </div>
+             <!--Pagination Bar -->
+            <div>
+                <nav class="centered" style="text-align: center">
+                    <ul class='pagination justify-content-center'>
+                        <li class="page-item" th:classappend="${page.hasPreviousPage}? '' : 'disabled'">
+                            <span class="page-link" th:if='${not page.hasPreviousPage}'><i class="fa fa-arrow-left"></i></span>
+                            <a  class="page-link" th:if='${page.hasPreviousPage}' th:href='@{${page.url}(page=${page.number-2},size=${page.size})}' title='Go to previous page'><i class="fa fa-arrow-left"></i></a>
+                        </li>
+                        <li class="page-item" th:each='item : ${page.items}' th:classappend="${item.current}? 'active' : ''">
+                            <span class="page-link" th:if='${item.current}' th:text='${item.number}'></span>
+                            <a  class="page-link" th:if='${not item.current}' th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span th:text='${item.number}'></span></a>
+                        </li>
+                        <li class="page-item" th:classappend="${page.hasNextPage}? '' : 'disabled'">
+                            <span class="page-link" th:if='${not page.hasNextPage}'><i class="fa fa-arrow-right"></i></span>
+                            <a class="page-link" th:if='${page.hasNextPage}' th:href='@{${page.url}(page=${page.number},size=${page.size})}' title='Go to next page'><i class="fa fa-arrow-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </section>
     </div>
     <script>
-
         $(function () {
-
             $('.cui-ecommerce--catalog--item--like').on('click', function(){
                 $(this).toggleClass('cui-ecommerce--catalog--item--like__selected')
             });
@@ -159,18 +176,7 @@
             $("[data-toggle=tooltip]").tooltip();
 
         });
-
     </script>
 </section>
-<!-- Page Scripts -->
-<!--<script>-->
-<!--$(function(){-->
-<!--$('#example2').DataTable({-->
-<!--autoWidth: true,-->
-<!--scrollX: true,-->
-<!--fixedColumns: true-->
-<!--});-->
-<!--});-->
-<!--</script>-->
 </body>
 </html>

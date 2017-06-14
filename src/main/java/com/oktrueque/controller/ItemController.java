@@ -6,6 +6,9 @@ import com.oktrueque.service.CategoryService;
 import com.oktrueque.service.ItemService;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +26,7 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
-//    @Autowired
-//    private CategoryService categoryService;
+
     private User user = new User();
     private List<Item> items = null;
 
@@ -39,11 +41,17 @@ public class ItemController {
             catch(Exception e){}
         }
         model.addAttribute("items", items);
-//        model.addAttribute("categories",categoryService.getCategories()); //Esto debería ser reemplazado, sirve para probar nada mas.
-//        model.addAttribute("item", new Item());
-//        user = items.get(0).getUser();
         return "itemsCatalog";
     }
+    @RequestMapping(value = "/itemsList", method = RequestMethod.GET)
+    public String list(Model model,Pageable pageable){
+        Page<Item> itemPage = itemService.findAll(pageable);
+        PageWrapper<Item> page = new PageWrapper<Item>(itemPage, "/listItems");
+        model.addAttribute("items", itemPage.getContent());
+        model.addAttribute("page", page);
+        return "itemsCatalog";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
     public String getItemById(@PathVariable Long id, Model model){
         model.addAttribute("item" , itemService.getItemById(id));

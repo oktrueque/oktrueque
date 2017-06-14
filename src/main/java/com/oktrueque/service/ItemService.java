@@ -3,7 +3,12 @@ package com.oktrueque.service;
 import com.oktrueque.model.Item;
 import com.oktrueque.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +38,9 @@ public class ItemService {
 
     public List<Item> getItemsByCategory(int id_category) {
         return itemRepository.findByCategory_Id(id_category);
+    }
+
+    public Page<Item> findAll(Pageable pageable) {
+        return itemRepository.findAll(pageable);
     }
 }
