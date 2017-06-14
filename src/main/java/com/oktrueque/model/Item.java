@@ -2,32 +2,25 @@ package com.oktrueque.model;
 
 import javax.persistence.*;
 
-
-/**
- * Created by Facundo on 27/04/2017.
- */
 @Entity
-@Table(name="items")
+@Table(name = "items")
 public class Item {
 
-    //Definicion de Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
     @ManyToOne
-    @JoinColumn(name="id_user")
+    @JoinColumn(name = "id_user")
     private User user;
     @OneToOne
-    @JoinColumn(name="id_category")
+    @JoinColumn(name = "id_category")
     private Category category;
     private String photo1;
     private String photo2;
     private String photo3;
 
-
-    //Constructores
     public Item() {
     }
 
@@ -48,8 +41,6 @@ public class Item {
         this.photo2 = photo2;
         this.photo3 = photo3;
     }
-
-    //Getters and Setters
 
     public Long getId() {
         return id;
