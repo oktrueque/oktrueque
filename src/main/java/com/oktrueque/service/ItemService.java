@@ -34,13 +34,16 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public void deleteItemAlone(Long id) { itemRepository.delete(id);}
+    public void deleteItem(Long id) { itemRepository.delete(id);}
 
-    public List<Item> getItemsByCategory(int id_category) {
-        return itemRepository.findByCategory_Id(id_category);
+    public Page<Item> getItemsByCategory(int id_category, Pageable pageable) {
+        return itemRepository.findByCategory_Id(id_category, pageable);
     }
 
     public Page<Item> findAll(Pageable pageable) {
         return itemRepository.findAll(pageable);
+    }
+    public Page<Item> getItemsByName(String name,Pageable pageable){
+        return itemRepository.findByName(name,pageable);
     }
 }

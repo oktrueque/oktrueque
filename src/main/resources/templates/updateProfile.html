@@ -110,13 +110,11 @@
         <div class="menu-info-block">
             <div class="right hidden-md-down margin-left-20">
                 <div class="search-block">
-                    <form action="/items" th:method="GET">
-                        <div class="form-input-icon form-input-icon-right">
-                            <i class="icmn-search"></i>
-                            <input type="text" class="form-control form-control-sm form-control-rounded" placeholder="Search..." name="item_name" />
-                            <button type="submit" class="search-block-submit"></button>
-                        </div>
-                    </form>
+                    <div class="form-input-icon form-input-icon-right">
+                        <i class="icmn-search"></i>
+                        <input type="text" class="form-control form-control-sm form-control-rounded" placeholder="Search..."/>
+                        <button type="submit" class="search-block-submit"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,139 +123,105 @@
 <section class="page-content">
     <div class="page-content-inner">
 
-        <!-- Ecommerce Product Details -->
         <section class="panel panel-with-borders">
-            <div class="panel-heading">
-                <h2>
-                    Product Details
-                </h2>
-            </div>
-            <div class="panel-body">
+            <div class="page-content-inner">
+                <div class="panel-body">
+
+            <form th:action="@{'/users/' + ${user.id}}" th:object="${user}" th:method="put">
+
+                <h5>Información Personal</h5>
                 <div class="row">
-                    <!--Visor de imagenes de la parte izquierda-->
-                    <div class="col-lg-8">
-                        <div class="cui-ecommerce--catalog--item">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <a href="javascript: void(0);">
-                                    <img th:src="${item.photo1}" />
-                                </a>
-                            </div>
-                        </div>
-                        <div class="cui-ecommerce--product--photos clearfix">
-                            <div class="cui-ecommerce--product--photos-item cui-ecommerce--product--photos-item__active">
-                                <img th:src="${item.photo1}"/>
-                            </div>
-                            <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="${item.photo2}"/>
-                            </div>
-                            <div class="cui-ecommerce--product--photos-item">
-                                <img th:src="${item.photo3}"/>
-                            </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="l0">Nombre</label>
+                            <input type="text" class="form-control" id="l0" th:field="*{name}"/>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <!--CODIGO Y ESTRELLAS DE LA DERECHA ARRIBA-->
-                        <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;sku">-->
-                            <!--SKU: #0000235-->
-                            <!--<br />-->
-                            <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;rating">-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-full"></i>-->
-                                <!--<i class="icmn-star-empty"></i>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
-                       <!--PRECIOS-->
-                        <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;price">-->
-                            <!--$189.95-->
-                            <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;price-before">-->
-                                <!--$220.95-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<hr/>-->
-                        <!--<div class="cui-ecommerce&#45;&#45;product&#45;&#45;descr">-->
-                            <!--<p th:text="${item.description}"></p>-->
-                        <!--</div>-->
-                        <div class="cui-ecommerce--product--controls">
-                            <button type="button" class="btn btn-icon btn-primary btn-lg margin-right-15">
-                                <i class="icmn-forward margin-right-5"></i>
-                                Trueque Ya
-                            </button>
-                            <!--AÑADIR A LA LISTA DE DESEOS-->
-                            <!--<a href="javascript: void(0);" class="btn btn-link">-->
-                                <!--<i class="icmn-heart4"></i>-->
-                                <!--Add to Wishlist-->
-                            <!--</a>-->
-                            <!--<a href="javascript: void(0);" class="btn btn-link">-->
-                                <!--<i class="icmn-stats-bars2"></i>-->
-                                <!--Add to Compare-->
-                            <!--</a>-->
-                        </div>
-                        <div class="cui-ecommerce--product--info">
-                            <div class="nav-tabs-horizontal">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">Descripción</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Información</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content padding-vertical-20">
-                                    <div class="tab-pane active" id="tab1" role="tabpanel">
-                                        <p th:text="${item.description}"></p>
-                                    </div>
-                                    <div class="tab-pane" id="tab2" role="tabpanel">
-                                        <dl class="dl-horizontal user-profile-dl">
-                                            <dt>Usuario</dt>
-                                            <dd th:text="${item.user.name} + ' ' + ${item.user.last_name}"></dd>
-                                            <dt>Email</dt>
-                                            <dd th:text="${item.user.email}"></dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="21">Apellido</label>
+                            <input type="text" class="form-control" id="21" th:field="*{last_name}"/>
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="23">Email</label>
+                            <input type="email" class="form-control" id="23" th:field="*{email}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="form-control-label" for="25">Password</label>
+                            <input type="password" class="form-control" id="25" th:field="*{password}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" for="l5">Password</label>
+                            <input type="password" class="form-control" id="15" th:field="*{password}"/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+
+                        <h5>Seleccionar foto de Perfil</h5>
+                        <div class="form-group">
+                            <label class="form-control-label" for="l6">File Upload</label>
+                            <input type="file" id="l6"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <h5>Seleccionar fondo de Fondo</h5>
+                        <div class="form-group">
+                            <label class="form-control-label" for="l5">File Upload</label>
+                            <input type="file" id="l5"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="form-group">
+
+                        <button type="submit" class="btn btn-default">Aceptar</button>
+                        <button type="button" class="btn btn-default" onclick="history.back()">Atras</button>
+
+
+                    </div>
+                </div>
+
+            </form>
+
+                </div>
+
             </div>
         </section>
-        <!-- End Ecommerce Product Details -->
+
     </div>
 
 
-    <!-- Page Scripts -->
-    <!--<script>-->
-
-        <!--$(function () {-->
-
-            <!--// Heart toggle-->
-            <!--$('.cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like').on('click', function(){-->
-                <!--$(this).toggleClass('cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;like__selected')-->
-            <!--});-->
-
-            <!--// Tooltip-->
-            <!--$("[data-toggle=tooltip]").tooltip();-->
-
-            <!--// Select 2-->
-            <!--$('.select2').select2();-->
-
-        <!--});-->
-
-    <!--</script>-->
-    <!-- End Page Scripts -->
 </section>
-<!--&lt;!&ndash; Page Scripts &ndash;&gt;-->
-<!--<script>-->
-<!--$(function(){-->
-<!--$('#example2').DataTable({-->
-<!--autoWidth: true,-->
-<!--scrollX: true,-->
-<!--fixedColumns: true-->
-<!--});-->
-<!--});-->
-<!--</script>-->
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
