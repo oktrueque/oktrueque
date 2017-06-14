@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by Felipe on 7/5/2017.
- */
 @Controller
 public class UserController {
 
@@ -24,47 +21,36 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/register")
-    public String getUserById(Model model){
+    public String getUserById(Model model) {
         User user1 = new User();
         model.addAttribute("user", user1);
         return "/register";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String addUser(Model model, @ModelAttribute User user)
-    {
+    public String addUser(Model model, @ModelAttribute User user) {
         user.setStatus(0);
         userService.addUser(user);
         return "redirect:/register";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{id}")
-    public String getUserProfile(Model model, @PathVariable long id)
-    {
+    public String getUserProfile(Model model, @PathVariable long id) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         model.addAttribute("items", user.getItems());
         return "userProfile";
-
     }
 
-    // obtengo el usuario para poder upgradiarlo
     @RequestMapping("/users/edit{id}")
-    public String getCategory(@PathVariable long id, Model model){
-        model.addAttribute("user" , userService.getUserById(id));
+    public String getCategory(@PathVariable long id, Model model) {
+        model.addAttribute("user", userService.getUserById(id));
         return "updateProfile";
-
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
-    public String updateCategory(@ModelAttribute User user,@PathVariable Long id){
-
-
+    public String updateCategory(@ModelAttribute User user, @PathVariable Long id) {
         userService.updateUser(user);
-        return "redirect:/users/"+ id;
-
+        return "redirect:/users/" + id;
     }
-
-
-
 }

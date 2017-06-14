@@ -4,26 +4,23 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Felipe on 7/5/2017.
- */
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String last_name;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
     @OneToMany(mappedBy = "user")
     private List<Item> items;
@@ -40,7 +37,7 @@ public class User {
         this.last_name = last_name;
         this.email = email;
         this.password = password;
-        this.items = new ArrayList<Item>();
+        this.items = new ArrayList<>();
     }
 
     public Integer getStatus() {
@@ -68,7 +65,6 @@ public class User {
     }
 
     public String getLast_name() {
-
         return last_name;
     }
 

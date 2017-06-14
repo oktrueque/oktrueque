@@ -5,13 +5,9 @@ import org.springframework.data.domain.Page;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Facundo on 04/06/2017.
- */
 public class PageWrapper<T> {
 
     public static final int MAX_PAGE_ITEM_DISPLAY = 5;
-    //objeto q devuelve el findAll(Pageable)
     private Page<T> page;
     private List<PageItem> items;
     private int currentNumber;
@@ -24,82 +20,86 @@ public class PageWrapper<T> {
     public void setUrl(String url) {
         this.url = url;
     }
-    public PageWrapper(Page<T> page, String url){
+
+    public PageWrapper(Page<T> page, String url) {
         this.page = page;
         this.url = url;
-        items = new ArrayList<PageItem>();
+        items = new ArrayList<>();
 
         currentNumber = page.getNumber() + 1; //start from 1 to match page.page
 
         int start, size;
-        if (page.getTotalPages() <= MAX_PAGE_ITEM_DISPLAY){
+        if (page.getTotalPages() <= MAX_PAGE_ITEM_DISPLAY) {
             start = 1;
             size = page.getTotalPages();
         } else {
-            if (currentNumber <= MAX_PAGE_ITEM_DISPLAY - MAX_PAGE_ITEM_DISPLAY/2){
+            if (currentNumber <= MAX_PAGE_ITEM_DISPLAY - MAX_PAGE_ITEM_DISPLAY / 2) {
                 start = 1;
                 size = MAX_PAGE_ITEM_DISPLAY;
-            } else if (currentNumber >= page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY/2){
+            } else if (currentNumber >= page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY / 2) {
                 start = page.getTotalPages() - MAX_PAGE_ITEM_DISPLAY + 1;
                 size = MAX_PAGE_ITEM_DISPLAY;
             } else {
-                start = currentNumber - MAX_PAGE_ITEM_DISPLAY/2;
+                start = currentNumber - MAX_PAGE_ITEM_DISPLAY / 2;
                 size = MAX_PAGE_ITEM_DISPLAY;
             }
         }
 
-        for (int i = 0; i<size; i++){
-            items.add(new PageItem(start+i, (start+i)==currentNumber));
+        for (int i = 0; i < size; i++) {
+            items.add(new PageItem(start + i, (start + i) == currentNumber));
         }
     }
-    public List<PageItem> getItems(){
+
+    public List<PageItem> getItems() {
         return items;
     }
 
-    public int getNumber(){
+    public int getNumber() {
         return currentNumber;
     }
 
-    public List<T> getContent(){
+    public List<T> getContent() {
         return page.getContent();
     }
 
-    public int getSize(){
+    public int getSize() {
         return page.getSize();
     }
 
-    public int getTotalPages(){
+    public int getTotalPages() {
         return page.getTotalPages();
     }
 
-    public boolean isFirstPage(){
+    public boolean isFirstPage() {
         return page.isFirst();
     }
 
-    public boolean isLastPage(){
+    public boolean isLastPage() {
         return page.isLast();
     }
 
-    public boolean isHasPreviousPage(){
+    public boolean isHasPreviousPage() {
         return page.hasPrevious();
     }
 
-    public boolean isHasNextPage(){
+    public boolean isHasNextPage() {
         return page.hasNext();
     }
+
     public class PageItem {
         private int number;
         private boolean current;
-        public PageItem(int number, boolean current){
+
+        public PageItem(int number, boolean current) {
             this.number = number;
             this.current = current;
         }
 
-        public int getNumber(){
+        public int getNumber() {
             return this.number;
         }
 
-        public boolean isCurrent(){
+        public boolean isCurrent() {
             return this.current;
         }
     }

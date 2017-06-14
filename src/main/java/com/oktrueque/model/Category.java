@@ -5,19 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * Created by Facundo on 01/05/2017.
- */
 @Entity
-@Table(name="categories")
+@Table(name = "categories")
 public class Category {
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    //Constructores
     public Category() {
     }
 
@@ -25,8 +21,6 @@ public class Category {
         this.id = id;
         this.name = name;
     }
-
-    //Getters and Setters
 
     public int getId() {
         return id;
