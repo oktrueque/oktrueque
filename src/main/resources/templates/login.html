@@ -101,17 +101,6 @@
     <script src="../assets/common/js/demo.temp.js" th:src="@{/common/js/demo.temp.js}"></script>
 
 
-
-    <script>
-        function save(){
-            var fieldValue = document.getElementById("validation-email").value;
-            localStorage.setItem('email',fieldValue);
-
-        }
-
-
-    </script>
-
 </head>
 <body class="theme-default single-page single-page-inverse">
 
@@ -173,13 +162,13 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary width-150" onclick="save()">Iniciar Sesión</button>
+                            <button type="button" class="btn btn-primary width-150" onclick="save()">Iniciar Sesión</button>
                         </div>
                     </form>
-                    <div th:if="${loginError!= null}">
-                        <p style="color:red">Usuario o contraseña incorrectos!, vuelva a intentar</p>
-                        <hr/>
-                    </div>
+                         <div th:if="${loginError!= null}">
+                            <p style="color:red">Usuario o contraseña incorrectos!, vuelva a intentar</p>
+                            <hr/>
+                         </div>
                 </div>
             </div>
         </div>
@@ -199,6 +188,15 @@
 
     <!-- Page Scripts -->
     <script>
+
+        function save(){
+            var fieldValue = document.getElementById("validation-email").value;
+            localStorage.setItem('email',fieldValue);
+            document.getElementById("form-validation").submit();
+
+
+        }
+
         $(function() {
 
             // Add class to body for change layout settings
@@ -265,6 +263,10 @@
         });
     </script>
     <!-- End Page Scripts -->
+
+
+
+
 
 
 <div class="main-backdrop"><!-- --></div>

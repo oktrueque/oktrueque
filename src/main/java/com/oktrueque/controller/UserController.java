@@ -72,7 +72,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
         User us;
-        long id=0;
+
         if (userService.getUserByEmail(email) == null) {
              us = userService.getUserByUserName(email);
         }
