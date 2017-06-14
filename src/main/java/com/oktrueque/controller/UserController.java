@@ -59,36 +59,37 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
-        User us;
-
-        if (userService.getUserByEmail(email) == null) {
-            us = userService.getUserByUserName(email);
-        } else us = userService.getUserByEmail(email);
-
-        if (us != null && us.getPassword().equals(password)) {
-
-            return "redirect:/users/" + us.getId();
-        } else {
-            model.addAttribute("loginError", true);
-            return "/login";
-        }
-    }
-
 //    @RequestMapping(method = RequestMethod.POST, value = "/login")
-//    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
+//    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
+//        User us;
 //
-//        User usuario = userService.getUserByEmailOrUsername(email);
+//        if (userService.getUserByEmail(email) == null) {
+//            us = userService.getUserByUserName(email);
+//        } else us = userService.getUserByEmail(email);
 //
-//            if (usuario != null && usuario.getPassword().equals(password)){
-//            return "redirect:/items";
-//            }
+//        if (us != null && us.getPassword().equals(password)) {
 //
-//            else {
-//                model.addAttribute("loginError", true);
-//                return "redirect:/login";
-//            }
+//            return "redirect:/users/" + us.getId();
+//        } else {
+//            model.addAttribute("loginError", true);
+//            return "/login";
+//        }
 //    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
+
+        User usuario = userService.getUserByEmailOrUsername(email, email);
+
+            if (usuario != null && usuario.getPassword().equals(password)){
+            return "redirect:/users/"+usuario.getId();
+            }
+
+            else {
+                model.addAttribute("loginError", true);
+
+                return "/login";
+            }
+    }
 
 }

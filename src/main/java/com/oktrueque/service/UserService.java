@@ -10,10 +10,10 @@ public interface UserService {
 
     void updateUser(User user);
 
-    User getUserByEmail(String email);
+//    User getUserByEmail(String email);
+//
+//    User getUserByUserName(String username);
 
-    User getUserByUserName(String username);
-
-//   User getUserByEmailOrUsername(String email);
+   User getUserByEmailOrUsername(String email, String username);
 
 }

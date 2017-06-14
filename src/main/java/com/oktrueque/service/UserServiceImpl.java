@@ -30,17 +30,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public User getUserByEmail(String email){
-        return userRepository.findByEmail(email);
-
-    }
-
-    public User getUserByUserName(String username) {
-        return userRepository.findByUsername(username);
-    }
-
+//    public User getUserByEmail(String email){
+//        return userRepository.findByEmail(email);
 //
-//    public User getUserByEmailOrUsername(String email){
-//        return userRepository.findAllByEmailOrUsername(email);
 //    }
+
+//    public User getUserByUserName(String username) {
+//        return userRepository.findByUsername(username);
+//    }
+
+
+    public User getUserByEmailOrUsername(String email, String username){
+        return userRepository.findByEmailOrUsername(email, username);
+    }
 }
