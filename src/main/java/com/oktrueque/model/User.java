@@ -116,4 +116,5 @@ public class User {
     public void setPhoto1(String photo1) {
         this.photo1 = photo1;
     }
+
 }

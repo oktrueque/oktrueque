@@ -7,10 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 @Controller
 public class UserController {
 
     private UserService userService;
+    private BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
+
+    public String encriptar(String password){
+
+       return encryptor.encryptPassword(password);
+    }
 
     @Autowired
     public UserController(UserService userService) {
@@ -48,6 +56,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public String updateUser(@ModelAttribute User user, @PathVariable long id) {
         user.setStatus(0);
+        user.setPassword(encriptar(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/users/" + id;
     }
@@ -81,7 +90,7 @@ public class UserController {
 
         User usuario = userService.getUserByEmailOrUsername(email, email);
 
-            if (usuario != null && usuario.getPassword().equals(password)){
+            if (usuario != null && encryptor.checkPassword(password,encriptar(password))){
             return "redirect:/users/"+usuario.getId();
             }
 
