@@ -73,7 +73,7 @@
                 </a>
             </li>
             <li>
-                <a class="left-menu-link" href="javascript:void(0)">
+                <a class="left-menu-link" href="/items">
                     <i class="left-menu-link-icon icmn-home2"><!-- --></i>
                     <span class="menu-top-hidden">Items</span>
                 </a>
@@ -138,7 +138,7 @@
                             <p>Posts</p>
                         </div>
                         <div class="profile-header-title">
-                            <h2>Artour Scott <small>@arteezy</small></h2>
+                            <h2 th:text="${user.username}" />
                             <p>Founder / CEO</p>
                         </div>
                     </div>
@@ -200,7 +200,7 @@
                     <div class="btn-group-vertical btn-group-justified">
 
                         <button type="button" class="btn">
-                            <a th:href="@{'/users/edit' + ${user.id}}" th:method="PUT" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">Editar</i></a>
+                            <a th:href="@{'/users/edit' + ${user.id}}" th:method="get" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">Editar</i></a>
                         </button>
 
                         <button type="button" class="btn">Accion 2</button>
@@ -231,7 +231,7 @@
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                     <div class="cui-ecommerce--catalog--item">
                                         <div class="cui-ecommerce--catalog--item--img">
-                                            <a href="javascript: void(0);">
+                                            <a th:href="@{'/items/' + ${item.id}}">
                                                 <img th:src="${item.photo1}" />
                                             </a>
                                         </div>

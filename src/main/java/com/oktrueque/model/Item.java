@@ -1,33 +1,37 @@
 package com.oktrueque.model;
 
+
 import javax.persistence.*;
 
-
-/**
- * Created by Facundo on 27/04/2017.
- */
 @Entity
-@Table(name="items")
+@Table(name = "items")
 public class Item {
 
-    //Definicion de Atributos
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
     @ManyToOne
-    @JoinColumn(name="id_user")
+    @JoinColumn(name = "id_user")
     private User user;
     @OneToOne
-    @JoinColumn(name="id_category")
+    @JoinColumn(name = "id_category")
     private Category category;
+    @ManyToOne
+    @JoinColumn(name = "id_trueque")
+    private Trueque trueque;
+    @Column(name = "status")
+    private Integer status;
+    @Column(name = "photo1")
     private String photo1;
+    @Column(name = "photo2")
     private String photo2;
+    @Column(name = "photo3")
     private String photo3;
 
-
-    //Constructores
     public Item() {
     }
 
@@ -48,8 +52,6 @@ public class Item {
         this.photo2 = photo2;
         this.photo3 = photo3;
     }
-
-    //Getters and Setters
 
     public Long getId() {
         return id;
@@ -91,6 +93,14 @@ public class Item {
         this.category = category;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getPhoto1() {
         return photo1;
     }
@@ -113,5 +123,13 @@ public class Item {
 
     public void setPhoto3(String photo3) {
         this.photo3 = photo3;
+    }
+
+    public Trueque getTrueque() {
+        return trueque;
+    }
+
+    public void setTrueque(Trueque trueque) {
+        this.trueque = trueque;
     }
 }

@@ -4,43 +4,53 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Felipe on 7/5/2017.
- */
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String last_name;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
-    @Column(name="status")
+    @Column(name = "status")
     private Integer status;
     @OneToMany(mappedBy = "user")
     private List<Item> items;
     @Column(name = "photo1")
     private String photo1;
+    @Column(name = "username")
+    private String username;
 
 
     public User() {
     }
 
-    public User(Long id, String name, String last_name, String email, String password, int status, String photo1) {
-        this.id = id;
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, String photo1, String username) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
-        this.items = new ArrayList<Item>();
+        this.status = status;
+        this.items = items;
+        this.photo1 = photo1;
+        this.username = username;
+        this.items = new ArrayList<>();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getStatus() {
@@ -68,7 +78,6 @@ public class User {
     }
 
     public String getLast_name() {
-
         return last_name;
     }
 
