@@ -1,8 +1,10 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.User;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.TruequeService;
+import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ public class TruequeController {
     private ItemService itemService;
     @Autowired
     private TruequeService truequeService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
     private String getUsersItems(@RequestParam(value = "id-user-offerer") Long idUserOfferer, @RequestParam(value = "id-user-demandant") Long idUserDemandant, Model model){
@@ -38,4 +42,5 @@ public class TruequeController {
         truequeService.saveTrueque(itemsOffer, itemsDemand);
         return "redirect:/users/" + itemsOffer.get(0).getUser().getId();
     }
+
 }

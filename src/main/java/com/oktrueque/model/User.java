@@ -116,4 +116,8 @@ public class User {
     public void setPhoto1(String photo1) {
         this.photo1 = photo1;
     }
+
+    public Boolean checkPassword(String password){
+        return this.password.equals(password);
+    }
 }
