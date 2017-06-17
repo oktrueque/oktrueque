@@ -19,7 +19,7 @@
    <script th:src="@{https://oss.maxcdn.com/respond/1.4.2/respond.min.js}" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
    <![endif]-->
 
-    <script th:src="@{/common/js/custom/oktrueque.js}" src="../static/common/js/custom/oktrueque.js"></script>
+    <script th:src="@{/common/js/custom/register.js}" src="../static/common/js/custom/register.js"></script>
    <!-- Vendors Styles -->
    <!-- v1.0.0 -->
    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap/dist/css/bootstrap.min.css"/>
@@ -48,7 +48,8 @@
    <!-- Clean UI Styles -->
    <link th:href="@{/common/css/source/main.css}" rel="stylesheet" type="text/css" href="../static/common/css/source/main.css"/>
 
-   <link th:href="@{/common/css/source/custom/oktrueque-register.css}" href="../static/common/css/source/custom/oktrueque-register.css" rel="stylesheet" type="text/css" />
+   <!--Custom-->
+   <link th:href="@{/common/css/source/custom/register.css}" href="../static/common/css/source/custom/register.css" rel="stylesheet" type="text/css" />
 
    <!-- Vendors Scripts -->
    <!-- v1.0.0 -->
@@ -107,7 +108,7 @@
 <body class="theme-default" onload="icons()">
 
 <section class="page-content">
-   <div class="page-content-inner" style="background-image: url(../static/common/img/simbolo.png)">
+   <div class="page-content-inner background-img">
 
       <!-- Register Page -->
       <div class="single-page-block-header">
@@ -115,7 +116,7 @@
             <div class="col-lg-4">
                <div class="logo">
                   <a href="javascript: history.back();">
-                     <img src="../static/common/img/simbolo.png" alt="Clean UI Admin Template" />
+                     <img src="../static/common/img/simbolo.png" th:src="@{common/img/simbolo.png}" alt="Clean UI Admin Template" />
                   </a>
                </div>
             </div>
@@ -140,22 +141,6 @@
                <form id="form-validation" name="form-validation" th:action="@{/register}" th:object="${user}" method="POST" onsubmit="return checkPass()">
                   <div class="form-group">
                      <div class="form-input-icon form-input-icon-right">
-                        <input th:field="*{name}"
-                               class="form-control"
-                               placeholder="Nombre"
-                               type="text"/>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form-input-icon form-input-icon-right">
-                        <input th:field="*{last_name}"
-                               class="form-control"
-                               placeholder="Apellido"
-                               type="text"/>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <div class="form-input-icon form-input-icon-right">
                         <input th:field="*{email}"
                                id="validation-email"
                                class="form-control"
@@ -163,6 +148,14 @@
                                name="validation[Email]"
                                type="text"
                                data-validation="[EMAIL]"/>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="form-input-icon form-input-icon-right">
+                        <input th:field="*{username}"
+                               class="form-control"
+                               placeholder="Apellido"
+                               type="text"/>
                      </div>
                   </div>
                   <div class="form-group">
@@ -185,15 +178,14 @@
                             placeholder="Repetir Contraseña"
                             onkeyup="checkPass(); return false;"/>
                   </div>
-
+                  <div>
+                     <label>
+                        <input required="true" type="checkbox" name="example6" checked="false"/>
+                        Acepto los terminos y condiciones
+                     </label>
+                  </div>
                   <div class="form-actions">
-                     <div>
-                        <label>
-                           <input required="true" type="checkbox" name="example6" checked="false"/>
-                           Acepto los terminos y condiciones
-                        </label>
-                     </div>
-                     <button id="btnReg" type="submit" value="Registrarse!" class="btn btn-primary width-150">Registrarse!></button>
+                     <button id="btn-register" type="button" class="btn btn-primary width-150">Registrarse!</button>
                   </div>
                </form>
             </div>
