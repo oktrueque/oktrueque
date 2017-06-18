@@ -2,6 +2,7 @@ package com.oktrueque.controller;
 
 import com.oktrueque.model.User;
 import com.oktrueque.service.UserService;
+import com.oktrueque.utils.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,8 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
 public class UserController {
 
     private UserService userService;
-    private BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
+
+    private Encrypter encrypt = new Encrypter();
 
     @Autowired
     public UserController(UserService userService) {
@@ -46,7 +48,7 @@ public class UserController {
         }
         user.setStatus(0);
         user.setItemsAmount(0);
-        user.setPassword(this.encrypt(user.getPassword()));
+        user.setPassword(this.encrypt.encrypt(user.getPassword()));
         user = userService.addUser(user);
         //Send email to user for email confirmation <-------
         return "redirect:/users/" + user.getId();
@@ -69,7 +71,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public String updateUser(@ModelAttribute User user, @PathVariable long id) {
         user.setStatus(0);
-        user.setPassword(this.encrypt(user.getPassword()));
+        user.setPassword(this.encrypt.encrypt(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/users/" + id;
     }
@@ -82,22 +84,13 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
-
         User usuario = userService.getUserByEmailOrUsername(email, email);
-
-            if (usuario != null && this.encryptor.checkPassword(password,encrypt(password))){
+        if (usuario != null && this.encrypt.checkPassword(password)){
             return "redirect:/users/"+usuario.getId();
-            }
-
-            else {
-                model.addAttribute("loginError", true);
-
-                return "/login";
-            }
-    }
-
-    public String encrypt(String password){
-        return encryptor.encryptPassword(password);
+        }else {
+            model.addAttribute("loginError", true);
+            return "/login";
+        }
     }
 
 }
