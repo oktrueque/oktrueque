@@ -159,8 +159,8 @@
                         <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
                         <div class="cui-ecommerce--product--controls">
                             <form id="form-trueque" action="/trueques" th:method="GET">
-                                <input type="hidden" id="id-user-offerer" name="id-user-offerer"/>
-                                <input type="hidden" id="id-user-demandant" name="id-user-demandant" th:value="${item.user.id}"/>
+                                <input type="hidden" id="username-user-offerer" name="username-user-offerer"/>
+                                <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
                                 <button type="button" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15">
                                     <i class="icmn-forward margin-right-5"></i>
                                     Trueque Ya
@@ -232,7 +232,7 @@
             if(user_username === null){
                 $('#loginModal').modal('show');
             }else{
-                $('#id-user-offerer').val(user_username);
+                $('#username-user-offerer').val(user_username);
                 $('#form-trueque').submit();
             }
         });
@@ -244,11 +244,11 @@
                 success: function(data)
                 {
                     console.log(data);
-                    if(data === -1){
+                    if(data === null){
                         $('#modal-div-email').addClass("has-danger");
                         $('#modal-div-password').addClass("has-danger");
                     }else{
-                        $('#id-user-offerer').val(data);
+                        $('#username-user-offerer').val(data);
                         $('#form-trueque').submit();
                     }
                 }

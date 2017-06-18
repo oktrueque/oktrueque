@@ -18,12 +18,12 @@ public class AjaxController {
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/checkUser")
-    public Long checkUser(@ModelAttribute User user){
+    public String checkUser(@ModelAttribute User user){
         User usuario = userService.getUserByEmailOrUsername(user.getEmail(), user.getEmail());
         if(usuario != null && usuario.checkPassword(user.getPassword())){
-            return usuario.getId();
+            return usuario.getUsername();
         }else{
-            return -1L;
+            return null;
         }
     }
 }

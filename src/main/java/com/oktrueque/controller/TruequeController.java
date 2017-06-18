@@ -27,13 +27,11 @@ public class TruequeController {
     private ItemService itemService;
     @Autowired
     private TruequeService truequeService;
-    @Autowired
-    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
-    private String getUsersItems(@RequestParam(value = "id-user-offerer") Long idUserOfferer, @RequestParam(value = "id-user-demandant") Long idUserDemandant, Model model){
-        model.addAttribute("itemsUserOffer", itemService.getItemsByUserId(idUserOfferer));
-        model.addAttribute("itemsUserDemand", itemService.getItemsByUserId(idUserDemandant));
+    private String getUsersItems(@RequestParam(value = "username-user-offerer") String UserOfferer, @RequestParam(value = "username-user-demandant") String UserDemandant, Model model){
+        model.addAttribute("itemsUserOffer", itemService.getItemsByUserUsername(UserOfferer));
+        model.addAttribute("itemsUserDemand", itemService.getItemsByUserUsername(UserDemandant));
         return "trueque";
     }
 

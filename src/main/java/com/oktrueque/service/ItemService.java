@@ -48,7 +48,7 @@ public class ItemService {
         return itemRepository.findByName(name, pageable);
     }
 
-    public List<Item> getItemsByUserId(Long userId){return itemRepository.findByUser_Id(userId);}
+    public List<Item> getItemsByUserUsername(String username){ return itemRepository.findByUser_Username(username);}
 
     public void updateTruequeItems(List<Item> itemsOffer, List<Item> itemsDemand, Trueque trueque){
         List<Item> items = new ArrayList<>();

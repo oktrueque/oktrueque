@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     Page<Item> findByCategory_Id(int id, Pageable pageable);
-    List<Item> findByUser_Id(Long userId);
     Page<Item> findByName(String name, Pageable pageable);
+    List<Item> findByUser_Username(String username);
 
 }
