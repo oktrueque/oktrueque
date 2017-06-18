@@ -26,9 +26,24 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public String addUser(Model model, @ModelAttribute User user) {
+        if(!user.checkUsername()){
+            model.addAttribute("user", user);
+            model.addAttribute("error", "-- El username debe contener al menos 6 caracteres, sin caracteres especiales --");
+            return "/register";
+        }
+        if(!user.checkEmail()){
+            model.addAttribute("user", user);
+            model.addAttribute("error", "-- El email ingresado no es válido --");
+            return "/register";
+        }
+        if(userService.checkIfUserExists(user.getEmail(), user.getUsername())){
+            model.addAttribute("user", user);
+            model.addAttribute("error", "-- El email o username ingresado ya existen --");
+            return "/register";
+        }
         user.setStatus(0);
-        userService.addUser(user);
-        return "redirect:/register";
+        user = userService.addUser(user);
+        return "redirect:/users/" + user.getId();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{id}")

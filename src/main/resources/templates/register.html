@@ -19,7 +19,7 @@
    <script th:src="@{https://oss.maxcdn.com/respond/1.4.2/respond.min.js}" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
    <![endif]-->
 
-    <script th:src="@{/common/js/custom/register.js}" src="../static/common/js/custom/register.js"></script>
+
    <!-- Vendors Styles -->
    <!-- v1.0.0 -->
    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css" href="../static/vendors/bootstrap/dist/css/bootstrap.min.css"/>
@@ -137,8 +137,11 @@
                   <i class="icmn-users margin-right-10"></i>
                   Registro
                </h3>
+               <div th:if="${error != null}">
+                  <p th:text="${error}"></p>
+               </div>
                <br />
-               <form id="form-validation" name="form-validation" th:action="@{/register}" th:object="${user}" method="POST" onsubmit="return checkPass()">
+               <form id="form-register" name="form-validation" th:action="@{/register}" th:object="${user}" method="POST" onsubmit="return checkPass()">
                   <div class="form-group">
                      <div class="form-input-icon form-input-icon-right">
                         <input th:field="*{email}"
@@ -154,7 +157,7 @@
                      <div class="form-input-icon form-input-icon-right">
                         <input th:field="*{username}"
                                class="form-control"
-                               placeholder="Apellido"
+                               placeholder="Username"
                                type="text"/>
                      </div>
                   </div>
@@ -180,7 +183,7 @@
                   </div>
                   <div>
                      <label>
-                        <input required="true" type="checkbox" name="example6" checked="false"/>
+                        <input id="form-checkbox" type="checkbox" name="example6" checked="false"/>
                         Acepto los terminos y condiciones
                      </label>
                   </div>
@@ -267,6 +270,7 @@
        });
 
    </script>
+   <script th:src="@{/common/js/custom/register.js}" src="../static/common/js/custom/register.js"></script>
 
 
 

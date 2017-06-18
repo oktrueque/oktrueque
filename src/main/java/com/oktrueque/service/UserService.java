@@ -1,19 +1,35 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.User;
+import com.oktrueque.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public interface UserService {
+@Service
+public class UserService {
 
-    User getUserById(Long id);
+    private UserRepository userRepository;
 
-    void addUser(User user);
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    void updateUser(User user);
+    public User getUserById(Long id) {
+        return userRepository.findOne(id);
+    }
 
-//    User getUserByEmail(String email);
-//
-//    User getUserByUserName(String username);
+    public User addUser(User user) {
+       return userRepository.save(user);
+    }
 
-   User getUserByEmailOrUsername(String email, String username);
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
 
+    public Boolean checkIfUserExists(String email, String username){ return userRepository.checkIfUserExists(email, username)>0;}
+
+    public User getUserByEmailOrUsername(String email, String username){
+        return userRepository.findByEmailOrUsername(email, username);
+    }
 }
