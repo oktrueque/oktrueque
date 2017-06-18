@@ -291,6 +291,14 @@
 
     });
 </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var user_username = [[${user.username}]];
+        localStorage.setItem('ok_user_username', user_username);
+
+        /*]]>*/
+    </script>
 <!-- End Page Scripts -->
 </section>
 

@@ -225,24 +225,14 @@
         </form>
     </div>
 </div>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-
-    // Guardo un username ejemplo simulando que el usuario ya inicio sesion.
-    var user_id = [[${user_id}]];
-    console.log(user_id)
-    localStorage.setItem('ok_user_id', user_id);
-
-    /*]]>*/
-</script>
 <script>
     $(document).ready(function(){
         $('#btn-trueque').click(function(){
-            var user_id = localStorage.getItem('ok_user');
-            if(user_id === null){
+            var user_username = localStorage.getItem('ok_user_username');
+            if(user_username === null){
                 $('#loginModal').modal('show');
             }else{
-                $('#id-user-offerer').val(user_id);
+                $('#id-user-offerer').val(user_username);
                 $('#form-trueque').submit();
             }
         });
