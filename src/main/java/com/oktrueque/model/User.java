@@ -26,6 +26,8 @@ public class User {
     private Integer status;
     @OneToMany(mappedBy = "user")
     private List<Item> items;
+    @Column(name = "items_amount")
+    private Integer itemsAmount;
     @Column(name = "photo1")
     private String photo1;
     @Column(name = "username")
@@ -117,6 +119,14 @@ public class User {
 
     public void setPhoto1(String photo1) {
         this.photo1 = photo1;
+    }
+
+    public Integer getItemsAmount() {
+        return itemsAmount;
+    }
+
+    public void setItemsAmount(Integer itemsAmount) {
+        this.itemsAmount = itemsAmount;
     }
 
     public Boolean checkPassword(String password){

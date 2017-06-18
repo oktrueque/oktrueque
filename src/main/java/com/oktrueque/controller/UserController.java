@@ -7,10 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 @Controller
 public class UserController {
 
     private UserService userService;
+    private BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
 
     @Autowired
     public UserController(UserService userService) {
@@ -42,7 +45,10 @@ public class UserController {
             return "/register";
         }
         user.setStatus(0);
+        user.setItemsAmount(0);
+        user.setPassword(this.encrypt(user.getPassword()));
         user = userService.addUser(user);
+        //Send email to user for email confirmation <-------
         return "redirect:/users/" + user.getId();
     }
 
@@ -63,6 +69,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public String updateUser(@ModelAttribute User user, @PathVariable long id) {
         user.setStatus(0);
+        user.setPassword(this.encrypt(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/users/" + id;
     }
@@ -73,30 +80,12 @@ public class UserController {
         return "login";
     }
 
-
-//    @RequestMapping(method = RequestMethod.POST, value = "/login")
-//    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
-//        User us;
-//
-//        if (userService.getUserByEmail(email) == null) {
-//            us = userService.getUserByUserName(email);
-//        } else us = userService.getUserByEmail(email);
-//
-//        if (us != null && us.getPassword().equals(password)) {
-//
-//            return "redirect:/users/" + us.getId();
-//        } else {
-//            model.addAttribute("loginError", true);
-//            return "/login";
-//        }
-//    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
 
         User usuario = userService.getUserByEmailOrUsername(email, email);
 
-            if (usuario != null && usuario.getPassword().equals(password)){
+            if (usuario != null && this.encryptor.checkPassword(password,encrypt(password))){
             return "redirect:/users/"+usuario.getId();
             }
 
@@ -105,6 +94,10 @@ public class UserController {
 
                 return "/login";
             }
+    }
+
+    public String encrypt(String password){
+        return encryptor.encryptPassword(password);
     }
 
 }
