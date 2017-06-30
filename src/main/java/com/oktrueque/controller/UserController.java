@@ -85,15 +85,15 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
-        User usuario = userService.getUserByEmailOrUsername(email, email);
-        if (usuario != null && this.encrypt.checkPassword(password)){
-            return "redirect:/users/"+usuario.getId();
-        }else {
-            model.addAttribute("loginError", true);
-            return "/login";
-        }
-    }
+//    @RequestMapping(method = RequestMethod.POST, value = "/login")
+//    public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
+//        User usuario = userService.getUserByEmailOrUsername(email, email);
+//        if (usuario != null && this.encrypt.checkPassword(password)){
+//            return "redirect:/users/"+usuario.getId();
+//        }else {
+//            model.addAttribute("loginError", true);
+//            return "/login";
+//        }
+//    }
 
 }
