@@ -1,6 +1,9 @@
 package com.oktrueque.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,8 +22,12 @@ public class User {
     @Column(name = "last_name")
     private String last_name;
     @Column(name = "email")
+    @NotNull
+    @NotEmpty
     private String email;
     @Column(name = "password")
+    @NotNull
+    @NotEmpty
     private String password;
     @Column(name = "status")
     private Integer status;
@@ -31,6 +38,8 @@ public class User {
     @Column(name = "photo1")
     private String photo1;
     @Column(name = "username")
+    @NotNull
+    @NotEmpty
     private String username;
 
 

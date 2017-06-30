@@ -6,9 +6,12 @@ import com.oktrueque.utils.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import org.jasypt.util.password.BasicPasswordEncryptor;
+
+import javax.validation.Valid;
 
 @Controller
 public class UserController {
@@ -29,8 +32,8 @@ public class UserController {
         return "/register";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String addUser(Model model, @ModelAttribute User user) {
+        @RequestMapping(method = RequestMethod.POST, value = "/register")
+    public String addUser(Model model, @ModelAttribute @Valid User user, BindingResult result) {
         if(!user.checkUsername()){
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El username debe contener al menos 6 caracteres, sin caracteres especiales --");
