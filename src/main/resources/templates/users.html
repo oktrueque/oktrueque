@@ -11,6 +11,7 @@
     <table>
         <tr>
             <th>id</th>
+            <th>Username</th>
             <th>name</th>
             <th>last name</th>
             <th>email</th>
@@ -18,6 +19,7 @@
         </tr>
         <tr th:each="user : ${users}">
             <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.last_name}"></td>
             <td th:text="${user.email}"></td>
@@ -28,7 +30,7 @@
 
     <form th:action="@{/users}" th:object="${user}" method="post">
 
-        <input class="form-control" type="hidden" th:field="*{id}"></input>
+        <input class="form-control" type="hidden" th:field="*{id}"/>
 
         nombre
         <input type="text" th:field="*{name}"/>
@@ -47,5 +49,5 @@
 
 </body>
 
->>>>>>> origin/master
+
 </html>
