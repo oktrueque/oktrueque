@@ -2,14 +2,11 @@ package com.oktrueque.controller;
 
 import com.oktrueque.model.User;
 import com.oktrueque.service.UserService;
-import com.oktrueque.utils.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import javax.validation.Valid;
 
@@ -17,8 +14,6 @@ import javax.validation.Valid;
 public class UserController {
 
     private UserService userService;
-
-    private Encrypter encrypt = new Encrypter();
 
     @Autowired
     public UserController(UserService userService) {
@@ -51,7 +46,6 @@ public class UserController {
         }
         user.setStatus(0);
         user.setItemsAmount(0);
-        user.setPassword(this.encrypt.encrypt(user.getPassword()));
         user = userService.addUser(user);
         //Send email to user for email confirmation <-------
         return "redirect:/users/" + user.getId();
@@ -74,7 +68,6 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{id}")
     public String updateUser(@ModelAttribute User user, @PathVariable long id) {
         user.setStatus(0);
-        user.setPassword(this.encrypt.encrypt(user.getPassword()));
         userService.updateUser(user);
         return "redirect:/users/" + id;
     }
