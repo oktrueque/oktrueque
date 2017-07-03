@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>Clean UI Admin Template</title>
+
+    <link th:href="@{/common/img/favicon.144x144.png}" href="../assets/common/img/favicon.144x144.png"
+          rel="apple-touch-icon" type="image/png" sizes="144x144"/>
+    <link th:href="@{/common/img/favicon.114x114.png}" href="../assets/common/img/favicon.114x114.png"
+          rel="apple-touch-icon" type="image/png" sizes="114x114"/>
+    <link th:href="@{/common/img/favicon.72x72.png}" href="../assets/common/img/favicon.72x72.png"
+          rel="apple-touch-icon" type="image/png" sizes="72x72"/>
+    <link th:href="@{/common/img/favicon.57x57.png}" href="../assets/common/img/favicon.57x57.png"
+          rel="apple-touch-icon" type="image/png"/>
+    <link th:href="@{/common/img/favicon.png}" href="../assets/common/img/favicon.png" rel="icon" type="image/png"/>
+    <link th:href="@{favicon.ico}" href="favicon.ico" rel="shortcut icon"/>
+
+    <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script th:src="@{https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js}"
+            src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script th:src="@{https://oss.maxcdn.com/respond/1.4.2/respond.min.js}"
+            src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Vendors Styles -->
+    <!-- v1.0.0 -->
+    <link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css"/>
+    <link th:href="@{/vendors/jscrollpane/style/jquery.jscrollpane.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/jscrollpane/style/jquery.jscrollpane.css"/>
+    <link th:href="@{/vendors/ladda/dist/ladda-themeless.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/ladda/dist/ladda-themeless.min.css"/>
+    <link th:href="@{/vendors/select2/dist/css/select2.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/select2/dist/css/select2.min.css"/>
+    <link th:href="@{/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css}"
+          rel="stylesheet" type="text/css"
+          href="../assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <link th:href="@{/vendors/fullcalendar/dist/fullcalendar.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/fullcalendar/dist/fullcalendar.min.css"/>
+    <link th:href="@{/vendors/cleanhtmlaudioplayer/src/player.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/cleanhtmlaudioplayer/src/player.css"/>
+    <link th:href="@{/vendors/cleanhtmlvideoplayer/src/player.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/cleanhtmlvideoplayer/src/player.css"/>
+    <link th:href="@{/vendors/bootstrap-sweetalert/dist/sweetalert.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/bootstrap-sweetalert/dist/sweetalert.css"/>
+    <link th:href="@{/vendors/summernote/dist/summernote.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/summernote/dist/summernote.css"/>
+    <link th:href="@{/vendors/owl.carousel/dist/assets/owl.carousel.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/owl.carousel/dist/assets/owl.carousel.min.css"/>
+    <link th:href="@{/vendors/ionrangeslider/css/ion.rangeSlider.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/ionrangeslider/css/ion.rangeSlider.css"/>
+    <link th:href="@{/vendors/datatables/media/css/dataTables.bootstrap4.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/datatables/media/css/dataTables.bootstrap4.min.css"/>
+    <link th:href="@{/vendors/c3/c3.min.css}" rel="stylesheet" type="text/css" href="../assets/vendors/c3/c3.min.css"/>
+    <link th:href="@{/vendors/chartist/dist/chartist.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/chartist/dist/chartist.min.css"/>
+    <!-- v1.4.0 -->
+    <link th:href="@{/vendors/nprogress/nprogress.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/nprogress/nprogress.css"/>
+    <link th:href="@{/vendors/jquery-steps/demo/css/jquery.steps.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/jquery-steps/demo/css/jquery.steps.css"/>
+    <!-- v1.4.2 -->
+    <link th:href="@{/vendors/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/bootstrap-select/dist/css/bootstrap-select.min.css"/>
+    <!-- v1.7.0 -->
+    <link th:href="@{/vendors/dropify/dist/css/dropify.min.css}" rel="stylesheet" type="text/css"
+          href="../assets/vendors/dropify/dist/css/dropify.min.css"/>
+
+    <!-- Clean UI Styles -->
+    <link th:href="@{/common/css/source/main.css}" rel="stylesheet" type="text/css"
+          href="../assets/common/css/source/main.css"/>
+
+    <!-- Vendors Scripts -->
+    <!-- v1.0.0 -->
+    <script th:src="@{/vendors/jquery/jquery.min.js}" src="../assets/vendors/jquery/jquery.min.js"></script>
+    <script th:src="@{/vendors/tether/dist/js/tether.min.js}"
+            src="../assets/vendors/tether/dist/js/tether.min.js"></script>
+    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"
+            src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script th:src="@{/vendors/jquery-mousewheel/jquery.mousewheel.min.js}"
+            src="../assets/vendors/jquery-mousewheel/jquery.mousewheel.min.js"></script>
+    <script th:src="@{/vendors/jscrollpane/script/jquery.jscrollpane.min.js}"
+            src="../assets/vendors/jscrollpane/script/jquery.jscrollpane.min.js"></script>
+    <script th:src="@{/vendors/spin.js/spin.js}" src="../assets/vendors/spin.js/spin.js"></script>
+    <script th:src="@{/vendors/ladda/dist/ladda.min.js}" src="../assets/vendors/ladda/dist/ladda.min.js"></script>
+    <script th:src="@{/vendors/select2/dist/js/select2.full.min.js}"
+            src="../assets/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"
+            src="../assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
+    <script th:src="@{/vendors/jquery-typeahead/dist/jquery.typeahead.min.js}"
+            src="../assets/vendors/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
+    <script th:src="@{/vendors/jquery-mask-plugin/dist/jquery.mask.min.js}"
+            src="../assets/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script th:src="@{/vendors/autosize/dist/autosize.min.js}"
+            src="../assets/vendors/autosize/dist/autosize.min.js"></script>
+    <script th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"
+            src="../assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
+    <script th:src="@{/vendors/moment/min/moment.min.js}" src="../assets/vendors/moment/min/moment.min.js"></script>
+    <script th:src="@{/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js}"
+            src="../assets/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script th:src="@{/vendors/fullcalendar/dist/fullcalendar.min.js}"
+            src="../assets/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script th:src="@{/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js}"
+            src="../assets/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js"></script>
+    <script th:src="@{/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js}"
+            src="../assets/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js"></script>
+    <script th:src="@{/vendors/bootstrap-sweetalert/dist/sweetalert.min.js}"
+            src="../assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
+    <script th:src="@{/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js}"
+            src="../assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
+    <script th:src="@{/vendors/summernote/dist/summernote.min.js}"
+            src="../assets/vendors/summernote/dist/summernote.min.js"></script>
+    <script th:src="@{/vendors/owl.carousel/dist/owl.carousel.min.js}"
+            src="../assets/vendors/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script th:src="@{/vendors/ionrangeslider/js/ion.rangeSlider.min.js}"
+            src="../assets/vendors/ionrangeslider/js/ion.rangeSlider.min.js"></script>
+    <script th:src="@{/vendors/nestable/jquery.nestable.js}"
+            src="../assets/vendors/nestable/jquery.nestable.js"></script>
+    <script th:src="@{/vendors/datatables/media/js/jquery.dataTables.min.js}"
+            src="../assets/vendors/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script th:src="@{/vendors/datatables/media/js/dataTables.bootstrap4.min.js}"
+            src="../assets/vendors/datatables/media/js/dataTables.bootstrap4.min.js"></script>
+    <script th:src="@{/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js}"
+            src="../assets/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+    <script th:src="@{/vendors/datatables-responsive/js/dataTables.responsive.js}"
+            src="../assets/vendors/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script th:src="@{/vendors/editable-table/mindmup-editabletable.js}"
+            src="../assets/vendors/editable-table/mindmup-editabletable.js"></script>
+    <script th:src="@{/vendors/d3/d3.min.js}" src="../assets/vendors/d3/d3.min.js"></script>
+    <script th:src="@{/vendors/c3/c3.min.js}" src="../assets/vendors/c3/c3.min.js"></script>
+    <script th:src="@{/vendors/chartist/dist/chartist.min.js}"
+            src="../assets/vendors/chartist/dist/chartist.min.js"></script>
+    <script th:src="@{/vendors/peity/jquery.peity.min.js}" src="../assets/vendors/peity/jquery.peity.min.js"></script>
+    <!-- v1.0.1 -->
+    <script th:src="@{/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js}"
+            src="../assets/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
+    <!-- v1.1.1 -->
+    <script th:src="@{/vendors/gsap/src/minified/TweenMax.min.js}"
+            src="../assets/vendors/gsap/src/minified/TweenMax.min.js"></script>
+    <script th:src="@{/vendors/hackertyper/hackertyper.js}" src="../assets/vendors/hackertyper/hackertyper.js"></script>
+    <script th:src="@{/vendors/jquery-countTo/jquery.countTo.js}"
+            src="../assets/vendors/jquery-countTo/jquery.countTo.js"></script>
+    <!-- v1.4.0 -->
+    <script th:src="@{/vendors/nprogress/nprogress.js}" src="../assets/vendors/nprogress/nprogress.js"></script>
+    <script th:src="@{/vendors/jquery-steps/build/jquery.steps.min.js}"
+            src="../assets/vendors/jquery-steps/build/jquery.steps.min.js"></script>
+    <!-- v1.4.2 -->
+    <script th:src="@{/vendors/bootstrap-select/dist/js/bootstrap-select.min.js}"
+            src="../assets/vendors/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script th:src="@{/vendors/chart.js/src/Chart.bundle.min.js}"
+            src="../assets/vendors/chart.js/src/Chart.bundle.min.js"></script>
+    <!-- v1.7.0 -->
+    <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}"
+            src="../assets/vendors/dropify/dist/js/dropify.min.js"></script>
+
+    <!-- Clean UI Scripts -->
+    <script th:src="@{/common/js/common.js}" src="../assets/common/js/common.js"></script>
+    <script th:src="@{/common/js/demo.temp.js}" src="../assets/common/js/demo.temp.js"></script>
+</head>
+
+
+<body class="theme-default">
+
+
+<nav class="left-menu">
+    <div class="logo-container">
+        <a href="index.html" class="logo">
+            <img src="../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}"
+                 alt="Clean UI Admin Template"/>
+            <img class="logo-inverse" src="../static/common/img/logo-inverse.png"
+                 th:src="@{/common/img/logo-inverse.png}" alt="Clean UI Admin Template"/>
+        </a>
+    </div>
+    <div class="left-menu-inner">
+        <ul class="left-menu-list left-menu-list-root list-unstyled">
+            <li>
+                <a class="left-menu-link" href="/users">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Usuarios</span>
+                </a>
+            </li>
+            <li>
+                <a class="left-menu-link" href="/categories">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Categorias</span>
+                </a>
+            </li>
+            <li>
+                <a class="left-menu-link" href="/items">
+                    <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <span class="menu-top-hidden">Items</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<nav class="top-menu">
+    <div class="menu-icon-container hidden-md-up">
+        <div class="animate-menu-button left-menu-toggle">
+            <div><!-- --></div>
+        </div>
+    </div>
+    <div class="menu">
+        <div class="menu-user-block">
+            <div class="dropdown dropdown-avatar">
+                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar" href="javascript:void(0)">
+                        <img th:src="@{/common/img/temp/avatars/1.jpg}" src="../static/common/img/temp/avatars/1.jpg"
+                             alt="Alternative text to the image"/>
+                    </span>
+                </a>
+                <!--PROFILE-->
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i>
+                        Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-header">Home</div>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
+                        System Dashboard</a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
+                        User Boards</a>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
+                        Issue Navigator (35 New)</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i>
+                        Logout</a>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="page-content">
+    <!-- Ecommerce Product Edit -->
+    <section class="panel panel-with-borders page-content-inner">
+        <div class="panel-heading">
+            <h2>
+                Creá tu item
+            </h2>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <form action="#" th:action="@{'/createItem'}"  th:method="POST">
+                    <div class="col-lg">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <!--NOMBRE DEL ITEM-->
+                                    <label class="control-label">Nombre</label>
+                                    <input  type="text" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <!--DROP DOWN LIST DE CATEGORIA-->
+                                <label class="form-control-label">Categoría</label>
+                                <select th:field="*{category}" class="form-control">
+                                    <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                            th:text="${cat.name}" th:field="*{category}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Descripción</label>
+                            <textarea  class="form-control" rows="7"></textarea>
+                        </div>
+                    </div>
+                    <!--FOTOS-->
+                    <div class="col-lg">
+                        <div class="row">
+                            <h4>Fotos del Item</h4>
+                            <div class="cui-ecommerce--catalog--item col-lg-4">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <a>
+                                        <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"
+                                             src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>
+                                    </a>
+                                    <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
+                                        <i class="icmn-cross2"><!-- --></i> Remove
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <input type="file"/>
+                                </div>
+                            </div>
+
+                            <div class="cui-ecommerce--catalog--item col-lg-4">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <a>
+                                        <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"
+                                             src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>
+                                    </a>
+                                    <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
+                                        <i class="icmn-cross2"><!-- --></i> Remove
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <input type="file"/>
+                                </div>
+                            </div>
+
+                            <div class="cui-ecommerce--catalog--item col-lg-4">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <a>
+                                        <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"
+                                             src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>
+                                    </a>
+                                    <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
+                                        <i class="icmn-cross2"><!-- --></i> Remove
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <input type="file"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary width-150">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- End Ecommerce Product Edit -->
+</div>
+</body>
+
+
+</html>

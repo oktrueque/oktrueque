@@ -73,9 +73,5 @@ public class ItemController {
         return "itemView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/items")
-    public String createItem(@ModelAttribute Item item) {
-        itemService.addItem(item);
-        return "redirect:/items";
-    }
+
 }
