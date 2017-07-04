@@ -59,6 +59,7 @@ public class UserController {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         model.addAttribute("items", user.getItems());
+        model.addAttribute("comments", user.getComments());
         return "userProfile";
     }
 
@@ -84,9 +85,9 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
     public String validateUser(@RequestParam("email") String email, @RequestParam("password") String password,Model model){
-        User usuario = userService.getUserByEmailOrUsername(email, email);
-        if (usuario != null && this.encrypt.checkPassword(password)){
-            return "redirect:/users/"+usuario.getId();
+        User us = userService.getUserByEmailOrUsername(email, email);
+        if (us != null && this.encrypt.checkPassword(password)){
+            return "redirect:/users/"+us.getId();
         }else {
             model.addAttribute("loginError", true);
             return "/login";

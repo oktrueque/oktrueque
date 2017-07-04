@@ -32,12 +32,14 @@ public class User {
     private String photo1;
     @Column(name = "username")
     private String username;
+    @OneToMany(mappedBy = "user_target")
+    private List<Comment> comments;
 
 
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, String photo1, String username) {
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items,List<Comment> comments, String photo1, String username) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
@@ -47,6 +49,15 @@ public class User {
         this.photo1 = photo1;
         this.username = username;
         this.items = new ArrayList<>();
+        this.comments = new ArrayList<>();
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getUsername() {
