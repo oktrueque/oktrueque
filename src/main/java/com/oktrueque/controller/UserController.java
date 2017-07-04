@@ -102,23 +102,6 @@ public class UserController {
 
     }
 
-    @RequestMapping(value= "/users/{username}/item", method = RequestMethod.POST)
-    public String createItem(@PathVariable String username, @ModelAttribute Item item, Model model){
 
-
-
-        return "asd";
-    }
-
-    @RequestMapping(value= "/users/{username}/item", method = RequestMethod.GET)
-    public String itemForm(@PathVariable String username, @ModelAttribute Item item, Model model){
-        Item item2 = new Item();
-        model.addAttribute("item", item2);
-        model.addAttribute("user", userService.getUserByUsername(username));
-        model.addAttribute("categories", categoryService.getCategories());
-
-        return "createItem";
-
-    }
 
 }

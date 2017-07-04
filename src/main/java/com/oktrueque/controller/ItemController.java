@@ -91,7 +91,6 @@ public class ItemController {
 
     @RequestMapping(method= RequestMethod.PUT, value="/users/{username}/item")
     public String setItem(@ModelAttribute Item item, @PathVariable String username, Model model) {
-
         model.addAttribute("item", itemService.setItem(item));
         return "redirect:/users/" + username;
     }
@@ -102,7 +101,6 @@ public class ItemController {
         model.addAttribute("item", item2);
         model.addAttribute("user", userService.getUserByUsername(username));
         model.addAttribute("category", categoryService.getCategories());
-
         return "createItem";
     }
 
