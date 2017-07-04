@@ -80,6 +80,7 @@ public class ItemController {
         return "itemsCatalog";
     }
 
+
     @RequestMapping(method = RequestMethod.POST, value = "/items")
     public String createItem(@ModelAttribute Item item) {
         itemService.addItem(item);
@@ -104,4 +105,12 @@ public class ItemController {
 
         return "createItem";
     }
+
+//    @RequestMapping(method = RequestMethod.GET, value = "/items/{id}")
+//    public String getItemById(@PathVariable Long id, Model model) {
+//        model.addAttribute("item", itemService.getItemById(id));
+//        return "itemView";
+//    }
+
+
 }

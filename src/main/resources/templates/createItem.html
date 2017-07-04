@@ -240,26 +240,40 @@
     <!-- Ecommerce Product Edit -->
     <section class="panel panel-with-borders page-content-inner">
         <div class="panel-heading">
+<<<<<<< HEAD
             <h2 >
                 Nuevo ítem
+=======
+            <h2>
+                Creá tu item
+>>>>>>> c32706c3e37733fd8783c7ad396c368002355769
             </h2>
         </div>
         <div class="panel-body">
             <div class="row">
+<<<<<<< HEAD
                 <form action="#" th:action="@{'/users/' + ${user.username} + '/item'}" th:object="${item}" th:method="PUT">
                     <input   th:value="0" name="status" type="hidden" class="form-control"/>
 
+=======
+                <form action="#" th:action="@{'/createItem'}"  th:method="POST">
+>>>>>>> c32706c3e37733fd8783c7ad396c368002355769
                     <div class="col-lg">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <!--NOMBRE DEL ITEM-->
                                     <label class="control-label">Nombre</label>
+<<<<<<< HEAD
                                     <input  th:field="*{name}" type="text" class="form-control"/>
+=======
+                                    <input  type="text" class="form-control"/>
+>>>>>>> c32706c3e37733fd8783c7ad396c368002355769
                                 </div>
                             </div>
                         </div>
                         <div class="row">
+<<<<<<< HEAD
                             <div class="form-group col-lg-4">
                                 <!--DROP DOWN LIST DE CATEGORIA-->
                                 <label class="form-control-label">Categoría</label>
@@ -268,11 +282,24 @@
                                     <!--<option th:each="cat : ${categories}" th:value="${cat.id}"-->
                                             <!--th:text="${cat.name}" th:field="*{category}"></option>-->
                                 <!--</select>-->
+=======
+                            <div class="form-group col-lg-6">
+                                <!--DROP DOWN LIST DE CATEGORIA-->
+                                <label class="form-control-label">Categoría</label>
+                                <select th:field="*{category}" class="form-control">
+                                    <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                            th:text="${cat.name}" th:field="*{category}"></option>
+                                </select>
+>>>>>>> c32706c3e37733fd8783c7ad396c368002355769
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Descripción</label>
+<<<<<<< HEAD
                             <textarea th:field="*{description}" class="form-control" rows="7"></textarea>
+=======
+                            <textarea  class="form-control" rows="7"></textarea>
+>>>>>>> c32706c3e37733fd8783c7ad396c368002355769
                         </div>
                     </div>
                     <!--FOTOS-->

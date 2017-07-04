@@ -15,10 +15,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findOne(id);
-    }
-
     public User addUser(User user) {
        return userRepository.save(user);
     }
