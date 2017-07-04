@@ -139,6 +139,7 @@
 </nav>
 <section class="page-content">
     <form action="/trueques" th:method="POST">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     <div class="page-content-inner">
 
        <!-- Ecommerce Product Details -->

@@ -61,6 +61,7 @@ public class UserController {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         model.addAttribute("items", user.getItems());
+        model.addAttribute("comments", user.getComments());
         return "userProfile";
     }
 

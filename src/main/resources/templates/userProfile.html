@@ -211,15 +211,111 @@
 
                     </div>
                 </div>
+
+                <div class="user-wall">
+                    <div class="user-wall-posting">
+                        <div class="margin-right-10">
+                            <h2>Comentarios acerca de</h2>
+                            <h2 align="center" th:text="${user.name}"></h2>
+                        </div>
+                    </div>
+                    <div class="user-wall-item clearfix">
+                        <th:block th:each="comentario:${comments}">
+                            <div class="user-wall-comments">
+                                <div class="user-wall-item clearfix">
+                                    <div class="s1">
+                                        <a class="avatar" href="javascript:void(0);">
+                                            <img src="../assets/common/img/temp/avatars/5.jpg" th:src="${comentario.user_origin.photo1}"  alt="Alternative text to the image"/>
+                                        </a>
+                                    </div>
+                                    <div class="s2">
+                                        <div class="user-wall-item-head">
+                                            <div class="dropdown pull-right">
+                                                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    <span>Action</span>
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="" role="menu">
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-pencil7"></i> Edit Post</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-bin3"></i> Delete Post</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fa fa-recycle"></i> Mark as Spam</a>
+                                                </ul>
+                                            </div>
+                                            <strong th:text="${comentario.user_origin.name}"></strong>
+                                            <small th:text="${comentario.date}"></small>
+                                        </div>
+                                        <div class="user-wall-post">
+                                            <P th:text="${comentario.comment}"></P>
+                                        </div>
+
+                                        <div th:if="${comentario.score==1}">
+                                             <div class="ec-stars-wrapper">
+                                                <a title="1 estrella">&#9733;</a>
+                                             </div>
+                                        </div>
+
+                                        <div th:if="${comentario.score==2}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="2 estrellas">&#9733;</a>
+                                                <a title="2 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+
+                                        <div th:if="${comentario.score==3}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="3 estrellas">&#9733;</a>
+                                                <a title="3 estrellas">&#9733;</a>
+                                                <a title="3 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+                                        <div th:if="${comentario.score==4}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="4 estrellas">&#9733;</a>
+                                                <a title="4 estrellas">&#9733;</a>
+                                                <a title="4 estrellas">&#9733;</a>
+                                                <a title="4 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+                                        <div th:if="${comentario.score==5}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </div>
+
+                            </div>
+
+                        </th:block>
+
+                    </div>
+
+
+                    <div class="form-group padding-top-10 margin-bottom-0">
+                        <textarea class="form-control adjustable-textarea" placeholder="Deje aqui su comentario" style="overflow: hidden; word-wrap: break-word; resize: none; height: 60px;"></textarea>
+                        <button class="btn btn-primary width-200 margin-top-10">
+                            <i class="fa fa-send margin-right-5"></i>
+                            Comentar
+                        </button>
+                    </div>
+
+                    </div>
+
             </section>
 
             <div class="widget widget-three">
                 <div class="example-calendar-block"></div>
             </div>
+
         </div>
-        <div class="col-xl-8">
 
-
+    <div class="col-xl-8">
             <section class="panel panel-with-borders">
                 <div class="panel-heading">
                     <h2>
@@ -295,14 +391,6 @@
 
     });
 </script>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-
-        var user_username = [[${user.username}]];
-        localStorage.setItem('ok_user_username', user_username);
-
-        /*]]>*/
-    </script>
 <!-- End Page Scripts -->
 </section>
 
