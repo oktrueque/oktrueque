@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
@@ -91,6 +91,7 @@
             <div><!-- --></div>
         </div>
     </div>
+    <div sec:authorize="isAuthenticated()">
     <div class="menu">
         <div class="menu-user-block">
             <div class="dropdown dropdown-avatar">
@@ -133,6 +134,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </nav>
 <section class="page-content">
