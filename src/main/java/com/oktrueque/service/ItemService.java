@@ -66,4 +66,8 @@ public class ItemService {
         itemRepository.save(items);
 
     }
+
+    public Item setItem(Item item){
+        return itemRepository.save(item);
+    }
 }

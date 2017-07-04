@@ -3,6 +3,7 @@ package com.oktrueque.controller;
 import com.oktrueque.model.Item;
 import com.oktrueque.service.CategoryService;
 import com.oktrueque.service.ItemService;
+import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ public class ItemController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/items")
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category,
@@ -80,5 +84,24 @@ public class ItemController {
     public String createItem(@ModelAttribute Item item) {
         itemService.addItem(item);
         return "redirect:/items";
+    }
+
+
+
+    @RequestMapping(method= RequestMethod.PUT, value="/users/{username}/item")
+    public String setItem(@ModelAttribute Item item, @PathVariable String username, Model model) {
+
+        model.addAttribute("item", itemService.setItem(item));
+        return "redirect:/users/" + username;
+    }
+
+    @RequestMapping(value= "/users/{username}/item", method = RequestMethod.GET)
+    public String itemForm(@PathVariable String username, Model model){
+        Item item2 = new Item();
+        model.addAttribute("item", item2);
+        model.addAttribute("user", userService.getUserByUsername(username));
+        model.addAttribute("category", categoryService.getCategories());
+
+        return "createItem";
     }
 }

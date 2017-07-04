@@ -10,4 +10,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
 
      @Query("SELECT COUNT(e) FROM User e WHERE e.email=?1 OR e.username=?2")
      Long checkIfUserExists(String email, String username);
+
+     User findByUsername(String username);
+
+
+
 }
