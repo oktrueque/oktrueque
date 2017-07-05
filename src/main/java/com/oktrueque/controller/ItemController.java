@@ -1,6 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.User;
 import com.oktrueque.service.CategoryService;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.UserService;
@@ -89,9 +90,11 @@ public class ItemController {
 
 
 
-    @RequestMapping(method= RequestMethod.PUT, value="/users/{username}/item")
-    public String setItem(@ModelAttribute Item item, @PathVariable String username, Model model) {
-        model.addAttribute("item", itemService.setItem(item));
+    @RequestMapping(method= RequestMethod.POST, value="/users/{username}/item")
+    public String setItem(@ModelAttribute Item item, @PathVariable String username) {
+        item.setStatus(0);
+        item.setUser(userService.getUserByUsername(username));
+        itemService.setItem(item);
         return "redirect:/users/" + username;
     }
 
@@ -100,15 +103,10 @@ public class ItemController {
         Item item2 = new Item();
         model.addAttribute("item", item2);
         model.addAttribute("user", userService.getUserByUsername(username));
-        model.addAttribute("category", categoryService.getCategories());
+        model.addAttribute("categories", categoryService.getCategories());
         return "createItem";
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/items/{id}")
-//    public String getItemById(@PathVariable Long id, Model model) {
-//        model.addAttribute("item", itemService.getItemById(id));
-//        return "itemView";
-//    }
 
 
 }

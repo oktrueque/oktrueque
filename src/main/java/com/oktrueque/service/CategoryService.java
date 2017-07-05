@@ -24,4 +24,5 @@ public class CategoryService {
         return categoryRepository.findOne(id);
     }
 
+    public int getCategoryByName(String name) { return categoryRepository.findCategoryByName(name);   }
 }

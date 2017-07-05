@@ -17,7 +17,7 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
     @ManyToOne
