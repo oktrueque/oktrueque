@@ -1,14 +1,20 @@
 package com.oktrueque.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +25,12 @@ public class User {
     @Column(name = "last_name")
     private String last_name;
     @Column(name = "email")
+    @NotNull
+    @NotEmpty
     private String email;
     @Column(name = "password")
+    @NotNull
+    @NotEmpty
     private String password;
     @Column(name = "status")
     private Integer status;
@@ -31,13 +41,17 @@ public class User {
     @Column(name = "photo1")
     private String photo1;
     @Column(name = "username")
+    @NotNull
+    @NotEmpty
     private String username;
+    @OneToMany(mappedBy = "user_target")
+    private List<Comment> comments;
 
 
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, String photo1, String username) {
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items,List<Comment> comments, String photo1, String username) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
@@ -47,6 +61,15 @@ public class User {
         this.photo1 = photo1;
         this.username = username;
         this.items = new ArrayList<>();
+        this.comments = new ArrayList<>();
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getUsername() {
@@ -145,5 +168,30 @@ public class User {
         Matcher m = p.matcher(this.email);
         if(m.find()) return true;
         return false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

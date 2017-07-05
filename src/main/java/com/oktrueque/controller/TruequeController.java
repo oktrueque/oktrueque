@@ -38,7 +38,7 @@ public class TruequeController {
     @RequestMapping(method = RequestMethod.POST, value = "/trueques")
     private String registerTrueque(@RequestParam(value = "itemsOffer") ArrayList<Item> itemsOffer, @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand){
         truequeService.saveTrueque(itemsOffer, itemsDemand);
-        return "redirect:/users/" + itemsOffer.get(0).getUser().getId();
+        return "redirect:/users/" + itemsOffer.get(0).getUser().getUsername();
     }
 
 }

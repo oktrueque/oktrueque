@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
@@ -109,43 +109,41 @@
             <div><!-- --></div>
         </div>
     </div>
-    <div class="menu">
-        <div class="menu-user-block">
-            <div class="dropdown dropdown-avatar">
-                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="avatar" href="javascript:void(0);">
-                        <img src="../assets/common/img/temp/avatars/1.jpg" th:src="${user.photo1}"
-                             alt="Alternative text to the image"/>
-                    </span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i>
-                        Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-header">Home</div>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
-                        System Dashboard</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
-                        User Boards</a>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i>
-                        Issue Navigator (35 New)</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i>
-                        Logout</a>
-                </ul>
-            </div>
-        </div>
-        <div class="menu-user-block menu-notifications">
-            <div class="dropdown dropdown-avatar">
-                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <i class="menu-notification-icon icmn-bubbles7"></i>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="" role="menu">
 
-                </ul>
+    <div sec:authorize="isAuthenticated()">
+        <div class="menu">
+            <div class="menu-user-block">
+                <div class="dropdown dropdown-avatar">
+                    <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar" href="javascript:void(0);">
+                        <img th:src="@{|${#authentication.principal.photo1}|}"/>
+                    </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-user"></i> Profile</a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-header">Home</div>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> System Dashboard</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> User Boards</a>
+                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> Issue Navigator (35 New)</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/logout"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu-user-block menu-notifications">
+                <div class="dropdown dropdown-avatar">
+                    <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="menu-notification-icon icmn-bubbles7"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="" role="menu">
+
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+
 </nav>
 
 <section class="page-content">
@@ -237,9 +235,105 @@
 
                             <button type="button" class="btn">Accion 2</button>
 
+                    </div>
+                </div>
+
+                <div class="user-wall">
+                    <div class="user-wall-posting">
+                        <div class="margin-right-10">
+                            <h2>Comentarios acerca de</h2>
+                            <h2 align="center" th:text="${user.name}"></h2>
                         </div>
                     </div>
-                </section>
+                    <div class="user-wall-item clearfix">
+                        <th:block th:each="comentario:${comments}">
+                            <div class="user-wall-comments">
+                                <div class="user-wall-item clearfix">
+                                    <div class="s1">
+                                        <a class="avatar" href="javascript:void(0);">
+                                            <img src="../assets/common/img/temp/avatars/5.jpg" th:src="${comentario.user_origin.photo1}"  alt="Alternative text to the image"/>
+                                        </a>
+                                    </div>
+                                    <div class="s2">
+                                        <div class="user-wall-item-head">
+                                            <div class="dropdown pull-right">
+                                                <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                    <span>Action</span>
+                                                    <span class="caret"></span>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="" role="menu">
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-pencil7"></i> Edit Post</a>
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-bin3"></i> Delete Post</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fa fa-recycle"></i> Mark as Spam</a>
+                                                </ul>
+                                            </div>
+                                            <strong th:text="${comentario.user_origin.name}"></strong>
+                                            <small th:text="${comentario.date}"></small>
+                                        </div>
+                                        <div class="user-wall-post">
+                                            <P th:text="${comentario.comment}"></P>
+                                        </div>
+
+                                        <div th:if="${comentario.score==1}">
+                                             <div class="ec-stars-wrapper">
+                                                <a title="1 estrella">&#9733;</a>
+                                             </div>
+                                        </div>
+
+                                        <div th:if="${comentario.score==2}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="2 estrellas">&#9733;</a>
+                                                <a title="2 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+
+                                        <div th:if="${comentario.score==3}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="3 estrellas">&#9733;</a>
+                                                <a title="3 estrellas">&#9733;</a>
+                                                <a title="3 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+                                        <div th:if="${comentario.score==4}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="4 estrellas">&#9733;</a>
+                                                <a title="4 estrellas">&#9733;</a>
+                                                <a title="4 estrellas">&#9733;</a>
+                                                <a title="4 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+                                        <div th:if="${comentario.score==5}">
+                                            <div class="ec-stars-wrapper">
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                                <a title="5 estrellas">&#9733;</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </div>
+
+                            </div>
+
+                        </th:block>
+
+                    </div>
+
+
+                    <div class="form-group padding-top-10 margin-bottom-0">
+                        <textarea class="form-control adjustable-textarea" placeholder="Deje aqui su comentario" style="overflow: hidden; word-wrap: break-word; resize: none; height: 60px;"></textarea>
+                        <button class="btn btn-primary width-200 margin-top-10">
+                            <i class="fa fa-send margin-right-5"></i>
+                            Comentar
+                        </button>
+                    </div>
+
+                    </div>
+
+            </section>
 
                 <div class="widget widget-three">
                     <div class="example-calendar-block"></div>
@@ -293,6 +387,7 @@
         <!-- End Profile -->
 
     </div>
+    </section>
 
     <!-- Page Scripts -->
     <script>
@@ -337,8 +432,6 @@
 
         /*]]>*/
     </script>
-    <!-- End Page Scripts -->
-</section>
 
 
 </body>

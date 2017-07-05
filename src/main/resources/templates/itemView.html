@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
@@ -87,12 +87,13 @@
             <div><!-- --></div>
         </div>
     </div>
+    <div sec:authorize="isAuthenticated()">
     <div class="menu">
         <div class="menu-user-block">
             <div class="dropdown dropdown-avatar">
                 <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="avatar" href="javascript:void(0);">
-                        <img src="../static/common/img/temp/avatars/1.jpg" th:src="@{/common/img/temp/avatars/1.jpg}" alt="Alternative text to the image"/>
+                        <img th:src="@{|${#authentication.principal.photo1}|}"/>
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
@@ -103,7 +104,7 @@
                     <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> User Boards</a>
                     <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-circle-right"></i> Issue Navigator (35 New)</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                    <a class="dropdown-item" href="/logout"><i class="dropdown-icon icmn-exit"></i> Logout</a>
                 </ul>
             </div>
         </div>
@@ -120,6 +121,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </nav>
 <section class="page-content">
@@ -158,14 +160,16 @@
                     <div class="col-lg-4">
                         <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
                         <div class="cui-ecommerce--product--controls">
-                            <form id="form-trueque" action="/trueques" th:method="GET">
-                                <input type="hidden" id="username-user-offerer" name="username-user-offerer"/>
-                                <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
-                                <button type="button" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15">
-                                    <i class="icmn-forward margin-right-5"></i>
-                                    Trueque Ya
-                                </button>
-                            </form>
+                            <div sec:authorize="isAuthenticated()">
+                                <form id="form-trueque" action="/trueques" th:method="GET">
+                                    <input type="hidden" id="username-user-offerer" name="username-user-offerer" th:value="${#authentication.principal.username}"/>
+                                    <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
+                                    <button type="sumbit" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15">
+                                        <i class="icmn-forward margin-right-5"></i>
+                                        Trueque Ya
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                         <div class="cui-ecommerce--product--info">
                             <div class="nav-tabs-horizontal">
@@ -199,62 +203,5 @@
         <!-- End Ecommerce Product Details -->
     </div>
 </section>
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form id="modal-form" action="/checkUser" method="post" name="user">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Iniciar Sesión</h4>
-            </div>
-            <div class="modal-body">
-                <p>Por favor, inicia sesión para poder realizar un trueque.</p>
-                    <div class="form-group" id="modal-div-email">
-                        <input type="text" placeholder="Enter email or username" class="form-control form-control-rounded" id="modal-user-email" name="email"/>
-                    </div>
-                    <div class="form-group" id="modal-div-password">
-                        <input type="password" placeholder="Enter password" class="form-control form-control-rounded" id="modal-user-password" name="password"/>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-modal" type="button" class="btn btn-primary">Enviar</button>
-            </div>
-        </div>
-        </form>
-    </div>
-</div>
-<script>
-    $(document).ready(function(){
-        $('#btn-trueque').click(function(){
-            var user_username = localStorage.getItem('ok_user_username');
-            if(user_username === null){
-                $('#loginModal').modal('show');
-            }else{
-                $('#username-user-offerer').val(user_username);
-                $('#form-trueque').submit();
-            }
-        });
-        $('#btn-modal').click(function(){
-            $.ajax({
-                type: "POST",
-                url: "/checkUser",
-                data: $("#modal-form").serialize(),
-                success: function(data)
-                {
-                    console.log(data);
-                    if(data === null){
-                        $('#modal-div-email').addClass("has-danger");
-                        $('#modal-div-password').addClass("has-danger");
-                    }else{
-                        $('#username-user-offerer').val(data);
-                        $('#form-trueque').submit();
-                    }
-                }
-            });
-        });
-    });
-</script>
 </body>
 </html>
