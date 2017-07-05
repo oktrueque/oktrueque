@@ -241,39 +241,43 @@
     <section class="panel panel-with-borders page-content-inner">
         <div class="panel-heading">
 
-            <h2 >
+            <h2>
                 Nuevo ítem
             </h2>
         </div>
         <div class="panel-body">
             <div class="row">
 
-                <form id="nuevoItemForm" onsubmit="return validateCategory()" th:action="@{'/users/' + ${user.username} + '/item'}" th:object="${item}" th:method="POST">
+                <form id="nuevoItemForm" onsubmit="return validations()"
+                      th:action="@{'/users/' + ${user.username} + '/item'}" th:object="${item}" th:method="POST">
                     <div class="col-lg">
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <!--NOMBRE DEL ITEM-->
                                     <label class="control-label">Nombre</label>
-                                    <input  th:field="*{name}" type="text" class="form-control"/>
+                                    <input required="true" th:field="*{name}" type="text" class="form-control"/>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-
                             <div class="form-group col-lg-4">
                                 <!--DROP DOWN LIST DE CATEGORIA-->
                                 <label for="selectCat" class="form-control-label">Categoría</label>
-                                <select id="selectCat" th:field="*{category}" class="form-control" >
-                                    <option value="-1"  > Seleccione categoría</option>
+                                <select required="true" id="selectCat" th:field="*{category}" class="form-control">
+                                    <option value="-1"> Seleccione categoría</option>
                                     <option th:each="cat : ${categories}" th:value="${cat.id}"
-                                            th:text="${cat.name}" th:field="*{category}" ></option>
+                                            th:text="${cat.name}" th:field="*{category}"></option>
                                 </select>
+                            </div>
+                            <div class="form-group col-lg-8">
+                                <i id="noCatIcon" hidden="false" style="color:red"
+                                   class="glyphicon glyphicon-arrow-left "></i>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-control-label">Descripción</label>
-                            <textarea th:field="*{description}" class="form-control" rows="7"></textarea>
+                            <label for="descTextArea" class="form-control-label">Descripción</label>
+                            <textarea required="true" id="descTextArea" th:field="*{description}" class="form-control" rows="7"></textarea>
 
                         </div>
                     </div>
@@ -339,19 +343,26 @@
 
 <script>
 
-    function validateCategory(){
+    function validations() {
 
         var selectValue = document.getElementById('selectCat').value;
+//        var description = document.getElementById('descTextArea').value;
+
 
         if (selectValue === '-1') {
             alert('Debe seleccionar una categoría para crear el item!');
+            document.getElementById('noCatIcon').hidden('false');
+//            document.getElementById('nuevoItemForm').
             return false;
-        }
-            else {
+//        } else if (description === '') {
+//            alert('Debe describir el ítem para crearlo!');
+//            return false;
+        } else {
             return true;
         }
 
     }
+
 
 </script>
 

@@ -1,9 +1,8 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.model.Item;
+
 import com.oktrueque.model.User;
-import com.oktrueque.service.CategoryService;
-import com.oktrueque.service.ItemService;
+
 import com.oktrueque.service.UserService;
 import com.oktrueque.utils.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import org.jasypt.util.password.BasicPasswordEncryptor;
-
 @Controller
 public class UserController {
 
     private UserService userService;
-    private CategoryService categoryService;
-    private ItemService itemService;
 
     private Encrypter encrypt = new Encrypter();
 
