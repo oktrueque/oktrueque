@@ -3,6 +3,7 @@ package com.oktrueque.controller;
 
 import com.oktrueque.model.User;
 
+import com.oktrueque.service.EmailService;
 import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,12 +16,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Controller
 public class UserController {
 
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -35,19 +41,19 @@ public class UserController {
         return "/register";
     }
 
-        @RequestMapping(method = RequestMethod.POST, value = "/register")
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     public String addUser(Model model, @ModelAttribute @Valid User user, BindingResult result) {
-        if(!user.checkUsername()){
+        if (!user.checkUsername()) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El username debe contener al menos 6 caracteres, sin caracteres especiales --");
             return "/register";
         }
-        if(!user.checkEmail()){
+        if (!user.checkEmail()) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email ingresado no es válido --");
             return "/register";
         }
-        if(userService.checkIfUserExists(user.getEmail(), user.getUsername())){
+        if (userService.checkIfUserExists(user.getEmail(), user.getUsername())) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email o username ingresado ya existen --");
             return "/register";
@@ -55,7 +61,8 @@ public class UserController {
         user.setStatus(0);
         user.setItemsAmount(0);
         user = userService.addUser(user);
-        //Send email to user for email confirmation <-------
+        userService.sendVerificationToken(user);
+
         return "redirect:/users/" + user.getId();
     }
 
@@ -69,7 +76,7 @@ public class UserController {
         return "userProfile";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value ="/users/edit{username}")
+    @RequestMapping(method = RequestMethod.GET, value = "/users/edit{username}")
     public String getUser(@PathVariable String username, Model model) {
         model.addAttribute("user", userService.getUserByUsername(username));
         return "updateProfile";
@@ -97,6 +104,16 @@ public class UserController {
         return "redirect:/login?logout";
     }
 
+
+    @RequestMapping(value="/{username}/{token}/confirm", method = RequestMethod.GET)
+    @Transactional
+    public String confirmAccount(@PathVariable String username,
+                                 @PathVariable String token){
+        if(!userService.confirmAcount(username,token)){
+            return "badUrl";
+        }
+        return "redirect:/login";
+    }
 
 
 }

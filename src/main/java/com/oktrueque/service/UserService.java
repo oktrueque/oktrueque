@@ -1,13 +1,22 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.User;
+import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserRepository;
+import com.oktrueque.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
+
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -38,5 +47,24 @@ public class UserService {
 
     public User getUserByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    public void sendVerificationToken(User user){
+        String token = UUID.randomUUID().toString();
+        VerificationToken verificationToken = new VerificationToken(token,user);
+        verificationTokenRepository.save(verificationToken);
+        String uriConfirm = "localhost:8080/" + user.getUsername() +
+                "/" + token + "/confirm";
+        emailService.sendMail(user.getEmail(), "Validar cuenta", uriConfirm);
+    }
+
+    public boolean confirmAcount(String username, String token) {
+        VerificationToken tokenStored  = verificationTokenRepository.findByToken(token);
+        User userStored = userRepository.findOne(tokenStored.getUser().getId());
+        if (tokenStored == null || userStored == null || !userStored.getUsername().equals(username)){
+            return false;
+        }
+        userStored.setStatus(1);
+        return true;
     }
 }
