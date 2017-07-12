@@ -2,72 +2,33 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.Item;
 import com.oktrueque.model.Trueque;
-import com.oktrueque.repository.ItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class ItemService {
+/**
+ * Created by Facundo on 12/07/2017.
+ */
+public interface ItemService {
 
-    @Autowired
-    private ItemRepository itemRepository;
+    List<Item> getItems();
 
-    public List<Item> getItems() {
-        List<Item> items = new ArrayList<>();
-        itemRepository.findAll().forEach(items::add);
-        return items;
-    }
+    Item getItemById(Long id);
 
-    public Item getItemById(Long id) {
-        return itemRepository.findOne(id);
-    }
+    void addItem(Item item);
 
-    public void addItem(Item item) {
-        itemRepository.save(item);
-    }
+    void deleteItem(Long id);
 
-    public void deleteItem(Long id) {
-        itemRepository.delete(id);
-    }
+    Page<Item> getItemsByCategory(int id_category, Pageable pageable);
 
-    public Page<Item> getItemsByCategory(int id_category, Pageable pageable) {
-        return itemRepository.findByCategory_Id(id_category, pageable);
-    }
+    Page<Item> findAll(Pageable pageable);
 
-    public Page<Item> findAll(Pageable pageable) {
-        return itemRepository.findAll(pageable);
-    }
+    Page<Item> getItemsByName(String name, Pageable pageable);
 
-    public Page<Item> getItemsByName(String name, Pageable pageable) {
-        return itemRepository.findByName(name, pageable);
-    }
+    List<Item> getItemsByUserUsername(String username);
 
-    public List<Item> getItemsByUserUsername(String username){ return itemRepository.findByUser_Username(username);}
+    void updateTruequeItems(List<Item> itemsOffer, List<Item> itemsDemand, Trueque trueque);
 
-    public void updateTruequeItems(List<Item> itemsOffer, List<Item> itemsDemand, Trueque trueque){
-        List<Item> items = new ArrayList<>();
-        itemsOffer.forEach(item -> {
-            item.setTrueque(trueque);
-            item.setStatus(2);
-            items.add(item);
-        });
-        itemsDemand.forEach(item -> {
-            item.setTrueque(trueque);
-            item.setStatus(2);
-            items.add(item);
-        });
-
-        itemRepository.save(items);
-
-    }
-
-    public Item setItem(Item item){
-        return itemRepository.save(item);
-    }
+    Item setItem(Item item);
 }

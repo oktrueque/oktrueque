@@ -1,7 +1,7 @@
 package com.oktrueque.controller.rest;
 
 import com.oktrueque.model.User;
-import com.oktrueque.service.UserService;
+import com.oktrueque.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AjaxController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @RequestMapping(method = RequestMethod.POST, value = "/checkUser")
     public String checkUser(@ModelAttribute User user){
-        User usuario = userService.getUserByEmailOrUsername(user.getEmail(), user.getEmail());
+        User usuario = userServiceImpl.getUserByEmailOrUsername(user.getEmail(), user.getEmail());
         if(usuario != null && usuario.checkPassword(user.getPassword())){
             return usuario.getUsername();
         }else{

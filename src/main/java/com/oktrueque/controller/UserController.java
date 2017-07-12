@@ -3,7 +3,6 @@ package com.oktrueque.controller;
 
 import com.oktrueque.model.User;
 
-import com.oktrueque.service.EmailService;
 import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,21 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.UUID;
 
 @Controller
 public class UserController {
 
+    @Autowired
     private UserService userService;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String getUserById(Model model) {

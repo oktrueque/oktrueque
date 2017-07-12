@@ -1,70 +1,23 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.User;
-import com.oktrueque.model.VerificationToken;
-import com.oktrueque.repository.UserRepository;
-import com.oktrueque.repository.VerificationTokenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+/**
+ * Created by Facundo on 12/07/2017.
+ */
+public interface UserService {
 
-@Service
-public class UserService {
+    User addUser(User user);
 
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private VerificationTokenRepository verificationTokenRepository;
+    void updateUser(User user);
 
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder){
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    Boolean checkIfUserExists(String email, String username);
 
-    public User addUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-       return userRepository.save(user);
-    }
+    User getUserByEmailOrUsername(String email, String username);
 
-    public void updateUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
+    User getUserByUsername(String username);
 
-    public Boolean checkIfUserExists(String email, String username){ return userRepository.checkIfUserExists(email, username)>0;}
+    void sendVerificationToken(User user);
 
-    public User getUserByEmailOrUsername(String email, String username){
-        return userRepository.findByEmailOrUsername(email, username);
-    }
-
-    public User getUserByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
-
-    public void sendVerificationToken(User user){
-        String token = UUID.randomUUID().toString();
-        VerificationToken verificationToken = new VerificationToken(token,user);
-        verificationTokenRepository.save(verificationToken);
-        String uriConfirm = "localhost:8080/" + user.getUsername() +
-                "/" + token + "/confirm";
-        emailService.sendMail(user.getEmail(), "Validar cuenta", uriConfirm);
-    }
-
-    public boolean confirmAcount(String username, String token) {
-        VerificationToken tokenStored  = verificationTokenRepository.findByToken(token);
-        User userStored = userRepository.findOne(tokenStored.getUser().getId());
-        if (tokenStored == null || userStored == null || !userStored.getUsername().equals(username)){
-            return false;
-        }
-        userStored.setStatus(1);
-        return true;
-    }
+    boolean confirmAcount(String username, String token);
 }

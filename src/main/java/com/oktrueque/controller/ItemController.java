@@ -1,10 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Item;
-import com.oktrueque.model.User;
-import com.oktrueque.service.CategoryService;
-import com.oktrueque.service.ItemService;
-import com.oktrueque.service.UserService;
+import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
