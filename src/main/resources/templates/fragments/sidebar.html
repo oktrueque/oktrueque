@@ -2,79 +2,63 @@
     <nav class="left-menu" left-menu="true">
         <div class="logo-container">
             <a href="/" class="logo">
-                <img src="../../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}"
+                <img class="logo-inverse" src="../../static/common/img/logo-v2.png" th:src="@{/common/img/logo-v2.png}"
                      alt="OkTrueque"/>
             </a>
         </div>
         <div class="left-menu-inner scroll-pane">
             <ul class="left-menu-list left-menu-list-root list-unstyled">
-                <li class="left-menu-list-submenu">
+                <li>
                     <a class="left-menu-link" href="javascript: void(0);">
                         <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                        <span class="menu-top-hidden">Usuarios</span>
+                        <span class="menu-top-hidden">Principal</span>
                     </a>
-                    <ul class="left-menu-list list-unstyled">
-                        <li>
-                            <a class="left-menu-link" th:href="@{/users(status=0)}">
-                                Nuevos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="left-menu-link" th:href="@{/users(status=1)}">
-                                Activos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="left-menu-link" th:href="@{/users(status=2)}">
-                                Eliminados
-                            </a>
-                        </li>
-                        <li>
-                            <a class="left-menu-link" th:href="@{/users(status=3)}">
-                                Banneados
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="left-menu-list-submenu">
-                    <a class="left-menu-link" href="javascript: void(0);">
-                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                        <span class="menu-top-hidden">Items</span>
-                    </a>
-                    <ul class="left-menu-list list-unstyled">
-                        <li>
-                            <a class="left-menu-link" th:href="@{/items(status=0)}">
-                                Nuevos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="left-menu-link" th:href="@{/items(status=1)}">
-                                Activos
-                            </a>
-                        </li>
-                        <li>
-                            <a class="left-menu-link" th:href="@{/items(status=2)}">
-                                Eliminados
-                            </a>
-                        </li>
-                        <li>
-                            <a class="left-menu-link" th:href="@{/items(status=3)}">
-                                Banneados
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li>
-                    <a class="left-menu-link" href="/categories">
-                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
+                    <a class="left-menu-link" href="javascript: void(0);">
+                        <i class="left-menu-link-icon icmn-user"><!-- --></i>
+                        <span class="menu-top-hidden">Mi Perfil</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="left-menu-link" href="javascript: void(0);">
+                        <i class="left-menu-link-icon icmn-bubbles10"><!-- --></i>
+                        <span class="menu-top-hidden">Mensajes</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="left-menu-link" href="javascript: void(0);">
+                        <i class="left-menu-link-icon icmn-magic-wand"><!-- --></i>
+                        <span class="menu-top-hidden">Mis Trueques</span>
+                    </a>
+                </li>
+                <li class="left-menu-list-submenu">
+                    <a class="left-menu-link" href="javascript: void(0);">
+                        <i class="left-menu-link-icon icmn-list2"><!-- --></i>
                         <span class="menu-top-hidden">Categorias</span>
                     </a>
-                </li>
-                <li>
-                    <a class="left-menu-link" href="/trueques">
-                        <i class="left-menu-link-icon icmn-home2"><!-- --></i>
-                        <span class="menu-top-hidden">Trueques</span>
-                    </a>
+                    <ul class="left-menu-list list-unstyled">
+                        <li>
+                            <a class="left-menu-link" href="javascript:void(0)">
+                                Categoria 1
+                            </a>
+                        </li>
+                        <li>
+                            <a class="left-menu-link" href="javascript:void(0)">
+                                Categoria 2
+                            </a>
+                        </li>
+                        <li>
+                            <a class="left-menu-link" href="javascript:void(0)">
+                                Categoria 3
+                            </a>
+                        </li>
+                        <li>
+                            <a class="left-menu-link" href="javascript:void(0)">
+                                Categoria N
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
