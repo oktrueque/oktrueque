@@ -233,7 +233,11 @@
                                         class="material-icons">Editar</i></a>
                             </button>
 
-                            <button type="button" class="btn">Accion 2</button>
+                            <button type="button" class="btn">
+                                <a th:href="@{'/users/chats/' + ${user.username}}" th:method="GET"
+                                   class="btn-floating btn-large waves-effect waves-light red"><i
+                                        class="material-icons">Mis Chats</i></a>
+                            </button>
 
                     </div>
                 </div>
