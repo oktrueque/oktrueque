@@ -72,6 +72,13 @@ public class UserController {
         return "updateProfile";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/users/chats/{username}")
+    public String getUser() {
+
+        return "chat";
+    }
+
+
     @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}")
     public String updateUser(@ModelAttribute User user, @PathVariable String username) {
         user.setStatus(0);
