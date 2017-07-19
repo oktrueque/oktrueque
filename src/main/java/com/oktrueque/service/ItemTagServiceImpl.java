@@ -1,14 +1,16 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Item_Tag;
+import com.oktrueque.model.ItemTag;
 import com.oktrueque.repository.ItemTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by nicolas on 19/07/17.
  */
+@Service
 public class ItemTagServiceImpl implements ItemTagService {
 
     private ItemTagRepository itemTagRepository;
@@ -19,7 +21,7 @@ public class ItemTagServiceImpl implements ItemTagService {
     }
 
     @Override
-    public List<Item_Tag> getItemTagByItemId(Long itemId) {
+    public List<ItemTag> getItemTagByItemId(Long itemId) {
         return itemTagRepository.findByIdItemId(itemId);
     }
 }

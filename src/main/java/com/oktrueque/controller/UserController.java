@@ -4,6 +4,8 @@ package com.oktrueque.controller;
 import com.oktrueque.model.User;
 
 import com.oktrueque.service.UserService;
+import com.oktrueque.service.UserTagService;
+import com.oktrueque.service.UserTagServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +23,14 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
-    @Autowired
     private UserService userService;
+    private UserTagService userTagService;
+
+    @Autowired
+    public UserController(UserService userService, UserTagService userTagService){
+        this.userService = userService;
+        this.userTagService = userTagService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String getUserById(Model model) {

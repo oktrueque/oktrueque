@@ -1,6 +1,6 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.User_Tag;
+import com.oktrueque.model.UserTag;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface UserTagService {
 
-    List<User_Tag> getUserTagByUserId(Long userId);
+    List<UserTag> getUserTagByUserId(Long userId);
 }

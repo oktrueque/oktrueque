@@ -1,7 +1,7 @@
 package com.oktrueque.repository;
 
-import com.oktrueque.model.User_Tag;
-import com.oktrueque.model.User_Tag_Id;
+import com.oktrueque.model.UserTag;
+import com.oktrueque.model.UserTagId;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by nicolas on 19/07/17.
  */
-public interface UserTagRepository extends CrudRepository<User_Tag, User_Tag_Id> {
+public interface UserTagRepository extends CrudRepository<UserTag, UserTagId> {
 
-    List<User_Tag> findByIdUserId(Long userId);
+    List<UserTag> findByIdUserId(Long userId);
 }

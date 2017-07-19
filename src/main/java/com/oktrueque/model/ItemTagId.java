@@ -1,15 +1,17 @@
 package com.oktrueque.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class Item_Tag_Id implements Serializable{
+public class ItemTagId implements Serializable{
 
+    @Column(name = "id_item")
     private Long itemId;
+    @Column(name = "id_tag")
     private Long tagId;
-
 
     public Long getItemId() {
         return itemId;
@@ -35,8 +37,8 @@ public class Item_Tag_Id implements Serializable{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Item_Tag_Id)) return false;
-        Item_Tag_Id that = (Item_Tag_Id) o;
+        if (!(o instanceof ItemTagId)) return false;
+        ItemTagId that = (ItemTagId) o;
         return Objects.equals(itemId, that.getItemId()) &&
                 Objects.equals(tagId, that.getTagId());
     }

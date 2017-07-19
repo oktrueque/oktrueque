@@ -1,6 +1,6 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Item_Tag;
+import com.oktrueque.model.ItemTag;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface ItemTagService {
 
-    List<Item_Tag> getItemTagByItemId(Long itemId);
+    List<ItemTag> getItemTagByItemId(Long itemId);
 }

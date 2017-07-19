@@ -9,20 +9,20 @@ import javax.persistence.Table;
  * Created by nicolas on 19/07/17.
  */
 @Entity
-@Table(name = "users_tags")
-public class User_Tag implements Comparable {
+@Table(name = "items_tags")
+public class ItemTag implements Comparable {
 
     @EmbeddedId
-    private User_Tag_Id id;
+    private ItemTagId id;
 
     @Column(name = "name")
     private String name;
 
-    public User_Tag_Id getId() {
+    public ItemTagId getId() {
         return id;
     }
 
-    public void setId(User_Tag_Id id) {
+    public void setId(ItemTagId id) {
         this.id = id;
     }
 
@@ -41,7 +41,7 @@ public class User_Tag implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-        User_Tag other = (User_Tag) o;
+        ItemTag other = (ItemTag) o;
         return this.hashCode() - other.hashCode();
     }
 }

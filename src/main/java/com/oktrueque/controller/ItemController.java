@@ -17,14 +17,18 @@ public class ItemController {
 
     private static final Logger LOGGER = Logger.getLogger(ItemController.class.getName());
 
-    @Autowired
     private ItemService itemService;
-
-    @Autowired
     private CategoryService categoryService;
+    private UserService userService;
+    private ItemTagService itemTagService;
 
     @Autowired
-    private UserService userService;
+    public ItemController(ItemService itemService, CategoryService categoryService, UserService userService, ItemTagService itemTagService){
+        this.itemService = itemService;
+        this.categoryService = categoryService;
+        this.userService = userService;
+        this.itemTagService = itemTagService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/items")
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category,

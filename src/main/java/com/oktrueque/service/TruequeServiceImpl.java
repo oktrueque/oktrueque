@@ -5,6 +5,7 @@ import com.oktrueque.model.Trueque;
 import com.oktrueque.model.User;
 import com.oktrueque.repository.TruequeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Envy on 15/6/2017.
  */
+@Service
 public class TruequeServiceImpl implements TruequeService {
 
 

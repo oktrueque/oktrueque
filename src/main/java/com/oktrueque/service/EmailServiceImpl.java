@@ -2,11 +2,12 @@ package com.oktrueque.service;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Facundo on 08/07/2017.
  */
-
+@Service
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;

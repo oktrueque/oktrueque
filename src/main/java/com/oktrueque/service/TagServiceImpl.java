@@ -3,12 +3,14 @@ package com.oktrueque.service;
 import com.oktrueque.model.Tag;
 import com.oktrueque.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by nicolas on 19/07/17.
  */
+@Service
 public class TagServiceImpl implements TagService {
 
     private TagRepository tagRepository;

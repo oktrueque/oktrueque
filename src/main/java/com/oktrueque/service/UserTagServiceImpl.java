@@ -1,14 +1,16 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.User_Tag;
+import com.oktrueque.model.UserTag;
 import com.oktrueque.repository.UserTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by nicolas on 19/07/17.
  */
+@Service
 public class UserTagServiceImpl implements UserTagService{
 
     private UserTagRepository userTagRepository;
@@ -19,7 +21,7 @@ public class UserTagServiceImpl implements UserTagService{
     }
 
     @Override
-    public List<User_Tag> getUserTagByUserId(Long userId) {
+    public List<UserTag> getUserTagByUserId(Long userId) {
         return userTagRepository.findByIdUserId(userId);
     }
 }
