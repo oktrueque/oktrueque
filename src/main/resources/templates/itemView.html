@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
 
 </head>
@@ -49,6 +49,12 @@
                                         Trueque Ya
                                     </button>
                                 </form>
+                            </div>
+                            <div sec:authorize="isAnonymous()">
+                                <a href="/login"  class="btn btn-icon btn-primary btn-lg margin-right-15">
+                                    <i class="icmn-redo2 margin-right-5"></i>
+                                    Log in
+                                </a>
                             </div>
                         </div>
                         <div class="cui-ecommerce--product--info">

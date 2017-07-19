@@ -44,7 +44,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Page<Item> getItemsByName(String name, Pageable pageable) {
-        return itemRepository.findByName(name, pageable);
+        return itemRepository.findByNameContains(name, pageable);
     }
 
     public List<Item> getItemsByUserUsername(String username) {

@@ -5,8 +5,8 @@
                 <div><!-- --></div>
             </div>
         </div>
-        <div sec:authorize="isAuthenticated()">
-            <div class="menu">
+        <div class="menu">
+            <div sec:authorize="isAuthenticated()">
                 <div class="menu-user-block">
                     <div class="dropdown dropdown-avatar">
                         <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -32,19 +32,20 @@
                         </ul>
                     </div>
                 </div>
+            </div>
                 <div class="menu-info-block">
                     <div class="right hidden-md-down margin-left-20">
                         <div class="search-block">
-                            <div class="form-input-icon form-input-icon-right">
-                                <i class="icmn-search"></i>
-                                <input type="text" class="form-control form-control-sm form-control-rounded"
-                                       placeholder="Search..."/>
-                                <button type="submit" class="search-block-submit"></button>
-                            </div>
+                            <form action="/items" th:method="GET">
+                                <div class="form-input-icon form-input-icon-right">
+                                    <i class="icmn-search"></i>
+                                    <input type="text" class="form-control form-control-sm form-control-rounded" placeholder="Search..." name="item_name" />
+                                    <button type="submit" class="search-block-submit"></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </nav>
 </th:block>
