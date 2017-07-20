@@ -46,6 +46,8 @@ public class User implements UserDetails{
     private String username;
     @OneToMany(mappedBy = "user_target")
     private List<Comment> comments;
+    @Column(name = "score")
+    private Integer score;
 
 
     public User() {
@@ -193,5 +195,13 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

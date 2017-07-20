@@ -1,7 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
+    <title>OKTrueque - Update Profile</title>
 
+    <!--CROPPER.js-->
+    <script th:src="@{/common/js/cropper/cropper.min.js}" src="../static/common/js/cropper/cropper.min.css"></script>
+    <link rel="stylesheet" th:href="@{/common/js/cropper/cropper.min.css}" href="../static/common/js/cropper/cropper.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"/>
+    <style>
+
+        .box-2 {
+            padding: 0.5em;
+            width: calc(100% / 2 - 1em);
+        }
+
+        .options label,
+        .options input {
+            width: 4em;
+            padding: 0.5em 1em;
+        }
+
+        .btn {
+            background: white;
+            color: black;
+            border: 1px solid black;
+            padding: 0.5em 1em;
+            text-decoration: none;
+            margin: 0.8em 0.3em;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -11,7 +48,7 @@
             <div class="page-content-inner">
                 <div class="panel-body">
 
-            <form th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="put">
+            <form th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT" enctype="multipart/form-data">
 
                 <h5>Información Personal</h5>
                 <div class="row">
@@ -27,15 +64,7 @@
                             <input type="text" class="form-control" id="21" th:field="*{last_name}"/>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="22">Nombre de Usuario</label>
-                            <input type="text" readonly="true" class="form-control" id="22" th:field="*{username}"/>
-                        </div>
-                    </div>
                 </div>
-
-
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -45,30 +74,28 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="form-control-label" for="25">Password</label>
-                            <input type="password" class="form-control" id="25" th:field="*{password}"/>
+                            <label class="form-control-label" for="22">Nombre de Usuario</label>
+                            <input type="text" readonly="true" class="form-control" id="22" th:field="*{username}"/>
                         </div>
-
                     </div>
-
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-
-                        <h5>Seleccionar foto de Perfil</h5>
-                        <div class="form-group">
-                            <label class="form-control-label" for="l6">File Upload</label>
-                            <input type="file" id="l6"/>
+                <div class="form-group">
+                    <h5>Seleccionar foto de Perfil</h5>
+                    <input id="file-input" type="file" name="file" class="btn-primary" />
+                    <div class="row">
+                        <!-- leftbox -->
+                        <div class="box-2 col-md-4">
+                            <div class="result"></div>
+                        </div>
+                        <!--rightbox-->
+                        <div class="box-2 img-result hide">
+                            <!-- result of crop -->
+                            <label for="croppedImg" class="form-control-label">Foto de perfil:</label>
+                            <img id="croppedImg" class="cropped" src="" alt=""  />
                         </div>
                     </div>
-                    <div class="col-lg-6">
-
-                        <h5>Seleccionar fondo de Fondo</h5>
-                        <div class="form-group">
-                            <label class="form-control-label" for="l5">File Upload</label>
-                            <input type="file" id="l5"/>
-                        </div>
-                    </div>
+                    <button class="btn save  btn-primary-outline">Cortar</button>
+                    <!--QUE LA IMAGEN DE FONDO SE CONFIGURE DONDE SE PUEDA PREVISUALIZAR EL FONDO-->
                 </div>
                 <div class="form-actions">
                     <div class="form-group">
@@ -92,7 +119,57 @@
 
 </section>
 
+
+    <!--CROP SCRIPT-->
+    <script type="text/javascript">
+
+        var result = document.querySelector('.result'),
+            img_result = document.querySelector('.img-result'),
+            options = document.querySelector('.options'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.cropped'),
+            upload = document.querySelector('#file-input'),
+            cropper = '';
+
+        upload.addEventListener('change', function (x) {
+            if (x.target.files.length) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    if (e.target.result) {
+                        var img = document.createElement('img');
+                        img.id = 'image';
+                        img.src = e.target.result;
+                        // clean result before
+                        result.innerHTML = '';
+                        result.appendChild(img);
+                        cropper = new Cropper(img,{ viewMode:2,aspectRatio: 1/1});
+                    }
+                };
+                reader.readAsDataURL(x.target.files[0]);
+            }
+
+        });
+
+        save.addEventListener('click', function save(e) {
+            e.preventDefault();
+            var imgSrc = cropper.getCroppedCanvas({width: 200, height: 200}).toDataURL(); //Tamaño de la img final.
+            cropped.classList.remove('hide');
+            img_result.classList.remove('hide');
+            // show image cropped
+            cropped.src = imgSrc;
+            cropped.attr = imgSrc;
+
+            var fd = new FormData(document.forms[0]);
+            fd.append("image", cropper.getCroppedCanvas({width: 200, height: 200}));
+        });
+
+    </script>
+
 </th:block>
+
+
+
+
 </html>
 
 
