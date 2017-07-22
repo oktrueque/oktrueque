@@ -68,12 +68,14 @@ public class ItemController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
-    public String getItemById(@PathVariable Long id, Model model, Principal principal) {
+    public String getItemById(@PathVariable Long id, Model model) {
 
         Item item = itemService.getItemById(id);
         User u = item.getUser();
         model.addAttribute("item", item);
         model.addAttribute("user", u);
+        model.addAttribute("tags", itemTagService.getItemTagByItemId(id));
+
         return "itemView";
 
     }

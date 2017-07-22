@@ -37,6 +37,9 @@
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="col-lg-4">
                         <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
                         <div class="cui-ecommerce--product--controls">
@@ -93,6 +96,18 @@
                         </a>
                     </div>
                 </div>
+
+
+                <ul class="list-group" >
+
+                        <th:block th:each="tag : ${tags}">
+
+                                <li class="list-group-item" th:text="${tag.name}"></li>
+
+                        </th:block>
+
+
+                </ul>
 
 
             </div>
