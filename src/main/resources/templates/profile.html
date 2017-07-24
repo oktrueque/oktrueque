@@ -59,7 +59,7 @@
                     </dl>
                 </div>
                 <div class="panel-footer">
-                    <a href="">Editar</a>
+                    <a href="/profile/edit">Editar</a>
                 </div>
             </section>
         </div>
@@ -82,8 +82,8 @@
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20 active">
-                            <div class="tab-pane active" id="posts" role="tabpanel">
-                            <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                            <div th:if="${hasItems}" class="tab-pane active" id="posts" role="tabpanel">
+                            <a href="/profile/items" class="btn btn-default width-full">Ver Más</a>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="margin-bottom-50">
@@ -97,25 +97,15 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
+                                                <tr th:each="item : ${items}">
                                                     <td>
                                                         <div class="cui-ecommerce--dashboard--list--img">
-                                                            <img src="../assets/common/img/temp/ecommerce/003.jpg" alt="Imagen"/>
+                                                            <img th:src="${item.photo1}"/>
                                                         </div>
                                                     </td>
-                                                    <td>Nombre</td>
-                                                    <td>Categoria</td>
-                                                    <td><span class="label label-info">Pendiente</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <img src="../assets/common/img/temp/ecommerce/004.jpg" alt="Imagen"/>
-                                                        </div>
-                                                    </td>
-                                                    <td>Nombre</td>
-                                                    <td>Categoria</td>
-                                                    <td><span class="label label-info">Activo</span></td>
+                                                    <td th:text="${item.name}">Nombre</td>
+                                                    <td th:text="${item.category.name}">Categoria</td>
+                                                    <td><span class="label label-info" th:text="${item.status}">Estado</span></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -123,7 +113,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="messaging" role="tabpanel">
+                            <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
+                                Parece que aún no tienes items. <a href="/profile/items">Agregar uno</a>
+                            </div>
+                            <div th:if="${hasTrueques}" class="tab-pane" id="messaging" role="tabpanel">
                             <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
                             <div class="row">
                                     <div class="col-lg-12">
@@ -137,7 +130,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
+                                                <tr th:each="trueque : ${trueques}">
                                                     <td>
                                                         <div class="cui-ecommerce--dashboard--list--img">
                                                             <img src="../assets/common/img/temp/avatars/3.jpg" alt="Imagen"/>
@@ -150,24 +143,14 @@
                                                     </td>
                                                     <td><span class="label label-info">Pendiente</span></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <img src="../assets/common/img/temp/avatars/4.jpg" alt="Imagen"/>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <img src="../assets/common/img/temp/ecommerce/002.jpg" alt="Imagen"/>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="label label-info">Aprobado</span></td>
-                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div th:if="${!hasTrueques}" class="tab-pane" id="messaging" role="tabpanel">
+                                Propone trueques por items de tu interés. <a href="/items">Explorar</a>
                             </div>
                         </div>
                     </div>
