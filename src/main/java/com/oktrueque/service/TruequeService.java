@@ -1,6 +1,7 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.Trueque;
 
 import java.util.List;
 
@@ -10,4 +11,6 @@ import java.util.List;
 public interface TruequeService {
 
     void saveTrueque(List<Item> itemsOffer, List<Item> itemsDemand);
+
+    List<Trueque> findByUserOffererIdOrUserDemandantId(Long userOffererId, Long userDemandantId);
 }

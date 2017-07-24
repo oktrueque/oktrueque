@@ -71,7 +71,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("items", user.getItems());
         model.addAttribute("comments", user.getComments());
-        return "userProfile";
+        return "user";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/edit{username}")

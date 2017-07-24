@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+
+</head>
+<th:block layout:fragment="content">
+<section class="page-content">
+<div class="page-content-inner">
+
+    <!-- Profile Header -->
+    <nav class="top-submenu top-submenu-with-background">
+        <div class="profile-header">
+            <div class="profile-header-info">
+                <div class="row">
+                    <div class="col-xl-8 col-xl-offset-4">
+                    <!-- Esto todavia no lo saco porque se cae el nombre, podria ser reemplazado por un boton que lleve a los items -->
+                        <div class="width-100 text-center pull-right hidden-md-down">
+                            <h2><span class="label label-success" >8,2</span></h2>
+                            <div class="cui-ecommerce--product--rating">
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-empty"></i>
+                            </div>
+                            <p>Calificación</p>
+                        </div>
+                        <div class="profile-header-title">
+                            <h2>Tu Perfil</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- End Profile Header -->
+
+    <!-- Profile -->
+    <div class="row">
+        <div class="col-xl-4">
+            <section class="panel profile-user" style="background-image: url(../assets/common/img/temp/photos/4.jpeg)">
+                <div class="panel-body">
+                    <div class="profile-user-title text-center">
+                        <a class="avatar" href="javascript:void(0);">
+                            <img src="../assets/common/img/temp/avatars/1.jpg" alt="Alternative text to the image" />
+                        </a>
+                        <div class="cui-ecommerce--product--rating">
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-full"></i>
+                            <i class="icmn-star-empty"></i>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </section>
+            <section class="panel">
+                <div class="panel-body">
+                    <h6>Information</h6>
+                    <dl class="dl-horizontal user-profile-dl">
+                        <dt>Nombre Completo</dt>
+                        <dd>Artour Scott</dd>
+                        <dt>Intereses</dt>
+                        <dd><span class="label label-default" style="margin:3px">Música</span> <span class="label label-default" style="margin:3px">Guitarra</span> <span class="label label-default" style="margin:3px">Muebles</span> <span class="label label-default" style="margin:3px">Córdoba</span> <span class="label label-default" style="margin:3px">Amigos</span> <span class="label label-default" style="margin:3px">Deporte</span></dd>
+                    </dl>
+                </div>
+                <div class="panel-footer">
+                    <a href="">Editar</a>
+                </div>
+            </section>
+        </div>
+        <div class="col-xl-8">
+            <section class="panel profile-user-content">
+                <div class="panel-body">
+                    <div class="nav-tabs-horizontal">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#posts" role="tab">
+                                    <i class="icmn-menu3"></i>
+                                    Items
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#messaging" role="tab">
+                                    <i class="icmn-image-compare"></i>
+                                    Trueques
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content padding-vertical-20 active">
+                            <div class="tab-pane active" id="posts" role="tabpanel">
+                            <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="margin-bottom-50">
+                                            <table class="table table-hover nowrap" id="tbl-items" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Imagen</th>
+                                                    <th>Nombre</th>
+                                                    <th>Categoria</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="cui-ecommerce--dashboard--list--img">
+                                                            <img src="../assets/common/img/temp/ecommerce/003.jpg" alt="Imagen"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>Nombre</td>
+                                                    <td>Categoria</td>
+                                                    <td><span class="label label-info">Pendiente</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="cui-ecommerce--dashboard--list--img">
+                                                            <img src="../assets/common/img/temp/ecommerce/004.jpg" alt="Imagen"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>Nombre</td>
+                                                    <td>Categoria</td>
+                                                    <td><span class="label label-info">Activo</span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="messaging" role="tabpanel">
+                            <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                            <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="margin-bottom-50">
+                                            <table class="table table-hover nowrap" id="tbl-trueques" width="100%">
+                                                <thead>
+                                                <tr>
+                                                    <th>Usuario</th>
+                                                    <th>Item</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="cui-ecommerce--dashboard--list--img">
+                                                            <img src="../assets/common/img/temp/avatars/3.jpg" alt="Imagen"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="cui-ecommerce--dashboard--list--img">
+                                                            <img src="../assets/common/img/temp/ecommerce/003.jpg" alt="Imagen"/>
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="label label-info">Pendiente</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="cui-ecommerce--dashboard--list--img">
+                                                            <img src="../assets/common/img/temp/avatars/4.jpg" alt="Imagen"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="cui-ecommerce--dashboard--list--img">
+                                                            <img src="../assets/common/img/temp/ecommerce/002.jpg" alt="Imagen"/>
+                                                        </div>
+                                                    </td>
+                                                    <td><span class="label label-info">Aprobado</span></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- End Profile -->
+
+</div>
+
+<!-- Page Scripts -->
+<script>
+    $(function(){
+
+        $('#tbl-items').DataTable({
+            responsive: true,
+            searching: false,
+            lengthChange: false
+        });
+
+        $('#tbl-trueques').DataTable({
+            responsive: true,
+            searching: false,
+            lengthChange: false
+        });
+
+    });
+</script>
+<!-- End Page Scripts -->
+</section>
+<div class="main-backdrop"><!-- --></div>
+
+</th:block>
+</html>
