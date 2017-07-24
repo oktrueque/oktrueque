@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/profile.css" th:href="@{/common/css/source/custom/profile.css}"/>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -15,13 +15,9 @@
                     <div class="col-xl-8 col-xl-offset-4">
                     <!-- Esto todavia no lo saco porque se cae el nombre, podria ser reemplazado por un boton que lleve a los items -->
                         <div class="width-100 text-center pull-right hidden-md-down">
-                            <h2><span class="label label-success" >8,2</span></h2>
-                            <div class="cui-ecommerce--product--rating">
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-empty"></i>
+                            <h2><span class="label label-success" th:text="${user.score}">8,2</span></h2>
+                            <div class="cui-ecommerce--product--rating stars">
+                                <!--Las estrellas se agregan por javascript-->
                             </div>
                             <p>Calificación</p>
                         </div>
@@ -38,18 +34,14 @@
     <!-- Profile -->
     <div class="row">
         <div class="col-xl-4">
-            <section class="panel profile-user" style="background-image: url(../assets/common/img/temp/photos/4.jpeg)">
+            <section class="panel profile-user background-img">
                 <div class="panel-body">
                     <div class="profile-user-title text-center">
                         <a class="avatar" href="javascript:void(0);">
-                            <img src="../assets/common/img/temp/avatars/1.jpg" alt="Alternative text to the image" />
+                            <img th:src="${user.photo1}"/>
                         </a>
-                        <div class="cui-ecommerce--product--rating">
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-empty"></i>
+                        <div class="cui-ecommerce--product--rating stars">
+                            <!--Las estrellas se agregan por javascript-->
                         </div>
                         <br/>
                     </div>
@@ -60,9 +52,10 @@
                     <h6>Information</h6>
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
-                        <dd>Artour Scott</dd>
+                        <dd th:text="${user.name + ' ' + user.last_name}">Artour Scott</dd>
                         <dt>Intereses</dt>
-                        <dd><span class="label label-default" style="margin:3px">Música</span> <span class="label label-default" style="margin:3px">Guitarra</span> <span class="label label-default" style="margin:3px">Muebles</span> <span class="label label-default" style="margin:3px">Córdoba</span> <span class="label label-default" style="margin:3px">Amigos</span> <span class="label label-default" style="margin:3px">Deporte</span></dd>
+                        <dd th:if="${hasTags}"><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
+                        <dd th:if="${!hasTags}">Parece que no has actualizado tus intereses. <a href="/profile/edit"> Actualizar</a></dd>
                     </dl>
                 </div>
                 <div class="panel-footer">
@@ -187,23 +180,37 @@
 </div>
 
 <!-- Page Scripts -->
-<script>
-    $(function(){
+    <script>
+        $(function(){
 
-        $('#tbl-items').DataTable({
-            responsive: true,
-            searching: false,
-            lengthChange: false
+            $('#tbl-items').DataTable({
+                responsive: true,
+                searching: false,
+                lengthChange: false
+            });
+
+            $('#tbl-trueques').DataTable({
+                responsive: true,
+                searching: false,
+                lengthChange: false
+            });
+
         });
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
-        $('#tbl-trueques').DataTable({
-            responsive: true,
-            searching: false,
-            lengthChange: false
-        });
+        var score = [[${user.score}]]/2;
+        var i;
+        for(i = 0; i < score; i++){
+            $('.stars').append('<i class="icmn-star-full"></i>');
+        }
+        for(i; i < 5; i++){
+            $('.stars').append('<i class="icmn-star-empty"></i>');
+        }
 
-    });
-</script>
+        /*]]>*/
+    </script>
 <!-- End Page Scripts -->
 </section>
 <div class="main-backdrop"><!-- --></div>
