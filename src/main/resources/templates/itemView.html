@@ -96,6 +96,13 @@
                         </div>
                    </div>
 
+                    <div align="right" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
+                        <a href="#"  class="btn btn-icon btn-primary btn-lg margin-top-15">
+                            <i class="icmn-forward margin-right-5"></i>
+                            Editar
+                        </a>
+                    </div>
+
                 </div>
 
 
@@ -107,16 +114,6 @@
                         </th:block>
                 </ul>
 
-
-
-                <div sec:authorize="isAuthenticated()">
-                    <div th:if="${#authentication.principal.id == user.id}">
-                        <a href="#"  class="btn btn-icon btn-primary btn-lg margin-right-15">
-                            <i class="icmn-forward margin-right-5"></i>
-                            Editar
-                        </a>
-                    </div>
-                </div>
 
             </div>
         </section>
