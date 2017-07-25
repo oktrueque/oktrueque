@@ -19,12 +19,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class UserController {
 
     private UserService userService;
     private UserTagService userTagService;
+
+
+
 
     @Autowired
     public UserController(UserService userService, UserTagService userTagService){
@@ -74,11 +78,7 @@ public class UserController {
         return "user";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users/edit{username}")
-    public String getUser(@PathVariable String username, Model model) {
-        model.addAttribute("user", userService.getUserByUsername(username));
-        return "updateProfile";
-    }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/chats/{username}")
     public String getUser() {
@@ -106,7 +106,7 @@ public class UserController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";
+        return "index";
     }
 
 
