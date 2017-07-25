@@ -1,14 +1,11 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.model.Tag;
-import com.oktrueque.model.Trueque;
-import com.oktrueque.model.User;
-import com.oktrueque.model.UserTag;
-import com.oktrueque.service.TruequeService;
-import com.oktrueque.service.UserService;
-import com.oktrueque.service.UserServiceImpl;
-import com.oktrueque.service.UserTagService;
+import com.oktrueque.model.*;
+import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,26 +21,24 @@ import java.util.List;
 public class ProfileController {
 
     private UserService userService;
-    private TruequeService truequeService;
     private UserTagService userTagService;
+    private ItemService itemService;
 
     @Autowired
-    public ProfileController(UserServiceImpl userService, TruequeService truequeService, UserTagService userTagService){
+    public ProfileController(UserServiceImpl userService,  UserTagService userTagService, ItemServiceImpl itemService){
         this.userService = userService;
-        this.truequeService = truequeService;
         this.userTagService = userTagService;
+        this.itemService = itemService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
-    public String getProfile(Principal principal, Model model){
+    public String getProfile(Principal principal, Model model, @PageableDefault(value = 4) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Trueque> trueques = truequeService.findByUserOffererIdOrUserDemandantId(user.getId(), user.getId());
+        List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         model.addAttribute("user", user);
-        model.addAttribute("hasItems", user.getItems().size() != 0 ? true : false);
-        model.addAttribute("items", user.getItems());
-        model.addAttribute("hasTrueques", trueques.size() != 0 ? true : false);
-        model.addAttribute("trueques", trueques);
+        model.addAttribute("hasItems", items.size() != 0 ? true : false);
+        model.addAttribute("items", items);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
         return "profile";

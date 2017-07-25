@@ -12,8 +12,6 @@ import java.util.List;
  */
 public interface ItemService {
 
-    List<Item> getItems();
-
     Item getItemById(Long id);
 
     void addItem(Item item);
@@ -25,6 +23,8 @@ public interface ItemService {
     Page<Item> findAll(Pageable pageable);
 
     Page<Item> getItemsByName(String name, Pageable pageable);
+
+    List<Item> getItemsByUserUsername(String username, Pageable pageable);
 
     List<Item> getItemsByUserUsername(String username);
 

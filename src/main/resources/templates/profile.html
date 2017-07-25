@@ -19,10 +19,9 @@
                             <div class="cui-ecommerce--product--rating stars">
                                 <!--Las estrellas se agregan por javascript-->
                             </div>
-                            <p>Calificación</p>
                         </div>
                         <div class="profile-header-title">
-                            <h2>Tu Perfil</h2>
+                            <h2 th:text="${'¡Bienvenido ' + user.name + '!'}">Nombre</h2>
                         </div>
                     </div>
                 </div>
@@ -52,7 +51,11 @@
                     <h6>Information</h6>
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
-                        <dd th:text="${user.name + ' ' + user.last_name}">Artour Scott</dd>
+                        <dd th:text="${user.name + ' ' + user.last_name}">Nombre</dd>
+                        <dt>Nombre de Usuario</dt>
+                        <dd th:text="${user.username}">Username</dd>
+                        <dt>Email</dt>
+                        <dd th:text="${user.email}">Email</dd>
                         <dt>Intereses</dt>
                         <dd th:if="${hasTags}"><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
                         <dd th:if="${!hasTags}">Parece que no has actualizado tus intereses. <a href="/profile/edit"> Actualizar</a></dd>
@@ -83,7 +86,6 @@
                         </ul>
                         <div class="tab-content padding-vertical-20 active">
                             <div th:if="${hasItems}" class="tab-pane active" id="posts" role="tabpanel">
-                            <a href="/profile/items" class="btn btn-default width-full">Ver Más</a>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="margin-bottom-50">
@@ -105,52 +107,17 @@
                                                     </td>
                                                     <td th:text="${item.name}">Nombre</td>
                                                     <td th:text="${item.category.name}">Categoria</td>
-                                                    <td><span class="label label-info" th:text="${item.status}">Estado</span></td>
+                                                    <td><span class="label label-info" th:text="${item.getStatusValue()}">Estado</span></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <a href="/profile/items" class="btn btn-default width-full" th:text="${'Ver Más (' + user.itemsAmount + ')'}">Ver Más</a>
                             </div>
                             <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
                                 Parece que aún no tienes items. <a href="/profile/items">Agregar uno</a>
-                            </div>
-                            <div th:if="${hasTrueques}" class="tab-pane" id="messaging" role="tabpanel">
-                            <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
-                            <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="margin-bottom-50">
-                                            <table class="table table-hover nowrap" id="tbl-trueques" width="100%">
-                                                <thead>
-                                                <tr>
-                                                    <th>Usuario</th>
-                                                    <th>Item</th>
-                                                    <th>Estado</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="trueque : ${trueques}">
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <img src="../assets/common/img/temp/avatars/3.jpg" alt="Imagen"/>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <img src="../assets/common/img/temp/ecommerce/003.jpg" alt="Imagen"/>
-                                                        </div>
-                                                    </td>
-                                                    <td><span class="label label-info">Pendiente</span></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div th:if="${!hasTrueques}" class="tab-pane" id="messaging" role="tabpanel">
-                                Propone trueques por items de tu interés. <a href="/items">Explorar</a>
                             </div>
                         </div>
                     </div>
@@ -169,15 +136,10 @@
             $('#tbl-items').DataTable({
                 responsive: true,
                 searching: false,
-                lengthChange: false
+                lengthChange: false,
+                info: false,
+                paging: false
             });
-
-            $('#tbl-trueques').DataTable({
-                responsive: true,
-                searching: false,
-                lengthChange: false
-            });
-
         });
     </script>
     <script th:inline="javascript">
