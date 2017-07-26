@@ -52,16 +52,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <h5></h5>
+                            <h5>Intereses personales</h5>
                             <div class="form-group">
-                                <h5>Seleccionar foto de Perfil</h5>
-                                <input id="file-input" type="file" name="file" class="btn-primary"/>
-                                <div class="row">
-                                </div>
-                                <button class="btn save  btn-primary-outline">Cortar</button>
+                                <label for="descTextArea" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
+                                <textarea  id="descTextArea"  class="form-control" rows="1"></textarea>
+                                <label for="descTextArea2" class="form-control-label">Intereses personales guardados</label>
+                                <textarea  id="descTextArea2" readonly="true" class="form-control" rows="4"></textarea>
                             </div>
                             <div class="form-actions">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-default">Aceptar</button>
+                                    <button type="submit" class="btn btn-primary">Aceptar</button>
                                     <button type="button" class="btn btn-default" onclick="history.back()">Atras
                                     </button>
                                 </div>
