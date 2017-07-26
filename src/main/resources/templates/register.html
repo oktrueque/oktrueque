@@ -191,6 +191,10 @@
                             <i class="icmn-users margin-right-10"></i>
                             Registro
                         </h3>
+                        <div th:if="${error != null}">
+                            <span class="text-danger" th:text="${error}"></span>
+                            <br/>
+                        </div>
                         <br/>
                         <form id="form-validation" name="form-validation" th:action="@{/register}" th:object="${user}"
                               method="POST" onsubmit="return checkPass()">
@@ -268,7 +272,7 @@
                                 </div>
                                 <button id="btnReg" type="submit" value="Registrarse!"
                                         class="btn btn-primary width-150">
-                                    Registrarse!>
+                                    Registrarse!
                                 </button>
                             </div>
                         </form>

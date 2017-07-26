@@ -1,6 +1,9 @@
 package com.oktrueque.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -24,10 +27,12 @@ public class Comment {
     @JoinColumn(name = "id_user_target")
     private User user_target;
     private int score;
-    private String date;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
 
 
-    public Comment(String comment, User user_target, User user_origin, int score, String date) {
+    public Comment(String comment, User user_target, User user_origin, int score, Date date) {
         this.comment = comment;
         this.user_target = user_target;
         this.user_origin = user_origin;
@@ -77,11 +82,11 @@ public class Comment {
         this.score = score;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }
