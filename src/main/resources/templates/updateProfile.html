@@ -1,194 +1,101 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
 <head>
+
+    <!--Fineuploader sources-->
+    <script th:src="@{/vendors/fineuploader-s3/s3.fine-uploader.core.js}"
+            src="../static/vendors/fineuploader-s3/s3.fine-uploader.core.js" ></script>
+    <link th:href="@{/vendors/fineuploader-s3/fine-uploader-gallery.css}"
+          href="../static/vendors/fineuploader-s3/fine-uploader-gallery.css"/>
 
 </head>
 <th:block layout:fragment="content">
-<section class="page-content">
-    <div class="page-content-inner">
-
-        <section class="panel panel-with-borders">
-            <div class="page-content-inner">
-                <div class="panel-body">
-
-            <form th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT" enctype="multipart/form-data">
-                <input type="hidden"  th:field="*{password}"/>
-                <input type="hidden"  th:field="*{status}"/>
-                <input type="hidden"  th:field="*{score}"/>
-                <input type="hidden"  th:field="*{id}"/>
-                <h5>Información Personal</h5>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="l0">Nombre</label>
-                            <input type="text" class="form-control" id="l0" th:field="*{name}"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="21">Apellido</label>
-                            <input type="text" class="form-control" id="21" th:field="*{last_name}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="23">Email</label>
-                            <input type="email" readonly="true" class="form-control" id="23" th:field="*{email}"/>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="form-control-label" for="22">Nombre de Usuario</label>
-                            <input type="text" readonly="true" class="form-control" id="22" th:field="*{username}"/>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <h5>Seleccionar foto de Perfil</h5>
-                    <input id="file-input" type="file" name="file" class="btn-primary" />
-                    <div class="row">
-                        <!-- leftbox -->
-                        <div class="box-2 col-md-4">
-                            <div class="result"></div>
-                        </div>
-                        <!--rightbox-->
-                        <div class="box-2 img-result hide">
-                            <!-- result of crop -->
-                            <label for="croppedImg" class="form-control-label">Foto de perfil:</label>
-                            <img id="croppedImg" class="cropped" src="" alt=""  />
-                        </div>
-                    </div>
-                    <button class="btn save  btn-primary-outline">Cortar</button>
-                    <!--QUE LA IMAGEN DE FONDO SE CONFIGURE DONDE SE PUEDA PREVISUALIZAR EL FONDO-->
-                </div>
-                <div class="form-group">
-
-                    <input type="hidden" class="form-control" id="21" th:field="*{id}"/>
-
-                </div>
-
-                <div class="form-actions">
-                    <div class="form-group">
-
-                        <button type="submit" class="btn btn-default">Aceptar</button>
-                        <button type="button" class="btn btn-default" onclick="history.back()">Atras</button>
-
-
+    <section class="page-content">
+        <div class="page-content-inner">
+            <section class="panel panel-with-borders">
+                <div class="page-content-inner">
+                    <div class="panel-body">
+                        <form th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                            <input type="hidden" th:field="*{password}"/>
+                            <input type="hidden" th:field="*{status}"/>
+                            <input type="hidden" th:field="*{score}"/>
+                            <input type="hidden" th:field="*{id}"/>
+                            </div>
+                            <h5>Información Personal</h5>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="l0">Nombre</label>
+                                        <input type="text" class="form-control" id="l0" th:field="*{name}"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="21">Apellido</label>
+                                        <input type="text" class="form-control" id="21" th:field="*{last_name}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="23">Email</label>
+                                        <input type="email" readonly="true" class="form-control" id="23"
+                                               th:field="*{email}"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="22">Nombre de Usuario</label>
+                                        <input type="text" readonly="true" class="form-control" id="22"
+                                               th:field="*{username}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <h5>Seleccionar foto de Perfil</h5>
+                                <input id="file-input" type="file" name="file" class="btn-primary"/>
+                                <div class="row">
+                                </div>
+                                <button class="btn save  btn-primary-outline">Cortar</button>
+                            </div>
+                            <div class="form-actions">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default">Aceptar</button>
+                                    <button type="button" class="btn btn-default" onclick="history.back()">Atras
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-
-            </form>
-
-                </div>
-
-            </div>
-        </section>
-
-    </div>
-
-
-</section>
-    <!--CROP SCRIPT-->
-    <script type="text/javascript">
-
-        var result = document.querySelector('.result'),
-            img_result = document.querySelector('.img-result'),
-            options = document.querySelector('.options'),
-            save = document.querySelector('.save'),
-            cropped = document.querySelector('.cropped'),
-            upload = document.querySelector('#file-input'),
-            cropper = '';
-
-        upload.addEventListener('change', function (x) {
-            if (x.target.files.length) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    if (e.target.result) {
-                        var img = document.createElement('img');
-                        img.id = 'image';
-                        img.src = e.target.result;
-                        // clean result before
-                        result.innerHTML = '';
-                        result.appendChild(img);
-                        cropper = new Cropper(img,{ viewMode:2,aspectRatio: 1/1});
-                    }
-                };
-                reader.readAsDataURL(x.target.files[0]);
-            }
-
-        });
-
-        save.addEventListener('click', function save(e) {
-            e.preventDefault();
-            var imgSrc = cropper.getCroppedCanvas({width: 200, height: 200}).toDataURL(); //Tamaño de la img final.
-            cropped.classList.remove('hide');
-            img_result.classList.remove('hide');
-            // show image cropped
-            cropped.src = imgSrc;
-            cropped.attr = imgSrc;
-
-            var fd = new FormData(document.forms[0]);
-            fd.append("image", cropper.getCroppedCanvas({width: 200, height: 200}));
-        });
-
-
-//        VALIDACIONES
-
-        $(':file').on('change', function() {
-            var file = this.files[0];
-            if (file.size > 1024) {
-                alert('max upload size is 1k')
-            }
-
-            // Also see .name, .type
-        });
-
-        $(':button').on('click', function() {
-            $.ajax({
-                // Your server script to process the upload
-                url: 'upload.php',
-                type: 'POST',
-
-                // Form data
-                data: new FormData($('form')[0]),
-
-                // Tell jQuery not to process data or worry about content-type
-                // You *must* include these options!
-                cache: false,
-                contentType: false,
-                processData: false,
-
-                // Custom XMLHttpRequest
-                xhr: function() {
-                    var myXhr = $.ajaxSettings.xhr();
-                    if (myXhr.upload) {
-                        // For handling the progress of the upload
-                        myXhr.upload.addEventListener('progress', function(e) {
-                            if (e.lengthComputable) {
-                                $('progress').attr({
-                                    value: e.loaded,
-                                    max: e.total,
-                                });
-                            }
-                        } , false);
-                    }
-                    return myXhr;
-                }
-            });
-        });
-
-
-    </script>
-
+            </section>
+        </div>
+    </section>
 </th:block>
-
-
-
-
+<script>
+//    todo por default
+    var uploader = new qq.s3.FineUploaderBasic({
+        request:
+            {
+            endpoint: '{ YOUR_BUCKET_NAME }.s3.amazonaws.com',
+            accessKey: '{ YOUR_ACCESS_KEY }'
+            },
+        signature:
+            {
+            endpoint: '/s3/signature'
+            },
+        uploadSuccess:
+            {
+            endpoint: '/s3/success'
+            },
+        iframeSupport: {
+            localBlankPagePath: '/success.html'
+        }})
+</script>
 </html>
 
 
