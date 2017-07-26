@@ -4,6 +4,7 @@ import com.oktrueque.model.Item;
 import com.oktrueque.model.Trueque;
 import com.oktrueque.repository.ItemRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,6 @@ public class ItemServiceImpl implements ItemService {
 
     public ItemServiceImpl(ItemRepository itemRepository){
         this.itemRepository = itemRepository;
-    }
-
-    public List<Item> getItems() {
-        List<Item> items = new ArrayList<>();
-        itemRepository.findAll().forEach(items::add);
-        return items;
     }
 
     public Item getItemById(Long id) {
@@ -47,6 +42,10 @@ public class ItemServiceImpl implements ItemService {
 
     public Page<Item> getItemsByName(String name, Pageable pageable) {
         return itemRepository.findByNameContains(name, pageable);
+    }
+
+    public List<Item> getItemsByUserUsername(String username, Pageable pageable) {
+        return itemRepository.findByUser_Username(username, pageable);
     }
 
     public List<Item> getItemsByUserUsername(String username) {

@@ -1,44 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-    <title>OKTrueque - Update Profile</title>
 
-    <!--CROPPER.js-->
-    <script th:src="@{/common/js/cropper/cropper.min.js}" src="../static/common/js/cropper/cropper.min.css"></script>
-    <link rel="stylesheet" th:href="@{/common/js/cropper/cropper.min.css}" href="../static/common/js/cropper/cropper.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"/>
-    <style>
-
-        .box-2 {
-            padding: 0.5em;
-            width: calc(100% / 2 - 1em);
-        }
-
-        .options label,
-        .options input {
-            width: 4em;
-            padding: 0.5em 1em;
-        }
-
-        .btn {
-            background: white;
-            color: black;
-            border: 1px solid black;
-            padding: 0.5em 1em;
-            text-decoration: none;
-            margin: 0.8em 0.3em;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        img {
-            max-width: 100%;
-        }
-    </style>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -80,7 +43,9 @@
                             <label class="form-control-label" for="22">Nombre de Usuario</label>
                             <input type="text" readonly="true" class="form-control" id="22" th:field="*{username}"/>
                         </div>
+
                     </div>
+
                 </div>
                 <div class="form-group">
                     <h5>Seleccionar foto de Perfil</h5>
@@ -100,6 +65,12 @@
                     <button class="btn save  btn-primary-outline">Cortar</button>
                     <!--QUE LA IMAGEN DE FONDO SE CONFIGURE DONDE SE PUEDA PREVISUALIZAR EL FONDO-->
                 </div>
+                <div class="form-group">
+
+                    <input type="hidden" class="form-control" id="21" th:field="*{id}"/>
+
+                </div>
+
                 <div class="form-actions">
                     <div class="form-group">
 

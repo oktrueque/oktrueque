@@ -132,4 +132,14 @@ public class Item {
     public void setTrueque(Trueque trueque) {
         this.trueque = trueque;
     }
+
+    public String getStatusValue(){
+        switch (this.status){
+            case 0: return "Pendiente";
+            case 1: return "Activo";
+            case 2: return "Eliminado";
+            case 3: return "Bloqueado";
+            default: return "Sin definir";
+        }
+    }
 }

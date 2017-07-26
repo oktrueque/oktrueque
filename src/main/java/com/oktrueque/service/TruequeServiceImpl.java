@@ -33,4 +33,9 @@ public class TruequeServiceImpl implements TruequeService {
         Trueque trueque = truequeRepository.save(new Trueque(offerer, demandant, 0));
         itemServiceImpl.updateTruequeItems(itemsOffer,itemsDemand, trueque);
     }
+
+    @Override
+    public List<Trueque> findByUserOffererIdOrUserDemandantId(Long userOffererId, Long userDemandantId) {
+        return truequeRepository.findByUserOffererIdOrUserDemandantId(userOffererId, userDemandantId);
+    }
 }
