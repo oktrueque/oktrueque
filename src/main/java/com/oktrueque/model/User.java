@@ -44,6 +44,8 @@ public class User implements UserDetails{
     @NotNull
     @NotEmpty
     private String username;
+    @Column(name = "score")
+    private Integer score;
     @OneToMany(mappedBy = "user_target")
     private List<Comment> comments;
 
@@ -51,17 +53,18 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items,List<Comment> comments, String photo1, String username) {
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, Integer score, List<Comment> comments) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
         this.status = status;
         this.items = items;
+        this.itemsAmount = itemsAmount;
         this.photo1 = photo1;
         this.username = username;
-        this.items = new ArrayList<>();
-        this.comments = new ArrayList<>();
+        this.score = score;
+        this.comments = comments;
     }
 
     public List<Comment> getComments() {
@@ -150,6 +153,14 @@ public class User implements UserDetails{
 
     public void setItemsAmount(Integer itemsAmount) {
         this.itemsAmount = itemsAmount;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public Boolean checkPassword(String password){
