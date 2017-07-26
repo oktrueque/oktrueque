@@ -92,8 +92,6 @@
 
 
 </section>
-
-
     <!--CROP SCRIPT-->
     <script type="text/javascript">
 
@@ -136,6 +134,53 @@
             var fd = new FormData(document.forms[0]);
             fd.append("image", cropper.getCroppedCanvas({width: 200, height: 200}));
         });
+
+
+//        VALIDACIONES
+
+        $(':file').on('change', function() {
+            var file = this.files[0];
+            if (file.size > 1024) {
+                alert('max upload size is 1k')
+            }
+
+            // Also see .name, .type
+        });
+
+        $(':button').on('click', function() {
+            $.ajax({
+                // Your server script to process the upload
+                url: 'upload.php',
+                type: 'POST',
+
+                // Form data
+                data: new FormData($('form')[0]),
+
+                // Tell jQuery not to process data or worry about content-type
+                // You *must* include these options!
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                // Custom XMLHttpRequest
+                xhr: function() {
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) {
+                        // For handling the progress of the upload
+                        myXhr.upload.addEventListener('progress', function(e) {
+                            if (e.lengthComputable) {
+                                $('progress').attr({
+                                    value: e.loaded,
+                                    max: e.total,
+                                });
+                            }
+                        } , false);
+                    }
+                    return myXhr;
+                }
+            });
+        });
+
 
     </script>
 

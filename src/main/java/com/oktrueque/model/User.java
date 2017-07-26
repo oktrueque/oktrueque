@@ -44,8 +44,6 @@ public class User implements UserDetails{
     @NotNull
     @NotEmpty
     private String username;
-    @Column(name = "score")
-    private Integer score;
     @OneToMany(mappedBy = "user_target")
     private List<Comment> comments;
     @Column(name = "score")
@@ -208,11 +206,4 @@ public class User implements UserDetails{
         return true;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
 }
