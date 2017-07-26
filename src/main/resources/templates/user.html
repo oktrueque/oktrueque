@@ -72,12 +72,12 @@
                                 <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
                                     <i class="icmn-redo2"><!-- --></i>
                                 </div>
-                                <a th:href="@{'/items/'+item.id}">
+                                <a th:href="@{'/items/' + ${item.id}}">
                                     <img th:src="${item.photo1}"/>
                                 </a>
                             </div>
                             <div class="cui-ecommerce--catalog--item--title">
-                                <a th:href="@{'/items/'+item.id}" th:text="${item.name}">Nombre</a>
+                                    <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}">Nombre</a>
                             </div>
                             <div class="cui-ecommerce--catalog--item--descr">
                                 <p th:text="${item.category.name}">Categoria</p>
