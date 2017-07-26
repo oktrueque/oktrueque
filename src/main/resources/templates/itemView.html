@@ -14,13 +14,18 @@
             <div class="panel-heading">
                 <h2>
                     Detalle del Producto
+                    <div class="cui-ecommerce--catalog--item--title">
+                        <!--<a href="javascript: void(0);" th:text="${item.name}"></a>-->
+
+                    </div>
                 </h2>
             </div>
 
-            <div class="panel-body">
-                <div class="row">
+            <div class="panel-body" >
 
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
+
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"  style="width: 300px; height: 480px; margin-top: 20px">
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                             <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
@@ -37,22 +42,60 @@
                                 <img   th:src="${item.photo3}" alt="First slide"/>
                             </div>
                         </div>
-                        <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev">
+                        <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev" style="height: 355px">
                             <span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="right carousel-control" data-target="#carousel-example-generic" role="button" data-slide="next">
+                        <a class="right carousel-control" data-target="#carousel-example-generic" role="button" data-slide="next" style="height: 355px">
                             <span class="icon-next fa fa-arrow-right" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
+
+                        <th:block th:each="tag : ${tags}">
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                <h5 th:text="${tag.name}"></h5>
+                            </div>
+                        </th:block>
+
+
                     </div>
+            </div>
+
+
+                <div class="panel">
+                     <div class="panel body">
+                        <div class="nav-tabs-horizontal" align="left">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" >
+                                    <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">Descripción</a>
+                                </li>
+                                <li class="nav-item">
+                                     <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Datos del Propietario</a>
+                                </li>
+                            </ul>
+                        <div class="tab-content padding-vertical-20">
+                            <div class="tab-pane active" id="tab1" role="tabpanel">
+                                <p th:text="${item.description}"></p>
+                            </div>
+                            <div class="tab-pane" id="tab2" role="tabpanel">
+                                <dl class="dl-horizontal user-profile-dl">
+                                    <dt>Usuario</dt>
+                                    <a th:href="@{'/users/' + ${user.username}}" th:text="${user.name} +' ' + ${user.last_name}" ></a>
+                                    <dt>Email</dt>
+                                    <dd th:text="${user.email}"></dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                   </div>
+
+                </div>
+
+             </div>
 
 
 
-                    <div class="col-lg-4">
-                        <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
-                        <div class="cui-ecommerce--product--controls">
-                            <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}">
+                         <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}">
                                 <form id="form-trueque" action="/trueques" th:method="GET">
                                     <input type="hidden" id="username-user-offerer" name="username-user-offerer" th:value="${#authentication.principal.username}"/>
                                     <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
@@ -68,54 +111,16 @@
                                     Log in
                                 </a>
                             </div>
-                        </div>
-                        <div class="cui-ecommerce--product--info">
-                            <div class="nav-tabs-horizontal">
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">Descripción</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Información</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content padding-vertical-20">
-                                    <div class="tab-pane active" id="tab1" role="tabpanel">
-                                        <p th:text="${item.description}"></p>
-                                    </div>
-                                    <div class="tab-pane" id="tab2" role="tabpanel">
-                                        <dl class="dl-horizontal user-profile-dl">
-                                            <dt>Usuario</dt>
-                                            <dd th:text="${user.name} + ' ' + ${user.last_name}"></dd>
-                                            <dt>Email</dt>
-                                            <dd th:text="${user.email}"></dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                   </div>
 
-                    <div align="right" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
+
+                    <div align="left" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
                         <a href="#"  class="btn btn-icon btn-primary btn-lg margin-top-15">
                             <i class="icmn-forward margin-right-5"></i>
                             Editar
                         </a>
                     </div>
 
-                </div>
 
-
-                <ul class="list-group" >
-
-                    <h3>Tags</h3>
-                       <th:block th:each="tag : ${tags}">
-                                <li class="list-group-item" th:text="${tag.name}"></li>
-                        </th:block>
-                </ul>
-
-
-            </div>
         </section>
     </div>
 
