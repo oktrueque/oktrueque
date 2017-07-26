@@ -3,11 +3,8 @@
       layout:decorator="layouts/default">
 <head>
 
-    <!--Fineuploader sources-->
-    <script th:src="@{/vendors/fineuploader-s3/s3.fine-uploader.core.js}"
-            src="../static/vendors/fineuploader-s3/s3.fine-uploader.core.js" ></script>
-    <link th:href="@{/vendors/fineuploader-s3/fine-uploader-gallery.css}"
-          href="../static/vendors/fineuploader-s3/fine-uploader-gallery.css"/>
+    <link th:href="@{/vendors/magicsuggest/magicsuggest-min.css}" href="../static/vendors/magicsuggest/magicsuggest-min.css" rel="stylesheet"/>
+    <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
 
 </head>
 <th:block layout:fragment="content">
@@ -75,28 +72,8 @@
             </section>
         </div>
     </section>
-    <div id="fine-uploader"></div>
+    <div id="magicsuggest"></div>
 </th:block>
-<script>
-//    todo por default
-    var uploader = new qq.s3.FineUploaderBasic({
-        request:
-            {
-            endpoint: '{ YOUR_BUCKET_NAME }.s3.amazonaws.com',
-            accessKey: '{ YOUR_ACCESS_KEY }'
-            },
-        signature:
-            {
-            endpoint: '/s3/signature'
-            },
-        uploadSuccess:
-            {
-            endpoint: '/s3/success'
-            },
-        iframeSupport: {
-            localBlankPagePath: '/success.html'
-        }})
-</script>
 </html>
 
 
