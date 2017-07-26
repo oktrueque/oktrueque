@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/profile.css" th:href="@{/common/css/source/custom/profile.css}"/>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -14,16 +14,16 @@
                 <div class="row">
                     <div class="col-xl-8 col-xl-offset-4">
                     <!-- Esto todavia no lo saco porque se cae el nombre, podria ser reemplazado por un boton que lleve a los items -->
+                        <!--<div class="width-100 text-center pull-right hidden-md-down">-->
+                            <!--<h2>154</h2>-->
+                            <!--<p>Comentarios</p>-->
+                        <!--</div>-->
                         <div class="width-100 text-center pull-right hidden-md-down">
-                            <h2>154</h2>
-                            <p>Comentarios</p>
-                        </div>
-                        <div class="width-100 text-center pull-right hidden-md-down">
-                            <h2>17</h2>
+                            <h2 th:text="${user.itemsAmount}">17</h2>
                             <p>Items</p>
                         </div>
                         <div class="profile-header-title">
-                            <h2>¡Hola, soy Artour!</h2>
+                            <h2 th:text="${'¡Hola, soy ' + user.name + '!'}">Nombre</h2>
                             <small><a href=""><i class="icmn-compass"></i> Denunciar a este usuario</a></small>
                         </div>
                     </div>
@@ -36,18 +36,14 @@
     <!-- Profile -->
     <div class="row">
         <div class="col-xl-4">
-            <section class="panel profile-user" style="background-image: url(../assets/common/img/temp/photos/4.jpeg)">
+            <section class="panel profile-user background-img">
                 <div class="panel-body">
                     <div class="profile-user-title text-center">
                         <a class="avatar" href="javascript:void(0);">
-                            <img src="../assets/common/img/temp/avatars/1.jpg" alt="Alternative text to the image" />
+                            <img th:src="${user.photo1}"/>
                         </a>
-                        <div class="cui-ecommerce--product--rating">
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-full"></i>
-                            <i class="icmn-star-empty"></i>
+                        <div class="cui-ecommerce--product--rating stars">
+                            <!--Las estrellas se ponen por javascript-->
                         </div>
                         <br/>
                     </div>
@@ -58,33 +54,41 @@
                     <h6>Information</h6>
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
-                        <dd>Artour Scott</dd>
+                        <dd th:text="${user.name + ' ' + user.last_name}">Nombre</dd>
                         <dt>Calificación</dt>
-                        <dd><small class="label label-success">8,2</small></dd>
-                        <dt>Intereses</dt>
-                        <dd><span class="label label-default" style="margin:3px">Música</span> <span class="label label-default" style="margin:3px">Guitarra</span> <span class="label label-default" style="margin:3px">Muebles</span> <span class="label label-default" style="margin:3px">Córdoba</span> <span class="label label-default" style="margin:3px">Amigos</span> <span class="label label-default" style="margin:3px">Deporte</span></dd>
+                        <dd><small class="label label-success" th:text="${user.score}">8,2</small></dd>
+                        <div th:if="${hasTags}">
+                            <dt>Intereses</dt>
+                            <dd><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
+                        </div>
                     </dl>
                 </div>
             </section>
             <section class="panel">
                 <div class="panel-body">
-                    <div class="cui-ecommerce--catalog--item">
+                    <div th:if="${hasItems}">
+                        <div class="cui-ecommerce--catalog--item" th:each="item : ${items}">
                             <div class="cui-ecommerce--catalog--item--img">
                                 <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
                                     <i class="icmn-redo2"><!-- --></i>
                                 </div>
-                                <a href="javascript: void(0);">
-                                    <img src="../assets/common/img/temp/ecommerce/003.jpg" />
+                                <a th:href="@{'/items/'+item.id}">
+                                    <img th:src="${item.photo1}"/>
                                 </a>
                             </div>
                             <div class="cui-ecommerce--catalog--item--title">
-                                <a href="javascript: void(0);">Silla</a>
+                                <a th:href="@{'/items/'+item.id}" th:text="${item.name}">Nombre</a>
                             </div>
                             <div class="cui-ecommerce--catalog--item--descr">
-                                Muebles
+                                <p th:text="${item.category.name}">Categoria</p>
                             </div>
                         </div>
                         <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                    </div>
+                    <div th:if="${!hasItems}">
+                        <p th:text="${'Parece que ' + user.name + ' no tiene artículos para intercambiar por el momento'}"></p>
+                        <a href="/items">Buscar otros</a>
+                    </div>
                 </div>
             </section>
         </div>
@@ -95,100 +99,37 @@
                             <div class="tab-pane active" id="posts" role="tabpanel">
                                 <h5>Comentarios</h5>
                                 <hr/>
-                                <div class="user-wall">
-                                    <div class="user-wall-item clearfix">
-                                        <div class="s1">
-                                            <a class="avatar" href="javascript:void(0);">
-                                                <img src="../assets/common/img/temp/avatars/3.jpg" alt="Alternative text to the image" />
-                                            </a>
-                                        </div>
-                                        <div class="s2">
-                                            <div class="user-wall-item-head">
-                                                <div class="pull-right">
-                                                    <a href=""><i class="icmn-compass"></i></a>
+                                <div th:if="${hasComments}">
+                                    <div class="user-wall">
+                                        <div class="user-wall-item clearfix" th:each="comment : ${comments}">
+                                            <div class="s1">
+                                                <a class="avatar" href="javascript:void(0);">
+                                                    <img th:src="${comment.user_origin.photo1}" />
+                                                </a>
+                                            </div>
+                                            <div class="s2">
+                                                <div class="user-wall-item-head">
+                                                    <div class="pull-right">
+                                                        <a href=""><i class="icmn-compass"></i></a>
+                                                    </div>
+                                                    <strong th:text="${comment.user_origin.name}">Name</strong>
+                                                    <small th:text="${comment.date}"></small>
                                                 </div>
-                                                <strong>Donald Trump</strong>
-                                                <small>Five seconds ago</small>
-                                            </div>
-                                            <div class="user-wall-post">
-                                                <p>
-                                                    La casa es un poco alejada de la zona urbana, pero es maravillosa, hermosisima, tal como se ve en las fotos o aún mas linda. Anna muy amable, nos dejo huevos de las gallinas de su mamá para el desayuno y mermelada de frutas hecha por su mamá, exquisita, además de otras cosas para el desayuno. Toda la región es preciosa y la comida muy buena. Destacamos la recomendación del restaurante de una Hostería cercana muy muy buena. Pasamos con nuestras dos hijas unos días maravillosos en este trullo, lo recomendamos mucho.
-                                                </p>
-                                            </div>
-                                            <div class="user-wall-controls">
-                                                <div class="cui-ecommerce--product--rating">
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-empty"></i>
+                                                <div class="user-wall-post">
+                                                    <p th:text="${comment.comment}">Comentario</p>
+                                                </div>
+                                                <div class="user-wall-controls">
+                                                    <div class="cui-ecommerce--product--rating">
+                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score)}"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
                                     </div>
-                                    <div class="user-wall-item clearfix">
-                                        <div class="s1">
-                                            <a class="avatar" href="javascript:void(0);">
-                                                <img src="../assets/common/img/temp/avatars/5.jpg" alt="Alternative text to the image" />
-                                            </a>
-                                        </div>
-                                        <div class="s2">
-                                            <div class="user-wall-item-head">
-                                                <div class="pull-right">
-                                                    <a href=""><i class="icmn-compass"></i></a>
-                                                </div>
-                                                <strong>Ann Gates</strong>
-                                                <small>10 May 2016 11:03AM</small>
-                                            </div>
-                                            <div class="user-wall-post">
-                                                <p>
-                                                    My boyfriend and I decided to spend 10 days in Puglia for the summer holidays. We liked the idea of staying in a typical Apulean dry stone hut with a conical roof: a TRULLO. Trullo edera was clean, perfectly equipped, bright, specious with everything you could need for a relaxing holiday. The outdoor space is very lovely, we enjoyed having breakfasts and dinners surrounded by the Valle D'Itria typical landscape. Moreover there is a pretty good chimney barbecue, we enjoyed very much making our bbq with the tasty meat from local producers, in particular the "bombette". The trullo is in a great location close to very beautiful villages such as Cisternino, Alberobello, Ostuni and Martina Franca. However we had to drive 1 hour or 1 hour and an half to reach the most beautiful beaches of Puglia (Torre dell'Orso and Punta Prosciutto). Anna was a great host, her mother Tonia very kind and respectful person! We would love to come again and I would recommend it to my friends.
-
-
-                                                </p>
-                                            </div>
-                                            <div class="user-wall-controls">
-                                                <div class="cui-ecommerce--product--rating">
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-half"></i>
-                                                    <i class="icmn-star-empty"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="user-wall-item clearfix">
-                                        <div class="s1">
-                                            <a class="avatar" href="javascript:void(0);">
-                                                <img src="../assets/common/img/temp/avatars/4.jpg" alt="Alternative text to the image" />
-                                            </a>
-                                        </div>
-                                        <div class="s2">
-                                            <div class="user-wall-item-head">
-                                                <div class="pull-right">
-                                                    <a href=""><i class="icmn-compass"></i></a>
-                                                </div>
-                                                <strong>Ann Gates</strong>
-                                                <small>10 May 2016 11:03AM</small>
-                                            </div>
-                                            <div class="user-wall-post">
-                                                <p>
-                                                    Perfect stay for our family, 3 kids under 4. The area is picturesque and Anna and her family are extremely accommodating. There was a friendly horse who the girls could feed their watermelon skins too. Anna's mum showed the girls her rabbits and chickens. We were lucky to receive fresh eggs and cucumbers from her garden. We also had a cooking class in the Trullo held by Veronica, Anna's sister. She was incredible and so passionat about local food. Our girls loved making pasta with her and eating it even more. Thank you Anna, we had a memorable family holiday.
-                                                </p>
-                                            </div>
-                                            <div class="user-wall-controls">
-                                                <div class="cui-ecommerce--product--rating">
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-full"></i>
-                                                    <i class="icmn-star-half"></i>
-                                                    <i class="icmn-star-empty"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                                </div>
+                                <div th:if="${!hasComments}">
+                                    <p th:text="${'Parece que no hay comentarios sobre ' + user.name + ' por el momento'}"></p>
                                 </div>
                             </div>
                         </div>
@@ -201,9 +142,20 @@
 </div>
 
 <!-- Page Scripts -->
-<script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
-</script>
+        var score = [[${user.score}]]/2;
+        var i;
+        for(i = 0; i < score; i++){
+            $('.stars').append('<i class="icmn-star-full"></i>');
+        }
+        for(i; i < 5; i++){
+            $('.stars').append('<i class="icmn-star-empty"></i>');
+        }
+
+        /*]]>*/
+    </script>
 <!-- End Page Scripts -->
 </section>
 <div class="main-backdrop"><!-- --></div>
