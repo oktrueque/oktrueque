@@ -60,6 +60,7 @@ public class ItemController {
         }
         model.addAttribute("items", items.getContent());
         model.addAttribute("page", page);
+        model.addAttribute("categories", categoryService.getCategories());
         return "itemsCatalog";
     }
 
