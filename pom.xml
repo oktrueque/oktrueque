@@ -59,7 +59,6 @@
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency>
 
-
     </dependencies>
 
 	<build>
