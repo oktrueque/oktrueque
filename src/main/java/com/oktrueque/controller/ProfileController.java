@@ -51,7 +51,8 @@ public class ProfileController {
         model.addAttribute("user", user);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-
         return "updateProfile";
     }
+
+
 }

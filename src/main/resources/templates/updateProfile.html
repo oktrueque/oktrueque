@@ -3,23 +3,26 @@
       layout:decorator="layouts/default">
 <head>
 
-    <link th:href="@{/vendors/magicsuggest/magicsuggest-min.css}" href="../static/vendors/magicsuggest/magicsuggest-min.css" rel="stylesheet"/>
-    <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
+    <script th:src="@{/vendors/jQuery-Tags-Input/jquery.tagsinput.min.js}"
+            src="../static/vendors/jQuery-Tags-Input/jquery.tagsinput.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/jQuery-Tags-Input/jquery.tagsinput.min.css}"
+          href="../static/vendors/jQuery-Tags-Input/jquery.tagsinput.min.css" />
 
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
         <div class="page-content-inner">
-            <section class="panel panel-with-borders">
+            <section class="panel panel-with-borders col-md-6">
                 <div class="page-content-inner">
                     <div class="panel-body">
                         <form th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT"
                               enctype="multipart/form-data">
+
                             <div class="form-group">
-                            <input type="hidden" th:field="*{password}"/>
-                            <input type="hidden" th:field="*{status}"/>
-                            <input type="hidden" th:field="*{score}"/>
-                            <input type="hidden" th:field="*{id}"/>
+                                <input type="hidden" th:field="*{password}"/>
+                                <input type="hidden" th:field="*{status}"/>
+                                <input type="hidden" th:field="*{score}"/>
+                                <input type="hidden" th:field="*{id}"/>
                             </div>
                             <h5>Información Personal</h5>
                             <div class="row">
@@ -55,10 +58,13 @@
                             <h5></h5>
                             <h5>Intereses personales</h5>
                             <div class="form-group">
-                                <label for="descTextArea" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
-                                <textarea  id="descTextArea"  class="form-control" rows="1"></textarea>
-                                <label for="descTextArea2" class="form-control-label">Intereses personales guardados</label>
-                                <textarea  id="descTextArea2" readonly="true" class="form-control" rows="4"></textarea>
+
+                                <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
+                                            <input  name="tags" id="tags" type="text"  class="form-control" />
+
+                                <label for="savedInterests" class="form-control-label">Intereses personales guardados</label>
+                                             <textarea id="savedInterests" readonly="true" class="form-control" rows="4"></textarea>
+
                             </div>
                             <div class="form-actions">
                                 <div class="form-group">
@@ -71,9 +77,33 @@
                     </div>
                 </div>
             </section>
+            <section class="panel panel-with-borders col-md-6">
+                <div class="page-content-inner">
+                    <div class="panel-body">
+                        <h5>Foto de perfil</h5>
+                        <img th:src="@{user.photo1}"/>
+                        <label for="photo1">Selecciona la foto deseada</label>
+                        <input type="file" id="photo1"/>
+                        <h5></h5>
+                        <h5>Wallpaper</h5>
+                        <img th:src="@{user.wallpaper}"/>
+                        <label for="wallpaper">Selecciona tu wallpaper</label>
+                        <input type="file" id="wallpaper"/>
+                    </div>
+                </div>
+            </section>
         </div>
     </section>
-    <div id="magicsuggest"></div>
+
+    <script type="text/javascript">
+
+        $('#tags').tagsInput({
+            autocomplete_url:'localhost:8080/profile/edit/tags'
+        });
+
+
+    </script>
+
 </th:block>
 </html>
 
