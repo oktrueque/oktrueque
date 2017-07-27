@@ -25,7 +25,9 @@
 
                 <h4 class="cui-ecommerce--product--main-title" th:text="${item.name}"></h4>
 
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"  style="width: 300px; height: 480px; margin-top: 20px">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel"  >
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                             <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
@@ -42,80 +44,81 @@
                                 <img   th:src="${item.photo3}" alt="First slide"/>
                             </div>
                         </div>
-                        <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev" style="height: 355px">
+                        <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev">
                             <span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="right carousel-control" data-target="#carousel-example-generic" role="button" data-slide="next" style="height: 355px">
+                        <a class="right carousel-control" data-target="#carousel-example-generic" role="button" data-slide="next">
                             <span class="icon-next fa fa-arrow-right" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
-
-                        <th:block th:each="tag : ${tags}">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-                                <h5 th:text="${tag.name}"></h5>
-                            </div>
-                        </th:block>
-
-
                     </div>
-            </div>
+                    </div>
+                    <div class="col-lg-8 col-md-6">
+                        <div class="panel">
+                            <div class="panel body">
+                                <div class="nav-tabs-horizontal" align="left">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item" >
+                                            <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">Descripción</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Datos del Propietario</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" style="padding: 20px">
+                                        <div class="tab-pane active" id="tab1" role="tabpanel">
+                                            <p th:text="${item.description}"></p>
+                                        </div>
+                                        <div class="tab-pane" id="tab2" role="tabpanel">
+                                            <dl class="dl-horizontal user-profile-dl">
+                                                <dt>Usuario</dt>
+                                                <a th:href="@{'/users/' + ${user.username}}" th:text="${user.name} +' ' + ${user.last_name}" ></a>
+                                                <dt>Email</dt>
+                                                <dd th:text="${user.email}"></dd>
+                                            </dl>
+                                        </div>
+                                    </div>
 
-
-                <div class="panel">
-                     <div class="panel body">
-                        <div class="nav-tabs-horizontal" align="left">
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item" >
-                                    <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">Descripción</a>
-                                </li>
-                                <li class="nav-item">
-                                     <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Datos del Propietario</a>
-                                </li>
-                            </ul>
-                        <div class="tab-content padding-vertical-20">
-                            <div class="tab-pane active" id="tab1" role="tabpanel">
-                                <p th:text="${item.description}"></p>
+                                </div>
                             </div>
-                            <div class="tab-pane" id="tab2" role="tabpanel">
-                                <dl class="dl-horizontal user-profile-dl">
-                                    <dt>Usuario</dt>
-                                    <a th:href="@{'/users/' + ${user.username}}" th:text="${user.name} +' ' + ${user.last_name}" ></a>
-                                    <dt>Email</dt>
-                                    <dd th:text="${user.email}"></dd>
-                                </dl>
-                            </div>
+                    </div >
+                        <span class="fa fa-tag" aria-hidden="true"> Etiquetas </span>
+                        <div class="padding-vertical-20">
+                            <th:block th:each="tag : ${tags}">
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="margin: 3px 0px 3px 0px">
+                                    <span class="label label-primary" th:text="${tag.name}"></span>
+                                </div>
+                            </th:block>
                         </div>
-
-                   </div>
-
                 </div>
+            </div>
 
              </div>
 
 
 
-                         <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}">
+                         <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}" style="padding: 40px">
                                 <form id="form-trueque" action="/trueques" th:method="GET">
                                     <input type="hidden" id="username-user-offerer" name="username-user-offerer" th:value="${#authentication.principal.username}"/>
                                     <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
-                                    <button type="sumbit" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15">
+                                    <button type="sumbit" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15 col-lg-offset-1">
                                         <i class="icmn-forward margin-right-5"></i>
                                         Trueque Ya
                                     </button>
                                 </form>
                             </div>
-                            <div sec:authorize="isAnonymous()">
-                                <a href="/login"  class="btn btn-icon btn-primary btn-lg margin-right-15">
+                            <div sec:authorize="isAnonymous()" style="padding: 40px">
+                                <a href="/login"  class="btn btn-icon btn-primary btn-lg margin-right-15 col-lg-offset-1">
                                     <i class="icmn-redo2 margin-right-5"></i>
                                     Log in
                                 </a>
                             </div>
 
 
-                    <div align="left" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}">
+                    <div align="left" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}" style="padding: 40px">
                         <a href="#"  class="btn btn-icon btn-primary btn-lg margin-top-15">
-                            <i class="icmn-forward margin-right-5"></i>
+                            <i class="icmn-forward margin-right-5 col-lg-offset-1"></i>
                             Editar
                         </a>
                     </div>
