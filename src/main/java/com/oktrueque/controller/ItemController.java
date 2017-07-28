@@ -75,6 +75,7 @@ public class ItemController {
         model.addAttribute("item", item);
         model.addAttribute("user", u);
         model.addAttribute("tags", itemTagService.getItemTagByItemId(id));
+        model.addAttribute("items", u.getItems());
 
         return "item";
 
