@@ -39,14 +39,8 @@
                         <i class="left-menu-link-icon icmn-list2"><!-- --></i>
                         <span class="menu-top-hidden">Categorias</span>
                     </a>
-                    <ul class="left-menu-list list-unstyled">
-                        <th:block th:each="category : ${categories}">
-                            <li>
-                                <a class="left-menu-link" th:href="@{'/items?id_category='+${category.id}}" th:text="${category.name}">
-                                    Categoria 1
-                                </a>
-                            </li>
-                        </th:block>
+                    <ul id="sidebar-categories" class="left-menu-list list-unstyled">
+                        <li><a class="left-menu-link"></a></li>
                     </ul>
                 </li>
             </ul>
