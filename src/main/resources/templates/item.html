@@ -16,7 +16,7 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-6 col-md-6">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -64,22 +64,20 @@
                             </div>
                         </div>
                         <hr />
-                        <div class="row">
+                        <div class="row ">
                             <div class="col-lg-12">
                                 <div class="cui-ecommerce--product--option_title">
                                     Categoría
                                 </div>
                                 <p th:text="${item.category.name}"></p>
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-10">
                                 <div class="cui-ecommerce--product--option_title">
                                     Características
                                 </div>
-                                <div class="cui-ecommerce--product--option">
+                                <div class="cui-ecommerce--product--option well well-lg">
                                     <th:block th:each="tag : ${tags}">
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2" style="margin: 3px 0px 3px 0px">
-                                            <span class="label label-primary" th:text="${tag.name}"></span>
-                                        </div>
+                                        <span style="margin-top: 5px" class="label label-success" th:text="${tag.name}"></span>
                                     </th:block>
                                 </div>
                             </div>
@@ -109,53 +107,49 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <br/>
-                <div class="row">
+
                     <div class="col-sm-12">
                         <h3 class="cui-ecommerce--product--main-title">Descripción</h3>
                         <p th:text="${item.description}"></p>
                     </div>
+
                 </div>
+                <br/>
+
             </div>
         </section>
 
 
         <section class="panel panel-with-borders">
             <div class="panel-heading">
-                <h2>Encuentre otros productos de </h2>
-                <h4 th:text="${user.name}"></h4>
+                <h2>Productos Sugeridos</h2>
+
             </div>
             <div class="panel-body">
                 <div class="cui-ecommerce--catalog">
                     <div class="row">
                         <div class="well well-lg">
-                            <th:block th:each="item : ${items}">
                             <div class="cui-ecommerce--catalog--item">
-
                                 <div class="cui-ecommerce--catalog--item--img">
-
                                     <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
                                         <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
                                         <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
                                     </div>
                                     <a ref="#">
-                                        <img th:src="@{item.photo1}" />
+                                        <img src="/common/img/temp/photos/2.jpeg" />
                                     </a>
                                 </div>
                                 <div class="cui-ecommerce--catalog--item--title">
-                                    <h2 th:text="${item.name}"></h2>
-
+                                   Producto
                                 </div>
                                 <div class="cui-ecommerce--catalog--item--descr">
                                     Descripcion
                                     <div class="cui-ecommerce--catalog--item--descr--sizes">
-                                        <p th:text="${item.description}"></p>
+
                                     </div>
 
                                 </div>
                             </div>
-                            </th:block>
                         </div>
 
                         </div>
