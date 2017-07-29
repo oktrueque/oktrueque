@@ -1,40 +1,53 @@
 package com.oktrueque.controller;
 
+
+import com.oktrueque.model.Tag;
 import com.oktrueque.model.User;
 import com.oktrueque.model.UserTag;
+import com.oktrueque.service.TagServiceImpl;
 import com.oktrueque.service.UserService;
-import com.oktrueque.service.UserTagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
+
 /**
  * Created by Tomas on 26-Jul-17.
  */
-@Controller
+@RestController
 public class TagController {
 
-    private UserTagService userTagService;
+    private TagServiceImpl tagServiceImpl;
     private UserService userService;
 
     @Autowired
-    public TagController(UserTagService userTagService){
-        this.userTagService = userTagService;
+    public TagController(TagServiceImpl tagServiceImpl, UserService userService){
+        this.tagServiceImpl = tagServiceImpl;
+        this.userService = userService;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/edit/tags") //AutoComplete
+    public ResponseEntity<List<Tag>> getAllTags(){
+        List<Tag> tags = tagServiceImpl.findAll();
+        return new ResponseEntity<>(tags, HttpStatus.OK);
+    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/profile/edit/tags")
+//    public @ResponseBody List<Tag> getTags(){
+//        return tagServiceImpl.findAll();
+//    }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/profile/edit/tags")
-    public String getUserTags(Principal principal, Model model){
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/edit/tags") //para crear los intereses nuevos
+    public String setUserTags(Principal principal, @RequestBody UserTag userTag){
         User user = userService.getUserByUsername(principal.getName());
-        List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
-        model.addAttribute("user", user);
-        model.addAttribute("tags", tags);
+
         return "updateProfile";
     }
+
 
 }
