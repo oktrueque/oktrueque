@@ -14,7 +14,7 @@
             <section class="panel panel-with-borders col-md-6">
                 <div class="page-content-inner">
                     <div class="panel-body">
-                        <form th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT"
+                        <form id="form" th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT"
                               enctype="multipart/form-data">
 
                             <div class="form-group">
@@ -67,7 +67,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                                    <button id="submit-btn" type="submit" class="btn btn-primary">Aceptar</button>
                                     <button type="button" class="btn btn-default" onclick="history.back()">Atras
                                     </button>
                                 </div>
@@ -103,7 +103,17 @@
             });
         });
 
-        
+        $('#form').onSubmit(
+
+            $('#tags').magicSuggest({
+                method: 'POST',
+                data: 'http://localhost:8080/profile/edit/tags'
+            })
+
+        )
+
+
+
     </script>
 
 </th:block>
