@@ -99,7 +99,9 @@
         document.addEventListener("DOMContentLoaded", function() {
             $('#tags').magicSuggest({
                 method: 'get',
-                data: 'http://localhost:8080/profile/edit/tags'
+                data: 'http://localhost:8080/profile/edit/tags',
+                allowFreeEntries: false,
+                toggleOnClick: true
             });
         });
 

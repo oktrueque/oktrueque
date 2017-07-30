@@ -32,7 +32,8 @@ public class UserTagServiceImpl implements UserTagService{
 
         for(UserTagId tag:tags) {
 
-            userTagRepository.saveByUserId(userId, tag.getTagId());
+
+            userTagRepository.setByUserId(userId, tag.getTagId());
 
         }
 
