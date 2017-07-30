@@ -42,12 +42,11 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/edit/tags") //para crear los intereses nuevos
-    public ResponseEntity<List<UserTagId>> setUserTagIds(@RequestBody UserTagId userTagId, Principal principal){
+    public ResponseEntity<List<UserTagId>> setUserTagIds(@RequestBody List<UserTagId> tags, Principal principal){
 
         User user = userServiceImpl.getUserByUsername(principal.getName());
-      //  userTagServiceImpl.setUserTagByUserId(user_id,List)
 
-
+        userTagServiceImpl.saveUserTags(user.getId(), tags);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
