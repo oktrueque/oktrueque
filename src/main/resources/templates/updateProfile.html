@@ -98,23 +98,23 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             $('#tags').magicSuggest({
-                method: 'get',
-                data: 'http://localhost:8080/profile/edit/tags',
-                allowFreeEntries: false,
-                toggleOnClick: true
+                    method: 'get'
+                    ,data: 'http://localhost:8080/profile/edit/tags'
+                    ,allowFreeEntries: false
+                    ,toggleOnClick: true
             });
         });
 
-        $('#form').onSubmit(
+    </script>
+    <script type="text/javascript">
 
+        $('#form').submit( function () {
+            alert("llego");
             $('#tags').magicSuggest({
                 method: 'POST',
                 data: 'http://localhost:8080/profile/edit/tags'
-            })
-
-        )
-
-
+            });
+        });
 
     </script>
 

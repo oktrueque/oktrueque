@@ -28,7 +28,7 @@ public class TagController {
     private UserTagServiceImpl userTagServiceImpl;
 
     @Autowired
-    public TagController(TagServiceImpl tagServiceImpl, UserServiceImpl userServiceImpl, UserTagServiceImpl userTagService, UserTagServiceImpl userTagServiceImpl){
+    public TagController(TagServiceImpl tagServiceImpl, UserServiceImpl userServiceImpl, UserTagServiceImpl userTagServiceImpl){
         this.tagServiceImpl = tagServiceImpl;
         this.userServiceImpl = userServiceImpl;
         this.userTagServiceImpl = userTagServiceImpl;
@@ -41,12 +41,12 @@ public class TagController {
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/profile/edit/tags") //para crear los intereses nuevos
-    public ResponseEntity<List<UserTagId>> setUserTagIds(@RequestBody List<UserTagId> tags, Principal principal){
+    @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit/tags") //para crear los intereses nuevos
+    public ResponseEntity<?> setUserTagIds(@RequestBody List<UserTagId> tags, Principal principal){
 
         User user = userServiceImpl.getUserByUsername(principal.getName());
 
-        userTagServiceImpl.saveUserTags(user.getId(), tags);
+//        userTagServiceImpl.saveUserTags(user.getId(), tags);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

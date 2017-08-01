@@ -28,17 +28,17 @@ public class UserTagServiceImpl implements UserTagService{
     }
 
 
-    public void saveUserTags(Long userId,List<UserTagId> tags){
-
-        for(UserTagId tag:tags) {
-
-
-            userTagRepository.setByUserId(userId, tag.getTagId());
-
-        }
-
-
-    }
+//    public void saveUserTags(Long userId,List<UserTagId> tags){
+//
+//        for(UserTagId tag:tags) {
+//
+//
+//            userTagRepository.setByUserId(userId, tag.getTagId());
+//
+//        }
+//
+//
+//    }
 
 
 }

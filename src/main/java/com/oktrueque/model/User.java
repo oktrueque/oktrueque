@@ -48,6 +48,8 @@ public class User implements UserDetails{
     private List<Comment> comments;
     @Column(name = "score")
     private Integer score;
+    @Transient
+    private List<Tag> tags;
 
 
     public User() {
