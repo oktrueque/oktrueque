@@ -1,6 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.ItemTag;
 import com.oktrueque.model.User;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,10 +74,13 @@ public class ItemController {
 
         Item item = itemService.getItemById(id);
         User u = item.getUser();
+
+        List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
         model.addAttribute("item", item);
         model.addAttribute("user", u);
-        model.addAttribute("tags", itemTagService.getItemTagByItemId(id));
-        model.addAttribute("items", u.getItems());
+        model.addAttribute("hasTags", tags.size() != 0 ? true : false);
+        model.addAttribute("tags", tags);
+        model.addAttribute("sugerencias", true);
 
         return "item";
 

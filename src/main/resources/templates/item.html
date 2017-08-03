@@ -24,13 +24,13 @@
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                             </ol>
                             <div class="carousel-inner" role="listbox">
-                                <div class="carousel-item active">
+                                <div class="carousel-item active" align="center">
                                     <img  th:src="${item.photo1}" alt="First slide"/>
                                 </div>
-                                <div class="carousel-item">
+                                <div class="carousel-item" align="center">
                                     <img  th:src="${item.photo2}" alt="First slide"/>
                                 </div>
-                                <div class="carousel-item">
+                                <div class="carousel-item" align="center">
                                     <img  th:src="${item.photo3}" alt="First slide"/>
                                 </div>
                             </div>
@@ -79,6 +79,9 @@
                                     <th:block th:each="tag : ${tags}">
                                         <span style="margin-top: 5px" class="label label-success" th:text="${tag.name}"></span>
                                     </th:block>
+                                    <div th:if="${!hasTags}">
+                                        <p>Parece que este objeto no posee tags por el momento!</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +123,7 @@
         </section>
 
 
-        <section class="panel panel-with-borders">
+        <section class="panel panel-with-borders" th:if="${sugerencias}">
             <div class="panel-heading">
                 <h2>Productos Sugeridos</h2>
 
