@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+
+</head>
+<th:block layout:fragment="content">
+<section class="page-content">
+    <div class="page-content-inner">
+
+        <!-- Ecommerce Product Details -->
+        <section class="panel panel-with-borders">
+            <div class="panel-heading">
+                <h2>
+                    Detalle del Artículo
+                </h2>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active" align="center">
+                                    <img  th:src="${item.photo1}" alt="First slide"/>
+                                </div>
+                                <div class="carousel-item" align="center">
+                                    <img  th:src="${item.photo2}" alt="First slide"/>
+                                </div>
+                                <div class="carousel-item" align="center">
+                                    <img  th:src="${item.photo3}" alt="First slide"/>
+                                </div>
+                            </div>
+                            <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" data-target="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="icon-next fa fa-arrow-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h3 th:text="${item.name}" class="cui-ecommerce--product--main-title"></h3>
+                                <a class="avatar" th:href="@{'/users/' + ${user.username}}">
+                                    <img th:src="${user.photo1}" />
+                                </a>
+                                <div class="user-wall-item-head">
+                                <strong th:text="${user.name}"></strong>
+                                </div>
+                                <div class="cui-ecommerce--product--rating">
+                                    <i class="icmn-star-full"></i>
+                                    <i class="icmn-star-full"></i>
+                                    <i class="icmn-star-full"></i>
+                                    <i class="icmn-star-full"></i>
+                                    <i class="icmn-star-empty"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row ">
+                            <div class="col-lg-12">
+                                <div class="cui-ecommerce--product--option_title">
+                                    Categoría
+                                </div>
+                                <p th:text="${item.category.name}"></p>
+                            </div>
+                            <div class="col-lg-10">
+                                <div class="cui-ecommerce--product--option_title">
+                                    Características
+                                </div>
+                                <div class="cui-ecommerce--product--option well well-lg">
+                                    <th:block th:each="tag : ${tags}">
+                                        <span style="margin-top: 5px" class="label label-success" th:text="${tag.name}"></span>
+                                    </th:block>
+                                    <div th:if="${!hasTags}">
+                                        <p>Parece que este objeto no posee tags por el momento!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}" style="padding: 40px">
+                            <form id="form-trueque" action="/trueques" th:method="GET">
+                                <input type="hidden" id="username-user-offerer" name="username-user-offerer" th:value="${#authentication.principal.username}"/>
+                                <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
+                                <button type="sumbit" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15 col-lg-offset-1">
+                                    <i class="icmn-forward margin-right-5"></i>
+                                    Trueque Ya
+                                </button>
+                            </form>
+                        </div>
+                        <div sec:authorize="isAnonymous()" style="padding: 40px">
+                            <a href="/login"  class="btn btn-icon btn-primary btn-lg margin-right-15 col-lg-offset-1">
+                                <i class="icmn-redo2 margin-right-5"></i>
+                                Log in
+                            </a>
+                        </div>
+
+                        <div align="left" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}" style="padding: 40px">
+                            <a href="#"  class="btn btn-icon btn-primary btn-lg margin-top-15">
+                                <i class="icmn-forward margin-right-5 col-lg-offset-1"></i>
+                                Editar
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <h3 class="cui-ecommerce--product--main-title">Descripción</h3>
+                        <p th:text="${item.description}"></p>
+                    </div>
+
+                </div>
+                <br/>
+
+            </div>
+        </section>
+
+
+        <section class="panel panel-with-borders" th:if="${sugerencias}">
+            <div class="panel-heading">
+                <h2>Productos Sugeridos</h2>
+
+            </div>
+            <div class="panel-body">
+                <div class="cui-ecommerce--catalog">
+                    <div class="row">
+                        <div class="well well-lg">
+                            <div class="cui-ecommerce--catalog--item">
+                                <div class="cui-ecommerce--catalog--item--img">
+                                    <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
+                                        <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
+                                        <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
+                                    </div>
+                                    <a ref="#">
+                                        <img src="/common/img/temp/photos/2.jpeg" />
+                                    </a>
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--title">
+                                   Producto
+                                </div>
+                                <div class="cui-ecommerce--catalog--item--descr">
+                                    Descripcion
+                                    <div class="cui-ecommerce--catalog--item--descr--sizes">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+        </section>
+
+        <!-- End Ecommerce Product Details -->
+
+    </div>
+
+
+    <!-- Page Scripts -->
+    <script>
+
+    </script>
+<!-- End Page Scripts -->
+</section>
+
+</th:block>
+</html>

@@ -1,14 +1,19 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.ItemTag;
+import com.oktrueque.model.User;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,11 +71,19 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
-        model.addAttribute("item", itemService.getItemById(id));
 
-        //Borrar la siguiente linea cuando tengamos el Iniciar Sesion y el id del user se guarde en local storage
-        model.addAttribute("user_id", 351);
-        return "itemView";
+        Item item = itemService.getItemById(id);
+        User u = item.getUser();
+
+        List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
+        model.addAttribute("item", item);
+        model.addAttribute("user", u);
+        model.addAttribute("hasTags", tags.size() != 0 ? true : false);
+        model.addAttribute("tags", tags);
+        model.addAttribute("sugerencias", true);
+
+        return "item";
+
     }
 
     @RequestMapping(value = "/itemsList", method = RequestMethod.GET)
