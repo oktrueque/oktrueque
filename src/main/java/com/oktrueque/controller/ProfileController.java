@@ -51,7 +51,8 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value = "/profile/edit")
     public String editProfile(Principal principal, Model model){
         User user = userService.getUserByUsername(principal.getName());
-        List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
+        //List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
+        List<Tag> tags = userTagService.getTagByUserTags(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
