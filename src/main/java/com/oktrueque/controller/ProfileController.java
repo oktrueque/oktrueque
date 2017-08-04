@@ -59,7 +59,7 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
-    public String updateUser(@ModelAttribute User user) {
+    public String updateProfile(@ModelAttribute User user) {
         user.setStatus(0);
         userService.updateUser(user);
         return "redirect:/profile";

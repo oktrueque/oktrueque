@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserTagService {
 
     List<UserTag> getUserTagByUserId(Long userId);
+
 }

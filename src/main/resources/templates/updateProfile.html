@@ -14,10 +14,11 @@
             <section class="panel panel-with-borders col-md-6">
                 <div class="page-content-inner">
                     <div class="panel-body">
-                        <form id="form" th:action="@{'/users/' + ${user.username}}" th:object="${user}" th:method="PUT"
+                        <form id="form" action="/profile/edit" th:object="${user}" th:method="PUT"
                               enctype="multipart/form-data">
 
                             <div class="form-group">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                                 <input type="hidden" th:field="*{password}"/>
                                 <input type="hidden" th:field="*{status}"/>
                                 <input type="hidden" th:field="*{score}"/>
@@ -59,10 +60,9 @@
                             <div class="form-group">
 
                                 <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
-                                            <input id="tags" type="text" class="form-control tagsinput" />
+                                            <input id="tags" type="text" name="tags" class="form-control tagsinput" />
 
-                                <label for="savedInterests" class="form-control-label">Intereses personales guardados</label>
-                                             <textarea id="savedInterests" readonly="true" class="form-control" rows="4"></textarea>
+
 
                             </div>
                             <div class="form-actions">
@@ -96,26 +96,27 @@
 
     <script type="text/javascript">
 
-        document.addEventListener("DOMContentLoaded", function() {
-            $('#tags').magicSuggest({
-                    method: 'get'
-                    ,data: 'http://localhost:8080/profile/edit/tags'
-                    ,allowFreeEntries: false
-                    ,toggleOnClick: true
-            });
-        });
+
 
     </script>
-    <script type="text/javascript">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
-        $('#form').submit( function () {
-            alert("llego");
-            $('#tags').magicSuggest({
-                method: 'POST',
-                data: 'http://localhost:8080/profile/edit/tags'
+        var tags = [[${tags}]];
+        document.addEventListener("DOMContentLoaded", function() {
+            var ms = $('#tags').magicSuggest({
+                method: 'get'
+                ,data: 'http://localhost:8080/profile/edit/allTags'
+                ,allowFreeEntries: false
+                ,toggleOnClick: true
+            });
+            ms.addToSelection(tags);
+            $(ms).on('selectionchange', function(){
+                alert(JSON.stringify(this.getValue()));
             });
         });
 
+        /*]]>*/
     </script>
 
 </th:block>
