@@ -28,4 +28,11 @@ public class TagServiceImpl implements TagService {
     public List<Tag> findTagsByIds(List<Long> tagsId) {
         return tagRepository.findAllByIdIn(tagsId);
     }
+
+    public void saveTags(List<Tag> tags){
+        for (Tag tag:tags) {
+            tagRepository.save(tag);
+        }
+
+    }
 }

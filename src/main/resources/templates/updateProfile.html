@@ -67,7 +67,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="form-group">
-                                    <button id="submit-btn" type="submit" class="btn btn-primary">Aceptar</button>
+                                    <button id="submit-btn" type="submit" class="btn btn-primary">Guardar</button>
                                     <button type="button" class="btn btn-default" onclick="history.back()">Atras
                                     </button>
                                 </div>
@@ -94,30 +94,50 @@
         </div>
     </section>
 
-    <script type="text/javascript">
-
-
-
-    </script>
     <script th:inline="javascript">
         /*<![CDATA[*/
 
         var tags = [[${tags}]];
+
         document.addEventListener("DOMContentLoaded", function() {
             var ms = $('#tags').magicSuggest({
                 method: 'get'
                 ,data: 'http://localhost:8080/profile/edit/allTags'
                 ,allowFreeEntries: false
                 ,toggleOnClick: true
+                ,useTabKey: true
+                ,typeDelay: 0
             });
             ms.addToSelection(tags);
-            $(ms).on('selectionchange', function(){
-                alert(JSON.stringify(this.getValue()));
-            });
         });
+
+        $('#submit-btn').on('click', function () {
+
+            ms({data: 'http://localhost:8080/profile/edit/tags',
+                ajaxConfig: {
+                    xhrFields: {
+                        data: JSON.stringify(this.getValue()),
+                        dataType: 'json',
+                        type: 'POST'
+                    }
+                }})
+        })
 
         /*]]>*/
     </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+//        $('#submit-btn').on('click', function () {
+//
+//            var ms = $('#tags').magicSuggest({
+//                data: 'http://localhost:8080/profile/edit/tags' //por default hace un post
+//                });
+//        });
+
+        /*]]>*/
+    </script>
+
 
 </th:block>
 </html>
