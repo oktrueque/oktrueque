@@ -98,7 +98,6 @@
         /*<![CDATA[*/
 
         var tags = [[${tags}]];
-
         document.addEventListener("DOMContentLoaded", function() {
             var ms = $('#tags').magicSuggest({
                 method: 'get'
@@ -111,34 +110,25 @@
             ms.addToSelection(tags);
         });
 
-        $('#submit-btn').on('click', function () {
-
-            ms({data: 'http://localhost:8080/profile/edit/tags',
-                ajaxConfig: {
-                    xhrFields: {
-                        data: JSON.stringify(this.getValue()),
-                        dataType: 'json',
-                        type: 'POST'
-                    }
-                }})
-        })
 
         /*]]>*/
     </script>
     <script th:inline="javascript">
-        /*<![CDATA[*/
+        var tags = [[${tags}]];
+        document.addEventListener('onsubmit', function () {
+            var ms = $('#tags').magicSuggest({data: 'http://localhost:8080/profile/edit/tags',
+                ajaxConfig: {
+                    xhrFields: {
+                        data: JSON.stringify(this.getValue(tags)),
+                        dataType: 'json',
+                        type: 'POST'
+                    }
+                }});
+            alert('getJson():' + ms.getJSON() + ' getJson(tags):' + ms.getJSON(tags)
+                + ' getValue:' + ms.getValue() + ' getValue(tags):' + ms.getValue(tags));
+        });
 
-//        $('#submit-btn').on('click', function () {
-//
-//            var ms = $('#tags').magicSuggest({
-//                data: 'http://localhost:8080/profile/edit/tags' //por default hace un post
-//                });
-//        });
-
-        /*]]>*/
     </script>
-
-
 </th:block>
 </html>
 
