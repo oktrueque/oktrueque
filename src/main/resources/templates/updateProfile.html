@@ -108,14 +108,21 @@
                 ,typeDelay: 0
             });
             ms.addToSelection(tags);
+
+            ms.on('selectionchange', function () {
+                alert("entro");
+                ms({data:'http://localhost:8080/profile/edit/tags'
+                    , method: 'post' })
+            })
         });
 
 
         /*]]>*/
     </script>
-    <script th:inline="javascript">
-        var tags = [[${tags}]];
-        document.addEventListener('onsubmit', function () {
+    <script type="text/javascript">
+
+        document.getElementById('tags').addEventListener('onchange', function () {
+            alert("entro");
             var ms = $('#tags').magicSuggest({data: 'http://localhost:8080/profile/edit/tags',
                 ajaxConfig: {
                     xhrFields: {
@@ -124,8 +131,8 @@
                         type: 'POST'
                     }
                 }});
-            alert('getJson():' + ms.getJSON() + ' getJson(tags):' + ms.getJSON(tags)
-                + ' getValue:' + ms.getValue() + ' getValue(tags):' + ms.getValue(tags));
+            alert("getJson():" + ms.getJSON() + " getJson(tags):" + ms.getJSON(tags)
+                + " getValue:" + ms.getValue() + " getValue(tags):" + ms.getValue(tags));
         });
 
     </script>
