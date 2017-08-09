@@ -369,7 +369,7 @@
 
         window.genUsername = function () {
 
-            var emailTruncated = document.getElementById('validation-email').value; //Falta cortar el email hasta el @ y proponer eso como username
+            var emailTruncated = document.getElementById('validation-email').value;
             emailTruncated = emailTruncated.substring(0, emailTruncated.indexOf('@'));
             document.getElementById('username-input').value = emailTruncated;
             return true;
