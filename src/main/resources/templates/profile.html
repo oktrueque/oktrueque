@@ -175,8 +175,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
 
+                                                    <h5>Intereses personales</h5>
+                                                    <div class="form-group">
+                                                        <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
+                                                        <input id="tags" type="text" class="form-control tagsinput" />
+                                                    </div>
+
+                                                    <div class="row">
                                                         <h4 class="modal-title">Fotos del Item</h4>
                                                         <div class="cui-ecommerce--catalog--item col-lg-3">
                                                             <div class="cui-ecommerce--catalog--item--img">
@@ -246,6 +252,31 @@
         /*]]>*/
     </script>
 
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var tags = [[${tags}]];
+        document.addEventListener("DOMContentLoaded", function() {
+            var ms = $('#tags').magicSuggest({
+                method: 'get'
+                ,data: 'http://localhost:8080/profile/edit/allTags'
+                ,allowFreeEntries: false
+                ,toggleOnClick: true
+                ,useTabKey: true
+                ,typeDelay: 0
+            });
+            ms.addToSelection(tags);
+
+            ms.on('selectionchange', function () {
+                alert("entro");
+                ms({data:'http://localhost:8080/profile/edit/tags'
+                    , method: 'post' })
+            })
+        });
+
+
+        /*]]>*/
+    </script>
 <!-- End Page Scripts -->
 </section>
 <div class="main-backdrop"><!-- --></div>
