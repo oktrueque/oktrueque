@@ -83,6 +83,15 @@
                                     Trueques
                                 </a>
                             </li>
+                            <div th:if="${hasItems}" >
+                            <li style="float: right" class="nav-item">
+                                <a data-toggle="modal" data-target="#example1">
+                                <button type="button" class="btn btn-icon btn-info margin-inline">
+                                    <i class="icmn-plus2" aria-hidden="true"></i>
+                                </button>
+                                </a>
+                            </li>
+                            </div>
                         </ul>
                         <div class="tab-content padding-vertical-20 active">
                             <div th:if="${hasItems}" class="tab-pane active" id="posts" role="tabpanel">
@@ -124,77 +133,77 @@
                                 <a data-toggle="modal" data-target="#example1">
                                     Click acá para agregar uno!
                                 </a>
-                                <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button>
-                                                <h4 class="modal-title" id="myModalLabel">Nuevo Item</h4>
-                                            </div>
+                            </div>
+                            <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">Nuevo Item</h4>
+                                        </div>
 
-                                            <form id="nuevoItemForm" onsubmit="return validations()"
-                                                  th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
+                                        <form id="nuevoItemForm" onsubmit="return validations()"
+                                              th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
                                             <div class="modal-body">
-                                                        <div class="col-lg">
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label class="control-label">Nombre</label>
-                                                                        <input type="text" th:field="*{name}" class="form-control col-lg-12"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <!--DROP DOWN LIST DE CATEGORIA-->
-                                                                    <div class="form-group">
-                                                                    <label for="selectCat" class="form-control-label">Categoría</label>
-                                                                    <select th:field="*{category}" id="selectCat" class="form-control">
-                                                                        <option value="-1"> Seleccione categoría</option>
-                                                                        <option th:each="cat : ${categories}" th:value="${cat.id}"
-                                                                                th:text="${cat.name}" th:field="*{category}"></option>
-                                                                    </select>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label for="descTextArea" class="form-control-label">Descripción</label>
-                                                                        <textarea th:field="*{description}" id="descTextArea" class="form-control" rows="4"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-
-                                                                <h4 class="modal-title">Fotos del Item</h4>
-                                                                <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                                    <div class="cui-ecommerce--catalog--item--img">
-                                                                        <input type="file"/>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                                    <div class="cui-ecommerce--catalog--item--img">
-                                                                        <input type="file"/>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                                    <div class="cui-ecommerce--catalog--item--img">
-                                                                        <input type="file"/>
-                                                                    </div>
-                                                                </div>
-
+                                                <div class="col-lg">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Nombre</label>
+                                                                <input type="text" th:field="*{name}" class="form-control col-lg-12"/>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-6">
+                                                            <!--DROP DOWN LIST DE CATEGORIA-->
+                                                            <div class="form-group">
+                                                                <label for="selectCat" class="form-control-label">Categoría</label>
+                                                                <select th:field="*{category}" id="selectCat" class="form-control">
+                                                                    <option value="-1"> Seleccione categoría</option>
+                                                                    <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                                                            th:text="${cat.name}" th:field="*{category}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group">
+                                                                <label for="descTextArea" class="form-control-label">Descripción</label>
+                                                                <textarea th:field="*{description}" id="descTextArea" class="form-control" rows="4"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <h4 class="modal-title">Fotos del Item</h4>
+                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
+                                                            <div class="cui-ecommerce--catalog--item--img">
+                                                                <input type="file"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
+                                                            <div class="cui-ecommerce--catalog--item--img">
+                                                                <input type="file"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
+                                                            <div class="cui-ecommerce--catalog--item--img">
+                                                                <input type="file"/>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
                                                 <button type="submit" class="btn btn-primary">Guardar Item</button>
                                             </div>
-                                            </form>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -221,6 +230,7 @@
             });
         });
     </script>
+
     <script th:inline="javascript">
         /*<![CDATA[*/
 
@@ -235,6 +245,7 @@
 
         /*]]>*/
     </script>
+
 <!-- End Page Scripts -->
 </section>
 <div class="main-backdrop"><!-- --></div>
