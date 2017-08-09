@@ -14,7 +14,7 @@
             <section class="panel panel-with-borders col-md-6">
                 <div class="page-content-inner">
                     <div class="panel-body">
-                        <form id="form" action="/profile/edit" th:object="${user}" th:method="PUT"
+                        <form id="form" th:action="@{/profile/edit}" th:object="${user}" th:method="PUT"
                               enctype="multipart/form-data">
 
                             <div class="form-group">
@@ -98,8 +98,9 @@
         /*<![CDATA[*/
 
         var tags = [[${tags}]];
+
         document.addEventListener("DOMContentLoaded", function() {
-            var ms = $('#tags').magicSuggest({
+            var ms = $("#tags").magicSuggest({
                 method: 'get'
                 ,data: 'http://localhost:8080/profile/edit/allTags'
                 ,allowFreeEntries: false
@@ -108,34 +109,44 @@
                 ,typeDelay: 0
             });
             ms.addToSelection(tags);
+//            alert(" getValue:" + JSON.stringify(ms.getValue()) + " getValue(tags):" + JSON.stringify(ms.getValue(tags)));
 
-            ms.on('selectionchange', function () {
-                alert("entro");
-                ms({data:'http://localhost:8080/profile/edit/tags'
-                    , method: 'post' })
-            })
         });
+
+            $("#submit-btn").on("click", function () {
+//                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST',
+//                        ajaxConfig: {
+//                            xhrFields: {
+//                                data: JSON.stringify(this.getValue(tags)),
+//                                dataType: 'json',
+//                                type: 'POST'
+//                            }
+//                        }});
+                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST'});
+
+                });
+
+
 
 
         /*]]>*/
     </script>
-    <script type="text/javascript">
+    <!--<script type="text/javascript">-->
 
-        document.getElementById('tags').addEventListener('onchange', function () {
-            alert("entro");
-            var ms = $('#tags').magicSuggest({data: 'http://localhost:8080/profile/edit/tags',
-                ajaxConfig: {
-                    xhrFields: {
-                        data: JSON.stringify(this.getValue(tags)),
-                        dataType: 'json',
-                        type: 'POST'
-                    }
-                }});
-            alert("getJson():" + ms.getJSON() + " getJson(tags):" + ms.getJSON(tags)
-                + " getValue:" + ms.getValue() + " getValue(tags):" + ms.getValue(tags));
-        });
-
-    </script>
+        <!--document.getElementById('tags').addEventListener('onchange', function () {-->
+            <!--alert("entro");-->
+            <!--var ms = $('#tags').magicSuggest({data: 'http://localhost:8080/profile/edit/tags',-->
+                <!--ajaxConfig: {-->
+                    <!--xhrFields: {-->
+                        <!--data: JSON.stringify(this.getValue(tags)),-->
+                        <!--dataType: 'json',-->
+                        <!--type: 'POST'-->
+                    <!--}-->
+                <!--}});-->
+            <!--alert("getJson():" + ms.getJSON() + " getJson(tags):" + ms.getJSON(tags)-->
+                <!--+ " getValue:" + ms.getValue() + " getValue(tags):" + ms.getValue(tags));-->
+        <!--});-->
+    <!--</script>-->
 </th:block>
 </html>
 

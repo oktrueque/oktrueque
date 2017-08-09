@@ -1,6 +1,7 @@
 package com.oktrueque.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.oktrueque.model.Tag;
 import com.oktrueque.model.User;
 import com.oktrueque.model.UserTagId;
@@ -51,7 +52,7 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/edit/tags")
-    public ResponseEntity<?> saveUserTags(@RequestBody List<Long> tags){ //tags= lista de longs
+    public ResponseEntity<Void> saveUserTags(@RequestBody List<Long> tags){
         List<Tag> tagsList = tagServiceImpl.findTagsByIds(tags);
         tagServiceImpl.saveTags(tagsList);
         return new ResponseEntity<>(HttpStatus.CREATED);
