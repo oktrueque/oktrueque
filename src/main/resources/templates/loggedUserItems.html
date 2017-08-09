@@ -63,5 +63,27 @@
 
     })
 </script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var tags = [[${tags}]];
+    document.addEventListener("DOMContentLoaded", function() {
+        var ms = $('#tags').magicSuggest({
+            method: 'get'
+            ,data: 'http://localhost:8080/profile/edit/allTags'
+            ,allowFreeEntries: false
+            ,toggleOnClick: true
+            ,useTabKey: true
+            ,typeDelay: 0
+        });
+        ms.addToSelection(tags);
+
+        ms.on('selectionchange', function () {
+            alert("entro");
+            ms({data:'http://localhost:8080/profile/edit/tags'
+                , method: 'post' })
+        })
+    });
 <!-- End Page Scripts -->
 </html>
