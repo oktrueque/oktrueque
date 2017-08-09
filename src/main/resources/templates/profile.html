@@ -133,21 +133,26 @@
                                                 </button>
                                                 <h4 class="modal-title" id="myModalLabel">Nuevo Item</h4>
                                             </div>
+
+                                            <form id="nuevoItemForm" onsubmit="return validations()"
+                                                  th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
                                             <div class="modal-body">
-                                                    <form>
                                                         <div class="col-lg">
                                                             <div class="row">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label class="control-label">Nombre</label>
-                                                                        <input required="true" type="text" class="form-control col-lg-12"/>
+                                                                        <input type="text" th:field="*{name}" class="form-control col-lg-12"/>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6">
                                                                     <!--DROP DOWN LIST DE CATEGORIA-->
                                                                     <div class="form-group">
                                                                     <label for="selectCat" class="form-control-label">Categoría</label>
-                                                                    <select required="true" id="selectCat" class="form-control">
+                                                                    <select th:field="*{category}" id="selectCat" class="form-control">
+                                                                        <option value="-1"> Seleccione categoría</option>
+                                                                        <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                                                                th:text="${cat.name}" th:field="*{category}"></option>
                                                                     </select>
                                                                     </div>
                                                                 </div>
@@ -156,17 +161,39 @@
                                                                 <div class="col-lg-12">
                                                                     <div class="form-group">
                                                                         <label for="descTextArea" class="form-control-label">Descripción</label>
-                                                                        <textarea required="true" id="descTextArea" class="form-control" rows="4"></textarea>
+                                                                        <textarea th:field="*{description}" id="descTextArea" class="form-control" rows="4"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="row">
+
+                                                                <h4 class="modal-title">Fotos del Item</h4>
+                                                                <div class="cui-ecommerce--catalog--item col-lg-3">
+                                                                    <div class="cui-ecommerce--catalog--item--img">
+                                                                        <input type="file"/>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="cui-ecommerce--catalog--item col-lg-3">
+                                                                    <div class="cui-ecommerce--catalog--item--img">
+                                                                        <input type="file"/>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="cui-ecommerce--catalog--item col-lg-3">
+                                                                    <div class="cui-ecommerce--catalog--item--img">
+                                                                        <input type="file"/>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
                                                         </div>
-                                                    </form>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary">Guardar Item</button>
+                                                <button type="submit" class="btn btn-primary">Guardar Item</button>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
