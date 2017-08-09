@@ -8,10 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -71,4 +68,13 @@ public class ProfileController {
         System.out.println(item);
         return null;
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/items")
+    public String getItemsByUser(Model model, Principal principal){
+    List<Item> items = itemService.getItemsByUserUsername(principal.getName());
+    model.addAttribute("items", items);
+
+    return "loggedUserItems";
+    }
+
 }

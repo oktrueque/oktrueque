@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+</head>
+<th:block layout:fragment="content">
+    <section class="page-content">
+<div class="page-content-inner">
+
+    <!-- Ecommerce Products List -->
+    <section class="panel panel-with-borders">
+        <div class="panel-heading">
+            <h2>
+                Tus Items
+            </h2>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover nowrap" id="example1" width="100%">
+                <thead class="thead-default">
+                <tr>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Thumbnail</th>
+                    <th>Name</th>
+                    <th>Descripcion</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr th:each="item : ${items}">
+                    <td><a href="javascript: void(0);" class="cui-ecommerce--dashboard--list--img"><img /></a></td>
+                    <td><a href="javascript: void(0);" class="link-underlined"><span th:text="${item.name}"></span></a></td>
+                    <td><span th:text="${item.description}"></span></td>
+                    <td><span th:text="${item.category.name}"></span></td>
+                    <td><span th:text="${item.status}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- End Ecommerce Products List -->
+
+</div>
+    </section>
+</th:block>
+<!-- Page Scripts -->
+<script>
+    $(function () {
+
+        // Datatables
+        $('#example1').DataTable({
+            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
+            responsive: true,
+            "autoWidth": false
+        });
+
+    })
+</script>
+<!-- End Page Scripts -->
+</html>
