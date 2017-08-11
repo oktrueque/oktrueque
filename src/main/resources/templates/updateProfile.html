@@ -114,17 +114,17 @@
         });
 
             $("#submit-btn").on("click", function () {
-//                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST',
-//                        ajaxConfig: {
-//                            xhrFields: {
-//                                data: JSON.stringify(this.getValue(tags)),
-//                                dataType: 'json',
-//                                type: 'POST'
-//                            }
-//                        }});
-                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST'});
+                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST',
+                        ajaxConfig: {
+                            xhrFields: {
+                                data: JSON.stringify(this.getValue(tags)),
+                                dataType: 'json',
+                                type: 'POST'
+                            }
+                        }});
+//                $("#tags").magicSuggest({method:'POST', data: 'http://localhost:8080/profile/edit/tags'});
 
-                });
+            });
 
 
 
