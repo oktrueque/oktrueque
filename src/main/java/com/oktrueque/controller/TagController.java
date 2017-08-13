@@ -41,10 +41,6 @@ public class TagController {
         this.userTagService = userTagService;
     }
 
-
-
-
-
     @RequestMapping(method = RequestMethod.GET, value = "/profile/edit/allTags") //AutoComplete
     public ResponseEntity<List<Tag>> autocomplete(){
         List<Tag> tags = tagServiceImpl.findAll();

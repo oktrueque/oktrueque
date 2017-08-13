@@ -98,6 +98,8 @@
         /*<![CDATA[*/
 
         var tags = [[${tags}]];
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
 
         document.addEventListener("DOMContentLoaded", function() {
             var ms = $("#tags").magicSuggest({
@@ -110,22 +112,60 @@
             });
             ms.addToSelection(tags);
 //            alert(" getValue:" + JSON.stringify(ms.getValue()) + " getValue(tags):" + JSON.stringify(ms.getValue(tags)));
+//              DAN LO MISMO
+            $("#submit-btn").on("click", function () {
+                $.ajax({
+                    type: "POST",
+//                    contentType: "application/json",
+                    url: "/profile/edit/tags",
+                    data: JSON.stringify(ms.getValue()),
+                    dataType: 'text',
+                    cache: false,
+                    timeout: 600000,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (lol) {
 
+                        console.log("success:" + JSON.stringify(lol))
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", JSON.stringify(e));
+                    }
+                });
+            });
         });
 
-            $("#submit-btn").on("click", function () {
-                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST',
-                        ajaxConfig: {
-                            xhrFields: {
-                                data: JSON.stringify(this.getValue(tags)),
-                                dataType: 'json',
-                                type: 'POST'
-                            }
-                        }});
+//            $("#submit-btn").on("click", function () {
+//                alert("entro");
+//                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST',
+//                        ajaxConfig: {
+//                            xhrFields: {
+//                                data: JSON.stringify(this.getValue(tags)),
+//                                dataType: 'json',
+//                                type: 'POST'
+//                            }
+//                        }});
 //                $("#tags").magicSuggest({method:'POST', data: 'http://localhost:8080/profile/edit/tags'});
 
-            });
-
+//                $.ajax({
+//                    type: "POST",
+//                    contentType: "application/json",
+//                    url: "/profile/edit/tags",
+//                    data: JSON.stringify(ms.getValue(tags)),
+//                    dataType: 'json',
+//                    cache: false,
+//                    timeout: 600000,
+//                    success: function () {
+//                        console.log("success")
+//                    },
+//                    error: function (e) {
+//                        console.log("ERROR : ", e);
+//                    }
+//                });
+//
+//            });
+//
 
 
 
