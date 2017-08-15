@@ -8,6 +8,7 @@ import com.oktrueque.model.UserTagId;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.ui.Model;
@@ -48,9 +49,10 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/edit/tags")
-    public ResponseEntity<Void> saveUserTags(@RequestBody List<Long> tags){
-        List<Tag> tagsList = tagServiceImpl.findTagsByIds(tags);
-        tagServiceImpl.saveTags(tagsList);
+    public ResponseEntity<Void> saveUserTags(@RequestBody List<Long> tagsId, Principal principal){
+        User user = userService.getUserByUsername(principal.getName());
+        List<Tag> tagsList = tagServiceImpl.findTagsByIds(tagsId);
+        userTagServiceImpl.saveUserTags(user.getId(),tagsList);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -13,5 +13,5 @@ import java.util.List;
 public interface UserTagRepository extends CrudRepository<UserTag, UserTagId> {
 
     List<UserTag> findByIdUserId(Long userId);
-//    void setByUserId(Long userId, Long tagId);
+
 }

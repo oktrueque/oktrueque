@@ -30,9 +30,10 @@ public class TagServiceImpl implements TagService {
     }
 
     public void saveTags(List<Tag> tags){
-        for (Tag tag:tags) {
-            tagRepository.save(tag);
-        }
+//        for (Tag tag:tags) {
+//            tagRepository.save(tag);
+//        }
+        tagRepository.save(tags);
 
     }
 }

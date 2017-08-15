@@ -100,6 +100,7 @@
         var tags = [[${tags}]];
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
+//        var userId = [[${user.id}]];
 
         document.addEventListener("DOMContentLoaded", function() {
             var ms = $("#tags").magicSuggest({
@@ -116,77 +117,54 @@
             $("#submit-btn").on("click", function () {
                 $.ajax({
                     type: "POST",
-//                    contentType: "application/json",
+                    contentType: "application/json",
                     url: "/profile/edit/tags",
                     data: JSON.stringify(ms.getValue()),
-                    dataType: 'text',
+                    dataType: 'text', //cambie esto a text, estaba json
                     cache: false,
                     timeout: 600000,
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader(header, token);
+
                     },
                     success: function (lol) {
-
-                        console.log("success:" + JSON.stringify(lol))
+                        console.log("success:" + JSON.stringify(lol));
                     },
                     error: function (e) {
                         console.log("ERROR : ", JSON.stringify(e));
                     }
-                });
+
+//                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags',
+//                    ajaxConfig: {
+//                        xhrFields: {
+//                            data: JSON.stringify(ms.getValue()),
+//                            dataType: 'json',
+//                            type: 'POST',
+//                            beforeSend: function(xhr) {
+//                                xhr.setRequestHeader(header, token);
+//                            },
+//                            success: function (lol) {
+//
+//                                console.log("success:" + JSON.stringify(lol))
+//                            },
+//                            error: function (e) {
+//                                console.log("ERROR : ", JSON.stringify(e));
+//                            }
+//                        }
+//                    }});
+
             });
+
+            });
+
         });
 
-//            $("#submit-btn").on("click", function () {
-//                alert("entro");
-//                $("#tags").magicSuggest({data: 'http://localhost:8080/profile/edit/tags', method:'POST',
-//                        ajaxConfig: {
-//                            xhrFields: {
-//                                data: JSON.stringify(this.getValue(tags)),
-//                                dataType: 'json',
-//                                type: 'POST'
-//                            }
-//                        }});
-//                $("#tags").magicSuggest({method:'POST', data: 'http://localhost:8080/profile/edit/tags'});
-
-//                $.ajax({
-//                    type: "POST",
-//                    contentType: "application/json",
-//                    url: "/profile/edit/tags",
-//                    data: JSON.stringify(ms.getValue(tags)),
-//                    dataType: 'json',
-//                    cache: false,
-//                    timeout: 600000,
-//                    success: function () {
-//                        console.log("success")
-//                    },
-//                    error: function (e) {
-//                        console.log("ERROR : ", e);
-//                    }
-//                });
-//
-//            });
-//
 
 
 
         /*]]>*/
     </script>
-    <!--<script type="text/javascript">-->
 
-        <!--document.getElementById('tags').addEventListener('onchange', function () {-->
-            <!--alert("entro");-->
-            <!--var ms = $('#tags').magicSuggest({data: 'http://localhost:8080/profile/edit/tags',-->
-                <!--ajaxConfig: {-->
-                    <!--xhrFields: {-->
-                        <!--data: JSON.stringify(this.getValue(tags)),-->
-                        <!--dataType: 'json',-->
-                        <!--type: 'POST'-->
-                    <!--}-->
-                <!--}});-->
-            <!--alert("getJson():" + ms.getJSON() + " getJson(tags):" + ms.getJSON(tags)-->
-                <!--+ " getValue:" + ms.getValue() + " getValue(tags):" + ms.getValue(tags));-->
-        <!--});-->
-    <!--</script>-->
 </th:block>
 </html>
 
