@@ -98,7 +98,6 @@ public class ProfileController {
     public String getItemsByUser(Model model, Principal principal){
     List<Item> items = itemService.getItemsByUserUsername(principal.getName());
     model.addAttribute("items", items);
-
     return "loggedUserItems";
     }
 
