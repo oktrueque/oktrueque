@@ -172,7 +172,7 @@ public class User implements UserDetails{
     public Boolean checkUsername(){
         Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(this.username);
-        if(this.username.length() < 6 || m.find() || this.username.split(" ").length > 1) return false;
+        if(this.username.length() < 1 || m.find() || this.username.split(" ").length > 1) return false;
         return true;
     }
 
