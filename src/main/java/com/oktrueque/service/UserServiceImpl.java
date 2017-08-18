@@ -33,7 +33,7 @@ public class UserServiceImpl  implements UserService{
     }
 
     public void updateUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 

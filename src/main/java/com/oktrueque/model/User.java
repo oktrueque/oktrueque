@@ -44,10 +44,12 @@ public class User implements UserDetails{
     @NotNull
     @NotEmpty
     private String username;
-    @Column(name = "score")
-    private Integer score;
     @OneToMany(mappedBy = "user_target")
     private List<Comment> comments;
+    @Column(name = "score")
+    private Integer score;
+    @Transient
+    private List<Tag> tags;
 
 
     public User() {
@@ -170,7 +172,7 @@ public class User implements UserDetails{
     public Boolean checkUsername(){
         Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(this.username);
-        if(this.username.length() < 6 || m.find() || this.username.split(" ").length > 1) return false;
+        if(this.username.length() < 1 || m.find() || this.username.split(" ").length > 1) return false;
         return true;
     }
 
@@ -204,5 +206,13 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

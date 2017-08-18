@@ -12,6 +12,8 @@ import javax.persistence.Table;
 @Table(name = "users_tags")
 public class UserTag implements Comparable {
 
+
+
     @EmbeddedId
     private UserTagId id;
 
@@ -44,4 +46,12 @@ public class UserTag implements Comparable {
         UserTag other = (UserTag) o;
         return this.hashCode() - other.hashCode();
     }
+
+    public UserTag(UserTagId id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public UserTag(){}
+
 }

@@ -1,14 +1,21 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.model.*;
+import com.oktrueque.model.Item;
+import com.oktrueque.model.ItemTag;
+import com.oktrueque.model.User;
+import com.oktrueque.model.UserTag;
+import com.oktrueque.model.Tag;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -49,6 +56,24 @@ public class ProfileController {
         model.addAttribute("categories",categoryService.getCategories());
         return "profile";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/edit")
+    public String editProfile(Principal principal, Model model){
+        User user = userService.getUserByUsername(principal.getName());
+        List<Tag> tags = userTagService.getTagByUserTags(user.getId());
+        model.addAttribute("user", user);
+        model.addAttribute("hasTags", tags.size() != 0 ? true : false);
+        model.addAttribute("tags", tags);
+        return "updateProfile";
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
+    public String updateProfile(@ModelAttribute User user) {
+        user.setStatus(0);
+        userService.updateUser(user);
+        return "redirect:/profile";
+    }
+
 
     @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {

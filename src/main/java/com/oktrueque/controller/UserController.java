@@ -55,7 +55,7 @@ public class UserController {
     public String addUser(Model model, @ModelAttribute @Valid User user, BindingResult result) {
         if (!user.checkUsername()) {
             model.addAttribute("user", user);
-            model.addAttribute("error", "-- El username debe contener al menos 6 caracteres, sin caracteres especiales --");
+            model.addAttribute("error", "-- El username no caracteres especiales --");
             return "/register";
         }
         if (!user.checkEmail()) {
@@ -68,6 +68,9 @@ public class UserController {
             model.addAttribute("error", "-- El email o username ingresado ya existen --");
             return "/register";
         }
+
+
+
         user.setStatus(0);
         user.setItemsAmount(0);
         user = userService.addUser(user);
@@ -102,12 +105,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}")
-    public String updateUser(@ModelAttribute User user, @PathVariable String username) {
-        user.setStatus(0);
-        userService.updateUser(user);
-        return "redirect:/users/" + username;
-    }
+
 
 
     @RequestMapping("/login")

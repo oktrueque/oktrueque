@@ -43,4 +43,11 @@ public class UserTagId implements Serializable{
         return Objects.equals(userId, that.getUserId()) &&
                 Objects.equals(tagId, that.getTagId());
     }
+
+    public UserTagId(Long userId, Long tagId) {
+        this.userId = userId;
+        this.tagId = tagId;
+    }
+
+    public UserTagId(){}
 }
