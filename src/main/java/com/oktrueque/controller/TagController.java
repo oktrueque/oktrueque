@@ -52,6 +52,7 @@ public class TagController {
     public ResponseEntity<Void> saveUserTags(@RequestBody List<Long> tagsId, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
         List<Tag> tagsList = tagServiceImpl.findTagsByIds(tagsId);
+        userTagServiceImpl.deleteAllByUserId(user.getId()); //Los elimino antes de guardarlos, para que solo queden guardados los que estan en el input.
         userTagServiceImpl.saveUserTags(user.getId(),tagsList);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

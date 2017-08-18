@@ -7,6 +7,7 @@ import com.oktrueque.repository.UserTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,9 @@ public class UserTagServiceImpl implements UserTagService{
         for(Tag tag:tags) userTagsList.add(new UserTag(new UserTagId(userId,tag.getId()),tag.getName()));
         userTagRepository.save(userTagsList);
     }
+
+    @Transactional
+    public void deleteAllByUserId(Long userId){ userTagRepository.removeAllById_UserId(userId);    }
 
 
 }
