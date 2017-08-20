@@ -89,9 +89,11 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/items")
-    public String newItem(Model model, @ModelAttribute Item item){
-        System.out.println(item);
-        return null;
+    public String newItem(@ModelAttribute Item item, Principal principal){
+        item.setStatus(0);
+        item.setUser(userService.getUserByUsername(principal.getName()));
+        itemService.setItem(item);
+        return "redirect:/profile";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items")

@@ -45,12 +45,6 @@ public class TagController {
         this.itemServiceImpl = itemServiceImpl;
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/profile/edit/allTags") //AutoComplete
-//    public ResponseEntity<List<Tag>> autocomplete(){
-//        List<Tag> tags = tagServiceImpl.findAll();
-//        return new ResponseEntity<>(tags, HttpStatus.OK);
-//    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/tags") //AutoComplete
     public ResponseEntity<List<Tag>> autocomplete(){
         List<Tag> tags = tagServiceImpl.findAll();
