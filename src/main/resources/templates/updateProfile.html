@@ -106,7 +106,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
                 method: 'get'
-                , data: 'http://localhost:8080/profile/edit/allTags'
+                , data: '/tags'
                 , allowFreeEntries: false
                 , toggleOnClick: true
                 , useTabKey: true
@@ -120,7 +120,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/edit/tags",
+                    url: "/profile/userTags",
                     data: JSON.stringify(ms.getValue()),
                     dataType: 'text',
                     cache: false,

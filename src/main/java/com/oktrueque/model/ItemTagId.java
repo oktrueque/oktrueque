@@ -42,4 +42,12 @@ public class ItemTagId implements Serializable{
         return Objects.equals(itemId, that.getItemId()) &&
                 Objects.equals(tagId, that.getTagId());
     }
+
+    public ItemTagId(Long itemId, Long tagId) {
+        this.itemId = itemId;
+        this.tagId = tagId;
+    }
+
+    public ItemTagId() {
+    }
 }

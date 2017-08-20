@@ -44,4 +44,12 @@ public class ItemTag implements Comparable {
         ItemTag other = (ItemTag) o;
         return this.hashCode() - other.hashCode();
     }
+
+    public ItemTag(ItemTagId id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public ItemTag() {
+    }
 }

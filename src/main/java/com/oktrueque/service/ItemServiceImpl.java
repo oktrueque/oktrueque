@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -71,5 +73,18 @@ public class ItemServiceImpl implements ItemService {
 
     public Item setItem(Item item) {
         return itemRepository.save(item);
+    }
+
+    public Long getMaxUserItemsId(List<Item> list){
+
+        Collections.sort(list, new Comparator<Item>() {
+            @Override
+            public int compare(Item item2, Item item1)
+            {
+                return  item1.getId().compareTo(item2.getId());
+            }
+        });
+
+        return list.get(0).getId();
     }
 }
