@@ -48,6 +48,9 @@ public class User implements UserDetails{
     private List<Comment> comments;
     @Column(name = "score")
     private Integer score;
+    @Column(name="wallpaper")
+    private String wallpaper;
+
     @Transient
     private List<Tag> tags;
 
@@ -67,6 +70,7 @@ public class User implements UserDetails{
         this.username = username;
         this.score = score;
         this.comments = comments;
+        this.wallpaper = getWallpaperPath();
     }
 
     public List<Comment> getComments() {
@@ -139,6 +143,14 @@ public class User implements UserDetails{
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    public String getWallpaper() {
+        return wallpaper;
+    }
+
+    public void setWallpaper(String wallpaper) {
+        this.wallpaper = wallpaper;
     }
 
     public String getPhoto1() {
@@ -214,5 +226,10 @@ public class User implements UserDetails{
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    private String getWallpaperPath(){
+        Integer number = (int) (Math.random() * 10) + 1;
+        return "./static/common/img/temp/photos/"+ number.toString() + ".jpeg";
     }
 }
