@@ -149,8 +149,7 @@
                                             <h4 class="modal-title" id="myModalLabel">Nuevo Item</h4>
                                         </div>
 
-                                        <form id="nuevoItemForm" onsubmit="return validations()"
-                                              th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
+                                        <form id="nuevoItemForm" th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
                                             <div class="modal-body">
                                                 <div class="col-lg">
                                                     <div class="row">
@@ -187,27 +186,27 @@
                                                         <input id="tags" type="text" class="form-control tagsinput" />
                                                     </div>
 
-                                                    <div class="row">
-                                                        <h4 class="modal-title">Fotos del Item</h4>
-                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                            <div class="cui-ecommerce--catalog--item--img">
-                                                                <input type="file"/>
-                                                            </div>
-                                                        </div>
+                                                    <!--<div class="row">-->
+                                                        <!--<h4 class="modal-title">Fotos del Item</h4>-->
+                                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-3">-->
+                                                            <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
+                                                                <!--<input type="file"/>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
 
-                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                            <div class="cui-ecommerce--catalog--item--img">
-                                                                <input type="file"/>
-                                                            </div>
-                                                        </div>
+                                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-3">-->
+                                                            <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
+                                                                <!--<input type="file"/>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
 
-                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                            <div class="cui-ecommerce--catalog--item--img">
-                                                                <input type="file"/>
-                                                            </div>
-                                                        </div>
+                                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-3">-->
+                                                            <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
+                                                                <!--<input type="file"/>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
 
-                                                    </div>
+                                                    <!--</div>-->
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
