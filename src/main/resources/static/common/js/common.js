@@ -35,28 +35,28 @@ $(function(){
     /////////////////////////////////////////////////////////////////////////////
     // Main menu scripts
 
-    if (!$('body').hasClass('menu-top')) {
-        if (!cleanUI.hasTouch) {
-            if (!cleanUI.hasTouch) {
-                $('nav.left-menu .scroll-pane').each(function() {
-                    $(this).jScrollPane({
-                        autoReinitialise: true,
-                        autoReinitialiseDelay: 100
-                    });
-                    var api = $(this).data('jsp'),
-                        throttleTimeout;
-                    $(window).bind('resize', function() {
-                        if (!throttleTimeout) {
-                            throttleTimeout = setTimeout(function() {
-                                api.reinitialise();
-                                throttleTimeout = null;
-                            }, 50);
-                        }
-                    });
-                });
-            }
-        }
-    }
+    // if (!$('body').hasClass('menu-top')) {
+    //     if (!cleanUI.hasTouch) {
+    //         if (!cleanUI.hasTouch) {
+    //             $('nav.left-menu .scroll-pane').each(function() {
+    //                 $(this).jScrollPane({
+    //                     autoReinitialise: true,
+    //                     autoReinitialiseDelay: 100
+    //                 });
+    //                 var api = $(this).data('jsp'),
+    //                     throttleTimeout;
+    //                 $(window).bind('resize', function() {
+    //                     if (!throttleTimeout) {
+    //                         throttleTimeout = setTimeout(function() {
+    //                             api.reinitialise();
+    //                             throttleTimeout = null;
+    //                         }, 50);
+    //                     }
+    //                 });
+    //             });
+    //         }
+    //     }
+    // }
 
     if ($('body').hasClass('menu-top')) {
 

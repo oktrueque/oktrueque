@@ -44,10 +44,12 @@ public class User implements UserDetails{
     @NotNull
     @NotEmpty
     private String username;
-    @Column(name = "score")
-    private Integer score;
     @OneToMany(mappedBy = "user_target")
     private List<Comment> comments;
+    @Column(name = "score")
+    private Integer score;
+    @Transient
+    private List<Tag> tags;
 
 
     public User() {
@@ -204,5 +206,13 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

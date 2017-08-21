@@ -105,12 +105,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/users/{username}")
-    public String updateUser(@ModelAttribute User user, @PathVariable String username) {
-        user.setStatus(0);
-        userService.updateUser(user);
-        return "redirect:/users/" + username;
-    }
+
 
 
     @RequestMapping("/login")

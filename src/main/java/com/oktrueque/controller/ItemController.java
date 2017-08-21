@@ -95,14 +95,11 @@ public class ItemController {
         return "itemsCatalog";
     }
 
-
     @RequestMapping(method = RequestMethod.POST, value = "/items")
     public String createItem(@ModelAttribute Item item) {
         itemService.addItem(item);
         return "redirect:/items";
     }
-
-
 
     @RequestMapping(method= RequestMethod.POST, value="/users/{username}/item")
     public String setItem(@ModelAttribute Item item, @PathVariable String username) {
