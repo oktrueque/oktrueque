@@ -32,7 +32,7 @@
                             <td><a th:href="'/profile/items/' + ${item.id}">
                                 <img width="100px" th:src="${item.photo1}"/>
                             </a></td>
-                            <td><a href="javascript: void(0);" class="link-underlined"><span
+                            <td><a th:href="'/profile/items/' + ${item.id}" class="link-underlined"><span
                                     th:text="${item.name}"></span></a></td>
                             <td><span th:text="${item.description}"></span></td>
                             <td><span class="align-middle" th:text="${item.category.name}"></span></td>
