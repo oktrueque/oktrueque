@@ -14,14 +14,18 @@
         <section class="panel panel-with-borders page-content-inner">
             <div class="panel-heading">
                 <h2>
-                    Nuevo ítem
+                    Editar Ítem
                 </h2>
             </div>
             <div class="panel-body">
                 <div class="row">
 
-                    <form id="nuevoItemForm" onsubmit="return validations()"
-                          th:action="@{'/users/' + ${user.username} + '/item'}" th:object="${item}" th:method="POST">
+                    <form id="editItemForm" onsubmit="return validations()"
+                          th:action="@{'/profile/items/' + ${item.id} + '/edit'}" th:object="${item}" th:method="PUT">
+
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+
                         <div class="col-lg">
                             <div class="row">
                                 <div class="col-lg-4">
@@ -61,55 +65,55 @@
                             </div>
                         </div>
                         <!--FOTOS-->
-                        <div class="col-lg">
-                            <div class="row">
-                                <h4>Fotos del Item</h4>
-                                <div class="cui-ecommerce--catalog--item col-lg-4">
-                                    <div class="cui-ecommerce--catalog--item--img">
-                                        <a>
-                                            <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"
-                                                 src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>
-                                        </a>
-                                        <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
-                                            <i class="icmn-cross2"><!-- --></i> Remove
-                                        </a>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file"/>
-                                    </div>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item col-lg-4">
-                                    <div class="cui-ecommerce--catalog--item--img">
-                                        <a>
-                                            <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"
-                                                 src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>
-                                        </a>
-                                        <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
-                                            <i class="icmn-cross2"><!-- --></i> Remove
-                                        </a>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file"/>
-                                    </div>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item col-lg-4">
-                                    <div class="cui-ecommerce--catalog--item--img">
-                                        <a>
-                                            <img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"
-                                                 src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>
-                                        </a>
-                                        <a class="link-underlined cui-ecommerce--catalog--item--img-remove">
-                                            <i class="icmn-cross2"><!-- --></i> Remove
-                                        </a>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="col-lg">-->
+                            <!--<div class="row">-->
+                                <!--<h4>Fotos del Item</h4>-->
+                                <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-4">-->
+                                    <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
+                                        <!--<a>-->
+                                            <!--<img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"-->
+                                                 <!--src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>-->
+                                        <!--</a>-->
+                                        <!--<a class="link-underlined cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img-remove">-->
+                                            <!--<i class="icmn-cross2">&lt;!&ndash; &ndash;&gt;</i> Remove-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="file"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-4">-->
+                                    <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
+                                        <!--<a>-->
+                                            <!--<img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"-->
+                                                 <!--src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>-->
+                                        <!--</a>-->
+                                        <!--<a class="link-underlined cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img-remove">-->
+                                            <!--<i class="icmn-cross2">&lt;!&ndash; &ndash;&gt;</i> Remove-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="file"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-4">-->
+                                    <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
+                                        <!--<a>-->
+                                            <!--<img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"-->
+                                                 <!--src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>-->
+                                        <!--</a>-->
+                                        <!--<a class="link-underlined cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img-remove">-->
+                                            <!--<i class="icmn-cross2">&lt;!&ndash; &ndash;&gt;</i> Remove-->
+                                        <!--</a>-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="file"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="form-actions">
-                            <button id="submit-btn" type="submit" class="btn btn-primary width-150">Crear</button>
+                            <button id="submit-btn" type="submit" class="btn btn-primary width-150">Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -142,6 +146,7 @@
 
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
+        var tags = [[${tags}]];
 
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
@@ -154,6 +159,7 @@
                 , maxSelection: null
                 , required: true
             });
+            ms.addToSelection(tags);
 
 
             $("#submit-btn").on("click", function () {
