@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>OkTrueque</title>
+
+    <link href="../../static/common/img/favicon/favicon.96x96.png" th:href="@{/common/img/favicon/favicon-96x96.png}"
+          rel="apple-touch-icon" type="image/png" sizes="96x96"/>
+    <link href="../../static/common/img/favicon/favicon.32x32.png" th:href="@{/common/img/favicon/favicon-32x32.png}"
+          rel="apple-touch-icon" type="image/png" sizes="32x32"/>
+    <link href="../../static/common/img/favicon/favicon.16x16.png" th:href="@{/common/img/favicon/favicon-16x16.png}"
+          rel="apple-touch-icon" type="image/png" sizes="16x16"/>
+    <link href="../../static/common/img/favicon/favicon.32x32.png" th:href="@{/common/img/favicon/favicon-32x32.png}"
+          rel="icon" type="image/png"/>
+    <link href="favicon.ico" rel="shortcut icon"/>
+
+    <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Vendors Styles -->
+    <!-- v1.0.0 -->
+    <link rel="stylesheet" type="text/css" href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css"
+          th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
+
+    <!-- Clean UI Styles -->
+    <link rel="stylesheet" type="text/css" th:href="@{/common/css/source/custom/confirmEmail.css}"/>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/main.css"
+          th:href="@{/common/css/source/main.css}"/>
+
+    <!-- Vendors Scripts -->
+    <!-- v1.0.0 -->
+    <script src="../assets/vendors/jquery/jquery.min.js" th:src="@{/vendors/jquery/jquery.min.js}"></script>
+    <script src="../assets/vendors/tether/dist/js/tether.min.js"
+            th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
+    <script src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js"
+            th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script src="../assets/vendors/html5-form-validation/dist/jquery.validation.min.js"
+            th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"></script>
+    <script src="../assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"
+            th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
+</head>
+<body class="theme-default">
+<section class="page-content">
+    <div class="page-content-inner background-img" >
+
+        <!-- Lockscreen Page -->
+
+        <div class="empty-holder"><!-- --></div>
+        <div class="single-page-block">
+            <div class="single-page-block-inner effect-3d-element">
+                <div class="blur-placeholder"><!-- --></div>
+                <div class="single-page-block-form">
+                    <div class="text-center">
+                        <span class="avatar" href="javascript:void(0);">
+                            <a href="/">
+                                <img th:src="@{common/img/simbolo-landing.png}" alt="Alternative text to the image"></img>
+                            </a>
+                        </span>
+                    </div>
+                    <h2 class="text-center" th:text="${user.name + ' ' + user.last_name}">
+                        <i class="icmn-lock4"></i>
+                    </h2>
+                    <br/>
+                    <div>
+                        <p style="color: #24222f; text-align: center">
+                            Bienvenido a OkTrueque, te enviamos un email de confirmación, verifica tu correo y por favor confirma tu cuenta.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lockscreen-typer">
+            <div class="locksreen-typer-inner" id="console"><!-- --></div>
+        </div>
+        <div class="empty-holder"><!-- --></div>
+        <!-- End Lockscreen Page -->
+
+    </div>
+
+    <!-- Page Scripts -->
+    <script>
+        $(function () {
+
+            // Add class to body for change layout settings
+            $('body').addClass('single-page');
+
+            // Form Validation
+            $('#form-validation').validate({
+                submit: {
+                    settings: {
+                        inputContainer: '.form-group',
+                        errorListClass: 'form-control-error',
+                        errorClass: 'has-danger'
+                    }
+                }
+            });
+
+            // Show/Hide Password
+            $('.password').password({
+                eyeClass: '',
+                eyeOpenClass: 'icmn-eye',
+                eyeCloseClass: 'icmn-eye-blocked'
+            });
+
+            // Show/Hide Password
+            Typer.speed = 3;
+            Typer.file = "/assets/vendors/hackertyper/kernel.txt";
+            Typer.init();
+
+            // Set Background Image for Form Block
+            function setImage() {
+                var imgUrl = $('.page-content-inner').css('background-image');
+
+                $('.blur-placeholder').css('background-image', imgUrl);
+            };
+
+            function changeImgPositon() {
+                var width = $(window).width(),
+                    height = $(window).height(),
+                    left = -(width - $('.single-page-block-inner').outerWidth()) / 2,
+                    top = -(height - $('.single-page-block-inner').outerHeight()) / 2;
+
+
+                $('.blur-placeholder').css({
+                    width: width,
+                    height: height,
+                    left: left,
+                    top: top
+                });
+            };
+
+            setImage();
+            changeImgPositon();
+
+            $(window).on('resize', function () {
+                changeImgPositon();
+            });
+
+            // Hacker Typer
+            (function loop() {
+                var rand = Math.round(Math.random() * (600 - 500)) + 100;
+                setTimeout(function () {
+                    Typer.addText();
+                    loop();
+                }, rand);
+            }());
+
+            // Mouse Move 3d Effect
+            var rotation = function (e) {
+                var perX = (e.clientX / $(window).width()) - 0.5;
+                var perY = (e.clientY / $(window).height()) - 0.5;
+                TweenMax.to(".effect-3d-element", 0.4, {
+                    rotationY: 15 * perX,
+                    rotationX: 15 * perY,
+                    ease: Linear.easeNone,
+                    transformPerspective: 1000,
+                    transformOrigin: "center"
+                })
+            };
+
+            if (!cleanUI.hasTouch) {
+                $('body').mousemove(rotation);
+            }
+
+        });
+    </script>
+    <!-- End Page Scripts -->
+</section>
+</body>
+</html>
