@@ -258,12 +258,8 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-
-        var tags = [[${tags}]];
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
-        var hasTags = [[${hasTags}]];
-
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
                 method: 'get'
@@ -275,8 +271,6 @@
                 , maxSelection: null
                 , required: true
             });
-            ms.addToSelection(tags);
-
             $("#submit-btn").on("click", function () {
                 $.ajax({
                     type: "POST",
@@ -295,14 +289,9 @@
                     error: function (e) {
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
-
                 });
-
             });
-
         });
-
-
         /*]]>*/
     </script>
 <!-- End Page Scripts -->

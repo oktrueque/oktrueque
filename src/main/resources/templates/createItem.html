@@ -140,10 +140,8 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
 
-        var tags = [[${tags}]];
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
-        var hasTags = [[${hasTags}]];
 
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
@@ -156,7 +154,7 @@
                 , maxSelection: null
                 , required: true
             });
-            ms.addToSelection(tags);
+
 
             $("#submit-btn").on("click", function () {
                 $.ajax({
