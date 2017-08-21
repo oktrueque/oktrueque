@@ -11,19 +11,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-/**
- * Created by nicolas on 21/07/17.
- */
+
+
 @Controller
 public class ProfileController {
 
@@ -35,12 +32,15 @@ public class ProfileController {
 
 
     @Autowired
-    public ProfileController(UserServiceImpl userService,  UserTagService userTagService, ItemServiceImpl itemService,CategoryServiceImpl categoryService){
+    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
+        this.itemTagService = itemTagService;
         this.categoryService = categoryService;
     }
+
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model, @PageableDefault(value = 4) Pageable pageable){
