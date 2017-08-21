@@ -31,6 +31,13 @@
                     </div>
                 </div>
             </div>
+            <div sec:authorize="isAnonymous()">
+                <div class="container menu-user-block">
+                    <a href="/login">
+                        <i class="fa fa-sign-in  fa-3x" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
                 <div class="menu-info-block">
                     <div class="right hidden-md-down margin-left-20">
                         <div class="search-block">
