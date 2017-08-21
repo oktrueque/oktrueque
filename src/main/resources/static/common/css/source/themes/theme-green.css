@@ -12,7 +12,7 @@
 }
 
 .theme-green nav.left-menu .logo-container {
-    background: #acb7bf !important;
+    background: #FFFFFF !important;
     border-bottom: none;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .theme-green nav.top-menu {
-    background: #acb7bf !important;
+    background: #B30227 !important;
     border-bottom: none;
     color: #ffffff;
 }
@@ -72,4 +72,10 @@
 
 .theme-green nav.top-menu .dropdown.open .dropdown-inline-button .dropdown-inline-button-icon {
     color: #eceff4;
+}
+
+#bloque-blanco{
+    height: 100%;
+    width: 10%;
+    background-color: #FFFFFF;
 }

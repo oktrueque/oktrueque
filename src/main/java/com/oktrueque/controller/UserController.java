@@ -76,7 +76,7 @@ public class UserController {
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
 
-        return "redirect:/users/" + user.getUsername();
+        return "/confirmEmail";
     }
 
 
