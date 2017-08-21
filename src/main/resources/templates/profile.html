@@ -92,7 +92,7 @@
                             <li style="float: right" class="nav-item">
                                 <a data-toggle="modal" data-target="#example1">
                                 <button type="button" class="btn btn-icon btn-info margin-inline">
-                                    <i class="icmn-plus2" aria-hidden="true"></i>
+                                    <i class="icmn-plus2" aria-hidden="true"> Agregar Item </i>
                                 </button>
                                 </a>
                             </li>
@@ -135,7 +135,7 @@
                             </div>
                             <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
                                 Parece que aún no tienes items.
-                                <a data-toggle="modal" data-target="#example1">
+                                <a id="manito" data-toggle="modal" data-target="#example1">
                                     Click acá para agregar uno!
                                 </a>
                             </div>
@@ -181,39 +181,24 @@
                                                         </div>
                                                     </div>
 
-                                                    <h5>Intereses personales</h5>
+                                                    <h5>Etiquetas</h5>
                                                     <div class="form-group">
                                                         <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
                                                         <input id="tags" type="text" class="form-control tagsinput" />
                                                     </div>
 
-                                                    <div class="row">
-                                                        <h4 class="modal-title">Fotos del Item</h4>
-                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                            <div class="cui-ecommerce--catalog--item--img">
-                                                                <input type="file"/>
-                                                            </div>
-                                                        </div>
 
-                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                            <div class="cui-ecommerce--catalog--item--img">
-                                                                <input type="file"/>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="cui-ecommerce--catalog--item col-lg-3">
-                                                            <div class="cui-ecommerce--catalog--item--img">
-                                                                <input type="file"/>
-                                                            </div>
-                                                        </div>
-
+                                                        <h5>Fotos del Item</h5>
+                                                        <div class="form-group">
+                                                            <div class="dropify-wrapper"><div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a file here or click</p><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" id="input-file-now" class="dropify"/><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
                                                     </div>
                                                 </div>
+                                                <div class="row modal-footer">
+                                                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Guardar Item</button>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                                <button type="submit" class="btn btn-primary">Guardar Item</button>
-                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
