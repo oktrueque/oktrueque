@@ -24,6 +24,7 @@
 		<java.version>1.8</java.version>
 		<slf4j.version>1.7.20</slf4j.version>
 		<logback.version>1.1.7</logback.version>
+		<freemarker.version>2.3.23</freemarker.version>
 	</properties>
 
 	<dependencies>
@@ -70,8 +71,14 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
 
-    </dependencies>
+
+
+	</dependencies>
 
 	<build>
 		<plugins>

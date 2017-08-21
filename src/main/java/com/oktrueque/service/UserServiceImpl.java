@@ -1,5 +1,6 @@
 package com.oktrueque.service;
 
+import com.oktrueque.model.Mail;
 import com.oktrueque.model.User;
 import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserRepository;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -51,9 +54,17 @@ public class UserServiceImpl  implements UserService{
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token,user);
         verificationTokenRepository.save(verificationToken);
-        String uriConfirm = "localhost:8080/" + user.getUsername() +
+        String uriConfirm = "http://localhost:8080/" + user.getUsername() +
                 "/" + token + "/confirm";
-        emailService.sendMail(user.getEmail(), "Validar cuenta", uriConfirm);
+        Mail mail = new Mail();
+        mail.setMailTo(user.getEmail());
+        mail.setMailSubject("Validar cuenta");
+        Map< String, Object > model = new LinkedHashMap<>();
+        model.put("nombre", user.getName());
+        model.put("apellido", user.getLast_name());
+        model.put("uri_confirm", uriConfirm);
+        mail.setModel(model);
+        emailService.sendMail(mail);
     }
 
     public boolean confirmAcount(String username, String token) {

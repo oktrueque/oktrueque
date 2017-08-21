@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/item.css" th:href="@{/common/css/source/custom/item.css}"/>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -16,22 +16,22 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-6 col-md-12">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                             </ol>
-                            <div class="carousel-inner" role="listbox">
+                            <div class="carousel-inner item-height" role="listbox">
                                 <div class="carousel-item active" align="center">
-                                    <img  th:src="${item.photo1}" alt="First slide"/>
+                                    <img class="item" th:src="${item.photo1}" alt="First slide"/>
                                 </div>
                                 <div class="carousel-item" align="center">
-                                    <img  th:src="${item.photo2}" alt="First slide"/>
+                                    <img class="item" th:src="${item.photo2}" alt="First slide"/>
                                 </div>
                                 <div class="carousel-item" align="center">
-                                    <img  th:src="${item.photo3}" alt="First slide"/>
+                                    <img class="item" th:src="${item.photo3}" alt="First slide"/>
                                 </div>
                             </div>
                             <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev">
@@ -43,6 +43,11 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
+                        <!--<div class="owl-carousel owl-theme">-->
+                            <!--<div class="item"><img  th:src="${item.photo1}" alt="First slide"/></div>-->
+                            <!--<div class="item"><img  th:src="${item.photo2}" alt="First slide"/></div>-->
+                            <!--<div class="item"><img  th:src="${item.photo3}" alt="First slide"/></div>-->
+                        <!--</div>-->
                     </div>
                     <div class="col-lg-5">
                         <div class="row">
@@ -167,9 +172,27 @@
 
 
     <!-- Page Scripts -->
+    <script src="../../static/vendors/datatables-responsive/js/dataTables.responsive.js"
+            th:src="@{/vendors/owl.carousel/dist/owl.carousel.js}"></script>
     <script>
-
+        $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:10,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:5
+                }
+            }
+        })
     </script>
+
 <!-- End Page Scripts -->
 </section>
 
