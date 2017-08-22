@@ -66,7 +66,7 @@ public class TagController {
         List<Tag> tagsList = tagServiceImpl.findTagsByIds(tagsId);
         List<Item> userItems = itemServiceImpl.getItemsByUserUsername(user.getUsername());
         Long maxUserItemId = itemServiceImpl.getMaxUserItemsId(userItems);
-        itemTagServiceImpl.saveItemTags(maxUserItemId,tagsList);
+        itemTagServiceImpl.saveItemTags(maxUserItemId,tagsList); //NO SIRVE CUANDO HACES UPDATE SOLO CUANDO CREAS
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

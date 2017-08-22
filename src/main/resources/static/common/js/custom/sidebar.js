@@ -6,7 +6,7 @@ $(document).ready(function(){
         type : "get",
         url : "/categories",
         success : function(data) {
-            console.log("SUCCESS: ", data);
+            console.log("SUCCESS: ");
             displayCategories(data);
         },
         error : function(e) {

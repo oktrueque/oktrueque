@@ -87,4 +87,8 @@ public class ItemServiceImpl implements ItemService {
 
         return list.get(0).getId();
     }
+
+    public void updateItem(Item item){
+        itemRepository.save(item);
+    }
 }

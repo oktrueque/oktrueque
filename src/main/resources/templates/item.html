@@ -109,7 +109,7 @@
                         </div>
 
                         <div align="left" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}" style="padding: 40px">
-                            <a href="#"  class="btn btn-icon btn-primary btn-lg margin-top-15">
+                            <a th:href="@{'/profile/items/' + ${item.id} + '/edit'}"  class="btn btn-icon btn-primary btn-lg margin-top-15">
                                 <i class="icmn-forward margin-right-5 col-lg-offset-1"></i>
                                 Editar
                             </a>
