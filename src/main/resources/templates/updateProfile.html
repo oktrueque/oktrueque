@@ -130,6 +130,7 @@
                     },
                     success: function () {
                         console.log("New tags posted succesfully!");
+                        window.location.replace("/profile");
                     },
                     error: function (e) {
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));

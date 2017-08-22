@@ -2,6 +2,7 @@ package com.oktrueque.model;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
@@ -31,6 +32,8 @@ public class Item {
     private String photo2;
     @Column(name = "photo3")
     private String photo3;
+    @Transient
+    private List<Tag> tags;
 
     public Item() {
     }
@@ -51,6 +54,17 @@ public class Item {
         this.photo1 = photo1;
         this.photo2 = photo2;
         this.photo3 = photo3;
+    }
+
+    public Item(String name, String description, User user, Category category, String photo1, String photo2, String photo3, List<Tag> tags ) {
+        this.name = name;
+        this.description = description;
+        this.user = user;
+        this.category = category;
+        this.photo1 = photo1;
+        this.photo2 = photo2;
+        this.photo3 = photo3;
+        this.tags = tags;
     }
 
     public Long getId() {
@@ -141,5 +155,13 @@ public class Item {
             case 3: return "Bloqueado";
             default: return "Sin definir";
         }
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

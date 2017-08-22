@@ -1,10 +1,6 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.model.Item;
-import com.oktrueque.model.ItemTag;
-import com.oktrueque.model.User;
-import com.oktrueque.model.UserTag;
-import com.oktrueque.model.Tag;
+import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,15 +25,17 @@ public class ProfileController {
     private ItemService itemService;
     private ItemTagService itemTagService;
     private CategoryService categoryService;
+    private ItemServiceImpl itemServiceImpl;
 
 
     @Autowired
-    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService) {
+    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, ItemServiceImpl itemServiceImpl) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;
         this.categoryService = categoryService;
+        this.itemServiceImpl = itemServiceImpl;
     }
 
 
@@ -103,4 +101,26 @@ public class ProfileController {
     return "loggedUserItems";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}/edit")
+    public String fillUpdateView(@PathVariable Long id, Model model) {
+        Item item = itemService.getItemById(id);
+        List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
+        List<Category> categories = categoryService.getCategories();
+        model.addAttribute("categories", categories);
+        model.addAttribute("item", item);
+        model.addAttribute("user", item.getUser());
+        model.addAttribute("hasTags", tags.size() != 0 ? true : false);
+        model.addAttribute("tags", tags);
+        model.addAttribute("sugerencias", false);
+        return "updateItem";
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
+    public String updateItemById(@ModelAttribute Item item, Principal principal){
+        User user = userService.getUserByUsername(principal.getName());
+        item.setUser(user);
+        item.setStatus(0);
+        itemServiceImpl.updateItem(item);
+        return "redirect:/profile/items";
+    }
 }
