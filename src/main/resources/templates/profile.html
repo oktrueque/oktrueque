@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </section>
-            <section class="panel">
+            <section class="panel panel-profile">
                 <div class="panel-body">
                     <h6>Information</h6>
                     <dl class="dl-horizontal user-profile-dl">
@@ -63,7 +63,7 @@
                         <dd th:text="${user.email}">Email</dd>
                         <dt>Intereses</dt>
                         <dd th:if="${hasTags}"><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
-                        <dd th:if="${!hasTags}">Parece que no has actualizado tus intereses. <a href="/profile/edit"> Actualizar</a></dd>
+                        <dd th:if="${!hasTags}">Parece que no has actualizado tus intereses.</dd>
                     </dl>
                 </div>
                 <div class="panel-footer">
@@ -72,7 +72,7 @@
             </section>
         </div>
         <div class="col-xl-8">
-            <section class="panel profile-user-content">
+            <section class="panel panel-profile profile-user-content">
                 <div class="panel-body">
                     <div class="nav-tabs-horizontal">
                         <ul class="nav nav-tabs" role="tablist">
