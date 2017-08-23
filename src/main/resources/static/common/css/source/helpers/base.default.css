@@ -402,15 +402,15 @@ nav.left-menu .left-menu-list li .left-menu-link {
 }
 
 nav.left-menu .left-menu-list li .left-menu-link:hover {
-    background: #B30227;
-    color: #FFFFFF;
+    background: #fdea99;
+    color: #000000;
     -webkit-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
 }
 
 nav.left-menu .left-menu-list li .left-menu-link:hover .left-menu-link-icon {
-    color: #827ca1;
+    color: #000000;
 }
 
 nav.left-menu .left-menu-list li .left-menu-link .left-menu-link-icon {
@@ -426,7 +426,7 @@ nav.left-menu .left-menu-list li .left-menu-link .left-menu-link-icon {
 nav.left-menu .left-menu-list li .left-menu-item {
     display: block;
     padding: 10px 25px;
-    color: #827ca1;
+    color: black;
 }
 
 nav.left-menu .left-menu-list li .left-menu-item .label {
@@ -2344,11 +2344,6 @@ body.theme-blue .cwt__footer {
     border: 2px solid #B30227;
 }
 
-.left-menu-link-icon-black{
-    color: rgba(0, 0, 0, 0.51);
-}
 
-.left-menu-link-icon-black:hover{
-    color: #FFFFFF;
-}
+
 
