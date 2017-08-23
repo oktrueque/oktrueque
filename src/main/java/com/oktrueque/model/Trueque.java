@@ -1,47 +1,38 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Envy on 14/6/2017.
  */
 @Entity
-@Table(name = "trueque")
+@Table(name = "trueques")
 public class Trueque {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_user_offerer")
-    private User userOfferer;
-    @ManyToOne
-    @JoinColumn(name = "id_user_demandant")
-    private User userDemandant;
     @Column(name = "status")
     private Integer status;
     @Column(name = "proposal_date")
-    @Temporal(TemporalType.DATE)
-    private Date proposalDate;
+    private LocalDateTime proposalDate;
     @Column(name = "acceptance_date")
-    @Temporal(TemporalType.DATE)
-    private Date acceptanceDate;
+    private LocalDateTime acceptanceDate;
     @Column(name = "rejection_date")
-    @Temporal(TemporalType.DATE)
-    private Date rejectionDate;
+    private LocalDateTime rejectionDate;
     @Column(name = "ending_date")
-    @Temporal(TemporalType.DATE)
-    private Date endingDate;
+    private LocalDateTime endingDate;
+    @Column(name = "peopleCount")
+    private Integer peopleCount;
 
-    public Trueque(){}
+    public Trueque() {
+    }
 
-    public Trueque(User userOfferer, User userDemandant, Integer status) {
-        this.userOfferer = userOfferer;
-        this.userDemandant = userDemandant;
+    public Trueque(Integer status) {
         this.status = status;
-        this.proposalDate = new Date();
+        this.proposalDate = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -52,22 +43,6 @@ public class Trueque {
         this.id = id;
     }
 
-    public User getUserOfferer() {
-        return userOfferer;
-    }
-
-    public void setUserOfferer(User userOfferer) {
-        this.userOfferer = userOfferer;
-    }
-
-    public User getUserDemandant() {
-        return userDemandant;
-    }
-
-    public void setUserDemandant(User userDemandant) {
-        this.userDemandant = userDemandant;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -76,35 +51,43 @@ public class Trueque {
         this.status = status;
     }
 
-    public Date getProposalDate() {
+    public LocalDateTime getProposalDate() {
         return proposalDate;
     }
 
-    public void setProposalDate(Date proposalDate) {
+    public void setProposalDate(LocalDateTime proposalDate) {
         this.proposalDate = proposalDate;
     }
 
-    public Date getAcceptanceDate() {
+    public LocalDateTime getAcceptanceDate() {
         return acceptanceDate;
     }
 
-    public void setAcceptanceDate(Date acceptanceDate) {
+    public void setAcceptanceDate(LocalDateTime acceptanceDate) {
         this.acceptanceDate = acceptanceDate;
     }
 
-    public Date getRejectionDate() {
+    public LocalDateTime getRejectionDate() {
         return rejectionDate;
     }
 
-    public void setRejectionDate(Date rejectionDate) {
+    public void setRejectionDate(LocalDateTime rejectionDate) {
         this.rejectionDate = rejectionDate;
     }
 
-    public Date getEndingDate() {
+    public LocalDateTime getEndingDate() {
         return endingDate;
     }
 
-    public void setEndingDate(Date endingDate) {
+    public void setEndingDate(LocalDateTime endingDate) {
         this.endingDate = endingDate;
+    }
+
+    public Integer getPeopleCount() {
+        return peopleCount;
+    }
+
+    public void setPeopleCount(Integer peopleCount) {
+        this.peopleCount = peopleCount;
     }
 }

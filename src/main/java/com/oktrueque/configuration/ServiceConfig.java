@@ -28,6 +28,10 @@ public class ServiceConfig {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    UserTruequeRepository userTruequeRepository;
+    @Autowired
+    ItemTruequeRepository itemTruequeRepository;
+    @Autowired
     VerificationTokenRepository verificationTokenRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -55,7 +59,7 @@ public class ServiceConfig {
 
     @Bean
     public TruequeService truequeService(){
-        return new TruequeServiceImpl(truequeRepository);
+        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository);
     }
 
     @Bean

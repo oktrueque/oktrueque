@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Envy on 10/6/2017.
@@ -31,8 +34,12 @@ public class TruequeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/trueques")
-    private String registerTrueque(@RequestParam(value = "itemsOffer") ArrayList<Item> itemsOffer, @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand){
-        truequeService.saveTrueque(itemsOffer, itemsDemand);
+    private String registerTrueque(@RequestParam(value = "itemsOffer") ArrayList<Item> itemsOffer,
+                                   @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand){
+        Map<Integer,List<Item>> participants = new LinkedHashMap<>();
+        participants.put(1,itemsOffer);
+        participants.put(2,itemsDemand);
+        truequeService.saveTrueque(participants);
         return "redirect:/users/" + itemsOffer.get(0).getUser().getUsername();
     }
 

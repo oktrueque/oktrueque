@@ -28,7 +28,5 @@ public interface ItemService {
 
     List<Item> getItemsByUserUsername(String username);
 
-    void updateTruequeItems(List<Item> itemsOffer, List<Item> itemsDemand, Trueque trueque);
-
     Item setItem(Item item);
 }

@@ -1,19 +1,13 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.Item;
-import com.oktrueque.model.Trueque;
 import com.oktrueque.repository.ItemRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-@Service
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
@@ -54,24 +48,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findByUser_Username(username);
     }
 
-    public void updateTruequeItems(List<Item> itemsOffer, List<Item> itemsDemand, Trueque trueque) {
-        List<Item> items = new ArrayList<>();
-        itemsOffer.forEach(item -> {
-            item.setTrueque(trueque);
-            item.setStatus(2);
-            items.add(item);
-        });
-        itemsDemand.forEach(item -> {
-            item.setTrueque(trueque);
-            item.setStatus(2);
-            items.add(item);
-        });
-
-        itemRepository.save(items);
-
-    }
-
-    public Item setItem(Item item) {
+     public Item setItem(Item item) {
         return itemRepository.save(item);
     }
 

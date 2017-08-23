@@ -21,9 +21,6 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
-    @ManyToOne
-    @JoinColumn(name = "id_trueque")
-    private Trueque trueque;
     @Column(name = "status")
     private Integer status;
     @Column(name = "photo1")
@@ -137,14 +134,6 @@ public class Item {
 
     public void setPhoto3(String photo3) {
         this.photo3 = photo3;
-    }
-
-    public Trueque getTrueque() {
-        return trueque;
-    }
-
-    public void setTrueque(Trueque trueque) {
-        this.trueque = trueque;
     }
 
     public String getStatusValue(){
