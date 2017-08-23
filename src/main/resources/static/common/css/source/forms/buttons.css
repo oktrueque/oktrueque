@@ -10,6 +10,8 @@
     line-height: 1.7;
 }
 
+
+
 .btn:hover, .btn:active {
     -webkit-transition: all 0.05s ease-in-out;
     -o-transition: all 0.05s ease-in-out;
@@ -125,6 +127,20 @@
 .btn.btn-default, .open > .btn.btn-default {
     background-color: #acb7bf;
     border-color: #acb7bf;
+}
+
+.btn.btn-oktrueque{
+    background-color: #B30227;
+    border-color: #B30227;
+    color: #FFFFFF;
+    padding: 5px 10px;
+}
+
+.btn.btn-oktrueque:hover{
+    background-color: #E1A800;
+    border-color: #E1A800;
+    color: #B30227;
+
 }
 
 .btn.btn-default:hover, .btn.btn-default:active, .open > .btn.btn-default:hover, .open > .btn.btn-default:active {
@@ -349,3 +365,4 @@
     border-color: #fa252d;
     color: #ffffff;
 }
+

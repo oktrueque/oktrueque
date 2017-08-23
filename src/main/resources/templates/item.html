@@ -14,9 +14,9 @@
                     Detalle del Artículo
                 </h2>
             </div>
-            <div class="panel-body">
+            <div class="panel-body panel-profile">
                 <div class="row">
-                    <div class="col-lg-6 col-md-12">
+                    <div class="col-lg-6 col-md-12 margin-left-20">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                             <ol class="carousel-indicators">
                                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 ">
                                 <h3 th:text="${item.name}" class="cui-ecommerce--product--main-title"></h3>
                                 <a class="avatar" th:href="@{'/users/' + ${user.username}}">
                                     <img th:src="${user.photo1}" />
@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 margin-left-20">
                         <h3 class="cui-ecommerce--product--main-title">Descripción</h3>
                         <p th:text="${item.description}"></p>
                     </div>
@@ -128,7 +128,7 @@
         </section>
 
 
-        <section class="panel panel-with-borders" th:if="${sugerencias}">
+        <section class="panel  panel-with-borders" th:if="${sugerencias}">
             <div class="panel-heading">
                 <h2>Productos Sugeridos</h2>
 
@@ -144,7 +144,7 @@
                                         <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
                                     </div>
                                     <a ref="#">
-                                        <img src="/common/img/temp/photos/2.jpeg" />
+                                        <img src="https://image.ibb.co/dQCENQ/pava.jpg" />
                                     </a>
                                 </div>
                                 <div class="cui-ecommerce--catalog--item--title">

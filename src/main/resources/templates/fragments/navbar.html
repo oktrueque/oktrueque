@@ -1,6 +1,6 @@
 <th:block xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" th:fragment="navbar">
     <nav class="top-menu">
-
+        <img height="20px" width="160px" class="margin-left-10 margin-top-30 float-left" alt="Lo Tengo, Lo Tienes" src="../../static/common/img/lotengolotienes.png" th:src="@{/common/img/lotengolotienes.png}"/>
         <div class="menu-icon-container hidden-md-up">
             <div class="animate-menu-button left-menu-toggle">
                 <div><!-- --></div>
@@ -34,7 +34,7 @@
             </div>
             <div sec:authorize="isAnonymous()">
                 <div class="container menu-user-block">
-                    <a href="/login">
+                    <a id="loginWord" href="/login">
                         <i class="fa fa-sign-in  fa-3x" aria-hidden="true"></i>
                     </a>
                 </div>

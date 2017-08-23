@@ -395,15 +395,15 @@ nav.left-menu .left-menu-list li .left-menu-link {
     padding: 10px 25px;
     font-weight: 600;
     outline: none;
-    color: #827ca1;
+    color: #000000;
     -webkit-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
 }
 
 nav.left-menu .left-menu-list li .left-menu-link:hover {
-    background: #f2f4f8;
-    color: #24222f;
+    background: #B30227;
+    color: #FFFFFF;
     -webkit-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
@@ -420,7 +420,7 @@ nav.left-menu .left-menu-list li .left-menu-link .left-menu-link-icon {
     display: inline-block;
     width: 22px;
     font-size: 1rem;
-    color: #bbb8cb;
+    color: #000000;
 }
 
 nav.left-menu .left-menu-list li .left-menu-item {
@@ -772,6 +772,8 @@ nav.left-menu .left-menu-list-color-yellow:hover:before, nav.left-menu .left-men
     margin-bottom: 0px;
 }
 
+
+
 .panel {
     background: #F8f7e6;
     border: 0px solid #dfe4ed;
@@ -781,8 +783,14 @@ nav.left-menu .left-menu-list-color-yellow:hover:before, nav.left-menu .left-men
     margin-bottom: 16px;
 }
 
+.panel-profile{
+    background: #FFFFFF;
+    padding: 10px;
+}
+
 .panel .panel:last-child {
     margin-bottom: 0px;
+
 }
 
 .panel .panel-heading {
@@ -2327,3 +2335,20 @@ body.theme-blue .cwt__footer {
 .notification-block .item .inner .label {
     font-size: 12px;
 }
+
+.panel-trueque-dashed{
+    border: 2px dashed #B30227;
+}
+
+.panel-trueque-complete{
+    border: 2px solid #B30227;
+}
+
+.left-menu-link-icon-black{
+    color: rgba(0, 0, 0, 0.51);
+}
+
+.left-menu-link-icon-black:hover{
+    color: #FFFFFF;
+}
+
