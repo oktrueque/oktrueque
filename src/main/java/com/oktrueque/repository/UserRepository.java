@@ -16,6 +16,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
 
      User findByUsername(String username);
 
+     //User findByStatusAndEmailOrStatusAndUsername(Integer status1, String email, Integer status2, String username);
 
+     @Query("SELECT u FROM User u WHERE u.status=?1 AND (u.email=?2 OR u.username=?3)")
+     User findUser(Integer status, String email, String username);
 
 }
