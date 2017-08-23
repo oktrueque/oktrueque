@@ -69,13 +69,10 @@ public class UserController {
             return "/register";
         }
 
-
-
         user.setStatus(0);
         user.setItemsAmount(0);
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
-
         return "/confirmEmail";
     }
 
@@ -100,13 +97,8 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/chats/{username}")
     public String getUser() {
-
         return "chat";
     }
-
-
-
-
 
     @RequestMapping("/login")
     public String loginUser() {
