@@ -17,6 +17,7 @@
 		<link th:href="@{/common/css/source/landing/bootstrap.min.css}" rel="stylesheet" type="text/css" href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
 		<!-- Custom styles for this template -->
+		<link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/prueba.css" th:href="@{/common/css/source/custom/prueba.css}"/>
 		<link href="css/owl.carousel.css" rel="stylesheet" th:href="@{/common/css/source/landing/owl.carousel.css}"/>
 		<link href="css/owl.theme.default.min.css"  rel="stylesheet" th:href="@{/common/css/source/landing/owl.theme.default.min.css}"/>
 		<link href="css/style.css" rel="stylesheet" th:href="@{/common/css/source/landing/style.css}"/>
@@ -128,7 +129,9 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="section-title">
-						<h2>Algunos artículos</h2>
+						<a href="/items">
+						<h2>Artículos</h2>
+						</a>
 						<p>Algunos de los objetos esperando ser trocados por sus dueños.</p>
 					</div>
 				</div>
@@ -138,10 +141,10 @@
 				<div class="col-md-4 col-0-gutter">
 					<div class="ot-portfolio-item">
 						<figure class="effect-bubba">
-							<img src="images/demo/portfolio-1.jpg" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img02" class="img-responsive" />
+							<img src="https://image.ibb.co/nqMSRk/reloj.jpg" alt="img02" class="prueba" />
 							<figcaption>
-								<h2>Nombre</h2>
-								<p>Categoria</p>
+								<h2>Reloj Rolex</h2>
+								<p>Accesorios</p>
 								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
 							</figcaption>
 						</figure>
@@ -152,10 +155,10 @@
 				<div class="col-md-4 col-0-gutter">
 					<div class="ot-portfolio-item">
 						<figure class="effect-bubba">
-							<img src="images/demo/portfolio-2.jpg" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img02" class="img-responsive" />
+							<img src="https://image.ibb.co/gbvMmk/mesa.jpg"  alt="img02" class="prueba" />
 							<figcaption>
-								<h2>Nombre</h2>
-								<p>Categoria</p>
+								<h2>Mesa de Madera</h2>
+								<p>Muebles</p>
 								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
 							</figcaption>
 						</figure>
@@ -166,10 +169,10 @@
 				<div class="col-md-4 col-0-gutter">
 					<div class="ot-portfolio-item">
 						<figure class="effect-bubba">
-							<img src="images/demo/portfolio-3.jpg" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img02" class="img-responsive" />
+							<img src="https://image.ibb.co/kTsRmk/celu.jpg" alt="img02" class="prueba" />
 							<figcaption>
-								<h2>Nombre</h2>
-								<p>Categoria</p>
+								<h2>iPhone 6s</h2>
+								<p>Electronicos</p>
 								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
 							</figcaption>
 						</figure>
@@ -182,10 +185,10 @@
 				<div class="col-md-4 col-0-gutter">
 					<div class="ot-portfolio-item">
 						<figure class="effect-bubba">
-							<img src="images/demo/portfolio-4.jpg" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img02" class="img-responsive" />
+							<img src="https://image.ibb.co/cCZve5/sillon.jpg"  alt="img02" class="prueba" />
 							<figcaption>
-								<h2>Nombre</h2>
-								<p>Categoria</p>
+								<h2>Sillon</h2>
+								<p>Muebles</p>
 								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
 							</figcaption>
 						</figure>
@@ -196,10 +199,10 @@
 				<div class="col-md-4 col-0-gutter">
 					<div class="ot-portfolio-item">
 						<figure class="effect-bubba">
-							<img src="images/demo/portfolio-5.jpg" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img02" class="img-responsive" />
+							<img src="https://image.ibb.co/erPQCQ/bici3.jpg"   alt="img02" class="prueba" />
 							<figcaption>
-								<h2>Nombre</h2>
-								<p>Categoria</p>
+								<h2>Bicicleta Deportiva</h2>
+								<p>Accesorios</p>
 								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
 							</figcaption>
 						</figure>
@@ -210,10 +213,10 @@
 				<div class="col-md-4 col-0-gutter">
 					<div class="ot-portfolio-item">
 						<figure class="effect-bubba">
-							<img src="images/demo/portfolio-6.jpg" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img02" class="img-responsive" />
+							<img src="https://image.ibb.co/gU2sRk/coche.jpg"  alt="img02" class="prueba" />
 							<figcaption>
-								<h2>Nombre</h2>
-								<p>Categoria</p>
+								<h2>Cochecito</h2>
+								<p>Accesorio</p>
 								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
 							</figcaption>
 						</figure>
@@ -242,7 +245,7 @@
 								<h3>Libros</h3>
 								<p>Comparte una historia que te emocionó con otros lectores</p>
 							</div>
-							<a th:href="@{/items(id_category=4)}" class="mz-module-button">ver más</a>
+							<a th:href="@{/items(id_category=5)}" class="mz-module-button">ver más</a>
 						</div>
 					</div>
 					<!-- end about module -->
@@ -251,10 +254,10 @@
 						<div class="mz-module">
 							<div class="mz-module-about">
 								<i class="fa fa-music color2 ot-circle"></i>
-								<h3>Música</h3>
+								<h3>Instrumentos</h3>
 								<p>Nunca es tarde para explorar este hobbie</p>
 							</div>
-							<a th:href="@{/items(id_category=1)}" class="mz-module-button">ver más</a>
+							<a th:href="@{/items(id_category=10)}" class="mz-module-button">ver más</a>
 						</div>
 					</div>
 					<!-- end about module -->
@@ -263,10 +266,10 @@
 						<div class="mz-module">
 							<div class="mz-module-about">
 								<i class="fa fa-briefcase color3 ot-circle"></i>
-								<h3>Herramientas</h3>
+								<h3>Muebles</h3>
 								<p>Aquella herramienta que nunca te diste el tiempo de comprar</p>
 							</div>
-							<a th:href="@{/items(id_category=21)}" class="mz-module-button">ver más</a>
+							<a th:href="@{/items(id_category=4)}" class="mz-module-button">ver más</a>
 						</div>
 					</div>
 					<!-- end about module -->
@@ -278,7 +281,7 @@
 								<h3>Indumentaria</h3>
 								<p> En excelente estado, validado por nuestro equipo</p>
 							</div>
-							<a th:href="@{/items(id_category=6)}" class="mz-module-button">ver más</a>
+							<a th:href="@{/items(id_category=7)}" class="mz-module-button">ver más</a>
 						</div>
 					</div>
 					<!-- end about module -->

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
@@ -13,7 +12,8 @@
           rel="apple-touch-icon" type="image/png" sizes="32x32"/>
     <link href="../../static/common/img/favicon/favicon.16x16.png" th:href="@{/common/img/favicon/favicon-16x16.png}"
           rel="apple-touch-icon" type="image/png" sizes="16x16"/>
-    <link href="../../static/common/img/favicon/favicon.32x32.png" th:href="@{/common/img/favicon/favicon-32x32.png}" rel="icon" type="image/png"/>
+    <link href="../../static/common/img/favicon/favicon.32x32.png" th:href="@{/common/img/favicon/favicon-32x32.png}"
+          rel="icon" type="image/png"/>
     <link href="favicon.ico" rel="shortcut icon"/>
 
     <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
@@ -24,21 +24,28 @@
 
     <!-- Vendors Styles -->
     <!-- v1.0.0 -->
-    <link rel="stylesheet" type="text/css" href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css"
+          th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
 
     <!-- Clean UI Styles -->
-    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/custom/login.css" th:href="@{/common/css/source/custom/login.css}"/>
+    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/custom/login.css"
+          th:href="@{/common/css/source/custom/login.css}"/>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/main.css" th:href="@{/common/css/source/main.css}"/>
+    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/main.css"
+          th:href="@{/common/css/source/main.css}"/>
 
     <!-- Vendors Scripts -->
     <!-- v1.0.0 -->
     <script src="../assets/vendors/jquery/jquery.min.js" th:src="@{/vendors/jquery/jquery.min.js}"></script>
-    <script src="../assets/vendors/tether/dist/js/tether.min.js" th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
-    <script src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js" th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <script src="../assets/vendors/html5-form-validation/dist/jquery.validation.min.js" th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"></script>
-    <script src="../assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js" th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
+    <script src="../assets/vendors/tether/dist/js/tether.min.js"
+            th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
+    <script src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js"
+            th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script src="../assets/vendors/html5-form-validation/dist/jquery.validation.min.js"
+            th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"></script>
+    <script src="../assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"
+            th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
 </head>
 <body class="theme-default single-page single-page-inverse">
 
@@ -60,7 +67,8 @@
             </div>
         </div>
         <div class="single-page-block">
-            <div class="single-page-block-inner effect-3d-element" style="transform-origin: center 50% 0px; transform: matrix3d(0.999909, 0, 0.0134874, -1.34874e-05, -0.00175247, 0.991523, 0.129922, -0.000129922, -0.0133731, -0.129934, 0.991433, -0.000991433, 0, 0, 0, 1);">
+            <div class="single-page-block-inner effect-3d-element"
+                 style="transform-origin: center 50% 0px; transform: matrix3d(0.999909, 0, 0.0134874, -1.34874e-05, -0.00175247, 0.991523, 0.129922, -0.000129922, -0.0133731, -0.129934, 0.991433, -0.000991433, 0, 0, 0, 1);">
                 <div class="blur-placeholder" th:src="@{/common/img/4.jpg}"><!-- --></div>
                 <div class="single-page-block-form">
                     <h3 class="text-center">
@@ -72,15 +80,19 @@
                         <hr/>
                     </div>
                     <form name='f' action="login" method='POST'>
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <div class="form-group">
-                            <input id="validation-email" class="form-control" placeholder="Email or Username" name="username" type="text" required="true"/>
+                            <input id="validation-email" class="form-control" placeholder="Email or Username"
+                                   name="username" type="text" required="true"/>
                             <!--data-validation="[EMAIL]"-->
                         </div>
 
                         <div class="form-group">
 
-                            <input id="validation-password" class="form-control password" name="password" type="password" data-validation="[L>=6]" data-validation-message="$ must be at least 6 characters" placeholder="Password" required="true"/>
+                            <input id="validation-password" class="form-control password" name="password"
+                                   type="password" data-validation="[L>=6]"
+                                   data-validation-message="$ must be at least 6 characters" placeholder="Password"
+                                   required="true"/>
 
                         </div>
                         <div class="form-group">
@@ -94,6 +106,7 @@
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary width-150">Iniciar Sesión</button>
+                           <a style="float: right" href="/register" class="btn btn-primary width-150">Registrarse</a>
                         </div>
                     </form>
                 </div>
@@ -112,7 +125,7 @@
 
     <!-- Page Scripts -->
     <script>
-        $(function() {
+        $(function () {
             // Show/Hide Password
             $('.password').password({
                 eyeClass: '',
@@ -127,8 +140,8 @@
             function changeImgPositon() {
                 var width = $(window).width(),
                     height = $(window).height(),
-                    left = - (width - $('.single-page-block-inner').outerWidth()) / 2,
-                    top = - (height - $('.single-page-block-inner').outerHeight()) / 2;
+                    left = -(width - $('.single-page-block-inner').outerWidth()) / 2,
+                    top = -(height - $('.single-page-block-inner').outerHeight()) / 2;
                 $('.blur-placeholder').css({
                     width: width,
                     height: height,
@@ -138,22 +151,24 @@
             };
             setImage();
             changeImgPositon();
-            $(window).on('resize', function(){
+            $(window).on('resize', function () {
                 changeImgPositon();
             });
             // Mouse Move 3d Effect
-            var rotation = function(e){
-                var perX = (e.clientX/$(window).width())-0.5;
-                var perY = (e.clientY/$(window).height())-0.5;
-                TweenMax.to(".effect-3d-element", 0.4, { rotationY:15*perX, rotationX:15*perY,  ease:Linear.easeNone, transformPerspective:1000, transformOrigin:"center" })
+            var rotation = function (e) {
+                var perX = (e.clientX / $(window).width()) - 0.5;
+                var perY = (e.clientY / $(window).height()) - 0.5;
+                TweenMax.to(".effect-3d-element", 0.4, {
+                    rotationY: 15 * perX,
+                    rotationX: 15 * perY,
+                    ease: Linear.easeNone,
+                    transformPerspective: 1000,
+                    transformOrigin: "center"
+                })
             };
         });
     </script>
     <!-- End Page Scripts -->
-
-
-
-
 
 
     <div class="main-backdrop"><!-- --></div>
