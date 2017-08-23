@@ -19,7 +19,7 @@
                 <div class="row">
                     <div class="col-xl-8 col-xl-offset-4">
                     <!-- Esto todavia no lo saco porque se cae el nombre, podria ser reemplazado por un boton que lleve a los items -->
-                        <div class="width-100 text-center pull-right hidden-md-down">
+                        <div th:if="${hasScore}" class="width-100 text-center pull-right hidden-md-down">
                             <h2><span class="label label-success" th:text="${user.score}">8,2</span></h2>
                             <div class="cui-ecommerce--product--rating stars">
                                 <!--Las estrellas se agregan por javascript-->
@@ -124,7 +124,6 @@
                                                     <td th:text="${item.name}">Nombre</td>
                                                     <td th:text="${item.category.name}">Categoria</td>
                                                     <td><span class="label label-info" th:text="${item.getStatusValue()}">Estado</span></td>
-
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -185,29 +184,6 @@
                                                         <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
                                                         <input id="tags" type="text" class="form-control tagsinput" />
                                                     </div>
-
-                                                    <!--<div class="row">-->
-                                                        <!--<h4 class="modal-title">Fotos del Item</h4>-->
-                                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-3">-->
-                                                            <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
-                                                                <!--<input type="file"/>-->
-                                                            <!--</div>-->
-                                                        <!--</div>-->
-
-                                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-3">-->
-                                                            <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
-                                                                <!--<input type="file"/>-->
-                                                            <!--</div>-->
-                                                        <!--</div>-->
-
-                                                        <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-3">-->
-                                                            <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
-                                                                <!--<input type="file"/>-->
-                                                            <!--</div>-->
-                                                        <!--</div>-->
-
-                                                    <!--</div>-->
-
                                                         <h5>Fotos del Item</h5>
                                                         <div class="form-group">
                                                             <div class="dropify-wrapper"><div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a file here or click</p><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" id="input-file-now" class="dropify"/><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
@@ -251,12 +227,15 @@
         /*<![CDATA[*/
 
         var score = [[${user.score}]]/2;
-        var i;
-        for(i = 0; i < score; i++){
-            $('.stars').append('<i class="icmn-star-full"></i>');
-        }
-        for(i; i < 5; i++){
-            $('.stars').append('<i class="icmn-star-empty"></i>');
+        var hasScore = [[${hasScore}]];
+        if(hasScore){
+            var i;
+            for(i = 0; i < score; i++){
+                $('.stars').append('<i class="icmn-star-full"></i>');
+            }
+            for(i; i < 5; i++){
+                $('.stars').append('<i class="icmn-star-empty"></i>');
+            }
         }
 
         /*]]>*/

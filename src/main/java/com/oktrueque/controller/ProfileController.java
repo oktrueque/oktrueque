@@ -46,6 +46,7 @@ public class ProfileController {
         List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         model.addAttribute("user", user);
+        model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
         model.addAttribute("items", items);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);

@@ -69,8 +69,6 @@ public class UserController {
             return "/register";
         }
 
-
-
         user.setStatus(0);
         user.setItemsAmount(0);
         user = userService.addUser(user);
