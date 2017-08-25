@@ -354,7 +354,7 @@ nav.left-menu .left-menu-inner {
 }
 
 nav.left-menu .left-menu-list-root {
-    margin: 15px 0px;
+  /*  margin: 15px 0px; */
 }
 
 nav.left-menu .left-menu-list li {
@@ -410,13 +410,15 @@ nav.left-menu .left-menu-list li .left-menu-link span{
     margin-top: 7px;
 }
 
+
 nav.left-menu .left-menu-list li .left-menu-link:hover {
-    background: #fdea99;
+    background: #ffbc4b;
     color: #000000;
     -webkit-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
 }
+
 
 nav.left-menu .left-menu-list li .left-menu-link:hover .left-menu-link-icon {
     color: #000000;
