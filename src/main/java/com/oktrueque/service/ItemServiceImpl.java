@@ -4,10 +4,13 @@ import com.oktrueque.model.Item;
 import com.oktrueque.repository.ItemRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+@Service
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
