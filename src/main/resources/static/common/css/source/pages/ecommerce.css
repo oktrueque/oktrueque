@@ -130,20 +130,23 @@ AGREGAR ACA EL TOGGLE DEL INFO */
     text-transform: uppercase;
     font-weight: bold;
     border-top: 0px solid #dfe4ed;
-    padding-top: 5px;
-    padding-left: 20px;
-    padding-right: 100px;
-    position: relative;
+    padding-top: 10px;
 }
 
 .cui-ecommerce-catalog--item--infobox{
-    margin-top: 290px;
+    margin-top: 282px;
     background-color: rgba(255, 255, 255, 0.75);
     position: relative;
+    width: inherit;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+
 }
 
 .cui-ecommerce--catalog--item--turequeyaicon{
     position: relative;
+    padding-top: 13px;
+    background-color: transparent;
 }
 
 
@@ -156,12 +159,9 @@ AGREGAR ACA EL TOGGLE DEL INFO */
 }
 
 .cui-ecommerce--catalog--item--descr {
-    padding-right: 100px;
     position: relative;
     font-style: italic;
     color: #4A5A5C;
-    margin-left: 20px;
-    padding-bottom: 15px;
 }
 
 .cui-ecommerce--catalog--item--descr--sizes {
@@ -357,4 +357,8 @@ AGREGAR ACA EL TOGGLE DEL INFO */
 
 .theme-inverse .cui-ecommerce--catalog--item--descr--sizes span {
     border-color: #38354a;
+}
+
+.hidden{
+    visibility: hidden;
 }

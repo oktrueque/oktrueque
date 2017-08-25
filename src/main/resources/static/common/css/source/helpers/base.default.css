@@ -392,13 +392,22 @@ nav.left-menu .left-menu-list li.left-menu-list-opened > .left-menu-link .left-m
 
 nav.left-menu .left-menu-list li .left-menu-link {
     display: block;
-    padding: 10px 25px;
-    font-weight: 600;
+    padding: 20px 25px;
+    font-weight: 300;
     outline: none;
     color: #000000;
+    font-size: larger;
     -webkit-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
+    text-transform: uppercase;
+}
+
+nav.left-menu .left-menu-list li .left-menu-link i{
+    font-size: 2em !important;
+}
+nav.left-menu .left-menu-list li .left-menu-link span{
+    margin-top: 7px;
 }
 
 nav.left-menu .left-menu-list li .left-menu-link:hover {

@@ -30,16 +30,20 @@
                                 <div class="cui-ecommerce--catalog--item">
 
                                             <img class="cui-ecommerce--catalog--item--img" th:src="${item.photo1}"/>
-                                    <div class="cui-ecommerce-catalog--item--infobox">
-                                    <div class="cui-ecommerce--catalog--item--title">
+                                    <div class="cui-ecommerce-catalog--item--infobox animated row hidden">
+                                        <div class="row col-lg-7 col-md-7 col-sm-7">
+                                    <div class="cui-ecommerce--catalog--item--title col-lg-12 col-md-12 col-sm-12">
                                         <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}"></a>
                                     </div>
-                                    <div class="cui-ecommerce--catalog--item--descr ">
-                                        <P th:text="${item.category.name}"></P>
-                                    </div>
-                                        <div class="cui-ecommerce--catalog--item--turequeyaicon pull-right">
-                                        <button class="btn margin-inline ">Trueque ya <i class="a fa-asl-interpreting" aria-hidden="true"></i></button>
+                                        <div class="cui-ecommerce--catalog--item--descr col-lg-12 col-md-12 col-sm-12">
+                                            <P th:text="${item.category.name}"></P>
                                         </div>
+                                        </div>
+                                        <div class="cui-ecommerce--catalog--item--turequeyaicon col-lg-5 col-md-5 col-sm-5">
+                                            <button class="btn margin-inline btn-warning ">Trueque ya <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                                        </div>
+
+
                                         </div>
                                 </div>
                             </div>
@@ -66,6 +70,9 @@
                     </nav>
                 </div>
             </div>
+
+            <script th:src="@{/common/js/custom/itemsCatalog.js}" src="../static/common/js/custom/itemsCatalog.js"></script>
+
         </section>
     </div>
 </section>
