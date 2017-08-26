@@ -48,7 +48,7 @@ public class UserController {
     public String getUserById(Model model) {
         User user1 = new User();
         model.addAttribute("user", user1);
-        return "/register";
+        return "register";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
