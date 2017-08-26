@@ -17,6 +17,7 @@ public class EmailServiceImpl implements EmailService {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     private final JavaMailSender javaMailSender;
+
     @Autowired
     private Configuration fmConfiguration;
 
@@ -24,6 +25,7 @@ public class EmailServiceImpl implements EmailService {
         this.javaMailSender = javaMailSender;
     }
 
+    @Override
     public void sendMail(Mail mail) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {

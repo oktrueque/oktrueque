@@ -13,4 +13,8 @@ public interface UserTagService {
     List<UserTag> getUserTagByUserId(Long userId);
 
     List<Tag> getTagByUserTags(Long userId);
+
+    void saveUserTags(Long userId,List<Tag> tags);
+
+    void deleteAllByUserId(Long userId);
 }

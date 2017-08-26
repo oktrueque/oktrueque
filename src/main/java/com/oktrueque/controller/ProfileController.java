@@ -1,6 +1,5 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.exceptions.TruequeException;
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

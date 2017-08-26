@@ -10,16 +10,15 @@ import java.util.List;
 /**
  * Created by nicolas on 19/07/17.
  */
-@Service
 public class TagServiceImpl implements TagService {
 
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
 
-    @Autowired
     public TagServiceImpl(TagRepository tagRepository){
         this.tagRepository = tagRepository;
     }
 
+    @Override
     public List<Tag> findAll(){
         return (List<Tag>) tagRepository.findAll();
     }
@@ -29,6 +28,7 @@ public class TagServiceImpl implements TagService {
         return tagRepository.findAllByIdIn(tagsId);
     }
 
+    @Override
     public void saveTags(List<Tag> tags){
 //        for (Tag tag:tags) {
 //            tagRepository.save(tag);

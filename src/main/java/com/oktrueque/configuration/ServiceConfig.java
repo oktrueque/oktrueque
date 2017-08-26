@@ -1,5 +1,6 @@
 package com.oktrueque.configuration;
 
+import com.oktrueque.model.ItemTagId;
 import com.oktrueque.repository.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +17,31 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ServiceConfig {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
     @Autowired
-    JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @Autowired
-    TruequeRepository truequeRepository;
+    private TruequeRepository truequeRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    UserTruequeRepository userTruequeRepository;
+    private UserTruequeRepository userTruequeRepository;
     @Autowired
-    ItemTruequeRepository itemTruequeRepository;
+    private ItemTruequeRepository itemTruequeRepository;
     @Autowired
-    VerificationTokenRepository verificationTokenRepository;
+    private VerificationTokenRepository verificationTokenRepository;
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private TagRepository tagRepository;
+    @Autowired
+    private ItemTagRepository itemTagRepository;
+    @Autowired
+    private UserTagRepository userTagRepository;
 
     @Bean
     public CategoryService categoryService(){
@@ -64,12 +70,26 @@ public class ServiceConfig {
 
     @Bean
     public UserService userService(){
-        return new UserServiceImpl(userRepository,verificationTokenRepository,bCryptPasswordEncoder);
+        return new UserServiceImpl(userRepository,verificationTokenRepository,bCryptPasswordEncoder,this.emailService());
     }
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return  new UserDetailsServiceImpl(userRepository);
+        return new UserDetailsServiceImpl(userRepository);
     }
 
+    @Bean
+    public TagService tagService(){
+        return new TagServiceImpl(tagRepository);
+    }
+
+    @Bean
+    public ItemTagService itemTagService(){
+        return new ItemTagServiceImpl(itemTagRepository);
+    }
+
+    @Bean
+    public UserTagService userTagService(){
+        return new UserTagServiceImpl(userTagRepository,this.tagService());
+    }
 }

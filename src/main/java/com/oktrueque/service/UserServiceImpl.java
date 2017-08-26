@@ -13,43 +13,48 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Service
 public class UserServiceImpl  implements UserService{
 
-    @Autowired
-    private EmailService emailService;
-
+    private final EmailService emailService;
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
                            VerificationTokenRepository verificationTokenRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder){
+                           BCryptPasswordEncoder bCryptPasswordEncoder,
+                           EmailService emailService){
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.emailService = emailService;
     }
+    @Override
     public User addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
        return userRepository.save(user);
     }
 
+    @Override
     public void updateUser(User user) {
         //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
+    @Override
     public Boolean checkIfUserExists(String email, String username){ return userRepository.checkIfUserExists(email, username)>0;}
 
+    @Override
     public User getUserByEmailOrUsername(String email, String username){
         return userRepository.findByEmailOrUsername(email, username);
     }
 
+    @Override
     public User getUserByUsername(String username){
         return userRepository.findByUsername(username);
     }
 
+    @Override
     public void sendVerificationToken(User user){
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token,user);
@@ -67,6 +72,7 @@ public class UserServiceImpl  implements UserService{
         emailService.sendMail(mail);
     }
 
+    @Override
     public boolean confirmAcount(String username, String token) {
         VerificationToken tokenStored  = verificationTokenRepository.findByToken(token);
         User userStored = userRepository.findOne(tokenStored.getUser().getId());

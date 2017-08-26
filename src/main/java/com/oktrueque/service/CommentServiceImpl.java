@@ -11,9 +11,8 @@ import java.util.List;
  * Created by Fabrizio SPOSETTI on 03/07/2017.
  */
 
-@Service
-public class CommentServiceImpl implements CommentService {
 
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
 
@@ -21,6 +20,7 @@ public class CommentServiceImpl implements CommentService {
         this.commentRepository = commentRepository;
     }
 
+    @Override
     public List<Comment> getComments() {
         List<Comment> comments = new ArrayList<>();
         commentRepository.findAll().forEach(comments::add);

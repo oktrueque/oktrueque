@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface TagService {
     List<Tag> findTagsByIds(List<Long> tagsId);
+
+    List<Tag> findAll();
+
+    void saveTags(List<Tag> tags);
 }

@@ -18,9 +18,7 @@ public class TruequeServiceImpl implements TruequeService {
 
 
     private final TruequeRepository truequeRepository;
-
     private final ItemTruequeRepository itemTruequeRepository;
-
     private final UserTruequeRepository userTruequeRepository;
 
     public TruequeServiceImpl(TruequeRepository truequeRepository,
@@ -30,7 +28,8 @@ public class TruequeServiceImpl implements TruequeService {
         this.itemTruequeRepository = itemTruequeRepository;
         this.userTruequeRepository = userTruequeRepository;
     }
-    
+
+    @Override
     @Transactional
     public void saveTrueque(Map<Integer,List<Item>> participants){
         Trueque truequeToSave = new Trueque(0);

@@ -14,13 +14,11 @@ import java.util.List;
 /**
  * Created by nicolas on 19/07/17.
  */
-@Service
 public class UserTagServiceImpl implements UserTagService{
 
     private UserTagRepository userTagRepository;
     private TagService tagService;
 
-    @Autowired
     public UserTagServiceImpl(UserTagRepository userTagRepository, TagService tagService){
         this.userTagRepository = userTagRepository;
         this.tagService = tagService;
@@ -31,6 +29,7 @@ public class UserTagServiceImpl implements UserTagService{
         return userTagRepository.findByIdUserId(userId);
     }
 
+    @Override
     public List<Tag> getTagByUserTags(Long userId){
         List<UserTag> userTags = userTagRepository.findByIdUserId(userId);
         List<Long> tagsId = new ArrayList<>();
@@ -38,12 +37,14 @@ public class UserTagServiceImpl implements UserTagService{
         return tagService.findTagsByIds(tagsId);
     }
 
+    @Override
     public void saveUserTags(Long userId,List<Tag> tags){
         List<UserTag> userTagsList = new ArrayList<>();
         for(Tag tag:tags) userTagsList.add(new UserTag(new UserTagId(userId,tag.getId()),tag.getName()));
         userTagRepository.save(userTagsList);
     }
 
+    @Override
     @Transactional
     public void deleteAllByUserId(Long userId){ userTagRepository.removeAllById_UserId(userId);    }
 

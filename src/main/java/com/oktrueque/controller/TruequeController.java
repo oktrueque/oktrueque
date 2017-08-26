@@ -21,10 +21,14 @@ import java.util.Map;
 @Controller
 public class TruequeController {
 
-    @Autowired
     private ItemService itemService;
-    @Autowired
     private TruequeService truequeService;
+
+    @Autowired
+    public TruequeController(ItemService itemService, TruequeService truequeService){
+        this.itemService = itemService;
+        this.truequeService = truequeService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
     private String getUsersItems(@RequestParam(value = "username-user-offerer") String UserOfferer, @RequestParam(value = "username-user-demandant") String UserDemandant, Model model){
