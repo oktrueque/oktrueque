@@ -29,4 +29,8 @@ public interface ItemService {
     List<Item> getItemsByUserUsername(String username);
 
     Item setItem(Item item);
+
+    Long getMaxUserItemsId(List<Item> list);
+
+    void updateItem(Item item);
 }

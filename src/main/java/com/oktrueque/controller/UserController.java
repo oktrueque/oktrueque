@@ -126,7 +126,7 @@ public class UserController {
     public String confirmAccount(@PathVariable String username,
                                  @PathVariable String token){
         if(!userService.confirmAcount(username,token)){
-            return "badUrl";
+            return "error_500";
         }
         return "redirect:/login";
     }

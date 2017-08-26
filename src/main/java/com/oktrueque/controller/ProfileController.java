@@ -1,5 +1,6 @@
 package com.oktrueque.controller;
 
+import com.oktrueque.exceptions.TruequeException;
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +26,15 @@ public class ProfileController {
     private ItemService itemService;
     private ItemTagService itemTagService;
     private CategoryService categoryService;
-    private ItemServiceImpl itemServiceImpl;
 
 
     @Autowired
-    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, ItemServiceImpl itemServiceImpl) {
+    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;
         this.categoryService = categoryService;
-        this.itemServiceImpl = itemServiceImpl;
     }
 
 
@@ -84,7 +83,6 @@ public class ProfileController {
         model.addAttribute("tags", tags);
         model.addAttribute("sugerencias", false);
         return "item";
-
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/items")
@@ -121,7 +119,7 @@ public class ProfileController {
         User user = userService.getUserByUsername(principal.getName());
         item.setUser(user);
         item.setStatus(0);
-        itemServiceImpl.updateItem(item);
+        itemService.updateItem(item);
         return "redirect:/profile/items";
     }
 }

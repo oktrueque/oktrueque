@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
             mimeMessageHelper.setText(mail.getMailContent(), true);
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
-           LOGGER.info("No se pudo enviar el mail de confirmacion", e);
+           LOGGER.warn("No se pudo enviar el mail de confirmacion", e);
         }
     }
     private String geContentFromTemplate(Map < String, Object > model) {
@@ -43,7 +43,7 @@ public class EmailServiceImpl implements EmailService {
             content.append(FreeMarkerTemplateUtils
                     .processTemplateIntoString(fmConfiguration.getTemplate("confirmAccount.ftl"), model));
         } catch (Exception e) {
-            LOGGER.info("No se pudo enviar el mail de confirmacion", e);
+            LOGGER.warn("No se pudo enviar el mail de confirmacion", e);
         }
         return content.toString();
     }

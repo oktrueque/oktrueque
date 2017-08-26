@@ -12,7 +12,8 @@
           rel="apple-touch-icon" type="image/png" sizes="32x32"/>
     <link href="../../static/common/img/favicon/favicon.16x16.png" th:href="@{/common/img/favicon/favicon-16x16.png}"
           rel="apple-touch-icon" type="image/png" sizes="16x16"/>
-    <link href="../../static/common/img/favicon/favicon.32x32.png" th:href="@{/common/img/favicon/favicon-32x32.png}" rel="icon" type="image/png"/>
+    <link href="../../static/common/img/favicon/favicon.32x32.png" th:href="@{/common/img/favicon/favicon-32x32.png}"
+          rel="icon" type="image/png"/>
     <link href="favicon.ico" rel="shortcut icon"/>
 
     <!-- HTML5 shim and Respond.js for < IE9 support of HTML5 elements and media queries -->
@@ -25,7 +26,8 @@
     <!-- v1.0.0 -->
     <link rel="stylesheet" type="text/css" href="../../static/vendors/bootstrap/dist/css/bootstrap.min.css"
           th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" type="text/css" href="../../static/vendors/datatables/media/css/dataTables.bootstrap4.min.css"
+    <link rel="stylesheet" type="text/css"
+          href="../../static/vendors/datatables/media/css/dataTables.bootstrap4.min.css"
           th:href="@{/vendors/datatables/media/css/dataTables.bootstrap4.min.css}"/>
     <!-- v1.7.0 -->
     <link rel="stylesheet" type="text/css" href="../../static/vendors/dropify/dist/css/dropify.min.css"
@@ -34,12 +36,14 @@
     <!-- Clean UI Styles -->
     <link rel="stylesheet" type="text/css" href="../../static/common/css/source/main.css"
           th:href="@{/common/css/source/main.css}"/>
-    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/pace.css" th:href="@{/common/css/source/custom/pace.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/pace.css"
+          th:href="@{/common/css/source/custom/pace.css}"/>
 
     <!-- Vendors Scripts -->
     <!-- v1.0.0 -->
     <script src="../../static/vendors/jquery/jquery.min.js" th:src="@{/vendors/jquery/jquery.min.js}"></script>
-    <script src="../../static/vendors/tether/dist/js/tether.min.js" th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
+    <script src="../../static/vendors/tether/dist/js/tether.min.js"
+            th:src="@{/vendors/tether/dist/js/tether.min.js}"></script>
     <script src="../../static/vendors/bootstrap/dist/js/bootstrap.min.js"
             th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script src="../../static/vendors/html5-form-validation/dist/jquery.validation.min.js"
@@ -71,26 +75,16 @@
     <script src="../assets/common/js/custom/sidebar.js" th:src="@{/common/js/custom/sidebar.js}"></script>
 </head>
 <body class="theme-green menu-static">
-<!--&lt;!&ndash; sidebar bar &ndash;&gt;-->
-<!--<div th:replace="fragments/sidebar :: sidebar"/>-->
-<!--&lt;!&ndash; /sidebar bar &ndash;&gt;-->
-
-<!--&lt;!&ndash; navbar bar &ndash;&gt;-->
-<!--<div th:replace="fragments/navbar :: navbar"/>-->
-<!--&lt;!&ndash; /navbar bar &ndash;&gt;-->
 <section class="page-content">
     <div class="page-content-inner">
-
-        <!-- Page 404 -->
         <div class="single-page-block">
             <div class="margin-auto text-center max-width-500">
                 <h1>Error 404</h1>
-                <p>The page you are looking for does not exist; it may have been moved, or removed altogether. You might want to try the search function. Alternatively, return to the front page.</p>
-                <a href="javascript: void(0);" class="btn btn-link">Go Back</a>
+                <p>The page you are looking for does not exist; it may have been moved, or removed altogether. You might
+                    want to try the search function. Alternatively, return to the front page.</p>
+                <a href="/items" class="btn btn-link">Go Back</a>
             </div>
         </div>
-        <!-- End Page 404 -->
-
     </div>
 </section>
 </body>

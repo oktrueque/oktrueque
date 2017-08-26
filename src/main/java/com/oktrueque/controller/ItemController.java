@@ -4,23 +4,22 @@ import com.oktrueque.model.Item;
 import com.oktrueque.model.ItemTag;
 import com.oktrueque.model.User;
 import com.oktrueque.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 @Controller
 public class ItemController {
 
-    private static final Logger LOGGER = Logger.getLogger(ItemController.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemController.class.getName());
 
     private ItemService itemService;
     private CategoryService categoryService;
@@ -51,7 +50,7 @@ public class ItemController {
                 model.addAttribute("category", categoryService.getCategory(id_category));
                 page = new PageWrapper<>(items, "/items?id_category=" + id_category);
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, e.toString(), e);
+                LOGGER.info("Busqueda por categoria incorrecta", e);
             }
         }
         if (item_name != null) {
@@ -60,7 +59,7 @@ public class ItemController {
                 model.addAttribute("item_name", item_name);
                 page = new PageWrapper<>(items, "/items?item_name=" + item_name);
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, e.toString(), e);
+                LOGGER.info("Busqueda por name incorrecta", e);
             }
         }
         model.addAttribute("items", items.getContent());

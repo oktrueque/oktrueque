@@ -43,10 +43,8 @@ public class TruequeServiceImpl implements TruequeService {
         participants.entrySet().forEach(entry -> {
             userTruequeRepository.save(
                     createUserTrueque(truequeSaved,entry.getValue().get(0).getUser(),entry.getKey()));
-            entry.getValue().forEach(item ->{
-                itemTruequeRepository.save(
-                        createItemTrueque(truequeSaved,item));
-            });
+            entry.getValue().forEach(item ->
+                itemTruequeRepository.save(createItemTrueque(truequeSaved,item)));
         });
     }
 
