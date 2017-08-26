@@ -1,6 +1,6 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.utils.Email;
+import com.oktrueque.model.Email;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
