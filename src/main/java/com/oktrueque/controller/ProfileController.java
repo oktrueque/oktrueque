@@ -77,18 +77,10 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
     public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
-//        Random random = new Random();
-//        try{
-//            String fileName = random.nextInt(10000) + picture.getOriginalFilename().replace(" ", "_");
-//            String filePath = "/tmp/" + fileName;
-//            picture.transferTo(new File(filePath));
-//            ResponseEntity<URL> responseEntity = awsS3Service.upload(filePath, String.format(fileNameUsers, user.getId(), fileName));
-//            user.setPhoto1(responseEntity.toString());
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-        String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId());
-        user.setPhoto1(pictureUrl);
+        if(!picture.getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId());
+            user.setPhoto1(pictureUrl);
+        }
         userService.updateUser(user);
         return "redirect:/profile";
     }

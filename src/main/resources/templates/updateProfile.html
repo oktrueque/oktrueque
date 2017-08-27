@@ -19,6 +19,7 @@
                             <div class="form-group">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 <input type="hidden" th:field="*{password}"/>
+                                <input type="hidden" th:field="*{photo1}"/>
                                 <input type="hidden" th:field="*{itemsAmount}"/>
                                 <input type="hidden" th:field="*{status}"/>
                                 <input type="hidden" th:field="*{score}"/>
@@ -80,12 +81,7 @@
                     <div class="panel-body">
                         <h5>Foto de perfil</h5>
                         <div class="form-group">
-                            <input id="photo1" type="file" class="dropify" name="picture" th:attr="data-default-file=*{photo1 != null ? photo1 : null}" />
-                        </div>
-                        <h5></h5>
-                        <h5>Wallpaper</h5>
-                        <div class="form-group">
-                            <input id="wallpaper" type="file" class="dropify" />
+                            <input id="photo1" type="file" class="dropify" name="picture" accept="image/*" data-max-file-size="300K" data-show-remove="false" />
                         </div>
                     </div>
                 </div>
