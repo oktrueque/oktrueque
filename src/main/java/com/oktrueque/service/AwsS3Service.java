@@ -14,7 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Random;
 
@@ -69,8 +74,11 @@ public class AwsS3Service {
         try {
             Random random = new Random();
             String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
+            BufferedImage croppedImage = cropImageSquare(file.getBytes());
             String filePath = "/tmp/" + fileName;
-            file.transferTo(new File(filePath));
+            File outputFile = new File(filePath);
+            ImageIO.write(croppedImage, "jpg", outputFile);
+
             ResponseEntity<URL> responseEntity = this.upload(filePath, String.format(fileNamePattern, userId));
             String url = responseEntity.getBody().toString();
             if (url.isEmpty()) {
@@ -82,5 +90,37 @@ public class AwsS3Service {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    private BufferedImage cropImageSquare(byte[] image) throws IOException {
+        // Get a BufferedImage object from a byte array
+        InputStream in = new ByteArrayInputStream(image);
+        BufferedImage originalImage = ImageIO.read(in);
+
+        // Get image dimensions
+        int height = originalImage.getHeight();
+        int width = originalImage.getWidth();
+
+        // The image is already a square
+        if (height == width) {
+            return originalImage;
+        }
+
+        // Compute the size of the square
+        int squareSize = (height > width ? width : height);
+
+        // Coordinates of the image's middle
+        int xc = width / 2;
+        int yc = height / 2;
+
+        // Crop
+        BufferedImage croppedImage = originalImage.getSubimage(
+                xc - (squareSize / 2), // x coordinate of the upper-left corner
+                yc - (squareSize / 2), // y coordinate of the upper-left corner
+                squareSize,            // widht
+                squareSize             // height
+        );
+
+        return croppedImage;
     }
 }
