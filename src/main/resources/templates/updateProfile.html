@@ -19,6 +19,7 @@
                             <div class="form-group">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 <input type="hidden" th:field="*{password}"/>
+                                <input type="hidden" th:field="*{itemsAmount}"/>
                                 <input type="hidden" th:field="*{status}"/>
                                 <input type="hidden" th:field="*{score}"/>
                                 <input type="hidden" th:field="*{id}"/>

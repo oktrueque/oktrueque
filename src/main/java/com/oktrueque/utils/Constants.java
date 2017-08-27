@@ -19,13 +19,12 @@ public class Constants {
         defaultProfilePictures.put(7, "https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-7");
         defaultProfilePictures.put(8, "https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-8");
         defaultProfilePictures.put(9, "https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-9");
-        defaultProfilePictures.put(10, "https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-10");
     }
 
     public static String returnRandomImage(){
         Random r = new Random();
         int Low = 1;
-        int High = 11;
+        int High = 10;
         int result = r.nextInt(High-Low) + Low;
         return defaultProfilePictures.get(result);
     }

@@ -1,6 +1,6 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Mail;
+import com.oktrueque.model.Email;
 import freemarker.template.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,7 @@ import java.util.Map;
 public class EmailServiceImpl implements EmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
+    private static final String MESSAGE= "Error al enviar el mail";
 
     private final JavaMailSender javaMailSender;
 
@@ -26,26 +27,26 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendMail(Mail mail) {
+    public void sendMail(Email mail, String template) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setSubject(mail.getMailSubject());
             mimeMessageHelper.setTo(mail.getMailTo());
-            mail.setMailContent(geContentFromTemplate(mail.getModel()));
+            mail.setMailContent(geContentFromTemplate(mail.getModel(), template));
             mimeMessageHelper.setText(mail.getMailContent(), true);
             javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
-           LOGGER.warn("No se pudo enviar el mail de confirmacion", e);
+           LOGGER.warn(MESSAGE, e);
         }
     }
-    private String geContentFromTemplate(Map < String, Object > model) {
+    private String geContentFromTemplate(Map < String, Object > model, String template) {
         StringBuffer content = new StringBuffer();
         try {
             content.append(FreeMarkerTemplateUtils
-                    .processTemplateIntoString(fmConfiguration.getTemplate("confirmAccount.ftl"), model));
+                    .processTemplateIntoString(fmConfiguration.getTemplate(template), model));
         } catch (Exception e) {
-            LOGGER.warn("No se pudo enviar el mail de confirmacion", e);
+            LOGGER.warn(MESSAGE, e);
         }
         return content.toString();
     }

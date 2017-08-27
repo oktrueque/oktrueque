@@ -1,11 +1,12 @@
 package com.oktrueque.configuration;
 
-import com.oktrueque.model.ItemTagId;
 import com.oktrueque.repository.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * Created by Facundo on 12/07/2017.
  */
 @Configuration
+@EntityScan(basePackageClasses = {Jsr310JpaConverters.class}, basePackages = "com.oktrueque.model")
 public class ServiceConfig {
 
     @Autowired
@@ -65,7 +67,7 @@ public class ServiceConfig {
 
     @Bean
     public TruequeService truequeService(){
-        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository);
+        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository,this.emailService());
     }
 
     @Bean

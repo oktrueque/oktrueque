@@ -1,13 +1,11 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Mail;
+import com.oktrueque.model.Email;
 import com.oktrueque.model.User;
 import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.VerificationTokenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -61,15 +59,15 @@ public class UserServiceImpl  implements UserService{
         verificationTokenRepository.save(verificationToken);
         String uriConfirm = "http://localhost:8080/" + user.getUsername() +
                 "/" + token + "/confirm";
-        Mail mail = new Mail();
-        mail.setMailTo(user.getEmail());
-        mail.setMailSubject("Validar cuenta");
+        Email email = new Email();
+        email.setMailTo(user.getEmail());
+        email.setMailSubject("Validar cuenta");
         Map< String, Object > model = new LinkedHashMap<>();
         model.put("nombre", user.getName());
         model.put("apellido", user.getLast_name());
         model.put("uri_confirm", uriConfirm);
-        mail.setModel(model);
-        emailService.sendMail(mail);
+        email.setModel(model);
+        emailService.sendMail(email,"confirmAccount.ftl");
     }
 
     @Override

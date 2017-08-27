@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Created by Facundo on 8/21/2017.
  */
-public class Mail {
+public class Email {
 
     private String mailTo;
 
@@ -17,7 +17,7 @@ public class Mail {
 
     private Map< String, Object > model;
 
-    public Mail() {
+    public Email() {
         contentType = "text/plain";
     }
 
