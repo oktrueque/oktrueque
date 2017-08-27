@@ -149,7 +149,9 @@
         var tags = [[${tags}]];
         var itemId = [[${item.id}]];
 
+
         document.addEventListener("DOMContentLoaded", function () {
+            
             var ms = $("#tags").magicSuggest({
                 method: 'get'
                 , data: '/tags'
@@ -167,7 +169,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/items/"+itemId+"/updateItemTags",
+                    url: "/profile/items/"+JSON.stringify(itemId)+"/updateItemTags",
                     data: JSON.stringify(ms.getValue()),
                     dataType: 'text',
                     cache: false,
