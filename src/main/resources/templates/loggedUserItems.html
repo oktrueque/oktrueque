@@ -24,7 +24,7 @@
                             <th>Categoría</th>
                             <th>Estado</th>
                             <th>Tags</th>
-                            <th>Editar</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,10 +42,13 @@
                             <td></td>
                             <td>
                                 <a th:href="@{'/profile/items/' + ${item.id} + '/edit'}">
-                                    <button type="button" class="btn">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </button>
-                                </a>
+                                    <button type="button" class="btn btn-xs btn-primary ">
+                                        Editar<i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button></a>
+                                <h1></h1>
+                                <form th:method="DELETE" th:action="@{'/profile/items/' + ${item.id}}"  >
+                                    <button type="submit" class="btn btn-xs btn-danger">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                         </tbody>

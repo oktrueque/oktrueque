@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -52,13 +53,22 @@ public class TagController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/profile/itemTags")
-    public ResponseEntity<Void> saveItemTags(@RequestBody List<Long> tagsId, Principal principal){
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/createItemTags")
+    public ResponseEntity<Void> createItemTags(@RequestBody List<Long> tagsId, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
         List<Tag> tagsList = tagService.findTagsByIds(tagsId);
         List<Item> userItems = itemService.getItemsByUserUsername(user.getUsername());
         Long maxUserItemId = itemService.getMaxUserItemsId(userItems);
-        itemTagService.saveItemTags(maxUserItemId,tagsList); //NO SIRVE CUANDO HACES UPDATE SOLO CUANDO CREAS
+        itemTagService.saveItemTags(maxUserItemId,tagsList);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/items/{id}/updateItemTags")
+    public ResponseEntity<Void> updateItemTags(@RequestBody List<Long> tagsId,@PathVariable Long id){
+        List<Tag> tagsList = tagService.findTagsByIds(tagsId);
+        Item item = itemService.getItemById(id);
+        itemTagService.deleteAllByItemId(item.getId());
+        itemTagService.saveItemTags(item.getId(),tagsList);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

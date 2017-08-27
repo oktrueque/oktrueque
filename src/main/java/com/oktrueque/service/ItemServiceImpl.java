@@ -82,4 +82,8 @@ public class ItemServiceImpl implements ItemService {
     public void updateItem(Item item){
         itemRepository.save(item);
     }
+
+    public List<Item> getNonDeletedItems(String username){
+        return itemRepository.findByUser_UsernameAndStatusIsNot(username,2);
+    }
 }

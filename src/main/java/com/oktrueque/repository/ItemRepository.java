@@ -12,5 +12,6 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     Page<Item> findByNameContains(String name, Pageable pageable);
     List<Item> findByUser_Username(String username);
     List<Item> findByUser_Username(String username, Pageable pageable);
+    List<Item> findByUser_UsernameAndStatusIsNot(String username, int status);
 
 }

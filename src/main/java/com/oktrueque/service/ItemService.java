@@ -33,4 +33,6 @@ public interface ItemService {
     Long getMaxUserItemsId(List<Item> list);
 
     void updateItem(Item item);
+
+    List<Item> getNonDeletedItems(String username);
 }

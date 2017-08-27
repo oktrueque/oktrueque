@@ -147,6 +147,7 @@
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
         var tags = [[${tags}]];
+        var itemId = [[${item.id}]];
 
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
@@ -166,7 +167,7 @@
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/itemTags",
+                    url: "/profile/items/"+itemId+"/updateItemTags",
                     data: JSON.stringify(ms.getValue()),
                     dataType: 'text',
                     cache: false,

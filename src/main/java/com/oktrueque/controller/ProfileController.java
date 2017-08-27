@@ -5,6 +5,7 @@ import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,7 +67,6 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
     public String updateProfile(@ModelAttribute User user) {
-        user.setStatus(0);
         userService.updateUser(user);
         return "redirect:/profile";
     }
@@ -94,8 +94,8 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items")
     public String getItemsByUser(Model model, Principal principal){
-    List<Item> items = itemService.getItemsByUserUsername(principal.getName());
-    model.addAttribute("items", items);
+    List<Item> nonDeletedItems = itemService.getNonDeletedItems(principal.getName());
+    model.addAttribute("items", nonDeletedItems);
     return "loggedUserItems";
     }
 
@@ -114,10 +114,19 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
-    public String updateItemById(@ModelAttribute Item item, Principal principal){
+    public String updateItemById(@PathVariable Long id, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
+        Item item = itemService.getItemById(id);
         item.setUser(user);
         item.setStatus(0);
+        itemService.updateItem(item);
+        return "redirect:/profile/items";
+    }
+
+    @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
+    public String deleteUserItem(@PathVariable Long id){
+        Item item = itemService.getItemById(id);
+        item.setStatus(2);
         itemService.updateItem(item);
         return "redirect:/profile/items";
     }
