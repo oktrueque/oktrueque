@@ -114,9 +114,8 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
-    public String updateItemById(@PathVariable Long id, Principal principal){
+    public String updateItemById(Principal principal, @ModelAttribute Item item){
         User user = userService.getUserByUsername(principal.getName());
-        Item item = itemService.getItemById(id);
         item.setUser(user);
         item.setStatus(0);
         itemService.updateItem(item);
