@@ -71,7 +71,7 @@ public class AwsS3Service {
             String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
             String filePath = "/tmp/" + fileName;
             file.transferTo(new File(filePath));
-            ResponseEntity<URL> responseEntity = this.upload(filePath, String.format(fileNamePattern, 10));
+            ResponseEntity<URL> responseEntity = this.upload(filePath, String.format(fileNamePattern, userId));
             String url = responseEntity.getBody().toString();
             if (url.isEmpty()) {
                 throw new Exception("Fail to move file");
