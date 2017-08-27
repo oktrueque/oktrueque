@@ -37,7 +37,6 @@ public class AwsS3Service {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
-
     private ResponseEntity<URL> upload(String fileName, String uploadKey) {
         AmazonS3 s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey))).withRegion(region).build();
         try {
@@ -70,26 +69,31 @@ public class AwsS3Service {
         }
     }
 
-    public String uploadFileToS3(MultipartFile file, String fileNamePattern, Long userId) {
-        try {
-            Random random = new Random();
-            String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
-            BufferedImage croppedImage = cropImageSquare(file.getBytes());
-            String filePath = "/tmp/" + fileName;
-            File outputFile = new File(filePath);
-            ImageIO.write(croppedImage, "jpg", outputFile);
+    public String uploadFileToS3(MultipartFile file, String fileNamePattern, Long userId, String previousPhoto) {
+        String extension = this.getFileExtension(file.getOriginalFilename());
+        if(extension.equals("png") || extension.equals("jpg") || extension.equals("jpeg")){
+            try {
+                Random random = new Random();
+                String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
+                BufferedImage croppedImage = cropImageSquare(file.getBytes());
+                String filePath = "/tmp/" + fileName;
+                File outputFile = new File(filePath);
+                ImageIO.write(croppedImage, this.getFileExtension(fileName), outputFile);
 
-            ResponseEntity<URL> responseEntity = this.upload(filePath, String.format(fileNamePattern, userId));
-            String url = responseEntity.getBody().toString();
-            if (url.isEmpty()) {
-                throw new Exception("Fail to move file");
-            } else {
-                return url;
+                ResponseEntity<URL> responseEntity = this.upload(filePath, String.format(fileNamePattern, userId));
+                String url = responseEntity.getBody().toString();
+                if (url.isEmpty()) {
+                    throw new Exception("Fail to move file");
+                } else {
+                    return url;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return previousPhoto;
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
         }
+        return previousPhoto;
+
     }
 
     private BufferedImage cropImageSquare(byte[] image) throws IOException {
@@ -122,5 +126,14 @@ public class AwsS3Service {
         );
 
         return croppedImage;
+    }
+
+    private String getFileExtension(String fileName){
+        String extension = null;
+        int i = fileName.lastIndexOf('.');
+        if (i > 0) {
+            extension = fileName.substring(i+1);
+        }
+        return extension;
     }
 }

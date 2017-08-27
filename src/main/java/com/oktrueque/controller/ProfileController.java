@@ -78,7 +78,7 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
     public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
         if(!picture.getOriginalFilename().equals("")){
-            String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId());
+            String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), user.getPhoto1());
             user.setPhoto1(pictureUrl);
         }
         userService.updateUser(user);
