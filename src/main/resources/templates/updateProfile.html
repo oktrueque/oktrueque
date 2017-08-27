@@ -11,12 +11,11 @@
 <th:block layout:fragment="content">
     <section class="page-content">
         <div class="page-content-inner">
+            <form id="form" th:action="@{/profile/edit}" th:object="${user}" th:method="PUT"
+                  enctype="multipart/form-data">
             <section class="panel panel-profile panel-with-borders col-md-6">
                 <div class="page-content-inner">
                     <div class="panel-body">
-                        <form id="form" th:action="@{/profile/edit}" th:object="${user}" th:method="PUT"
-                              enctype="multipart/form-data">
-
                             <div class="form-group">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                                 <input type="hidden" th:field="*{password}"/>
@@ -72,7 +71,6 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
                     </div>
                 </div>
             </section>
@@ -81,7 +79,7 @@
                     <div class="panel-body">
                         <h5>Foto de perfil</h5>
                         <div class="form-group">
-                            <input id="photo1" type="file" class="dropify" />
+                            <input id="photo1" type="file" class="dropify" name="picture" th:attr="data-default-file=*{photo1 != null ? photo1 : null}" />
                         </div>
                         <h5></h5>
                         <h5>Wallpaper</h5>
@@ -91,6 +89,7 @@
                     </div>
                 </div>
             </section>
+            </form>
         </div>
     </section>
 
