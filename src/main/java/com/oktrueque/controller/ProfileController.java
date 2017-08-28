@@ -3,15 +3,17 @@ package com.oktrueque.controller;
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.security.Principal;
 import java.util.List;
@@ -26,15 +28,21 @@ public class ProfileController {
     private ItemService itemService;
     private ItemTagService itemTagService;
     private CategoryService categoryService;
+    private AwsS3Service awsS3Service;
 
+    @Value("${aws.s3.fileName.users}")
+    private String fileNameUsers;
+    @Value("${aws.s3.fileName.items}")
+    private String fileNameItems;
 
     @Autowired
-    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService) {
+    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, AwsS3Service awsS3Service) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;
         this.categoryService = categoryService;
+        this.awsS3Service = awsS3Service;
     }
 
 
@@ -66,7 +74,11 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
-    public String updateProfile(@ModelAttribute User user) {
+    public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
+        if(!picture.getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), user.getPhoto1());
+            user.setPhoto1(pictureUrl);
+        }
         userService.updateUser(user);
         return "redirect:/profile";
     }

@@ -10,6 +10,7 @@ import com.oktrueque.service.ItemService;
 import com.oktrueque.service.UserService;
 import com.oktrueque.service.UserTagService;
 import com.oktrueque.service.UserTagServiceImpl;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -71,6 +72,7 @@ public class UserController {
 
         user.setStatus(0);
         user.setItemsAmount(0);
+        user.setPhoto1(Constants.returnRandomImage());
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
         return "/confirmEmail";
