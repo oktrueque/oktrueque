@@ -164,7 +164,6 @@
             ms.addToSelection(tags);
 
             $("#submit-btn").on("click", function () {
-                console.log(JSON.stringify(ms.getValue()));
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
@@ -182,14 +181,9 @@
                     error: function (e) {
                         console.log("ERROR POSTING TAGS: ", e);
                     }
-
                 });
-
             });
-
         });
-
-
         /*]]>*/
     </script>
 
