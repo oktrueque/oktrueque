@@ -15,4 +15,5 @@ public interface ItemTagService {
     void saveItemTags(Long itemId,List<Tag> tags);
 
     void deleteAllByItemId(Long itemId);
+
 }

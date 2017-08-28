@@ -122,6 +122,7 @@
             ms.addToSelection(tags);
 
             $("#submit-btn").on("click", function () {
+                console.log(JSON.stringify(ms.getValue()));
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
@@ -135,16 +136,13 @@
                     },
                     success: function () {
                         console.log("New tags posted succesfully!");
-                        window.location.replace("/profile");
+
                     },
                     error: function (e) {
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
-
                 });
-
             });
-
         });
 
 

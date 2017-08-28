@@ -2,11 +2,13 @@ package com.oktrueque.controller;
 
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.ItemTagId;
 import com.oktrueque.model.Tag;
 import com.oktrueque.model.User;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.ui.Model;
@@ -64,7 +66,7 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/items/{id}/updateItemTags")
-    public ResponseEntity<Void> updateItemTags(@RequestBody List<Long> tagsId,@PathVariable Long id){
+    public ResponseEntity<Void> updateItemTags(@RequestBody List<Long> tagsId, @PathVariable Long id){
         List<Tag> tagsList = tagService.findTagsByIds(tagsId);
         Item item = itemService.getItemById(id);
         itemTagService.deleteAllByItemId(item.getId());

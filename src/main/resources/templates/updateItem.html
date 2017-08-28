@@ -146,17 +146,11 @@
 
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
-        var parameter = [[${_csrf.parameterName}]];
         var tags = [[${tags}]];
         var itemId = [[${item.id}]];
 
 
         document.addEventListener("DOMContentLoaded", function () {
-            //SACAR ESTO!
-            console.log("Header:"+ JSON.stringify(header));
-            console.log("Token:" + JSON.stringify(token));
-            console.log("Parameter:" + JSON.stringify(parameter));
-
             var ms = $("#tags").magicSuggest({
                 method: 'get'
                 , data: '/tags'
@@ -169,13 +163,12 @@
             });
             ms.addToSelection(tags);
 
-
             $("#submit-btn").on("click", function () {
-
+                console.log(JSON.stringify(ms.getValue()));
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/items/"+JSON.stringify(itemId)+"/updateItemTags",
+                    url: "/profile/items/"+itemId+"/updateItemTags",
                     data: JSON.stringify(ms.getValue()),
                     dataType: 'text',
                     cache: false,
@@ -187,7 +180,7 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
-                        console.log("ERROR POSTING TAGS: ", JSON.stringify(e));
+                        console.log("ERROR POSTING TAGS: ", e);
                     }
 
                 });
