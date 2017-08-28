@@ -55,10 +55,13 @@ public class TagController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/profile/createItemTags")
-    public ResponseEntity<Void> createItemTags(@RequestBody List<Long> tagsId){
-        List<Tag> tagsList = tagService.findTagsByIds(tagsId);
-        itemTagService.saveItemTags(newItemId,tagsList);
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/createItem")
+    public ResponseEntity<Void> createItem(@RequestBody Item item, Principal principal){ //Crea el item completo con tags
+        User user = userService.getUserByUsername(principal.getName());
+        List<Tag> tagsList = item.getTags();
+        item.setStatus(0);
+        item.setUser(user);
+        itemService.setItem(item);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
