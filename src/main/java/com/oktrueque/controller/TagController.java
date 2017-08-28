@@ -56,12 +56,9 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/createItemTags")
-    public ResponseEntity<Void> createItemTags(@RequestBody List<Long> tagsId, Principal principal){
-        User user = userService.getUserByUsername(principal.getName());
+    public ResponseEntity<Void> createItemTags(@RequestBody List<Long> tagsId){
         List<Tag> tagsList = tagService.findTagsByIds(tagsId);
-        List<Item> userItems = itemService.getItemsByUserUsername(user.getUsername());
-        Long maxUserItemId = itemService.getMaxUserItemsId(userItems);
-        itemTagService.saveItemTags(maxUserItemId,tagsList);
+        itemTagService.saveItemTags(newItemId,tagsList);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

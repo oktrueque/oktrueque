@@ -48,7 +48,7 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
-    public String getProfile(Principal principal, Model model, @PageableDefault(value = 4) Pageable pageable){
+    public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
         List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
