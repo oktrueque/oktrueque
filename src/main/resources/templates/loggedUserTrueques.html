@@ -19,18 +19,14 @@
                         <thead class="thead-default">
                         <tr>
                             <th>Fecha de Propuesta de Trueque</th>
-                            <th>Cantidad de Personas intervinientes</th>
+                            <th>Cantidad de Participantes en Trueque</th>
                             <th>Ver Detalle</th>
 
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="trueque : ${trueques}">
-                            <!--<td><a th:href="'/profile/items/' + ${item.id}">-->
-                                <!--<img width="100px" th:src="${item.photo1}"/>-->
-                            <!--</a></td>-->
-                            <!--<td><a th:href="'/profile/items/' + ${item.id}" class="link-underlined"><span-->
-                                    <!--th:text="${item.name}"></span></a></td>-->
+
                             <td><span th:text="${trueque.proposalDate}"></span></td>
                             <td><span class="align-middle" th:text="${trueque.peopleCount}"></span></td>
 
