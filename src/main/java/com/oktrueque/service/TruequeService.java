@@ -1,6 +1,7 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.ItemTrueque;
 import com.oktrueque.model.Trueque;
 import com.oktrueque.model.UserTrueque;
 
@@ -18,6 +19,7 @@ public interface TruequeService {
 
     List<UserTrueque> getUserTruequeById_TruequeId(long id);
 
+    List<ItemTrueque> getItemsTruequeById_TruequeId(long id);
 
     Trueque getTruequeById (long id);
 }

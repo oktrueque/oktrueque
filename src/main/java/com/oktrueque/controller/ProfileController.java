@@ -155,17 +155,23 @@ public class ProfileController {
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         LinkedList<User> users = new LinkedList<>();
         User userNuevo;
-        List<ItemTrueque> items;
+        List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
+        LinkedList<Item> items = new LinkedList<>();
+        Item itemNuevo;
+
+        for (ItemTrueque itemTrueque: itemsTrueques){
+                itemNuevo = itemService.getItemById(itemTrueque.getId().getItemId());
+                items.add(itemNuevo);
+        }
 
         for (UserTrueque userTrueque: userTrueques){
-
             if(userTrueque.getId().getUserId()!= userLogged.getId()){
                 userNuevo = userService.getUserById(userTrueque.getId().getUserId());
                 users.add(userNuevo);
             }
         }
 
-
+        model.addAttribute("items", items);
         model.addAttribute("users", users);
         model.addAttribute("trueque", trueque);
         return "truequeDetail";

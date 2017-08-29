@@ -18,4 +18,5 @@ public interface UserTruequeRepository extends PagingAndSortingRepository<UserTr
     List<UserTrueque> getUserTruequeById_TruequeId(long id);
 
 
+
 }
