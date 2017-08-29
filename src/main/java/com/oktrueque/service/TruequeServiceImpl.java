@@ -75,4 +75,17 @@ public class TruequeServiceImpl implements TruequeService {
 
     }
 
+    public List<UserTrueque> getUserTruequeById_UserId(long id){
+        return userTruequeRepository.getUserTruequeById_UserId(id);
+    }
+
+    public List<UserTrueque> getUserTruequeById_TruequeId(long id){
+        return userTruequeRepository.getUserTruequeById_TruequeId(id);
+    }
+
+    public Trueque getTruequeById (long id){
+       return truequeRepository.findTruequeById(id);
+    }
+
+
 }

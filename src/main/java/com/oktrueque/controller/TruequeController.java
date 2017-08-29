@@ -44,7 +44,7 @@ public class TruequeController {
         participants.put(1,itemsOffer);
         participants.put(2,itemsDemand);
         truequeService.saveTrueque(participants);
-        return "redirect:/users/" + itemsOffer.get(0).getUser().getUsername();
+        return "redirect:/profile";
     }
 
 }

@@ -80,4 +80,8 @@ public class UserServiceImpl  implements UserService{
         userStored.setStatus(1);
         return true;
     }
+
+    public User getUserById(long id){
+        return userRepository.findUserById(id);
+    }
 }
