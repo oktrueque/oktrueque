@@ -70,13 +70,13 @@ public class AwsS3Service {
     }
 
     public String uploadFileToS3(MultipartFile file, String fileNamePattern, Long userId, String previousPhoto) {
-        String extension = this.getFileExtension(file.getOriginalFilename());
+        String extension = this.getFileExtension(file.getOriginalFilename()).toLowerCase();
         if(extension.equals("png") || extension.equals("jpg") || extension.equals("jpeg")){
             try {
                 Random random = new Random();
                 String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
                 BufferedImage croppedImage = cropImageSquare(file.getBytes());
-                String filePath = "/tmp/" + fileName;
+                String filePath = "./src/main/resources/static/temp/" + fileName;
                 File outputFile = new File(filePath);
                 ImageIO.write(croppedImage, this.getFileExtension(fileName), outputFile);
 
@@ -85,6 +85,7 @@ public class AwsS3Service {
                 if (url.isEmpty()) {
                     throw new Exception("Fail to move file");
                 } else {
+                    outputFile.delete();
                     return url;
                 }
             } catch (Exception ex) {
