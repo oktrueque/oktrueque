@@ -21,7 +21,7 @@
                             <th>Fecha de Propuesta</th>
                             <th>Estado del Trueque</th>
                             <th>Usuarios Participantes</th>
-                            <th>Items ofrecidos</th>
+                            <th>Items Ofrecidos</th>
                             <th>Ver Perfil</th>
 
                         </tr>
@@ -33,10 +33,17 @@
                             <td><span th:text="${trueque.status}"></span></td>
                             <td><span th:text="${user.name}+ ' ' + ${user.last_name}"></span></td>
 
-                            <td th:each="item : ${items}" th:if="${item.user.id==user.id}">
+
+                            <td>
+                                <div th:each="item : ${items}" th:if="${item.user.id==user.id}">
                                 <p th:text="${item.name}"></p>
-                                <img width="100px" th:src="${item.photo1}"/>
+                                     <a th:href="'/items/' + ${item.id}">
+                                      <img width="100px" th:src="${item.photo1}"/>
+                                     </a>
+
+                                </div>
                             </td>
+
 
 
                             <td><a th:href="'/users/' + ${user.username}">
@@ -66,6 +73,9 @@
             "autoWidth": false
         });
     })
+
+
+
 </script>
 <!-- End Page Scripts -->
 </html>
