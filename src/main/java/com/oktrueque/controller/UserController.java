@@ -9,7 +9,6 @@ import com.oktrueque.model.UserTag;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.UserService;
 import com.oktrueque.service.UserTagService;
-import com.oktrueque.service.UserTagServiceImpl;
 import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -127,7 +125,7 @@ public class UserController {
     @Transactional
     public String confirmAccount(@PathVariable String username,
                                  @PathVariable String token){
-        if(!userService.confirmAcount(username,token)){
+        if(!userService.confirmAccount(username,token)){
             return "error_500";
         }
         return "redirect:/login";

@@ -154,17 +154,18 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr th:each="trueque : ${trueques}">
-                                                        <!--<td>-->
-                                                            <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
-                                                                <!--<a th:href="'/profile/items/' + ${item.id}">-->
-                                                                    <!--<img th:src="${item.photo1}"/>-->
-                                                                <!--</a>-->
-                                                            <!--</div>-->
-                                                        <!--</td>-->
                                                         <td th:text="${trueque.proposalDate}"></td>
                                                         <td th:text="${trueque.peopleCount}"></td>
                                                         <td><span class="label label-info" th:text="${trueque.status}"></span></td>
-                                                        
+                                                        <td>
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
+                                                                <button type="button" class="btn">
+                                                                    <i class="fa fa-bars" aria-hidden="true"/>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+
+
                                                     </tr>
                                                     </tbody>
                                                 </table>
