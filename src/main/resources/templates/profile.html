@@ -138,6 +138,42 @@
                                     Click acá para agregar uno!
                                 </a>
                             </div>
+                            <div class="tab-pane" id="messaging" role="tabpanel">
+                                <div class="tab-pane active" id="posts" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="margin-bottom-50">
+                                                <table class="table table-hover nowrap" id="tbl-items" width="100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Fecha de Propuesta</th>
+                                                        <th>Peronsas Invervinientes</th>
+                                                        <th>Estado</th>
+                                                        <th>Ver Detalle</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="trueque : ${trueques}">
+                                                        <!--<td>-->
+                                                            <!--<div class="cui-ecommerce&#45;&#45;dashboard&#45;&#45;list&#45;&#45;img">-->
+                                                                <!--<a th:href="'/profile/items/' + ${item.id}">-->
+                                                                    <!--<img th:src="${item.photo1}"/>-->
+                                                                <!--</a>-->
+                                                            <!--</div>-->
+                                                        <!--</td>-->
+                                                        <td th:text="${trueque.proposalDate}"></td>
+                                                        <td th:text="${trueque.peopleCount}"></td>
+                                                        <td><span class="label label-info" th:text="${trueque.status}"></span></td>
+                                                        
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -200,6 +236,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>

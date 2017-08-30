@@ -52,7 +52,10 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     private UserTrueque createUserTrueque(Trueque truequeSaved, User user, Integer orden) {
-        return new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
+        UserTrueque userTrueque = (orden.equals(1)) ?
+                new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, true) :
+                new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
+        return userTrueque;
     }
 
     private ItemTrueque createItemTrueque(Trueque truequeSaved, Item item) {
