@@ -2,6 +2,7 @@ package com.oktrueque.configuration;
 
 import com.oktrueque.repository.*;
 import com.oktrueque.service.*;
+import com.oktrueque.service.chat.XmppManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -44,6 +45,8 @@ public class ServiceConfig {
     private ItemTagRepository itemTagRepository;
     @Autowired
     private UserTagRepository userTagRepository;
+    @Autowired
+    private XmppManager xmppManager;
 
     @Bean
     public CategoryService categoryService(){
@@ -72,7 +75,8 @@ public class ServiceConfig {
 
     @Bean
     public UserService userService(){
-        return new UserServiceImpl(userRepository,verificationTokenRepository,bCryptPasswordEncoder,this.emailService());
+        return new UserServiceImpl(userRepository,verificationTokenRepository
+                ,bCryptPasswordEncoder,this.emailService(), this.chatService());
     }
 
     @Bean
@@ -93,5 +97,10 @@ public class ServiceConfig {
     @Bean
     public UserTagService userTagService(){
         return new UserTagServiceImpl(userTagRepository,this.tagService());
+    }
+
+    @Bean
+    public ChatService chatService(){
+        return new ChatServiceImpl(xmppManager, userRepository);
     }
 }

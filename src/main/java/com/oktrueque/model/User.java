@@ -177,6 +177,10 @@ public class User implements UserDetails{
         this.score = score;
     }
 
+    public String getFullName(){
+        return name + " " + last_name;
+    }
+
     public Boolean checkPassword(String password){
         return this.password.equals(password);
     }

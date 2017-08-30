@@ -1,6 +1,7 @@
 package com.oktrueque.configuration;
 
 import com.oktrueque.repository.UserRepository;
+import com.oktrueque.service.ChatService;
 import com.oktrueque.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/profile/**", "/trueques/**").authenticated()
                     .and()
                     .formLogin()
-                    .loginPage("/login").defaultSuccessUrl("/items").failureUrl("/login-error");
+                    .loginPage("/login").defaultSuccessUrl("/login-open-fire",true).failureUrl("/login-error");
         } catch (Exception e) {
             LOGGER.info(MESSAGE, e);
         }
