@@ -58,7 +58,7 @@ public class ProfileController {
         model.addAttribute("items", items);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-        model.addAttribute("item", new Item());
+        model.addAttribute("item", new Item(0));
         model.addAttribute("categories",categoryService.getCategories());
         return "profile";
     }

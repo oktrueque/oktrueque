@@ -54,6 +54,7 @@
             <section class="panel panel-profile">
                 <div class="panel-body">
                     <h6>Information</h6>
+                    <input id="userId" type="hidden" th:field="${user.id}" />
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
                         <dd th:text="${user.name + ' ' + user.last_name}">Nombre</dd>
@@ -149,13 +150,16 @@
                                         </div>
 
                                         <form id="nuevoItemForm" th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
+                                            <!--hidden inputs-->
+                                            <input id="itemId" type="hidden" th:field="${item.id}" />
+
                                             <div class="modal-body">
                                                 <div class="col-lg">
                                                     <div class="row">
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <label class="control-label">Nombre</label>
-                                                                <input type="text" th:field="*{name}" class="form-control col-lg-12"/>
+                                                                <input id="itemName" type="text" th:field="*{name}" class="form-control col-lg-12"/>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
@@ -247,7 +251,14 @@
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
 
+        var itemId =  $("#itemId").val();
+        var itemName =  $("#itemName").val();
+        var itemDes = $("#descTextArea").val();
+        var userId = $("#userId").val();
+        var itemCat = $("#selectCat").val();
+
         document.addEventListener("DOMContentLoaded", function () {
+
             var ms = $("#tags").magicSuggest({
                 method: 'get'
                 , data: '/tags'
@@ -259,13 +270,27 @@
                 , required: true
             });
 
+
             $("#submit-btn").on("click", function () {
+
+                //JSON para enviar.
+                var newItem = {
+                    id:itemId,
+                    name:itemName,
+                    user:userId,
+                    description:itemDes,
+                    category:itemCat,
+                    status:0,
+                    idTags:JSON.stringify(ms.getValue())
+                };
+
+
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/createItemTags",
-                    data: JSON.stringify(ms.getValue()),
-                    dataType: 'text',
+                    url: "/profile/createItem",
+                    data:JSON.stringify(newItem),
+                    dataType: 'json',
                     cache: false,
                     timeout: 600000,
                     beforeSend: function (xhr) {

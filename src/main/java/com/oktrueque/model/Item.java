@@ -31,8 +31,14 @@ public class Item {
     private String photo3;
     @Transient
     private List<Tag> tags;
+    @Transient
+    private List<Integer> idTags;
 
     public Item() {
+    }
+
+    public Item(int status) {
+        this.status = status;
     }
 
     public Item(Long id, String name, String description, User user, Category category) {

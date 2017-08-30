@@ -59,7 +59,6 @@ public class TagController {
     public ResponseEntity<Void> createItem(@RequestBody Item item, Principal principal){ //Crea el item completo con tags
         User user = userService.getUserByUsername(principal.getName());
         List<Tag> tagsList = item.getTags();
-        item.setStatus(0);
         item.setUser(user);
         itemService.setItem(item);
         return new ResponseEntity<>(HttpStatus.CREATED);
