@@ -195,7 +195,7 @@
                                                 </div>
                                                 <div class="row modal-footer">
                                                     <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                                    <button id="submit-btn" type="submit" class="btn btn-primary">Crear</button>
+                                                    <button id="submit-btn" type="button" data-dismiss="modal" class="btn btn-primary">Crear</button>
                                                 </div>
                                             </div>
 
@@ -251,11 +251,7 @@
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
 
-        var itemId =  $("#itemId").val();
-        var itemName =  $("#itemName").val();
-        var itemDes = $("#descTextArea").val();
-        var userId = $("#userId").val();
-        var itemCat = $("#selectCat").val();
+
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -271,26 +267,30 @@
             });
 
 
-            $("#submit-btn").on("click", function () {
 
+            $("#submit-btn").on("click", function () {
+                var itemId =  $("#itemId").val();
+                var itemName =  $("#itemName").val();
+                var itemDes = $("#descTextArea").val();
+                var userId = $("#userId").val();
+                var itemCat = $("#selectCat").val();
                 //JSON para enviar.
                 var newItem = {
                     id:itemId,
                     name:itemName,
-                    user:userId,
+                    user:{id: userId},
                     description:itemDes,
-                    category:itemCat,
+                    category:{id:itemCat},
                     status:0,
-                    idTags:JSON.stringify(ms.getValue())
+                    idTags:ms.getValue(),
+                    tags:null
                 };
-
-
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "/profile/createItem",
                     data:JSON.stringify(newItem),
-                    dataType: 'json',
+                    dataType: 'text',
                     cache: false,
                     timeout: 600000,
                     beforeSend: function (xhr) {
@@ -303,6 +303,12 @@
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
                 });
+                itemId=null;
+                itemName=null;
+                itemDes=null;
+                userId=null;
+                itemCat=null;
+
             });
         });
         /*]]>*/

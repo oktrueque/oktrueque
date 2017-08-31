@@ -2,19 +2,17 @@ package com.oktrueque.controller;
 
 
 import com.oktrueque.model.Item;
-import com.oktrueque.model.ItemTagId;
 import com.oktrueque.model.Tag;
 import com.oktrueque.model.User;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,9 +56,8 @@ public class TagController {
     @RequestMapping(method = RequestMethod.POST, value = "/profile/createItem")
     public ResponseEntity<Void> createItem(@RequestBody Item item, Principal principal){ //Crea el item completo con tags
         User user = userService.getUserByUsername(principal.getName());
-        List<Tag> tagsList = item.getTags();
         item.setUser(user);
-        itemService.setItem(item);
+        itemService.saveItem(item);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

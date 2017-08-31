@@ -62,7 +62,7 @@ public class ServiceConfig {
 
     @Bean
     public ItemService itemService(){
-        return new ItemServiceImpl(itemRepository);
+        return new ItemServiceImpl(itemRepository, itemTagRepository, tagRepository);
     }
 
     @Bean

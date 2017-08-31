@@ -35,4 +35,6 @@ public interface ItemService {
     void updateItem(Item item);
 
     List<Item> getNonDeletedItems(String username);
+
+    void saveItem(Item item);
 }
