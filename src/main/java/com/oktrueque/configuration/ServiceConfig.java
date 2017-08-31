@@ -20,6 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class ServiceConfig {
 
     @Autowired
+    private ComplaintTypeRepository complaintTypeRepository;
+
+    @Autowired
+    private ComplaintRepository complaintRepository;
+    @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private CommentRepository commentRepository;
@@ -47,6 +52,18 @@ public class ServiceConfig {
     private UserTagRepository userTagRepository;
     @Autowired
     private XmppManager xmppManager;
+
+
+
+
+    @Bean
+    public ComplaintTypeService complaintTypeService(){return new ComplaintTypeServiceImpl(complaintTypeRepository);}
+
+    @Bean
+    public ComplaintService complaintService(){
+        return new ComplaintServiceImpl(complaintRepository);
+    }
+
 
     @Bean
     public CategoryService categoryService(){

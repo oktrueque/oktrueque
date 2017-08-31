@@ -1,15 +1,11 @@
 package com.oktrueque.controller;
 
 
-import com.oktrueque.model.Comment;
-import com.oktrueque.model.Item;
-import com.oktrueque.model.User;
+import com.oktrueque.model.*;
 
-import com.oktrueque.model.UserTag;
-import com.oktrueque.service.ItemService;
-import com.oktrueque.service.UserService;
-import com.oktrueque.service.UserTagService;
+import com.oktrueque.service.*;
 import com.oktrueque.utils.Constants;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -20,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import sun.util.calendar.Gregorian;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,15 +30,20 @@ public class UserController {
     private UserService userService;
     private UserTagService userTagService;
     private ItemService itemService;
-
+    private ComplaintService complaintService;
+    private ComplaintTypeService complaintTypeService;
 
 
     @Autowired
-    public UserController(UserService userService, UserTagService userTagService, ItemService itemService){
+    public UserController(UserService userService, UserTagService userTagService, ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
+        this.complaintService = complaintService;
+        this.complaintTypeService = complaintTypeService;
     }
+
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String getUserById(Model model) {
@@ -77,12 +79,28 @@ public class UserController {
     }
 
 
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/users/denuncias")
+    public String addComplaint(@ModelAttribute Complaint complaint) {
+
+        
+        complaintService.addComplaint(complaint);
+
+        return "/users/{username}";
+    }
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public String getUserProfile(Model model, @PathVariable String username, @PageableDefault(value = 2) Pageable pageable) {
         User user = userService.getUserByUsername(username);
         List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<Comment> comments = user.getComments();
+        List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
+        Complaint complaint = new Complaint();
+        model.addAttribute("complaintTypes", complaintTypes);
+        model.addAttribute("complaint", complaint);
         model.addAttribute("user", user);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
         model.addAttribute("items", items);

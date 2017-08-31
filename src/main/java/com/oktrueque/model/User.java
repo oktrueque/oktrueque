@@ -50,15 +50,24 @@ public class User implements UserDetails{
     private Integer score;
     @Column(name="wallpaper")
     private String wallpaper;
+    @OneToMany(mappedBy = "user_target")
+    private List<Complaint> complaints;
 
     @Transient
     private List<Tag> tags;
 
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
+    }
 
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, Integer score, List<Comment> comments) {
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, List<Tag> tags) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
@@ -68,9 +77,11 @@ public class User implements UserDetails{
         this.itemsAmount = itemsAmount;
         this.photo1 = photo1;
         this.username = username;
-        this.score = score;
         this.comments = comments;
-        this.wallpaper = getWallpaperPath();
+        this.score = score;
+        this.wallpaper = wallpaper;
+        this.complaints = complaints;
+        this.tags = tags;
     }
 
     public List<Comment> getComments() {
