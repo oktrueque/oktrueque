@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.List;
 
 
 /**
@@ -27,8 +28,12 @@ public class ChatController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/messages")
     public String getChat(Model model){
-        model.addAttribute("usersChatList",chatService.getChatsRegistered());
-        return "chat";
+        List<User> users = chatService.getChatsRegistered();
+        if(users!= null) {
+            model.addAttribute("usersChatList",chatService.getChatsRegistered());
+            return "chat";
+        }
+        return "redirect:/items";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/login-open-fire")

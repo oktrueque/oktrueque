@@ -10,6 +10,5 @@ import java.util.List;
  */
 public interface TruequeRepository extends CrudRepository<Trueque, Long> {
 
-
     Trueque findTruequeById(long id);
 }

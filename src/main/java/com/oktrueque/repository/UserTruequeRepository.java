@@ -11,12 +11,9 @@ import java.util.List;
  */
 public interface UserTruequeRepository extends PagingAndSortingRepository<UserTrueque,UserTruequeId>{
 
-
-
     List<UserTrueque> getUserTruequeById_UserId(long id);
 
     List<UserTrueque> getUserTruequeById_TruequeId(long id);
-
 
 
 }
