@@ -56,8 +56,9 @@
                                 </tr>
                             </#list>
                             </table>
-                <a style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px">
-                    Aceptar Trueuque
+                <a href="${uri_confirm}"
+                   style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px">
+                    Aceptar Trueque
                 </a>
                 </td>
                             </tr>

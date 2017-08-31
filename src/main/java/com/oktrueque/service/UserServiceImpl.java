@@ -5,6 +5,7 @@ import com.oktrueque.model.User;
 import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.VerificationTokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.LinkedHashMap;
@@ -17,20 +18,23 @@ public class UserServiceImpl  implements UserService{
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ChatService chatService;
 
     public UserServiceImpl(UserRepository userRepository,
                            VerificationTokenRepository verificationTokenRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
-                           EmailService emailService){
+                           EmailService emailService, ChatService chatService){
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.emailService = emailService;
+        this.chatService = chatService;
     }
     @Override
     public User addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-       return userRepository.save(user);
+        chatService.createNewUser(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -70,7 +74,7 @@ public class UserServiceImpl  implements UserService{
     }
 
     @Override
-    public boolean confirmAcount(String username, String token) {
+    public boolean confirmAccount(String username, String token) {
         VerificationToken tokenStored  = verificationTokenRepository.findByToken(token);
         User userStored = userRepository.findOne(tokenStored.getUser().getId());
         if (tokenStored == null || userStored == null || !userStored.getUsername().equals(username)){
@@ -78,5 +82,9 @@ public class UserServiceImpl  implements UserService{
         }
         userStored.setStatus(1);
         return true;
+    }
+
+    public User getUserById(long id){
+        return userRepository.findUserById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.*;
+import com.oktrueque.repository.TagRepository;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.security.Principal;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -28,22 +30,24 @@ public class ProfileController {
     private ItemService itemService;
     private ItemTagService itemTagService;
     private CategoryService categoryService;
+    private TruequeService truequeService;
     private AwsS3Service awsS3Service;
-
     @Value("${aws.s3.fileName.users}")
     private String fileNameUsers;
     @Value("${aws.s3.fileName.items}")
     private String fileNameItems;
 
     @Autowired
-    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, AwsS3Service awsS3Service) {
+    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;
         this.categoryService = categoryService;
+        this.truequeService = truequeService;
         this.awsS3Service = awsS3Service;
     }
+
 
 
 
@@ -52,6 +56,18 @@ public class ProfileController {
         User user = userService.getUserByUsername(principal.getName());
         List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
+
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+
+        Trueque TruequeNuevo;
+        LinkedList<Trueque> trueques = new LinkedList<>();
+
+        for (UserTrueque trueque: userTrueques){
+
+            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
+            trueques.add(TruequeNuevo);
+        }
+
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
@@ -60,6 +76,7 @@ public class ProfileController {
         model.addAttribute("tags", tags);
         model.addAttribute("item", new Item(0));
         model.addAttribute("categories",categoryService.getCategories());
+        model.addAttribute("trueques", trueques);
         return "profile";
     }
 
@@ -141,4 +158,54 @@ public class ProfileController {
         itemService.updateItem(item);
         return "redirect:/profile/items";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques")
+    public String getTruequesByUser(Model model, Principal principal){
+        User user = userService.getUserByUsername(principal.getName());
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+
+        Trueque TruequeNuevo;
+        LinkedList<Trueque> trueques = new LinkedList<>();
+
+        for (UserTrueque trueque: userTrueques){
+
+            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
+            trueques.add(TruequeNuevo);
+        }
+        model.addAttribute("trueques", trueques);
+
+        return "loggedUserTrueques";
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques/{id}")
+    public String getTruequeById(Model model,@PathVariable Long id,Principal principal){
+        User userLogged = userService.getUserByUsername(principal.getName());
+        Trueque trueque = truequeService.getTruequeById(id);
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
+        LinkedList<User> users = new LinkedList<>();
+        User userNuevo;
+        List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
+        LinkedList<Item> items = new LinkedList<>();
+        Item itemNuevo;
+
+        for (ItemTrueque itemTrueque: itemsTrueques){
+                itemNuevo = itemService.getItemById(itemTrueque.getId().getItemId());
+                items.add(itemNuevo);
+        }
+
+        for (UserTrueque userTrueque: userTrueques){
+            if(userTrueque.getId().getUserId()!= userLogged.getId()){
+                userNuevo = userService.getUserById(userTrueque.getId().getUserId());
+                users.add(userNuevo);
+            }
+        }
+
+        model.addAttribute("items", items);
+        model.addAttribute("users", users);
+        model.addAttribute("trueque", trueque);
+        return "truequeDetail";
+    }
+
+
 }

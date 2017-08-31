@@ -39,7 +39,7 @@ public class TruequeServiceImpl implements TruequeService {
         Trueque truequeSaved = truequeRepository.save(truequeToSave);
         saveItemsAndUsers(participants, truequeSaved);
         sendMailTo(participants.get(1).get(0).getUser(),participants.get(2).get(0).getUser(),
-                participants.get(1),participants.get(2));
+                participants.get(1),participants.get(2),truequeSaved);
     }
 
     private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved) {
@@ -52,14 +52,18 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     private UserTrueque createUserTrueque(Trueque truequeSaved, User user, Integer orden) {
-        return new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
+        UserTrueque userTrueque = (orden.equals(1)) ?
+                new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, true) :
+                new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
+        return userTrueque;
     }
 
     private ItemTrueque createItemTrueque(Trueque truequeSaved, Item item) {
         return new ItemTrueque(new ItemTruequeId(truequeSaved.getId(), item.getId()));
     }
 
-    private void sendMailTo(User userOrigen, User userDestino, List<Item> itemsPropuestos, List<Item> itemsDemandados){
+    private void sendMailTo(User userOrigen, User userDestino,
+                            List<Item> itemsPropuestos, List<Item> itemsDemandados, Trueque trueque){
         Email email = new Email();
         email.setMailTo(userDestino.getEmail());
         email.setMailSubject("Nueva propuesta de Trueque");
@@ -70,9 +74,26 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("apellidoDestino", userDestino.getLast_name());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
+        model.put("uri_confirm","http://localhost:8080/trueque/"+trueque.getId()+"/confirm");
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 
+    }
+
+    public List<UserTrueque> getUserTruequeById_UserId(long id){
+        return userTruequeRepository.getUserTruequeById_UserId(id);
+    }
+
+    public List<UserTrueque> getUserTruequeById_TruequeId(long id){
+        return userTruequeRepository.getUserTruequeById_TruequeId(id);
+    }
+
+    public Trueque getTruequeById (long id){
+       return truequeRepository.findTruequeById(id);
+    }
+
+    public List<ItemTrueque> getItemsTruequeById_TruequeId(long id){
+        return itemTruequeRepository.findById_TruequeId(id);
     }
 
 }

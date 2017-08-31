@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layouts/default">
+<head>
+</head>
+<th:block layout:fragment="content">
+    <section class="page-content">
+        <div class="page-content-inner">
+
+            <!-- Ecommerce Products List -->
+            <section class="panel panel-with-borders">
+                <div class="panel-heading">
+                    <h2>
+                        Tus Trueques
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover nowrap" id="example1" width="100%">
+                        <thead class="thead-default">
+                        <tr>
+                            <th>Fecha de Propuesta de Trueque</th>
+                            <th>Cantidad de Participantes en Trueque</th>
+                            <th>Ver Detalle</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="trueque : ${trueques}">
+
+                            <td><span th:text="${trueque.proposalDate}"></span></td>
+                            <td><span class="align-middle" th:text="${trueque.peopleCount}"></span></td>
+
+                            <td>
+                                <a th:href="'/profile/trueques/' + ${trueque.id}">
+                                    <button type="button" class="btn">
+                                        <i class="fa fa-bars" aria-hidden="true"/>
+                                  </button>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!-- End Ecommerce Products List -->
+
+        </div>
+    </section>
+
+
+</th:block>
+<!-- Page Scripts -->
+<script>
+    $(function () {
+        // Datatables
+        $('#example1').DataTable({
+            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
+            responsive: true,
+            "autoWidth": false
+        });
+    })
+</script>
+<!-- End Page Scripts -->
+</html>

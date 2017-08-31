@@ -27,13 +27,13 @@
                     <div class="row">
                         <th:block th:each="item : ${items}">
                             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                <a th:href="@{'/items/' + ${item.id}}">
                                 <div class="cui-ecommerce--catalog--item">
-
                                             <img class="cui-ecommerce--catalog--item--img" th:src="${item.photo1}"/>
                                     <div class="cui-ecommerce-catalog--item--infobox animated row hidden">
                                         <div class="row col-lg-7 col-md-7 col-sm-7">
                                     <div class="cui-ecommerce--catalog--item--title col-lg-12 col-md-12 col-sm-12">
-                                        <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}"></a>
+                                        <p th:text="${item.name}"></p>
                                     </div>
                                         <div class="cui-ecommerce--catalog--item--descr col-lg-12 col-md-12 col-sm-12">
                                             <P th:text="${item.category.name}"></P>
@@ -46,6 +46,7 @@
 
                                         </div>
                                 </div>
+                                </a>
                             </div>
                         </th:block>
                     </div>

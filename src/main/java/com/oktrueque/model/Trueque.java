@@ -1,5 +1,7 @@
 package com.oktrueque.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -17,6 +19,7 @@ public class Trueque {
     @Column(name = "status")
     private Integer status;
     @Column(name = "proposal_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime proposalDate;
     @Column(name = "acceptance_date")
     private LocalDateTime acceptanceDate;

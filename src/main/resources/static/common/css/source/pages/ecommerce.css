@@ -162,6 +162,7 @@ AGREGAR ACA EL TOGGLE DEL INFO */
     position: relative;
     font-style: italic;
     color: #4A5A5C;
+    margin-top: -15px;
 }
 
 .cui-ecommerce--catalog--item--descr--sizes {

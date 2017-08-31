@@ -8,21 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
     private final static Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    public UserDetailsServiceImpl(UserRepository userRepository){
-        this.userRepository=userRepository;
+    private final UserRepository userRepository;
+
+
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username){
-        User user = userRepository.findUser(1,username, username);
+    public UserDetails loadUserByUsername(String username) {
+        User user = userRepository.findUser(1, username, username);
         if (user == null) {
             UsernameNotFoundException exception = new UsernameNotFoundException(username);
-            LOGGER.info("Login Fail",exception);
+            LOGGER.info("Login Fail", exception);
             throw exception;
         }
         return user;
