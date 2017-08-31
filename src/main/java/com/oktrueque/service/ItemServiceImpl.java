@@ -12,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
@@ -75,26 +73,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Long getMaxUserItemsId(List<Item> list){
-
-        Collections.sort(list, new Comparator<Item>() {
-            @Override
-            public int compare(Item item2, Item item1)
-            {
-                return  item1.getId().compareTo(item2.getId());
-            }
-        });
-
-        return list.get(0).getId();
-    }
-
-    @Override
     public void updateItem(Item item){
         itemRepository.save(item);
     }
 
     public List<Item> getNonDeletedItems(String username){
-        return itemRepository.findByUser_UsernameAndStatusIsNot(username,2);
+        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,2);
     }
 
     @Override
@@ -108,4 +92,16 @@ public class ItemServiceImpl implements ItemService {
         });
         itemTagRepository.save(itemTags);
     }
+
+    public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status,Pageable pageable){
+        //  2: Eliminado
+        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status,pageable);
+    }
+
+    public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status){
+        //  2: Eliminado
+        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status);
+    }
+
+
 }

@@ -114,15 +114,12 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="item : ${items}">
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <a th:href="'/profile/items/' + ${item.id}">
-                                                            <img th:src="${item.photo1}"/>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td th:text="${item.name}">Nombre</td>
+                                                <tr  th:each="item : ${user.getItems()}">
+                                                    <td><a th:href="'/profile/items/' + ${item.id}">
+                                                        <img width="100px" th:src="${item.photo1}"/>
+                                                    </a></td>
+                                                    <td><a th:href="'/profile/items/' + ${item.id}" class="link-underlined"><span
+                                                            th:text="${item.name}"></span></a></td>
                                                     <td th:text="${item.category.name}">Categoria</td>
                                                     <td><span class="label label-info" th:text="${item.getStatusValue()}">Estado</span></td>
                                                 </tr>
@@ -304,6 +301,12 @@
                 , required: true
             });
 
+            $('#example1').on('hidden.bs.modal', function () {
+                $(this).find('form').trigger('reset');
+                $("#example1").modal('hide');
+                ms.clear();
+                location.reload();
+            });
 
 
             $("#submit-btn").on("click", function () {
@@ -338,16 +341,13 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
+                        alert("Ha ocurrido un error creando el item, lo sentimos. Error: "+JSON.stringify(e));
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
                 });
-                itemId=null;
-                itemName=null;
-                itemDes=null;
-                userId=null;
-                itemCat=null;
-
             });
+
+
         });
         /*]]>*/
     </script>
