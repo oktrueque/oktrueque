@@ -39,7 +39,7 @@ public class XmppManager {
         connection = new XMPPConnection(config);
         try {
             connection.connect();
-            LOGGER.info("Conexion exitosa, server:" + connection.getServiceName());
+            LOGGER.info("Conexion exitosa al servidor Openfire");
         }
         catch (XMPPException e){
             LOGGER.error("Error to connect with server Openfire", e);
@@ -54,7 +54,7 @@ public class XmppManager {
         accountManager = connection.getAccountManager();
         try {
             accountManager.createAccount(username, password,dates);
-            LOGGER.info("Nuevo usuario de openfire, user:" + username);
+            LOGGER.info("Nuevo usuario de openFire, user:" + username);
             disconnect();
         } catch (XMPPException e) {
             LOGGER.error("Error to create new user", e);
@@ -67,6 +67,7 @@ public class XmppManager {
             if (connection!=null && connection.isConnected()) {
                 connection.login(username, password);
                 chatManager= connection.getChatManager();
+                LOGGER.info("User login in openFire success");
             }
         } catch (XMPPException e) {
             LOGGER.error("Error to try login user", e);
@@ -83,6 +84,8 @@ public class XmppManager {
     public void disconnect() {
         if (connection!=null && connection.isConnected()) {
             connection.disconnect();
+            LOGGER.info("Logout to openfire success");
+
         }
     }
 
@@ -111,18 +114,25 @@ public class XmppManager {
     }
 
 
-    public void createEntry(String user, String name) throws Exception {
-        Roster roster = connection.getRoster();
-        roster.createEntry(user, name, null);
+    public void createEntry(String user, String name, String userToLogin) {
+        try{
+            init();
+            loginUser(userToLogin,userToLogin+"pass");
+            Roster roster = connection.getRoster();
+            roster.createEntry(user, name, null);
+            disconnect();
+        }catch (Exception e){
+            LOGGER.error("Error to try create Entry", e);
+        }
     }
 
     public List<RosterEntry> getChatsRegistered(){
-//        PacketFilter filter = new AndFilter(new PacketTypeFilter(Message.class));
-//        PacketCollector collector = connection.createPacketCollector(filter);
         List<RosterEntry> rostersEntries = new ArrayList<>();
         Roster roster = connection.getRoster();
         roster.getEntries().forEach(rostersEntries :: add);
         return rostersEntries;
     }
 
+    //  PacketFilter filter = new AndFilter(new PacketTypeFilter(Message.class));
+//        PacketCollector collector = connection.createPacketCollector(filter);
 }

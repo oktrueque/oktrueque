@@ -3,9 +3,12 @@ package com.oktrueque.service;
 import com.oktrueque.model.*;
 import com.oktrueque.repository.ItemTruequeRepository;
 import com.oktrueque.repository.TruequeRepository;
+import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.UserTruequeRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +24,16 @@ public class TruequeServiceImpl implements TruequeService {
     private final TruequeRepository truequeRepository;
     private final ItemTruequeRepository itemTruequeRepository;
     private final UserTruequeRepository userTruequeRepository;
+    private final UserRepository userRepository;
     private final EmailService emailService;
 
     public TruequeServiceImpl(TruequeRepository truequeRepository, ItemTruequeRepository itemTruequeRepository,
-                              UserTruequeRepository userTruequeRepository, EmailService emailService) {
+                              UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository) {
         this.truequeRepository = truequeRepository;
         this.itemTruequeRepository = itemTruequeRepository;
         this.userTruequeRepository = userTruequeRepository;
         this.emailService = emailService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -40,6 +45,23 @@ public class TruequeServiceImpl implements TruequeService {
         saveItemsAndUsers(participants, truequeSaved);
         sendMailTo(participants.get(1).get(0).getUser(),participants.get(2).get(0).getUser(),
                 participants.get(1),participants.get(2),truequeSaved);
+    }
+
+    @Override
+    @Transactional
+    public List<User> confirmTruequeAndGetUsersBelongingTo(Long id) {
+        Trueque truequeSaved = truequeRepository.findOne(id);
+        truequeSaved.setStatus(1);
+        truequeSaved.setAcceptanceDate(LocalDateTime.now());
+        List<UserTrueque> userTrueques = userTruequeRepository.getUserTruequeById_TruequeId(id);
+        List<User> users = new ArrayList<>();
+        userTrueques.forEach(t ->{
+            users.add(userRepository.findOne(t.getId().getUserId()));
+            if(!t.isConfirm()){
+                t.setConfirm(true);
+            }
+        });
+        return users;
     }
 
     private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved) {
@@ -74,24 +96,28 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("apellidoDestino", userDestino.getLast_name());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
-        model.put("uri_confirm","http://localhost:8080/trueque/"+trueque.getId()+"/confirm");
+        model.put("uri_confirm","http://localhost:8080/trueques/"+trueque.getId()+"/confirm");
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 
     }
 
+    @Override
     public List<UserTrueque> getUserTruequeById_UserId(long id){
         return userTruequeRepository.getUserTruequeById_UserId(id);
     }
 
+    @Override
     public List<UserTrueque> getUserTruequeById_TruequeId(long id){
         return userTruequeRepository.getUserTruequeById_TruequeId(id);
     }
 
+    @Override
     public Trueque getTruequeById (long id){
        return truequeRepository.findTruequeById(id);
     }
 
+    @Override
     public List<ItemTrueque> getItemsTruequeById_TruequeId(long id){
         return itemTruequeRepository.findById_TruequeId(id);
     }

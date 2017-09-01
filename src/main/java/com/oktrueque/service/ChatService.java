@@ -14,4 +14,8 @@ public interface ChatService {
     void loginIntoXmppService(User user);
 
     void createNewUser(User user);
+
+    void createNewsRosters(List<User> users, String name);
+
+    void logout();
 }
