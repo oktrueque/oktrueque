@@ -46,27 +46,18 @@ public class ProfileController {
         this.awsS3Service = awsS3Service;
     }
 
-
-
-
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(user.getUsername(),2,pageable);
+        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(user.getUsername(),2, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
-
-
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-
         for (UserTrueque trueque: userTrueques){
-
             TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
             trueques.add(TruequeNuevo);
         }
-
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
@@ -98,7 +89,6 @@ public class ProfileController {
         userService.updateUser(user);
         return "redirect:/profile";
     }
-
 
     @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
@@ -162,17 +152,14 @@ public class ProfileController {
     public String getTruequesByUser(Model model, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-
         for (UserTrueque trueque: userTrueques){
 
             TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
             trueques.add(TruequeNuevo);
         }
         model.addAttribute("trueques", trueques);
-
         return "loggedUserTrueques";
     }
 
@@ -187,24 +174,19 @@ public class ProfileController {
         List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
         LinkedList<Item> items = new LinkedList<>();
         Item itemNuevo;
-
         for (ItemTrueque itemTrueque: itemsTrueques){
                 itemNuevo = itemService.getItemById(itemTrueque.getId().getItemId());
                 items.add(itemNuevo);
         }
-
         for (UserTrueque userTrueque: userTrueques){
             if(userTrueque.getId().getUserId()!= userLogged.getId()){
                 userNuevo = userService.getUserById(userTrueque.getId().getUserId());
                 users.add(userNuevo);
             }
         }
-
         model.addAttribute("items", items);
         model.addAttribute("users", users);
         model.addAttribute("trueque", trueque);
         return "truequeDetail";
     }
-
-
 }
