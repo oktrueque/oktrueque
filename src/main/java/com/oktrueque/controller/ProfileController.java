@@ -111,8 +111,8 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items")
-    public String getItemsByUser(Model model, Principal principal, @PageableDefault(value=6) Pageable pageable){
-    List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(principal.getName(),2, pageable);
+    public String getItemsByUser(Model model, Principal principal){
+    List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(principal.getName(),2);
     model.addAttribute("items", items);
     return "loggedUserItems";
     }

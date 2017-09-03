@@ -147,7 +147,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Fecha de Propuesta</th>
-                                                        <th>Peronsas Invervinientes</th>
+                                                        <th>Participantes</th>
                                                         <th>Estado</th>
                                                         <th>Ver Detalle</th>
                                                     </tr>
@@ -236,8 +236,8 @@
                             </div>
                         </div>
                         <div class="row modal-footer">
-                            <button type="button" class="btn" data-dismiss="modalCreateItem">Cerrar</button>
-                            <button id="submit-btn" type="button" data-dismiss="modalCreateItem" class="btn btn-primary">Crear</button>
+                            <button id="btnCerrar" type="button" class="btn" data-dismiss="#modalCreateItem">Cerrar</button>
+                            <button id="submit-btn" type="button"  class="btn btn-primary">Crear</button>
                         </div>
                     </div>
 
@@ -293,6 +293,7 @@
                 , typeDelay: 0
                 , maxSelection: null
                 , required: true
+                , vregex: /^[a-zA-Z\s]*$/g
             });
 //            COMPORTAMIENTO DEL MODAL
             $('#modalCreateItem').on('hidden.bs.modal', function () {
@@ -301,28 +302,35 @@
                 ms.clear();
                 location.reload();
             });
+
             $("#submit-btn").on("click", function () {
-                var itemId =  $("#itemId").val();
-                var itemName =  $("#itemName").val();
+
+                var itemId = $("#itemId").val();
+                var itemName = $("#itemName").val();
                 var itemDes = $("#descTextArea").val();
                 var userId = $("#userId").val();
                 var itemCat = $("#selectCat").val();
                 //JSON para enviar.
                 var newItem = {
-                    id:itemId,
-                    name:itemName,
-                    user:{id: userId},
-                    description:itemDes,
-                    category:{id:itemCat},
-                    status:0,
-                    idTags:ms.getValue(),
-                    tags:null
+                    id: itemId,
+                    name: itemName,
+                    user: {id: userId},
+                    description: itemDes,
+                    category: {id: itemCat},
+                    status: 0,
+                    idTags: ms.getValue(),
+                    tags: null
                 };
+
+            if (validations()){
+
+                $("#modalCreateItem").modal('hide');
+
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "/profile/createItem",
-                    data:JSON.stringify(newItem),
+                    data: JSON.stringify(newItem),
                     dataType: 'text',
                     cache: false,
                     timeout: 600000,
@@ -333,13 +341,74 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
-                        alert("Ha ocurrido un error creando el item, lo sentimos. Error: "+JSON.stringify(e));
+                        alert("Ha ocurrido un error creando el item, lo sentimos. Error: " + JSON.stringify(e));
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
                 });
+
+
+
+            } else if(ms.getValue()===null) {
+                alert('Debe asignar tags al item!');
+                return false;
+
+            } else return true;
+
+
+
             });
+
+
+            $("#btnCerrar").on("click", function () {
+                $("#modalCreateItem").modal('hide');
+            })
+
         });
         /*]]>*/
+    </script>
+
+    <script>
+
+        function validations() {
+
+            var selectValue = document.getElementById('selectCat').value;
+            var itemName = $("#itemName").val();
+            var itemDes = $("#descTextArea").val();
+
+            console.log("ItemName: "+itemName);
+            console.log("itemDes: "+itemDes);
+            console.log("selectValue: "+selectValue);
+
+            if (selectValue === '-1') {
+                alert('Debe seleccionar una categoría para crear el item!');
+                document.getElementById('selectCat').focus();
+                return false;
+
+            } else if (itemName.length===0) {
+                alert('Debe asignar un nombre el item!');
+                $("#itemName").focus();
+                return false;
+
+            } else if (!/^[a-zA-Z\s]*$/g.test(itemName)){
+                alert('El nombre solo puede contener letras!');
+                $("#itemName").focus();
+                return false;
+
+            } else if (itemDes.length===0){
+                alert('Debe describir más el item!');
+                $("#descTextArea").focus();
+                return false;
+
+            } else return true;
+
+
+
+
+
+
+        }
+
+
     </script>
 <!-- End Page Scripts -->
 </section>
