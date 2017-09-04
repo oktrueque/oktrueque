@@ -5,7 +5,6 @@ import com.oktrueque.model.*;
 
 import com.oktrueque.service.*;
 import com.oktrueque.utils.Constants;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -81,13 +82,18 @@ public class UserController {
 
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/users/denuncias")
-    public String addComplaint(@ModelAttribute Complaint complaint) {
+    @RequestMapping(method = RequestMethod.POST, value = "/users/denuncias/{username}")
+    public String addComplaint(@ModelAttribute Complaint complaint, Principal principal, @PathVariable String username) {
 
-        
-        complaintService.addComplaint(complaint);
+        User userDemandant = userService.getUserByUsername(principal.getName());
+        User userTarget = userService.getUserByUsername(username);
+        complaint.setUser_target(userTarget);
+        complaint.setUser_origin(userDemandant);
+        complaint.setDate(LocalDateTime.now());
+        complaintService.saveComplaint(complaint);
 
-        return "/users/{username}";
+
+        return "redirect:/users/" + username ;
     }
 
 

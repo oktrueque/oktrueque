@@ -3,6 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.ComplaintType;
 import com.oktrueque.repository.ComplaintTypeRepository;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,8 +20,8 @@ public class ComplaintTypeServiceImpl implements ComplaintTypeService {
 
     @Override
     public List<ComplaintType> getComplaintTypes() {
-
-             return complaintTypeRepository.findAll();
-
+        List<ComplaintType> complaintTypes = new ArrayList<ComplaintType>();
+        complaintTypeRepository.findAll().forEach(complaintTypes::add);
+        return complaintTypes;
     }
 }

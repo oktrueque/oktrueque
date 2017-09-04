@@ -12,5 +12,5 @@ import java.util.List;
 public interface ComplaintTypeRepository extends CrudRepository<ComplaintType, Integer> {
 
 
-    List<ComplaintType> findAll();
+
 }

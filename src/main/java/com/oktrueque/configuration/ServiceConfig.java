@@ -61,7 +61,7 @@ public class ServiceConfig {
 
     @Bean
     public ComplaintService complaintService(){
-        return new ComplaintServiceImpl(complaintRepository);
+        return new ComplaintServiceImpl(complaintRepository,this.emailService());
     }
 
 

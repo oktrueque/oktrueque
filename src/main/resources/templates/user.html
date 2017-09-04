@@ -27,59 +27,51 @@
                         <div class="profile-header-title">
 
                             <h2 th:text="${'¡Hola, soy ' + user.name + '!'}">Nombre</h2>
-                                <a data-toggle="modal" data-target="#example1">
-                                    <button type="button" class="btn btn-icon btn-info margin-inline">
-                                        <i class="icmn-compass" aria-hidden="true"> Denunciar a este usuario</i>
-                                    </button>
-                                </a>
 
-                            <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Nuevo Denuncia</h4>
-                                        </div>
+                            <div sec:authorize="isAuthenticated()">
+                                   <a data-toggle="modal" data-target="#example1">
+                                        <button type="button" class="btn btn-icon btn-info margin-inline">
+                                            <i class="icmn-compass" aria-hidden="true"> Denunciar a este usuario</i>
+                                        </button>
+                                 </a>
 
-                                        <form  th:action="@{'/users/denuncias'}" th:object="${complaint}" th:method="POST">
-                                            <div class="modal-body">
-                                                <div class="col-lg">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Motivo</label>
-                                                                <input type="text" th:field="*{complaint}" class="form-control col-lg-12"/>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label">Fecha</label>
-                                                                <input type="date" th:field="*{date}" class="form-control col-lg-12"/>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label for="selectComplaint" class="form-control-label col-lg-12"></label>
-                                                                <select th:field="*{complaintType}" id="selectComplaint" class="form-control col-lg-12">
-                                                                    <option value="-1"> Seleccione el Tipo de Denuncia</option>
-                                                                    <option th:each="complaint : ${complaintTypes}" th:value="${complaint.id}"
-                                                                            th:text="${complaint.name}"></option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row modal-footer">
-                                                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Enviar Denuncia</button>
-                                                </div>
+                                  <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Nueva Denuncia</h4>
                                             </div>
+                                            <div class="modal-body">
+                                            <form  th:action="@{'/users/denuncias/'+${user.username}}" th:object="${complaint}" th:method="POST">
 
-                                        </form>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Motivo</label>
+                                                                <input type="text" th:field="*{description}"/>
+
+                                                            <!--<select th:field="*{complaintType}">-->
+                                                                <!--<option th:each="complaintType : ${complaintTypes}"-->
+                                                                        <!--th:value="${complaintType.id}" th:text="${complaintType.name}">Tipo-->
+                                                                <!--</option>-->
+                                                            <!--</select>-->
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div>
+                                                         <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                                                         <button type="submit" class="btn btn-primary">Enviar Denuncia</button>
+                                                    </div>
+                                            </form>
+                                            </div>
                                     </div>
                                 </div>
+                              </div>
                             </div>
+
 
                         </div>
                     </div>
