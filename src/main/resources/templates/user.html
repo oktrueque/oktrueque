@@ -28,14 +28,14 @@
 
                             <h2 th:text="${'¡Hola, soy ' + user.name + '!'}">Nombre</h2>
 
-                            <div sec:authorize="isAuthenticated()">
-                                   <a data-toggle="modal" data-target="#example1">
+                            <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}">
+                                   <a data-toggle="modal" data-target="#modal">
                                         <button type="button" class="btn btn-icon btn-info margin-inline">
                                             <i class="icmn-compass" aria-hidden="true"> Denunciar a este usuario</i>
                                         </button>
                                  </a>
 
-                                  <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+                                  <div class="modal fade"  id="modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -45,27 +45,31 @@
                                                 <h4 class="modal-title" id="myModalLabel">Nueva Denuncia</h4>
                                             </div>
                                             <div class="modal-body">
-                                            <form  th:action="@{'/users/denuncias/'+${user.username}}" th:object="${complaint}" th:method="POST">
+                                                <div class="row">
+                                                    <form  th:action="@{'/users/denuncias/'+${user.username}}" th:object="${complaint}" th:method="POST">
 
-                                                    <div class="col-lg-6">
+                                                     <div class="col-lg-6">
                                                         <div class="form-group">
-                                                            <label class="control-label">Motivo</label>
-                                                                <input type="text" th:field="*{description}"/>
 
-                                                            <!--<select th:field="*{complaintType}">-->
-                                                                <!--<option th:each="complaintType : ${complaintTypes}"-->
-                                                                        <!--th:value="${complaintType.id}" th:text="${complaintType.name}">Tipo-->
-                                                                <!--</option>-->
-                                                            <!--</select>-->
+                                                            <label class="control-label">Motivo</label>
+                                                                <textarea class="form-control" placeholder="Mensaje *" th:field="*{description}"/>
+
+
+                                                            <label for="selectMot">Tipo de Denuncia</label>
+                                                            <select id="selectMot" th:field="*{complaintType.id}" class="form-control">
+                                                                <option value="-1"> Seleccione tipo de denuncia</option>
+                                                                <option th:each="complaintType : ${complaintTypes}"
+                                                                        th:value="${complaintType.id}" th:text="${complaintType.name}" th:field="*{complaintType.id}">                                                                </option>
+                                                            </select>
                                                         </div>
 
+                                                        <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                                                        <button type="submit" class="btn btn-primary">Enviar Denuncia</button>
+
                                                     </div>
 
-                                                    <div>
-                                                         <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                                         <button type="submit" class="btn btn-primary">Enviar Denuncia</button>
-                                                    </div>
-                                            </form>
+                                                    </form>
+                                                </div>
                                             </div>
                                     </div>
                                 </div>

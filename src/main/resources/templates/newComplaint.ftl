@@ -14,9 +14,9 @@
             </table>
             <div style="padding: 40px 40px 20px 40px; background: #fff;">
 
-                <p>Se ha efectuado una denuncia a ${denunciado.name} ${denunciado.last_name}</p>
-                <p>Realizada por ${denunciante.name} ${denunciante.last_name}</p>
-                <p>La misma se detalla a continuacion: ${denuncia.description}</p>
+                <p>Se ha efectuado una denuncia a ${userTarget.name} ${userTarget.last_name}</p>
+                <p>Realizada por ${userOrigin.name} ${userOrigin.last_name}</p>
+                <p>La misma se detalla a continuacion: ${complaint.description}</p>
 
 
             </div>

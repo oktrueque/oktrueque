@@ -37,9 +37,9 @@ public class ComplaintServiceImpl implements ComplaintService{
         email.setMailSubject("Nueva denuncia!");
 
         Map< String, Object > model = new LinkedHashMap<>();
-        model.put("denunciado", complaint.getUser_target());
-        model.put("denunciante", complaint.getUser_origin());
-        model.put("denuncia", complaint);
+        model.put("userTarget", complaint.getUser_target());
+        model.put("userOrigin", complaint.getUser_origin());
+        model.put("complaint", complaint);
 
 
      // model.put("uri_confirm","http://localhost:8080/trueque/"+trueque.getId()+"/confirm");
