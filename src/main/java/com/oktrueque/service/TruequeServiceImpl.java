@@ -5,6 +5,7 @@ import com.oktrueque.repository.ItemTruequeRepository;
 import com.oktrueque.repository.TruequeRepository;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.UserTruequeRepository;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -19,6 +20,9 @@ import java.util.Map;
  */
 
 public class TruequeServiceImpl implements TruequeService {
+
+    @Value("${api.url}")
+    private String urlServer;
 
 
     private final TruequeRepository truequeRepository;
@@ -96,7 +100,7 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("apellidoDestino", userDestino.getLast_name());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
-        model.put("uri_confirm","http://localhost:8080/trueques/"+trueque.getId()+"/confirm");
+        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/confirm");
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 

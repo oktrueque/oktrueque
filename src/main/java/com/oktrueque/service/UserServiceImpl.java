@@ -6,6 +6,7 @@ import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.LinkedHashMap;
@@ -13,6 +14,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UserServiceImpl  implements UserService{
+
+    @Value("${api.url}")
+    private String urlServer;
 
     private final EmailService emailService;
     private final VerificationTokenRepository verificationTokenRepository;
@@ -60,7 +64,7 @@ public class UserServiceImpl  implements UserService{
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken(token,user);
         verificationTokenRepository.save(verificationToken);
-        String uriConfirm = "http://localhost:8080/" + user.getUsername() +
+        String uriConfirm = urlServer + user.getUsername() +
                 "/" + token + "/confirm";
         Email email = new Email();
         email.setMailTo(user.getEmail());

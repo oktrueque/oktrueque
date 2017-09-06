@@ -6,6 +6,7 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -17,8 +18,10 @@ import java.util.*;
 public class XmppManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(XmppManager.class);
-    private static final String server = "localhost";
-    private static final int port = 5222;
+    @Value("${openfire.server}")
+    private String server;
+    @Value("${openfire.port}")
+    private String port;
     private static final int packetReplyTimeout = 500;
 
     private ConnectionConfiguration config;
@@ -33,7 +36,7 @@ public class XmppManager {
 
     public void init() {
         SmackConfiguration.setPacketReplyTimeout(packetReplyTimeout);
-        config = new ConnectionConfiguration(server, port);
+        config = new ConnectionConfiguration(server, Integer.parseInt(port));
         config.setSASLAuthenticationEnabled(true);
         config.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
         connection = new XMPPConnection(config);
