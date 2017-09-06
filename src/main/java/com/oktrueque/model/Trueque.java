@@ -46,9 +46,20 @@ public class Trueque {
         this.id = id;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
+    public String getStatus() {
+        switch (this.status){
+            case 0: return "Pendiente";
+            case 1: return "Activo";
+            case 2: return "Eliminado";
+            case 3: return "Baneado";
+            default: return "Sin definir";
+    }}
+
+    public boolean isPendiente(){return this.status==0;}
+
+    public boolean isActivo(){return this.status==1;}
+
+    public boolean isEliminado(){return this.status==2;}
 
     public void setStatus(Integer status) {
         this.status = status;

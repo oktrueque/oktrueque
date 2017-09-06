@@ -157,9 +157,31 @@
                                                         <td th:text="${trueque.proposalDate}"></td>
                                                         <td th:text="${trueque.peopleCount}"></td>
                                                         <td><span class="label label-info" th:text="${trueque.status}"></span></td>
-                                                        <td>
+                                                        <td th:if="${trueque.isPendiente()}" >
                                                             <a th:href="'/profile/trueques/' + ${trueque.id}">
-                                                                <button type="button" class="btn">
+                                                                <button type="button" class="btn center-block">
+                                                                    <i class="fa fa-bars" aria-hidden="true"/>
+                                                                </button>
+                                                            </a>
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
+                                                                <button type="button" class="btn center-block">
+                                                                    <i class="fa fa-bars" aria-hidden="true"/>
+                                                                </button>
+                                                            </a>
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
+                                                                <button type="button" class="btn center-block">
+                                                                    <i class="fa fa-bars" aria-hidden="true"/>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                        <td th:if="${trueque.isActivo()}" >
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
+                                                                <button type="button" class="btn center-block">
+                                                                    <i class="fa fa-bars" aria-hidden="true"/>
+                                                                </button>
+                                                            </a>
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
+                                                                <button type="button" class="btn center-block">
                                                                     <i class="fa fa-bars" aria-hidden="true"/>
                                                                 </button>
                                                             </a>
