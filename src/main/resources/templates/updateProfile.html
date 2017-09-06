@@ -63,6 +63,7 @@
                                 <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses
                                     personales</label>
                                 <input id="tags" type="text" class="form-control tagsinput"/>
+                                
 
 
                             </div>
@@ -93,10 +94,12 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
 
+        //  DROPIFY  //
         $(function() {
             $('.dropify').dropify();
         });
 
+        //  MAGIC SUGGEST //
         var tags = [[${tags}]];
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
@@ -128,16 +131,12 @@
                     },
                     success: function () {
                         console.log("New tags posted succesfully!");
-                        window.location.replace("/profile");
                     },
                     error: function (e) {
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
-
                 });
-
             });
-
         });
 
 

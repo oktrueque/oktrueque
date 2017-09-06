@@ -30,7 +30,13 @@ public interface ItemService {
 
     Item setItem(Item item);
 
-    Long getMaxUserItemsId(List<Item> list);
-
     void updateItem(Item item);
+
+    List<Item> getNonDeletedItems(String username);
+
+    void saveItem(Item item);
+
+    List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status, Pageable pageable);
+
+    List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status);
 }

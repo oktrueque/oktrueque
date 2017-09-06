@@ -54,6 +54,7 @@
             <section class="panel panel-profile">
                 <div class="panel-body">
                     <h6>Information</h6>
+                    <input id="userId" type="hidden" th:field="${user.id}" />
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
                         <dd th:text="${user.name + ' ' + user.last_name}">Nombre</dd>
@@ -65,10 +66,12 @@
                         <dd th:if="${hasTags}"><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
                         <dd th:if="${!hasTags}">Parece que no has actualizado tus intereses.</dd>
                     </dl>
+                    <a href="/profile/edit"><button class="btn btn-primary" type="button">Editar</button></a>
                 </div>
-                <div class="panel-footer">
-                    <a href="/profile/edit">Editar</a>
-                </div>
+                <!--<div class="panel-footer">-->
+                    <!--&lt;!&ndash;<a href="/profile/edit">Editar</a>&ndash;&gt;-->
+                   <!---->
+                <!--</div>-->
             </section>
         </div>
         <div class="col-xl-8">
@@ -90,7 +93,7 @@
                             </li>
                             <div th:if="${hasItems}" >
                             <li style="float: right" class="nav-item">
-                                <a data-toggle="modal" data-target="#example1">
+                                <a data-toggle="modal" data-target="#modalCreateItem">
                                 <button type="button" class="btn btn-icon btn-info margin-inline">
                                     <i class="icmn-plus2" aria-hidden="true"></i>
                                 </button>
@@ -113,15 +116,12 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="item : ${items}">
-                                                    <td>
-                                                        <div class="cui-ecommerce--dashboard--list--img">
-                                                            <a th:href="'/profile/items/' + ${item.id}">
-                                                            <img th:src="${item.photo1}"/>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td th:text="${item.name}">Nombre</td>
+                                                <tr  th:each="item : ${user.getItems()}">
+                                                    <td><a th:href="'/profile/items/' + ${item.id}">
+                                                        <img width="100px" th:src="${item.photo1}"/>
+                                                    </a></td>
+                                                    <td><a th:href="'/profile/items/' + ${item.id}" class="link-underlined"><span
+                                                            th:text="${item.name}"></span></a></td>
                                                     <td th:text="${item.category.name}">Categoria</td>
                                                     <td><span class="label label-info" th:text="${item.getStatusValue()}">Estado</span></td>
                                                 </tr>
@@ -134,7 +134,7 @@
                             </div>
                             <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
                                 Parece que aún no tienes items.
-                                <a id="manito" data-toggle="modal" data-target="#example1">
+                                <a id="manito" data-toggle="modal" data-target="#modalCreateItem">
                                     Click acá para agregar uno!
                                 </a>
                             </div>
@@ -147,7 +147,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th>Fecha de Propuesta</th>
-                                                        <th>Peronsas Invervinientes</th>
+                                                        <th>Participantes</th>
                                                         <th>Estado</th>
                                                         <th>Ver Detalle</th>
                                                     </tr>
@@ -164,8 +164,6 @@
                                                                 </button>
                                                             </a>
                                                         </td>
-
-
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -174,78 +172,80 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Nuevo Item</h4>
-                                        </div>
-
-                                        <form id="nuevoItemForm" th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
-                                            <div class="modal-body">
-                                                <div class="col-lg">
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label class="control-label">Nombre</label>
-                                                                <input type="text" th:field="*{name}" class="form-control col-lg-12"/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <!--DROP DOWN LIST DE CATEGORIA-->
-                                                            <div class="form-group">
-                                                                <label for="selectCat" class="form-control-label">Categoría</label>
-                                                                <select th:field="*{category}" id="selectCat" class="form-control">
-                                                                    <option value="-1"> Seleccione categoría</option>
-                                                                    <option th:each="cat : ${categories}" th:value="${cat.id}"
-                                                                            th:text="${cat.name}" th:field="*{category}"></option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="form-group">
-                                                                <label for="descTextArea" class="form-control-label">Descripción</label>
-                                                                <textarea th:field="*{description}" id="descTextArea" class="form-control" rows="4"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <h5>Etiquetas</h5>
-                                                    <div class="form-group">
-                                                        <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
-                                                        <input id="tags" type="text" class="form-control tagsinput" />
-                                                    </div>
-                                                        <h5>Fotos del Item</h5>
-                                                        <div class="form-group">
-                                                            <div class="dropify-wrapper"><div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a file here or click</p><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" id="input-file-now" class="dropify"/><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
-                                                    </div>
-                                                </div>
-                                                <div class="row modal-footer">
-                                                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary">Guardar Item</button>
-                                                </div>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </section>
         </div>
     </div>
     <!-- End Profile -->
-
 </div>
+
+    <!--MODAL CREATE ITEM-->
+    <div class="modal fade" id="modalCreateItem" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Nuevo Item</h4>
+                </div>
+
+                <form id="nuevoItemForm" th:action="@{'/profile/items'}" th:object="${item}" th:method="POST">
+                    <input id="itemId" type="hidden" th:field="${item.id}" />
+
+                    <div class="modal-body">
+                        <div class="col-lg">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Nombre</label>
+                                        <input id="itemName" type="text" th:field="*{name}" class="form-control col-lg-12"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <!--DROP DOWN LIST DE CATEGORIA-->
+                                    <div class="form-group">
+                                        <label for="selectCat" class="form-control-label">Categoría</label>
+                                        <select th:field="*{category}" id="selectCat" class="form-control">
+                                            <option value="-1"> Seleccione categoría</option>
+                                            <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                                    th:text="${cat.name}" th:field="*{category}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="descTextArea" class="form-control-label">Descripción</label>
+                                        <textarea th:field="*{description}" id="descTextArea" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5>Etiquetas</h5>
+                            <div class="form-group">
+                                <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
+                                <input id="tags" type="text" class="form-control tagsinput" />
+                            </div>
+                            <h5>Fotos del Item</h5>
+                            <div class="form-group">
+                                <div class="dropify-wrapper"><div class="dropify-message"><span class="file-icon"></span> <p>Drag and drop a file here or click</p><p class="dropify-error">Ooops, something wrong appended.</p></div><div class="dropify-loader"></div><div class="dropify-errors-container"><ul></ul></div><input type="file" id="input-file-now" class="dropify"/><button type="button" class="dropify-clear">Remove</button><div class="dropify-preview"><span class="dropify-render"></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-filename"><span class="file-icon"></span> <span class="dropify-filename-inner"></span></p><p class="dropify-infos-message">Drag and drop or click to replace</p></div></div></div></div>
+                            </div>
+                        </div>
+                        <div class="row modal-footer">
+                            <button id="btnCerrar" type="button" class="btn" data-dismiss="#modalCreateItem">Cerrar</button>
+                            <button id="submit-btn" type="button"  class="btn btn-primary">Crear</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL CREATE ITEM-->
 
 <!-- Page Scripts -->
     <script>
@@ -281,12 +281,8 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-
-        var tags = [[${tags}]];
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
-        var hasTags = [[${hasTags}]];
-
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
                 method: 'get'
@@ -297,15 +293,44 @@
                 , typeDelay: 0
                 , maxSelection: null
                 , required: true
+                , vregex: /^[a-zA-Z\s]*$/g
             });
-            ms.addToSelection(tags);
+//            COMPORTAMIENTO DEL MODAL
+            $('#modalCreateItem').on('hidden.bs.modal', function () {
+                $(this).find('form').trigger('reset');
+                $("#modalCreateItem").modal('hide');
+                ms.clear();
+                location.reload();
+            });
 
             $("#submit-btn").on("click", function () {
+
+                var itemId = $("#itemId").val();
+                var itemName = $("#itemName").val();
+                var itemDes = $("#descTextArea").val();
+                var userId = $("#userId").val();
+                var itemCat = $("#selectCat").val();
+                //JSON para enviar.
+                var newItem = {
+                    id: itemId,
+                    name: itemName,
+                    user: {id: userId},
+                    description: itemDes,
+                    category: {id: itemCat},
+                    status: 0,
+                    idTags: ms.getValue(),
+                    tags: null
+                };
+
+            if (validations()){
+
+                $("#modalCreateItem").modal('hide');
+
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/itemTags",
-                    data: JSON.stringify(ms.getValue()),
+                    url: "/profile/createItem",
+                    data: JSON.stringify(newItem),
                     dataType: 'text',
                     cache: false,
                     timeout: 600000,
@@ -316,17 +341,74 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
+                        alert("Ha ocurrido un error creando el item, lo sentimos. Error: " + JSON.stringify(e));
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
                     }
-
                 });
+
+
+
+            } else if(ms.getValue()===null) {
+                alert('Debe asignar tags al item!');
+                return false;
+
+            } else return true;
+
+
 
             });
 
+
+            $("#btnCerrar").on("click", function () {
+                $("#modalCreateItem").modal('hide');
+            })
+
         });
-
-
         /*]]>*/
+    </script>
+
+    <script>
+
+        function validations() {
+
+            var selectValue = document.getElementById('selectCat').value;
+            var itemName = $("#itemName").val();
+            var itemDes = $("#descTextArea").val();
+
+            console.log("ItemName: "+itemName);
+            console.log("itemDes: "+itemDes);
+            console.log("selectValue: "+selectValue);
+
+            if (selectValue === '-1') {
+                alert('Debe seleccionar una categoría para crear el item!');
+                document.getElementById('selectCat').focus();
+                return false;
+
+            } else if (itemName.length===0) {
+                alert('Debe asignar un nombre el item!');
+                $("#itemName").focus();
+                return false;
+
+            } else if (!/^[a-zA-Z\s]*$/g.test(itemName)){
+                alert('El nombre solo puede contener letras!');
+                $("#itemName").focus();
+                return false;
+
+            } else if (itemDes.length===0){
+                alert('Debe describir más el item!');
+                $("#descTextArea").focus();
+                return false;
+
+            } else return true;
+
+
+
+
+
+
+        }
+
+
     </script>
 <!-- End Page Scripts -->
 </section>

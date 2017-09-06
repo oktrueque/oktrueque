@@ -5,6 +5,7 @@ import com.oktrueque.repository.UserRepository;
 import com.oktrueque.service.chat.XmppManager;
 import org.igniterealtime.restclient.RestApiClient;
 import org.igniterealtime.restclient.entity.AuthenticationToken;
+import org.jivesoftware.smack.RosterEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -27,10 +28,14 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<User> getChatsRegistered() {
         List<User> users = new ArrayList<>();
-        xmppManager.getChatsRegistered().forEach(t ->{
-            users.add(userRepository.findByUsername(t.getUser()));
-        });
-        return users;
+        List<RosterEntry> chats = xmppManager.getChatsRegistered();
+        if(chats != null){
+            chats.forEach(t ->
+                users.add(userRepository.findByUsername(t.getUser()))
+            );
+            return users;
+        }
+        return null;
     }
 
 
@@ -53,5 +58,23 @@ public class ChatServiceImpl implements ChatService {
         xmppManager.init();
         xmppManager.createUser(user.getUsername(),user.getUsername()+"pass"
                 ,user.getName()+ " " +user.getLast_name(), user.getEmail());
+    }
+
+    @Override
+    public void createNewsRosters(List<User> users, String name) {
+        List<String> names = new ArrayList<>();
+        users.forEach(t -> names.add(t.getUsername()));
+        users.forEach(t->{
+            names.forEach(n-> {
+                if(!n.equals(t.getUsername())){
+                    xmppManager.createEntry(t.getUsername(),name, n);
+                }
+            });
+        });
+    }
+
+    @Override
+    public void logout() {
+        xmppManager.disconnect();
     }
 }

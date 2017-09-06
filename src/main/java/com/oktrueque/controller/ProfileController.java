@@ -5,23 +5,19 @@ import com.oktrueque.repository.TagRepository;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.net.URL;
+
 import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+
 
 
 @Controller
@@ -50,33 +46,25 @@ public class ProfileController {
         this.awsS3Service = awsS3Service;
     }
 
-
-
-
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
-    public String getProfile(Principal principal, Model model, @PageableDefault(value = 4) Pageable pageable){
+    public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
+        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(user.getUsername(),2, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
-
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-
         for (UserTrueque trueque: userTrueques){
-
             TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
             trueques.add(TruequeNuevo);
         }
-
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
         model.addAttribute("items", items);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-        model.addAttribute("item", new Item());
+        model.addAttribute("item", new Item(0));
         model.addAttribute("categories",categoryService.getCategories());
         model.addAttribute("trueques", trueques);
         return "profile";
@@ -102,7 +90,6 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-
     @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
@@ -125,7 +112,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items")
     public String getItemsByUser(Model model, Principal principal){
-    List<Item> items = itemService.getItemsByUserUsername(principal.getName());
+    List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(principal.getName(),2);
     model.addAttribute("items", items);
     return "loggedUserItems";
     }
@@ -145,10 +132,18 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
-    public String updateItemById(@ModelAttribute Item item, Principal principal){
+    public String updateItemById(Principal principal, @ModelAttribute Item item){
         User user = userService.getUserByUsername(principal.getName());
         item.setUser(user);
-        item.setStatus(0);
+//        item.setStatus(0);
+        itemService.updateItem(item);
+        return "redirect:/profile/items";
+    }
+
+    @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
+    public String deleteUserItem(@PathVariable Long id){
+        Item item = itemService.getItemById(id);
+        item.setStatus(2);
         itemService.updateItem(item);
         return "redirect:/profile/items";
     }
@@ -157,17 +152,14 @@ public class ProfileController {
     public String getTruequesByUser(Model model, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-
         for (UserTrueque trueque: userTrueques){
 
             TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
             trueques.add(TruequeNuevo);
         }
         model.addAttribute("trueques", trueques);
-
         return "loggedUserTrueques";
     }
 
@@ -182,24 +174,19 @@ public class ProfileController {
         List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
         LinkedList<Item> items = new LinkedList<>();
         Item itemNuevo;
-
         for (ItemTrueque itemTrueque: itemsTrueques){
                 itemNuevo = itemService.getItemById(itemTrueque.getId().getItemId());
                 items.add(itemNuevo);
         }
-
         for (UserTrueque userTrueque: userTrueques){
             if(userTrueque.getId().getUserId()!= userLogged.getId()){
                 userNuevo = userService.getUserById(userTrueque.getId().getUserId());
                 users.add(userNuevo);
             }
         }
-
         model.addAttribute("items", items);
         model.addAttribute("users", users);
         model.addAttribute("trueque", trueque);
         return "truequeDetail";
     }
-
-
 }

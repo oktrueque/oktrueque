@@ -3,6 +3,7 @@ package com.oktrueque.service;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.ItemTrueque;
 import com.oktrueque.model.Trueque;
+import com.oktrueque.model.User;
 import com.oktrueque.model.UserTrueque;
 
 import java.util.List;
@@ -22,4 +23,7 @@ public interface TruequeService {
     List<ItemTrueque> getItemsTruequeById_TruequeId(long id);
 
     Trueque getTruequeById (long id);
+
+    List<User> confirmTruequeAndGetUsersBelongingTo(Long id);
+
 }

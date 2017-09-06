@@ -6,8 +6,6 @@
 <th:block layout:fragment="content">
     <section class="page-content">
         <div class="page-content-inner">
-
-            <!-- Ecommerce Products List -->
             <section class="panel panel-with-borders">
                 <div class="panel-heading">
                     <h2>
@@ -24,7 +22,7 @@
                             <th>Categoría</th>
                             <th>Estado</th>
                             <th>Tags</th>
-                            <th>Editar</th>
+                            <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,38 +35,83 @@
                             <td><span th:text="${item.description}"></span></td>
                             <td><span class="align-middle" th:text="${item.category.name}"></span></td>
                             <td><span th:text="${item.getStatusValue()}"></span></td>
-                            <!--  <td><dd th:if="${hasTags}"><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag </br></span></dd></td>
-                       -->
-                            <td></td>
                             <td>
-                                <a th:href="@{'/profile/items/' + ${item.id} + '/edit'}">
-                                    <button type="button" class="btn">
-                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </button>
-                                </a>
+                                <span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span>
                             </td>
+                            <td>
+                                <div>
+                                    <a th:href="@{'/profile/items/' + ${item.id} + '/edit'}">
+                                        <button type="button" class="btn btn-xs btn-primary ">
+                                            Editar<i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    </a>
+                                </div>
+                                <div>
+                                    <button id="openModal" type="button" class="btn btn-xs btn-danger">Eliminar</button>
+                                </div>
+                            </td>
+                            <!--MODAL ELIMINAR-->
+
+                                <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog"
+                                     aria-labelledby="" aria-hidden="true"
+                                     style="display: none;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                                <h5 class="modal-title" id="myModalLabel">Advertencia</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="modal-body">¿Seguro desea eliminar este Item?</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form  id="formEliminar"  th:action="@{'/profile/items/' + ${item.id}}"  th:object="${item}"
+                                                       th:method="DELETE">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn" data-dismiss="#modalEliminar">Cancelar</button>
+                                                    <button id="btnOk" type="submit" class="btn btn-primary">Aceptar</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
-            <!-- End Ecommerce Products List -->
-
         </div>
     </section>
+    <!-- Page Scripts -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $("#openModal").on("click", function () {
+                $('#modalEliminar').modal('toggle');
+            });
+            $("#btnOk").on("click", function () {
+                $('#modalEliminar').modal('hide');
+            });
 
-
-</th:block>
-<!-- Page Scripts -->
-<script>
-    $(function () {
-        // Datatables
-        $('#example1').DataTable({
-            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
-            responsive: true,
-            "autoWidth": false
         });
-    })
-</script>
+    </script>
+    <script>
+        $(function () {
+            // Datatables
+            $('#example1').DataTable({
+                "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]],
+                responsive: true,
+                "autoWidth": false
+            });
+        });
+    </script>
+</th:block>
+
+
+
+
 <!-- End Page Scripts -->
 </html>

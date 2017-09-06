@@ -1,22 +1,30 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.ItemTag;
+import com.oktrueque.model.ItemTagId;
+import com.oktrueque.model.Tag;
 import com.oktrueque.repository.ItemRepository;
+import com.oktrueque.repository.ItemTagRepository;
+import com.oktrueque.repository.TagRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
+    private final ItemTagRepository itemTagRepository;
+    private final TagRepository tagRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository){
+    public ItemServiceImpl(ItemRepository itemRepository, ItemTagRepository itemTagRepository, TagRepository tagRepository){
         this.itemRepository = itemRepository;
+        this.itemTagRepository = itemTagRepository;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -65,21 +73,37 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Long getMaxUserItemsId(List<Item> list){
+    public void updateItem(Item item){
 
-        Collections.sort(list, new Comparator<Item>() {
-            @Override
-            public int compare(Item item2, Item item1)
-            {
-                return  item1.getId().compareTo(item2.getId());
-            }
-        });
 
-        return list.get(0).getId();
+        itemRepository.save(item);
+    }
+
+    public List<Item> getNonDeletedItems(String username){
+        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,2);
     }
 
     @Override
-    public void updateItem(Item item){
-        itemRepository.save(item);
+    @Transactional
+    public void saveItem(Item item) {
+        Item itemSaved = itemRepository.save(item);
+        List<Tag> tags = tagRepository.findAllByIdIn(item.getIdTags());
+        List<ItemTag> itemTags = new ArrayList<>();
+        tags.forEach(t->{
+            itemTags.add(new ItemTag(new ItemTagId(itemSaved.getId(),t.getId()),t.getName()));
+        });
+        itemTagRepository.save(itemTags);
     }
+
+    public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status,Pageable pageable){
+        //  2: Eliminado
+        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status,pageable);
+    }
+
+    public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status){
+        //  2: Eliminado
+        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status);
+    }
+
+
 }

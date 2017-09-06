@@ -82,12 +82,12 @@ public class ServiceConfig {
 
     @Bean
     public ItemService itemService(){
-        return new ItemServiceImpl(itemRepository);
+        return new ItemServiceImpl(itemRepository, itemTagRepository, tagRepository);
     }
 
     @Bean
     public TruequeService truequeService(){
-        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository,this.emailService());
+        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository,this.emailService(),userRepository);
     }
 
     @Bean

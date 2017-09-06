@@ -64,54 +64,7 @@
                                           class="form-control" rows="7"></textarea>
                             </div>
                         </div>
-                        <!--FOTOS-->
-                        <!--<div class="col-lg">-->
-                            <!--<div class="row">-->
-                                <!--<h4>Fotos del Item</h4>-->
-                                <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-4">-->
-                                    <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
-                                        <!--<a>-->
-                                            <!--<img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"-->
-                                                 <!--src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>-->
-                                        <!--</a>-->
-                                        <!--<a class="link-underlined cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img-remove">-->
-                                            <!--<i class="icmn-cross2">&lt;!&ndash; &ndash;&gt;</i> Remove-->
-                                        <!--</a>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<input type="file"/>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-4">-->
-                                    <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
-                                        <!--<a>-->
-                                            <!--<img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"-->
-                                                 <!--src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>-->
-                                        <!--</a>-->
-                                        <!--<a class="link-underlined cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img-remove">-->
-                                            <!--<i class="icmn-cross2">&lt;!&ndash; &ndash;&gt;</i> Remove-->
-                                        <!--</a>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<input type="file"/>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item col-lg-4">-->
-                                    <!--<div class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img">-->
-                                        <!--<a>-->
-                                            <!--<img th:src="@{/common/img/temp/ecommerce/ecommerce-empty.jpg}"-->
-                                                 <!--src="../assets/common/img/temp/ecommerce/ecommerce-empty.jpg"/>-->
-                                        <!--</a>-->
-                                        <!--<a class="link-underlined cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;img-remove">-->
-                                            <!--<i class="icmn-cross2">&lt;!&ndash; &ndash;&gt;</i> Remove-->
-                                        <!--</a>-->
-                                    <!--</div>-->
-                                    <!--<div class="form-group">-->
-                                        <!--<input type="file"/>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
+
                         <div class="form-actions">
                             <button id="submit-btn" type="submit" class="btn btn-primary width-150">Guardar</button>
                         </div>
@@ -147,6 +100,8 @@
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
         var tags = [[${tags}]];
+        var itemId = [[${item.id}]];
+
 
         document.addEventListener("DOMContentLoaded", function () {
             var ms = $("#tags").magicSuggest({
@@ -161,12 +116,11 @@
             });
             ms.addToSelection(tags);
 
-
             $("#submit-btn").on("click", function () {
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
-                    url: "/profile/itemTags",
+                    url: "/profile/items/"+itemId+"/updateItemTags",
                     data: JSON.stringify(ms.getValue()),
                     dataType: 'text',
                     cache: false,
@@ -178,16 +132,11 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
-                        console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
+                        console.log("ERROR POSTING TAGS: ", e);
                     }
-
                 });
-
             });
-
         });
-
-
         /*]]>*/
     </script>
 

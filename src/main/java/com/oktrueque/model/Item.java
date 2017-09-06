@@ -2,6 +2,7 @@ package com.oktrueque.model;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,8 +32,14 @@ public class Item {
     private String photo3;
     @Transient
     private List<Tag> tags;
+    @Transient
+    private ArrayList<Long> idTags;
 
     public Item() {
+    }
+
+    public Item(int status) {
+        this.status = status;
     }
 
     public Item(Long id, String name, String description, User user, Category category) {
@@ -53,16 +60,6 @@ public class Item {
         this.photo3 = photo3;
     }
 
-    public Item(String name, String description, User user, Category category, String photo1, String photo2, String photo3, List<Tag> tags ) {
-        this.name = name;
-        this.description = description;
-        this.user = user;
-        this.category = category;
-        this.photo1 = photo1;
-        this.photo2 = photo2;
-        this.photo3 = photo3;
-        this.tags = tags;
-    }
 
     public Long getId() {
         return id;
@@ -152,5 +149,13 @@ public class Item {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public ArrayList<Long> getIdTags() {
+        return idTags;
+    }
+
+    public void setIdTags(ArrayList<Long> idTags) {
+        this.idTags = idTags;
     }
 }
