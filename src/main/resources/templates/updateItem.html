@@ -12,25 +12,23 @@
     <section class="page-content">
         <!-- Ecommerce Product Edit -->
         <section class="panel panel-profile panel-with-borders page-content-inner">
-            <div class="panel-heading">
-                <h2>
-                    Editar Ítem
-                </h2>
-            </div>
-            <div class="panel-body margin-left-30">
-                <div class="row">
+            <div class="container">
+                <div class="panel-heading">
+                    <h2>
+                        Editar Ítem
+                    </h2>
+                    <hr/>
+                </div>
+                <div class="panel-body margin-left-30">
 
-                    <form id="editItemForm" onsubmit="return validations()"
-                          th:action="@{'/profile/items/' + ${item.id} + '/edit'}" th:object="${item}" th:method="PUT">
+                        <form id="editItemForm" onsubmit="return validations()"
+                              th:action="@{'/profile/items/' + ${item.id} + '/edit'}" th:object="${item}" th:method="PUT">
 
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-
-                        <div class="col-lg">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <!--NOMBRE DEL ITEM-->
                                         <label for="itemName" class="control-label">Nombre</label>
                                         <input id="itemName" required="true" th:field="*{name}" type="text"
                                                class="form-control"/>
@@ -39,17 +37,12 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-4">
-                                    <!--DROP DOWN LIST DE CATEGORIA-->
                                     <label for="selectCat" class="form-control-label">Categoría</label>
                                     <select required="true" id="selectCat" th:field="*{category}" class="form-control">
                                         <option value="-1"> Seleccione categoría</option>
                                         <option th:each="cat : ${categories}" th:value="${cat.id}"
                                                 th:text="${cat.name}" th:field="*{category}"></option>
                                     </select>
-                                </div>
-                                <div class="form-group col-lg-8">
-                                    <i id="noCatIcon" hidden="false" style="color:red"
-                                       class="glyphicon glyphicon-arrow-left "></i>
                                 </div>
                             </div>
                             <div class="row">
@@ -58,17 +51,18 @@
                                     <input id="tags" type="text" class="form-control tagsinput" />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="descTextArea" class="form-control-label">Descripción</label>
-                                <textarea required="true" id="descTextArea" th:field="*{description}"
-                                          class="form-control" rows="7"></textarea>
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+                                    <label for="descTextArea" class="form-control-label">Descripción</label>
+                                    <textarea required="true" id="descTextArea" th:field="*{description}"
+                                              class="form-control" rows="7"></textarea>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-actions">
-                            <button id="submit-btn" type="submit" class="btn btn-primary width-150">Guardar</button>
-                        </div>
-                    </form>
+                            <div class="form-actions">
+                                <button id="submit-btn" type="submit" class="btn btn-primary width-150">Guardar</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </section>

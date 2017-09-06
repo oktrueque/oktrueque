@@ -133,10 +133,9 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
     public String updateItemById(Principal principal, @ModelAttribute Item item){
-        User user = userService.getUserByUsername(principal.getName());
-        item.setUser(user);
-//        item.setStatus(0);
-        itemService.updateItem(item);
+//        User user = userService.getUserByUsername(principal.getName());
+//        item.setUser(user);
+//        itemService.updateItem(item);
         return "redirect:/profile/items";
     }
 
