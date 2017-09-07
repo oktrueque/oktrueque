@@ -124,18 +124,19 @@ public class ProfileController {
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("item", item);
-        model.addAttribute("user", item.getUser());
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-        model.addAttribute("sugerencias", false);
+        model.addAttribute("photo1", item.getPhoto1());
+        model.addAttribute("photo2", item.getPhoto2());
+        model.addAttribute("photo3", item.getPhoto3());
         return "updateItem";
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
-    public String updateItemById(Principal principal, @ModelAttribute Item item){
-//        User user = userService.getUserByUsername(principal.getName());
-//        item.setUser(user);
-//        itemService.updateItem(item);
+    public String updateItemById(@ModelAttribute Item item, @ModelAttribute List<MultipartFile> pictures, Principal principal){
+        User user = userService.getUserByUsername(principal.getName());
+        item.setUser(user);
+        itemService.updateItem(item);
         return "redirect:/profile/items";
     }
 
