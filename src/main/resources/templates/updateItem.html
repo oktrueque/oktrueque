@@ -24,6 +24,10 @@
                               th:action="@{'/profile/items/' + ${item.id} + '/edit'}" th:object="${item}" th:method="PUT" enctype="multipart/form-data">
 
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" th:field="*{status}"/>
+                            <input type="hidden" th:field="*{photo1}"/>
+                            <input type="hidden" th:field="*{photo2}"/>
+                            <input type="hidden" th:field="*{photo3}"/>
 
                             <div class="row">
                                 <div class="col-lg-4">
