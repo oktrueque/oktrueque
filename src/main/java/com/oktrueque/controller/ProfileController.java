@@ -137,14 +137,17 @@ public class ProfileController {
         if(!pictures.get(0).getOriginalFilename().equals("")){
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(0), fileNameItems, item.getId(), "1", item.getPhoto1());
             item.setPhoto1(pictureUrl);
+            item.setStatus(0);
         }
         if(!pictures.get(1).getOriginalFilename().equals("")){
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(1), fileNameItems, item.getId(), "2", item.getPhoto1());
             item.setPhoto2(pictureUrl);
+            item.setStatus(0);
         }
         if(!pictures.get(2).getOriginalFilename().equals("")){
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(2), fileNameItems, item.getId(), "3", item.getPhoto1());
             item.setPhoto3(pictureUrl);
+            item.setStatus(0);
         }
 
         User user = userService.getUserByUsername(principal.getName());
