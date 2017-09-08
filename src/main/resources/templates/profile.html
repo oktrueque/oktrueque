@@ -7,6 +7,7 @@
     <link th:href="@{/vendors/magicsuggest/magicsuggest-min.css}" href="../static/vendors/magicsuggest/magicsuggest-min.css" rel="stylesheet"/>
     <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}" src="../assets/vendors/dropify/dist/js/dropify.min.js"></script>
     <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
+    <script th:src="@{/common/js/custom/magicSuggest.js}" src="../static/common/js/custom/magicSuggest.js"></script>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -218,7 +219,6 @@
                 </div>
 
                 <form id="nuevoItemForm" th:action="@{'/profile/items'}" th:object="${item}" th:method="POST" enctype="multipart/form-data">
-                    <input id="itemId" type="hidden" th:field="${item.id}" />
 
                     <div class="modal-body">
                         <div class="col-lg">
@@ -252,15 +252,15 @@
 
                             <h5>Etiquetas</h5>
                             <div class="form-group">
-                                <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
-                                <input id="tags" type="text" class="form-control tagsinput" />
+                                <label for="ms" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
+                                <input id="ms" type="text" class="form-control tagsinput" />
                             </div>
                             <h5>Fotos del Item</h5>
-                            <input id="new-photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <input id="photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
                             <br/>
-                            <input id="new-photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <input id="photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
                             <br/>
-                            <input id="new-photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <input id="photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
                         </div>
                         <div class="row modal-footer">
                             <button id="btnCerrar" type="button" class="btn" data-dismiss="#modalCreateItem">Cerrar</button>
@@ -281,7 +281,6 @@
         });
 
         $(function(){
-
             $('#tbl-items').DataTable({
                 responsive: true,
                 searching: false,
@@ -314,89 +313,40 @@
         /*<![CDATA[*/
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
-        var tags;
         var ms;
 
         $('#new-item').click(function(){
-            $.ajax({
-                type: "GET",
-                contentType: "application/json",
-                url: "/tags",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (data) {
-                    tags = data;
-                    console.log(data);
-                    ms = $("#tags").magicSuggest({
-                        data: function(q){
-                            var e = q || '', r=[], c = tags;
-                            for(var i=0; i<c.length; i++){
-                                if(c[i].name.toLowerCase().indexOf(e.toLowerCase()) > -1)
-                                    r.push({id: c[i].id, name: c[i].name});
-                            }
-                            return r;
-                        },
-                        allowFreeEntries: false,
-                        useTabKey: true
-                    });
-
-                    $('#modalCreateItem').modal('show');
-                },
-                error: function (e) {
-                    alert("Ha ocurrido un error creando el item, lo sentimos. Error: " + JSON.stringify(e));
-                    console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
-                }
-            });
+            $('#modalCreateItem').modal('show');
         });
 
+        function getNewItem(){
+            let itemName = $("#itemName").val();
+            let itemDes = $("#descTextArea").val();
+            let userId = $("#userId").val();
+            let itemCat = $("#selectCat").val();
+            var item = {
+                name: itemName,
+                user: {id: userId},
+                description: itemDes,
+                category: {id: itemCat},
+                tags: ms.getSelection()
+            };
+            return JSON.stringify(item);
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
-
-            if (!String.toLowerCase) {
-                String.toLowerCase = function(s) {
-                    return String(s).toLowerCase();
-                }
-            }
-
-//            COMPORTAMIENTO DEL MODAL
-            $('#modalCreateItem').on('hidden.bs.modal', function () {
-                $(this).find('form').trigger('reset');
-                $("#modalCreateItem").modal('hide');
-                ms.clear();
-                location.reload();
-            });
-
+            ms.initialize();
             $("#submit-btn").on("click", function () {
 
-                var itemId = $("#itemId").val();
-                var itemName = $("#itemName").val();
-                var itemDes = $("#descTextArea").val();
-                var userId = $("#userId").val();
-                var itemCat = $("#selectCat").val();
-                //JSON para enviar.
-                var newItem = {
-                    id: itemId,
-                    name: itemName,
-                    user: {id: userId},
-                    description: itemDes,
-                    category: {id: itemCat},
-                    status: 0,
-                    idTags: ms.getValue(),
-                    tags: null
-                };
-
             if (validations()){
-
                 $("#modalCreateItem").modal('hide');
 
                 $.ajax({
                     type: "POST",
-                    contentType: "application/json",
-                    url: "/profile/createItem",
-                    data: JSON.stringify(newItem),
-                    dataType: 'text',
-                    cache: false,
-                    timeout: 600000,
+                    url: "/profile/items",
+                    contentType : "application/json",
+                    data: getNewItem(),
+                    dataType : 'json',
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
                     },
@@ -404,21 +354,11 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
-                        alert("Ha ocurrido un error creando el item, lo sentimos. Error: " + JSON.stringify(e));
-                        console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
+                        console.log(e);
                     }
                 });
 
-
-
-            } else if(ms.getValue()===null) {
-                alert('Debe asignar tags al item!');
-                return false;
-
-            } else return true;
-
-
-
+                }
             });
 
 
@@ -437,10 +377,6 @@
             var selectValue = document.getElementById('selectCat').value;
             var itemName = $("#itemName").val();
             var itemDes = $("#descTextArea").val();
-
-            console.log("ItemName: "+itemName);
-            console.log("itemDes: "+itemDes);
-            console.log("selectValue: "+selectValue);
 
             if (selectValue === '-1') {
                 alert('Debe seleccionar una categoría para crear el item!');

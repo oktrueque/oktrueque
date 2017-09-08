@@ -1,6 +1,8 @@
 package com.oktrueque.model;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class Item {
     @Transient
     private List<Tag> tags;
     @Transient
-    private ArrayList<Long> idTags;
+    private MultipartFile[] pictures;
 
     public Item() {
     }
@@ -151,11 +153,11 @@ public class Item {
         this.tags = tags;
     }
 
-    public ArrayList<Long> getIdTags() {
-        return idTags;
+    public MultipartFile[] getPictures() {
+        return pictures;
     }
 
-    public void setIdTags(ArrayList<Long> idTags) {
-        this.idTags = idTags;
+    public void setPictures(MultipartFile[] pictures) {
+        this.pictures = pictures;
     }
 }

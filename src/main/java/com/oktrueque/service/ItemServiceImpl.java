@@ -86,13 +86,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public void saveItem(Item item) {
-        Item itemSaved = itemRepository.save(item);
-        List<Tag> tags = tagRepository.findAllByIdIn(item.getIdTags());
-        List<ItemTag> itemTags = new ArrayList<>();
-        tags.forEach(t->{
-            itemTags.add(new ItemTag(new ItemTagId(itemSaved.getId(),t.getId()),t.getName()));
-        });
-        itemTagRepository.save(itemTags);
+//        Item itemSaved = itemRepository.save(item);
+//        List<Tag> tags = tagRepository.findAllByIdIn(item.getIdTags());
+//        List<ItemTag> itemTags = new ArrayList<>();
+//        tags.forEach(t->{
+//            itemTags.add(new ItemTag(new ItemTagId(itemSaved.getId(),t.getId()),t.getName()));
+//        });
+//        itemTagRepository.save(itemTags);
     }
 
     public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status,Pageable pageable){
