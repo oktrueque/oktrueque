@@ -146,7 +146,7 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}/edit")
     public String fillUpdateView(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
-        List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
+        List<Tag> tags = itemTagService.getItemTags(id);
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("item", item);

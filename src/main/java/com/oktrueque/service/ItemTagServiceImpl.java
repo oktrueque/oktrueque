@@ -29,6 +29,14 @@ public class ItemTagServiceImpl implements ItemTagService {
     }
 
     @Override
+    public List<Tag> getItemTags(Long itemId) {
+        List<ItemTag> itemTags =  itemTagRepository.findByIdItemId(itemId);
+        List<Tag> tags = new ArrayList<>();
+        itemTags.forEach(itemTag -> tags.add(new Tag(itemTag.getId().getTagId(), itemTag.getName())));
+        return tags;
+    }
+
+    @Override
     public void saveItemTags(Long itemId,List<Tag> tags){
         List<ItemTag> itemTagsList = new ArrayList<>();
         for(Tag tag:tags) itemTagsList.add(new ItemTag(new ItemTagId(itemId,tag.getId()),tag.getName()));
