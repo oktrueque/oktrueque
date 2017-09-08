@@ -93,11 +93,14 @@
                             </li>
                             <div th:if="${hasItems}" >
                             <li style="float: right" class="nav-item">
-                                <a data-toggle="modal" data-target="#modalCreateItem">
-                                <button type="button" class="btn btn-icon btn-info margin-inline">
+                                <button id="new-item" type="button" class="btn btn-icon btn-info margin-inline">
                                     <i class="icmn-plus2" aria-hidden="true"></i>
                                 </button>
-                                </a>
+                                <!--<a data-toggle="modal" data-target="#modalCreateItem">-->
+                                <!--<button type="button" class="btn btn-icon btn-info margin-inline">-->
+                                    <!--<i class="icmn-plus2" aria-hidden="true"></i>-->
+                                <!--</button>-->
+                                <!--</a>-->
                             </li>
                             </div>
                         </ul>
@@ -311,18 +314,50 @@
         /*<![CDATA[*/
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
-        document.addEventListener("DOMContentLoaded", function () {
-            var ms = $("#tags").magicSuggest({
-                method: 'get'
-                , data: '/tags'
-                , allowFreeEntries: false
-                , toggleOnClick: true
-                , useTabKey: true
-                , typeDelay: 0
-                , maxSelection: null
-                , required: true
-                , vregex: /^[a-zA-Z\s]*$/g
+        var tags;
+        var ms;
+
+        $('#new-item').click(function(){
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: "/tags",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    tags = data;
+                    console.log(data);
+                    ms = $("#tags").magicSuggest({
+                        data: function(q){
+                            var e = q || '', r=[], c = tags;
+                            for(var i=0; i<c.length; i++){
+                                if(c[i].name.toLowerCase().indexOf(e.toLowerCase()) > -1)
+                                    r.push({id: c[i].id, name: c[i].name});
+                            }
+                            return r;
+                        },
+                        allowFreeEntries: false,
+                        useTabKey: true
+                    });
+
+                    $('#modalCreateItem').modal('show');
+                },
+                error: function (e) {
+                    alert("Ha ocurrido un error creando el item, lo sentimos. Error: " + JSON.stringify(e));
+                    console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
+                }
             });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            if (!String.toLowerCase) {
+                String.toLowerCase = function(s) {
+                    return String(s).toLowerCase();
+                }
+            }
+
 //            COMPORTAMIENTO DEL MODAL
             $('#modalCreateItem').on('hidden.bs.modal', function () {
                 $(this).find('form').trigger('reset');
