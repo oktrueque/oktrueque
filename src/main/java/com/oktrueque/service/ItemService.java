@@ -28,13 +28,11 @@ public interface ItemService {
 
     List<Item> getItemsByUserUsername(String username);
 
-    Item setItem(Item item);
-
     void updateItem(Item item);
 
     List<Item> getNonDeletedItems(String username);
 
-    void saveItem(Item item);
+    Item saveItem(Item item);
 
     List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status, Pageable pageable);
 

@@ -1,6 +1,5 @@
 package com.oktrueque.controller;
 
-import com.google.gson.JsonObject;
 import com.oktrueque.model.*;
 import com.oktrueque.repository.TagRepository;
 import com.oktrueque.service.*;
@@ -111,8 +110,30 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.POST, value="/profile/items")
     public ResponseEntity<Item> newItem(@RequestBody Item item){
         item.setStatus(0);
-        Item itemResponse = itemService.setItem(item);
+        Item itemResponse = itemService.saveItem(item);
         return new ResponseEntity(itemResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/items/images")
+    public String setItemImages(@ModelAttribute Item item){
+        Item itemDB = itemService.getItemById(item.getId());
+        if(!item.getPictures()[0].getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[0], fileNameItems, item.getId(), "1", item.getPhoto1());
+            itemDB.setPhoto1(pictureUrl);
+            itemDB.setStatus(0);
+        }
+        if(!item.getPictures()[1].getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[1], fileNameItems, item.getId(), "2", item.getPhoto1());
+            itemDB.setPhoto2(pictureUrl);
+            itemDB.setStatus(0);
+        }
+        if(!item.getPictures()[2].getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[2], fileNameItems, item.getId(), "3", item.getPhoto1());
+            itemDB.setPhoto3(pictureUrl);
+            itemDB.setStatus(0);
+        }
+        itemService.updateItem(itemDB);
+        return "redirect:/profile";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items")

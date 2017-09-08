@@ -255,12 +255,6 @@
                                 <label for="ms" class="form-control-label">Escribe aquí tus nuevos intereses personales</label>
                                 <input id="ms" type="text" class="form-control tagsinput" />
                             </div>
-                            <h5>Fotos del Item</h5>
-                            <input id="photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
-                            <br/>
-                            <input id="photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
-                            <br/>
-                            <input id="photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
                         </div>
                         <div class="row modal-footer">
                             <button id="btnCerrar" type="button" class="btn" data-dismiss="#modalCreateItem">Cerrar</button>
@@ -273,6 +267,41 @@
         </div>
     </div>
     <!--END MODAL CREATE ITEM-->
+
+    <!--MODAL SET IMAGES-->
+    <div class="modal fade" id="modalSetImages" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Agregue imágenes a su item</h4>
+                </div>
+
+                <form id="form-set-images" action="/profile/items/images" th:method="POST" enctype="multipart/form-data">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input id="itemId" type="hidden" name="id"/>
+                    <div class="modal-body">
+                        <div class="col-lg">
+                            <h5>Fotos del Item</h5>
+                            <input id="photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <br/>
+                            <input id="photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <br/>
+                            <input id="photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                        </div>
+                        <div class="row modal-footer">
+                            <button type="button" class="btn" data-dismiss="#modalSetImages">Cerrar</button>
+                            <button id="submit" type="submit"  class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL SET IMAGES-->
 
 <!-- Page Scripts -->
     <script>
@@ -350,8 +379,10 @@
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
                     },
-                    success: function () {
-                        console.log("New tags posted succesfully!");
+                    success: function (data) {
+                        console.log("Item Saved");
+                        $('#itemId').val(data.id);
+                        $('#modalSetImages').modal('show');
                     },
                     error: function (e) {
                         console.log(e);
