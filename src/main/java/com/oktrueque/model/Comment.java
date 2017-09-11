@@ -3,6 +3,7 @@ package com.oktrueque.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -17,7 +18,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String comment;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
@@ -27,15 +28,14 @@ public class Comment {
     @JoinColumn(name = "id_user_target")
     private User user_target;
     private int score;
-    @Temporal(TemporalType.DATE)
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date;
+    private LocalDateTime date;
 
-
-    public Comment(String comment, User user_target, User user_origin, int score, Date date) {
-        this.comment = comment;
-        this.user_target = user_target;
+    public Comment(String description, User user_origin, User user_target, int score, LocalDateTime date) {
+        this.description = description;
         this.user_origin = user_origin;
+        this.user_target = user_target;
         this.score = score;
         this.date = date;
     }
@@ -50,12 +50,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String comment) {
+        this.description = description;
     }
 
     public User getUser_target() {
@@ -82,11 +82,11 @@ public class Comment {
         this.score = score;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }

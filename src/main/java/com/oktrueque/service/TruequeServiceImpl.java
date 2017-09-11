@@ -68,6 +68,12 @@ public class TruequeServiceImpl implements TruequeService {
         return users;
     }
 
+    @Override
+    public void updateTrueque(Trueque trueque) {
+        truequeRepository.save(trueque);
+    }
+
+
     private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved) {
         participants.entrySet().forEach(entry -> {
             userTruequeRepository.save(
