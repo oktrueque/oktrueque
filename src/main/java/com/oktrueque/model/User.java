@@ -245,4 +245,5 @@ public class User implements UserDetails{
         Integer number = (int) (Math.random() * 10) + 1;
         return "./static/common/img/temp/photos/"+ number.toString() + ".jpeg";
     }
+
 }
