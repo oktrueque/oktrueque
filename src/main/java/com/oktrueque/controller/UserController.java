@@ -65,17 +65,17 @@ public class UserController {
         if (!user.checkUsername()) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El username no caracteres especiales --");
-            return "/register";
+            return "register";
         }
         if (!user.checkEmail()) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email ingresado no es válido --");
-            return "/register";
+            return "register";
         }
         if (userService.checkIfUserExists(user.getEmail(), user.getUsername())) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email o username ingresado ya existen --");
-            return "/register";
+            return "register";
         }
 
         user.setStatus(0);
@@ -83,7 +83,7 @@ public class UserController {
         user.setPhoto1(Constants.returnRandomImage());
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
-        return "/confirmEmail";
+        return "confirmEmail";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users/complaints/{username}")
