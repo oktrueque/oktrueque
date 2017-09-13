@@ -34,6 +34,8 @@ public class AwsS3Service {
     private String region;
     @Value("${aws.s3.bucket}")
     private String bucket;
+    @Value("${dir.images}")
+    private String directoryPath;
 
     private ResponseEntity<URL> upload(String fileName, String uploadKey) {
         AmazonS3 s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey))).withRegion(region).build();
@@ -74,7 +76,7 @@ public class AwsS3Service {
                 Random random = new Random();
                 String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
                 BufferedImage croppedImage = cropImageSquare(file.getBytes());
-                String filePath = "./src/main/resources/static/temp/" + fileName;
+                String filePath = directoryPath + fileName;
                 File outputFile = new File(filePath);
                 ImageIO.write(croppedImage, this.getFileExtension(fileName), outputFile);
 
