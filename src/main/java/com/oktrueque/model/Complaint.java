@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Created by Fabrizio SPOSETTI on 31/08/2017.
@@ -17,7 +16,7 @@ public class Complaint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -63,11 +62,11 @@ public class Complaint {
         this.user_origin = user_origin;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

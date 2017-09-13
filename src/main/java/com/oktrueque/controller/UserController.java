@@ -15,6 +15,8 @@ import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -84,11 +86,8 @@ public class UserController {
         return "/confirmEmail";
     }
 
-
-
-
-    @RequestMapping(method = RequestMethod.POST, value = "/users/denuncias/{username}")
-    public String addComplaint(@ModelAttribute Complaint complaint, Principal principal, @PathVariable String username) {
+    @RequestMapping(method = RequestMethod.POST, value = "/users/complaints/{username}")
+    public ResponseEntity<Complaint> addComplaint(@RequestBody Complaint complaint, Principal principal, @PathVariable String username) {
 
         User userDemandant = userService.getUserByUsername(principal.getName());
         User userTarget = userService.getUserByUsername(username);
@@ -97,10 +96,8 @@ public class UserController {
         complaint.setDate(LocalDateTime.now());
         complaintService.saveComplaint(complaint);
 
-
-        return "redirect:/users/" + username ;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public String getUserProfile(Model model, @PathVariable String username, @PageableDefault(value = 2) Pageable pageable) {

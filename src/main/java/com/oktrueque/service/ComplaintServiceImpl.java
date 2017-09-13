@@ -25,10 +25,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 
     @Override
     public void saveComplaint(Complaint complaint) {
-
         complaintRepository.save(complaint);
         sendMailTo(complaint);
-
     }
 
     private void sendMailTo(Complaint complaint){
