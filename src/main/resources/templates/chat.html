@@ -21,15 +21,15 @@
                     </div>
                     <!--Aca buscar los rost-->
                     <div class="messaging-list">
-                        <div class="messaging-list-item" th:each="userConv : ${usersChatList}">
+                        <div class="messaging-list-item" th:each="conversation : ${conversations}">
                             <div class="s1">
                                 <a class="avatar" href="javascript:void(0);">
-                                    <img th:src="${userConv.photo1}" ></img>
+                                    <img th:src="${conversation.id.user.photo1}" ></img>
                                 </a>
                             </div>
                             <div class="s2">
                                 <!--<small class="messaging-time">8:34PM</small>-->
-                                <div class="messaging-list-title-name" th:text="${userConv.name + ' ' + userConv.last_name} "></div>
+                                <div class="messaging-list-title-name" th:text="${conversation.id.user.name + ' ' + conversation.id.user.last_name} "></div>
                                 <!--<div class="messaging-list-title-last color-default">Hello! Where you are now? I want to-->
                                 <!--talk. Hello! Where you are now? I want to talk-->
                                 <!--</div>-->
