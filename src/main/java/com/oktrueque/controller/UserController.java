@@ -8,7 +8,6 @@ import com.oktrueque.model.Comment;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.User;
 import com.oktrueque.model.UserTag;
-import com.oktrueque.service.ChatService;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.UserService;
 import com.oktrueque.service.UserTagService;
@@ -39,17 +38,15 @@ public class UserController {
     private ItemService itemService;
     private ComplaintService complaintService;
     private ComplaintTypeService complaintTypeService;
-    private ChatService chatService;
 
 
     @Autowired
-    public UserController(UserService userService, UserTagService userTagService, ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService, ChatService chatService) {
+    public UserController(UserService userService, UserTagService userTagService, ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.complaintService = complaintService;
         this.complaintTypeService = complaintTypeService;
-        this.chatService = chatService;
     }
 
 
@@ -147,7 +144,6 @@ public class UserController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            chatService.logout();
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "index";
