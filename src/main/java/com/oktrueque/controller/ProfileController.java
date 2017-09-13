@@ -1,11 +1,9 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.*;
-import com.oktrueque.repository.TagRepository;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -20,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.print.attribute.standard.Media;
 import java.security.Principal;
 import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,6 +28,7 @@ import java.util.List;
 public class ProfileController {
 
     private UserService userService;
+    private CommentService commentService;
     private UserTagService userTagService;
     private ItemService itemService;
     private ItemTagService itemTagService;
@@ -41,8 +41,9 @@ public class ProfileController {
     private String fileNameItems;
 
     @Autowired
-    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
+    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
         this.userService = userService;
+        this.commentService = commentService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;
@@ -63,6 +64,9 @@ public class ProfileController {
             TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
             trueques.add(TruequeNuevo);
         }
+
+
+
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
@@ -72,6 +76,7 @@ public class ProfileController {
         model.addAttribute("item", new Item(0));
         model.addAttribute("categories",categoryService.getCategories());
         model.addAttribute("trueques", trueques);
+
         return "profile";
     }
 
@@ -181,6 +186,53 @@ public class ProfileController {
         itemService.updateItem(item);
         return "redirect:/profile/items";
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "profile/trueques/{id}")
+    public String upadteTrueque(@PathVariable Long id, Model model, Principal principal){
+
+        Trueque trueque = truequeService.getTruequeById(id);
+        User user = userService.getUserByUsername(principal.getName());
+
+        if (trueque.getStatus().equals("Pendiente")){
+            trueque.setStatus(2);
+            trueque.setRejectionDate(LocalDateTime.now());
+            truequeService.updateTrueque(trueque);
+            return "redirect:/profile";
+        }
+
+        if (trueque.getStatus().equals("Activo")){
+            trueque.setStatus(4);
+            trueque.setRejectionDate(LocalDateTime.now());
+            truequeService.updateTrueque(trueque);
+            List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+            LinkedList<User> users = new LinkedList<>();
+
+            for (UserTrueque ut: userTrueques){
+                if (ut.getId().getUserId()!= user.getId()){
+                    users.add(userService.getUserById(ut.getId().getUserId()));
+                }
+            }
+            Comment comment = new Comment();
+            model.addAttribute("comment", comment);
+            model.addAttribute("users", users);
+            return "canceledTrueque";
+        }
+
+        return "redirect:/profile/";
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
+    public String addComment(Principal principal, @ModelAttribute Comment comment){
+
+        comment.setDate(LocalDateTime.now());
+        comment.setUser_origin(userService.getUserByUsername(principal.getName()));
+        commentService.saveComment(comment);
+
+        return "redirect:/profile";
+    }
+
+
 
     @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
     public String deleteUserItem(@PathVariable Long id){

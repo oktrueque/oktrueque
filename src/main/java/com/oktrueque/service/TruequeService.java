@@ -26,4 +26,9 @@ public interface TruequeService {
 
     List<User> confirmTruequeAndGetUsersBelongingTo(Long id);
 
+    void updateTrueque (Trueque trueque);
+
+
+
+
 }

@@ -47,6 +47,8 @@ public class TruequeController {
     }
 
 
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}/confirm")
     public String confirmTrueque(@PathVariable Long id){
         List<User> users = truequeService.confirmTruequeAndGetUsersBelongingTo(id);

@@ -19,6 +19,7 @@
                         <thead class="thead-default">
                         <tr>
                             <th>Fecha de Propuesta de Trueque</th>
+                            <th>Estado del Trueque</th>
                             <th>Cantidad de Participantes en Trueque</th>
                             <th>Ver Detalle</th>
 
@@ -28,6 +29,7 @@
                         <tr th:each="trueque : ${trueques}">
 
                             <td><span th:text="${trueque.proposalDate}"></span></td>
+                            <td><span th:text="${trueque.status}"></span></td>
                             <td><span class="align-middle" th:text="${trueque.peopleCount}"></span></td>
 
                             <td>

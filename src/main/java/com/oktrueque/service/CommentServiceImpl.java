@@ -26,4 +26,10 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.findAll().forEach(comments::add);
         return comments;
     }
+
+    @Override
+    public void saveComment(Comment comment) {
+        commentRepository.save(comment);
+    }
+
 }
