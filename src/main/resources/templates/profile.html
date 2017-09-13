@@ -162,8 +162,11 @@
                                                                     <i class="fa fa-bars" aria-hidden="true"/>
                                                                 </button>
                                                             </a>
-                                                            <form th:action="@{'/profile/trueques/'+${trueque.id}}" th:object="${trueque}" th:method="PUT">
-                                                                <button type="submit" class="btn btn-xs btn-danger">Aceptar</button>
+                                                            <form id="confirmForm" th:action="@{'/trueques/'+${trueque.id}+'/accept'}" th:object="${trueque}" th:method="PUT">
+                                                                <!--Aceptar trueque-->
+                                                                <button id="btnConfirmar" type="submit" class="btn btn-xs btn-success" style="width:30px">Aceptar
+                                                                    <i class="fa fa-check" aria-hidden="true"/>
+                                                                </button>
                                                             </form>
 
                                                             <form th:action="@{'/profile/trueques/'+${trueque.id}}" th:object="${trueque}" th:method="PUT">
@@ -172,16 +175,16 @@
 
                                                         </td>
                                                         <td th:if="${trueque.isActivo()}">
-                                                            <form id="confirmForm" th:action="@{'/trueques/'+${trueque.id}+'/confirm'}" th:object="${trueque}" th:method="PUT">
-                                                                <!--CONFIRMAR-->
-                                                                <button id="btnConfirmar" type="submit" class="btn btn-xs btn-success" style="width:30px">
+                                                            <form id="acceptForm" th:action="@{'/trueques/'+${trueque.id}+'/accept'}" th:object="${trueque}" th:method="PUT">
+                                                                <!--Aceptar trueque-->
+                                                                <button id="btnAccept" type="submit" class="btn btn-xs btn-success" style="width:30px">Aceptar
                                                                     <i class="fa fa-check" aria-hidden="true"/>
                                                                 </button>
                                                             </form>
 
                                                             <form th:action="@{'/profile/trueques/'+${trueque.id}}" th:object="${trueque}" th:method="PUT">
                                                                 <!--CANCELAR-->
-                                                                <button type="submit" class="btn btn-xs btn-danger" style="width:30px">
+                                                                <button type="submit" class="btn btn-xs btn-danger" style="width:30px">Cancelar
                                                                     <i class="fa fa-times" aria-hidden="true"/>
                                                                 </button>
                                                             </form>
@@ -189,7 +192,7 @@
                                                             <a th:href="'/profile/trueques/' + ${trueque.id}">
                                                                 <!--DETALLE-->
                                                                 <button type="button" class="btn btn-xs" style="width:30px">
-                                                                    <i class="fa fa-bars" aria-hidden="true"/>
+                                                                    <i class="fa fa-bars" aria-hidden="true"/>Detalle
                                                                 </button>
                                                             </a>
 
