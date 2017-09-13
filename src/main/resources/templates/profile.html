@@ -164,7 +164,7 @@
                                                             </a>
                                                             <form id="confirmForm" th:action="@{'/trueques/'+${trueque.id}+'/accept'}" th:object="${trueque}" th:method="PUT">
                                                                 <!--Aceptar trueque-->
-                                                                <button id="btnConfirmar" type="submit" class="btn btn-xs btn-success" style="width:30px">Aceptar
+                                                                <button id="btnConfirmar" type="submit" class="btn btn-xs btn-success" >Aceptar
                                                                     <i class="fa fa-check" aria-hidden="true"/>
                                                                 </button>
                                                             </form>
@@ -177,7 +177,7 @@
                                                         <td th:if="${trueque.isActivo()}">
                                                             <form id="acceptForm" th:action="@{'/trueques/'+${trueque.id}+'/accept'}" th:object="${trueque}" th:method="PUT">
                                                                 <!--Aceptar trueque-->
-                                                                <button id="btnAccept" type="submit" class="btn btn-xs btn-success" style="width:30px">Aceptar
+                                                                <button id="btnAccept" type="submit" class="btn btn-xs btn-success">Aceptar
                                                                     <i class="fa fa-check" aria-hidden="true"/>
                                                                 </button>
                                                             </form>
