@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <head>
-    <script src="../assets/common/js/custom/sidebar.js" th:src="@{/common/js/custom/chat.js}"></script>
+    <script th:src="@{/common/js/custom/chat.js}"></script>
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
@@ -65,33 +65,8 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="conversation-block height-700 custom-scroll">
-                                    <div class="conversation-item you">
-                                        <div class="s1">
-                                            <a class="avatar" href="javascript:void(0);">
-                                                <img src=""
-                                                     alt="Alternative text to the image"/>
-                                            </a>
-                                        </div>
-                                        <div class="s2">
-                                            <strong>David Scott</strong>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry</p>
-                                        </div>
-                                    </div>
-                                    <div class="conversation-item">
-                                        <div class="s1">
-                                            <a class="avatar" href="javascript:void(0);">
-                                                <img src="../assets/common/img/temp/avatars/4.jpg"
-                                                     alt="Alternative text to the image"/>
-                                            </a>
-                                        </div>
-                                        <div class="s2">
-                                            <strong>Donald Trump</strong>
-                                            <p>Ok. Thanks!</p>
-                                        </div>
-                                    </div>
+                                <div id="conversation" class="conversation-block height-700 custom-scroll">
+
                                 </div>
                                 <div class="form-group padding-top-20 margin-bottom-0">
                                 <textarea class="form-control adjustable-textarea" placeholder="Type and press enter"
@@ -114,44 +89,11 @@
         </div>
 
         <!-- Page Scripts -->
-        <script>
-            $(function () {
-                ///////////////////////////////////////////////////
-                // SIDEBAR CURRENT STATE
-                $('.messaging-list-item').on('click', function () {
-                    $('.messaging-list-item').removeClass('current');
-                    $(this).addClass('current');
-                });
-                ///////////////////////////////////////////////////////////
-                // CUSTOM SCROLL
-                if (!cleanUI.hasTouch) {
-                    $('.custom-scroll').each(function () {
-                        $(this).jScrollPane({
-                            autoReinitialise: true,
-                            autoReinitialiseDelay: 100
-                        });
-                        var api = $(this).data('jsp'),
-                            throttleTimeout;
-                        $(window).bind('resize', function () {
-                            if (!throttleTimeout) {
-                                throttleTimeout = setTimeout(function () {
-                                    api.reinitialise();
-                                    throttleTimeout = null;
-                                }, 50);
-                            }
-                        });
-                    });
-                }
-                ///////////////////////////////////////////////////////////
-                // MEDIA PLAYER
-                if (!(typeof angular === 'undefined')) {
-                    $('.mediatec-cleanaudioplayer').cleanaudioplayer();
-                    $('.mediatec-cleanvideoplayer').cleanvideoplayer();
-                }
-                ///////////////////////////////////////////////////////////
-                // ADJUSTABLE TEXTAREA
-                autosize($('.adjustable-textarea'));
-            });
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var userId =  /*[[${#authentication.principal.id}]]*/ "";
+            initialize(userId);
+            /*]]>*/
         </script>
         <!-- End Page Scripts -->
     </section>

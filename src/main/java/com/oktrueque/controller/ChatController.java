@@ -33,6 +33,7 @@ public class ChatController {
     public String getConversations(Model model, Principal principal){
         User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         model.addAttribute("conversations", conversationService.getAllConversationByUserId(user.getId()));
+        model.addAttribute("user", user);
         return "chat";
     }
 
