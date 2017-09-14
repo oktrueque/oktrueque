@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <head>
+    <script src="../../static/vendors/sockjs/sockjs.min.js" th:src="@{/vendors/sockjs/sockjs.min.js}"></script>
+    <script src="../../static/vendors/sockjs/stomp.min.js" th:src="@{/vendors/sockjs/stomp.min.js}"></script>
     <script th:src="@{/common/js/custom/chat.js}"></script>
 </head>
 <th:block layout:fragment="content">

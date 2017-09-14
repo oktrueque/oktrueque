@@ -7,6 +7,8 @@ import com.oktrueque.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -41,6 +44,12 @@ public class ChatController {
     public ResponseEntity<List<Message>> getConversationMessages(@PathVariable Long id){
         List<Message> messages = messageService.getMessagesbyConversationId(id);
         return new ResponseEntity<>(messages, HttpStatus.OK);
+    }
+
+    @MessageMapping("/messages")
+    @SendTo("/topic/messages")
+    public Message send(Message message) throws Exception {
+        return new Message(new Date(), message.getMessage());
     }
 
 }
