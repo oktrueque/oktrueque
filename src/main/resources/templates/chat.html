@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <head>
-
+    <script src="../assets/common/js/custom/sidebar.js" th:src="@{/common/js/custom/chat.js}"></script>
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
@@ -21,20 +21,22 @@
                     </div>
                     <!--Aca buscar los rost-->
                     <div class="messaging-list">
-                        <div class="messaging-list-item" th:each="conversation : ${conversations}">
-                            <div class="s1">
-                                <a class="avatar" href="javascript:void(0);">
-                                    <img th:src="${conversation.id.user.photo1}" ></img>
-                                </a>
+                        <th:block th:each="conversation : ${conversations}" >
+                            <div class="messaging-list-item conversation" th:attr="data-id=${conversation.id}" >
+                                <div class="s1">
+                                    <a class="avatar" href="javascript:void(0);">
+                                        <img src="https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-8" />
+                                    </a>
+                                </div>
+                                <div class="s2">
+                                    <!--<small class="messaging-time">8:34PM</small>-->
+                                    <div class="messaging-list-title-name" th:text="${conversation.date} "></div>
+                                    <!--<div class="messaging-list-title-last color-default">Hello! Where you are now? I want to-->
+                                    <!--talk. Hello! Where you are now? I want to talk-->
+                                    <!--</div>-->
+                                </div>
                             </div>
-                            <div class="s2">
-                                <!--<small class="messaging-time">8:34PM</small>-->
-                                <div class="messaging-list-title-name" th:text="${conversation.id.user.name + ' ' + conversation.id.user.last_name} "></div>
-                                <!--<div class="messaging-list-title-last color-default">Hello! Where you are now? I want to-->
-                                <!--talk. Hello! Where you are now? I want to talk-->
-                                <!--</div>-->
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
                 </div>
                 <div class="panel-heading">
@@ -60,46 +62,48 @@
                     <h6 class="messaging-title">Software Developing</h6>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="conversation-block height-700 custom-scroll">
-                                <div class="conversation-item">
-                                    <div class="s1">
-                                        <a class="avatar" href="javascript:void(0);">
-                                            <img src="../assets/common/img/temp/avatars/3.jpg"
-                                                 alt="Alternative text to the image"></img>
-                                        </a>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="conversation-block height-700 custom-scroll">
+                                    <div class="conversation-item you">
+                                        <div class="s1">
+                                            <a class="avatar" href="javascript:void(0);">
+                                                <img src=""
+                                                     alt="Alternative text to the image"/>
+                                            </a>
+                                        </div>
+                                        <div class="s2">
+                                            <strong>David Scott</strong>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry</p>
+                                        </div>
                                     </div>
-                                    <div class="s2">
-                                        <strong>David Scott</strong>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                                            industry</p>
+                                    <div class="conversation-item">
+                                        <div class="s1">
+                                            <a class="avatar" href="javascript:void(0);">
+                                                <img src="../assets/common/img/temp/avatars/4.jpg"
+                                                     alt="Alternative text to the image"/>
+                                            </a>
+                                        </div>
+                                        <div class="s2">
+                                            <strong>Donald Trump</strong>
+                                            <p>Ok. Thanks!</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="conversation-item you">
-                                    <div class="s1">
-                                        <a class="avatar" href="javascript:void(0);">
-                                            <img src="../assets/common/img/temp/avatars/4.jpg"
-                                                 alt="Alternative text to the image"></img>
-                                        </a>
-                                    </div>
-                                    <div class="s2">
-                                        <strong>Donald Trump</strong>
-                                        <p>Ok. Thanks!</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group padding-top-20 margin-bottom-0">
+                                <div class="form-group padding-top-20 margin-bottom-0">
                                 <textarea class="form-control adjustable-textarea" placeholder="Type and press enter"
                                           style="overflow-x: hidden; word-wrap: break-word; resize: none; overflow-y: visible;"></textarea>
-                                <button class="btn btn-primary width-200 margin-top-10">
-                                    <i class="fa fa-send margin-right-5"></i>
-                                    Send
-                                </button>
-                                <button class="btn btn-link margin-top-10">
-                                    Attach File
-                                </button>
+                                    <button class="btn btn-primary width-200 margin-top-10">
+                                        <i class="fa fa-send margin-right-5"></i>
+                                        Send
+                                    </button>
+                                    <button class="btn btn-link margin-top-10">
+                                        Attach File
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,25 +1,19 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.*;
-import com.oktrueque.repository.TagRepository;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.print.attribute.standard.Media;
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 

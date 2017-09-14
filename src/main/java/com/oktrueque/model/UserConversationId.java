@@ -1,6 +1,5 @@
 package com.oktrueque.model;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,8 +9,9 @@ import java.util.Objects;
 @Embeddable
 public class UserConversationId implements Serializable{
 
-    @Column(name = "id_conversation")
-    private Long conversationId;
+    @ManyToOne
+    @JoinColumn(name = "id_conversation")
+    private Conversation conversation;
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
@@ -19,17 +19,17 @@ public class UserConversationId implements Serializable{
     public UserConversationId() {
     }
 
-    public UserConversationId(Long conversationId, User userId) {
-        this.conversationId = conversationId;
+    public UserConversationId(Conversation conversationId, User userId) {
+        this.conversation = conversationId;
         this.user = userId;
     }
 
-    public Long getConversationId() {
-        return conversationId;
+    public Conversation getConversation() {
+        return conversation;
     }
 
-    public void setConversationId(Long conversationId) {
-        this.conversationId = conversationId;
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
     }
 
     public User getUser() {
@@ -45,12 +45,12 @@ public class UserConversationId implements Serializable{
         if (this == o) return true;
         if (!(o instanceof UserConversationId)) return false;
         UserConversationId that = (UserConversationId) o;
-        return Objects.equals(conversationId, that.getConversationId()) &&
+        return Objects.equals(conversation.getId(), that.getConversation().getId()) &&
                 Objects.equals(user.getId(), that.getUser().getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(conversationId, user.getId());
+        return Objects.hash(conversation.getId(), user.getId());
     }
 }
