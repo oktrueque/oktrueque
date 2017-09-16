@@ -7,6 +7,7 @@ initialize = function(id){
 $(document).ready(function () {
    $('.conversation').on('click', function () {
        var conversationId = $(this).data('id');
+       $('#idConversation').val(conversationId);
        $.ajax({
            type : "get",
            url : "/profile/conversations/" + conversationId + "/messages",
@@ -26,35 +27,69 @@ display = function(messages){
     var conversation = $('#conversation');
     conversation.html("");
     messages.forEach(function(message){
-        if(message.user.id === userId){
-            conversation.append(
-                '<div class="conversation-item you">' +
-                '<div class="s1">' +
-                '<a class="avatar" href="javascript:void(0);">' +
-                '<img src="" alt="Alternative text to the image"/>' +
-                '</a>' +
-                '</div>' +
-                '<div class="s2">' +
-                '<p>'+ message.message +'</p>' +
-                '</div>' +
-                '</div>'
-            );
-        }else{
-            conversation.append(
-                '<div class="conversation-item">' +
-                '<div class="s1">' +
-                '<a class="avatar" href="javascript:void(0);">' +
-                '<img src="" alt="Alternative text to the image"/>' +
-                '</a>' +
-                '</div>' +
-                '<div class="s2">' +
-                '<p>'+ message.message +'</p>' +
-                '</div>' +
-                '</div>'
-            );
-        }
-
+        displayMessageWithConversation(conversation, message);
     });
+};
+
+displayMessageWithConversation = function(conversation, message){
+    if(message.user.id === userId){
+        conversation.append(
+            '<div class="conversation-item you">' +
+            '<div class="s1">' +
+            '<a class="avatar" href="javascript:void(0);">' +
+            '<img src="" alt="Alternative text to the image"/>' +
+            '</a>' +
+            '</div>' +
+            '<div class="s2">' +
+            '<p>'+ message.message +'</p>' +
+            '</div>' +
+            '</div>'
+        );
+    }else{
+        conversation.append(
+            '<div class="conversation-item">' +
+            '<div class="s1">' +
+            '<a class="avatar" href="javascript:void(0);">' +
+            '<img src="" alt="Alternative text to the image"/>' +
+            '</a>' +
+            '</div>' +
+            '<div class="s2">' +
+            '<p>'+ message.message +'</p>' +
+            '</div>' +
+            '</div>'
+        );
+    }
+};
+
+displayMessage = function(message){
+    var conversation = $('#conversation');
+    if(message.user.id === userId){
+        conversation.append(
+            '<div class="conversation-item you">' +
+            '<div class="s1">' +
+            '<a class="avatar" href="javascript:void(0);">' +
+            '<img src="" alt="Alternative text to the image"/>' +
+            '</a>' +
+            '</div>' +
+            '<div class="s2">' +
+            '<p>'+ message.message +'</p>' +
+            '</div>' +
+            '</div>'
+        );
+    }else{
+        conversation.append(
+            '<div class="conversation-item">' +
+            '<div class="s1">' +
+            '<a class="avatar" href="javascript:void(0);">' +
+            '<img src="" alt="Alternative text to the image"/>' +
+            '</a>' +
+            '</div>' +
+            '<div class="s2">' +
+            '<p>'+ message.message +'</p>' +
+            '</div>' +
+            '</div>'
+        );
+    }
 };
 
 var stompClient = null;
@@ -88,19 +123,28 @@ function disconnect() {
 }
 
 function sendMessage() {
-    var from = document.getElementById('from').value;
-    var text = document.getElementById('text').value;
-    stompClient.send("/app/chat", {},
-        JSON.stringify({'from':from, 'text':text}));
+    var text = $('#text');
+    var message = {
+        user: {id: userId},
+        userId: userId,
+        message:  text.val(),
+        conversationId: document.getElementById('idConversation').value,
+        date: new Date()
+    };
+    text.val("");
+    displayMessage(message);
+    stompClient.send("/app/messages", {},
+        JSON.stringify(message));
 }
 
 function showMessageOutput(messageOutput) {
-    var response = document.getElementById('response');
-    var p = document.createElement('p');
-    p.style.wordWrap = 'break-word';
-    p.appendChild(document.createTextNode(messageOutput.from + ": "
-        + messageOutput.text + " (" + messageOutput.time + ")"));
-    response.appendChild(p);
+    console.log(messageOutput);
+    if(messageOutput.conversation.id == $('#idConversation').val()){
+        displayMessage(messageOutput);
+    }
+    else{
+        console.log(messageOutput.conversation.id, $('#idConversation').val());
+    }
 }
 
 

@@ -1,6 +1,8 @@
 package com.oktrueque.controller;
 
+import com.oktrueque.model.Conversation;
 import com.oktrueque.model.Message;
+import com.oktrueque.model.MessageLite;
 import com.oktrueque.model.User;
 import com.oktrueque.service.ConversationService;
 import com.oktrueque.service.MessageService;
@@ -12,6 +14,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,8 +51,10 @@ public class ChatController {
 
     @MessageMapping("/messages")
     @SendTo("/topic/messages")
-    public Message send(Message message) throws Exception {
-        return new Message(new Date(), message.getMessage());
+    public Message send(MessageLite message) throws Exception {
+        User user = new User();
+        user.setId(message.getUserId());
+        return new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
     }
 
 }

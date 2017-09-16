@@ -71,9 +71,10 @@
 
                                 </div>
                                 <div class="form-group padding-top-20 margin-bottom-0">
-                                <textarea class="form-control adjustable-textarea" placeholder="Type and press enter"
+                                <input type="hidden" id="idConversation"/>
+                                <textarea id="text" class="form-control adjustable-textarea" placeholder="Type and press enter"
                                           style="overflow-x: hidden; word-wrap: break-word; resize: none; overflow-y: visible;"></textarea>
-                                    <button class="btn btn-primary width-200 margin-top-10">
+                                    <button class="btn btn-primary width-200 margin-top-10" onclick="sendMessage();">
                                         <i class="fa fa-send margin-right-5"></i>
                                         Send
                                     </button>

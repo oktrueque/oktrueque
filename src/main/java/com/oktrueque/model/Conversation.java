@@ -23,6 +23,10 @@ public class Conversation {
     public Conversation() {
     }
 
+    public Conversation(Long id){
+        this.id = id;
+    }
+
     public Conversation(LocalDateTime date, Long idTrueque) {
         this.date = date;
         this.idTrueque = idTrueque;
