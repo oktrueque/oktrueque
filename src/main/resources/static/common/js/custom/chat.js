@@ -1,12 +1,13 @@
 var userId;
-
+var stompClient = null;
+var conversationId = null;
 initialize = function(id){
     userId = id;
 };
 
 $(document).ready(function () {
    $('.conversation').on('click', function () {
-       var conversationId = $(this).data('id');
+       conversationId = $(this).data('id');
        $('#idConversation').val(conversationId);
        $.ajax({
            type : "get",
@@ -92,8 +93,6 @@ displayMessage = function(message){
     }
 };
 
-var stompClient = null;
-
 function setConnected(connected) {
     document.getElementById('connect').disabled = connected;
     document.getElementById('disconnect').disabled = !connected;
@@ -108,7 +107,7 @@ function connect() {
     stompClient.connect({}, function(frame) {
         //setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/messages', function(messageOutput) {
+        stompClient.subscribe("/user/queue/reply", function(messageOutput) {
             showMessageOutput(JSON.parse(messageOutput.body));
         });
     });
@@ -128,22 +127,23 @@ function sendMessage() {
         user: {id: userId},
         userId: userId,
         message:  text.val(),
-        conversationId: document.getElementById('idConversation').value,
+        conversationId: conversationId,
         date: new Date()
     };
     text.val("");
     displayMessage(message);
-    stompClient.send("/app/messages", {},
+    var sendTo = $('#send-to-' + conversationId).text();
+    stompClient.send("/app/messages/" + sendTo, {},
         JSON.stringify(message));
 }
 
 function showMessageOutput(messageOutput) {
     console.log(messageOutput);
-    if(messageOutput.conversation.id == $('#idConversation').val()){
+    if(messageOutput.conversation.id === conversationId){
         displayMessage(messageOutput);
     }
     else{
-        console.log(messageOutput.conversation.id, $('#idConversation').val());
+        console.log(messageOutput.conversation.id, conversationId);
     }
 }
 

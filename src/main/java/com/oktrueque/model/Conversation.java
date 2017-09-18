@@ -2,7 +2,6 @@ package com.oktrueque.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "conversations")
@@ -16,9 +15,6 @@ public class Conversation {
     private LocalDateTime date;
     @Column(name = "id_trueque")
     private Long idTrueque;
-
-    @Transient
-    private List<User> other;
 
     public Conversation() {
     }
@@ -54,13 +50,5 @@ public class Conversation {
 
     public void setIdTrueque(Long idTrueque) {
         this.idTrueque = idTrueque;
-    }
-
-    public List<User> getOther() {
-        return other;
-    }
-
-    public void setOther(List<User> other) {
-        this.other = other;
     }
 }

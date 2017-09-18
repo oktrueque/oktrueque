@@ -23,16 +23,17 @@
                     </div>
                     <!--Aca buscar los rost-->
                     <div class="messaging-list">
-                        <th:block th:each="conversation : ${conversations}" >
-                            <div class="messaging-list-item conversation" th:attr="data-id=${conversation.id}" >
+                        <th:block th:each="uc : ${conversations}" >
+                            <div class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}" >
                                 <div class="s1">
                                     <a class="avatar" href="javascript:void(0);">
-                                        <img src="https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-8" />
+                                        <img th:src="${uc.sendTo.photo1}" />
                                     </a>
                                 </div>
                                 <div class="s2">
                                     <!--<small class="messaging-time">8:34PM</small>-->
-                                    <div class="messaging-list-title-name" th:text="${conversation.date} "></div>
+                                    <div class="messaging-list-title-name" th:text="${uc.sendTo.name}"></div>
+                                    <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}"></span>
                                     <!--<div class="messaging-list-title-last color-default">Hello! Where you are now? I want to-->
                                     <!--talk. Hello! Where you are now? I want to talk-->
                                     <!--</div>-->

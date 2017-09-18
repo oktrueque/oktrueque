@@ -12,13 +12,17 @@ public class UserConversation implements Comparable {
 
     @Column(name = "date")
     private LocalDateTime date;
+    @ManyToOne
+    @JoinColumn(name = "id_send_to")
+    private User sendTo;
 
     public UserConversation() {
     }
 
-    public UserConversation(UserConversationId id, LocalDateTime date) {
+    public UserConversation(UserConversationId id, LocalDateTime date, User sendTo) {
         this.id = id;
         this.date = date;
+        this.sendTo = sendTo;
     }
 
     public UserConversationId getId() {
@@ -35,6 +39,14 @@ public class UserConversation implements Comparable {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public User getSendTo() {
+        return sendTo;
+    }
+
+    public void setSendTo(User sendTo) {
+        this.sendTo = sendTo;
     }
 
     @Override
