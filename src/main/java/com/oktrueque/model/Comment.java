@@ -40,7 +40,7 @@ public class Comment {
         this.date = date;
     }
 
-    public Comment(){};
+    public Comment(){}
 
     public Long getId() {
         return id;

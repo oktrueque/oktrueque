@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -145,6 +146,7 @@ public class ProfileController {
         return "redirect:/profile/items";
     }
 
+
     @RequestMapping(method = RequestMethod.PUT, value = "profile/trueques/{id}")
     public String upadteTrueque(@PathVariable Long id, Model model, Principal principal){
 
@@ -178,6 +180,7 @@ public class ProfileController {
 
         return "redirect:/profile/";
     }
+
 
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
