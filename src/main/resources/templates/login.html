@@ -137,7 +137,7 @@
                     <span>Revisa tu correo electronico, tu password se ha restablecido.</span>
                 </div>
                 <div class="row modal-footer">
-                    <button type="button" data-dismiss="#modalPasswordReset" class="btn btn-primary">Aceptar</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -220,7 +220,7 @@
                         }
                     });
                 } else {
-                    emailInput.setAttribute('placeholder','Debes insertar un mail o username para recuperar el password');
+                    document.getElementById('validation-email').placeholder = 'Inserta mail o username para recuperar la contraseña';
                 }
             });
 
