@@ -96,7 +96,8 @@
 
                         </div>
                         <div class="form-group">
-                            <a href="javascript: void(0);" class="pull-right">Olvidaste tu contraseña?</a>
+                            <a id="resetPassLink"  class="pull-right">Recuperar contraseña</a>
+
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="example6" checked=""/>
@@ -121,6 +122,27 @@
         <!-- End Login Omega Page -->
 
     </div>
+
+    <!--MODAL PASSWORD RESET SENT-->
+    <div class="modal fade" id="modalPasswordReset" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Revisa tu correo electronico, tu password se ha restablecido.</span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="#modalPasswordReset" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL PASSWORD RESET SENT-->
 
 
     <!-- Page Scripts -->
@@ -167,6 +189,43 @@
                 })
             };
         });
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            let emailInput = $("#validation-email");
+            $("#resetPassLink").on("click", function () {
+                if(emailInput.val().length!==0){
+                    $.ajax({
+                        type: "POST",
+                        url: "/resetPassword",
+                        contentType : "application/json",
+                        data: emailInput.val(),
+                        dataType : 'text',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },
+                        success: function () {
+                            console.log("Ajax sent");
+                            $("#modalPasswordReset").modal('show');
+                        },
+                        error: function (e) {
+                            console.log(JSON.stringify(e));
+                            console.log("input: "+emailInput.val());
+                        }
+                    });
+                } else {
+                    emailInput.setAttribute('placeholder','Debes insertar un mail o username para recuperar el password');
+                }
+            });
+
+        });
+        /*]]>*/
     </script>
     <!-- End Page Scripts -->
 
