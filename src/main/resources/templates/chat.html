@@ -50,13 +50,10 @@
                                 <i class="icmn-more2"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                                <a class="dropdown-item" href="javascript:void(0)"><i
-                                        class="dropdown-icon icmn-pencil7"></i> Edit Conversation</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i
-                                        class="dropdown-icon icmn-bin3"></i> Delete Conversation</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Perfil del Usuario</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Confirmar Trueque</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i
-                                        class="dropdown-icon fa fa-recycle"></i> Mark as Spam</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Cancelar Trueque</a>
                             </ul>
                         </div>
                     </div>
@@ -69,16 +66,16 @@
                             <div id="conversation" class="conversation-block height-700 custom-scroll">
 
                             </div>
-                            <div class="form-group padding-top-20 margin-bottom-0">
+                            <div id="chat-actions" class="form-group padding-top-20 margin-bottom-0">
                                 <input type="hidden" id="idConversation"/>
                                 <div class="row">
                                     <div class="col-sm-11">
-                                        <textarea id="text" class="form-control adjustable-textarea textarea" placeholder="Escribe un mensaje aquí"></textarea>
+                                        <textarea id="text" class="form-control adjustable-textarea textarea" disabled="disabled" placeholder="Escribe un mensaje aquí"></textarea>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button class="btn btn-primary width-100 margin-top-10" onclick="sendMessage();">
+                                        <button id="send" class="btn btn-primary width-100 margin-top-10" disabled="disabled" onclick="sendMessage();">
                                             <i class="fa fa-send margin-right-5"></i>
-                                            Send
+                                            Enviar
                                         </button>
                                     </div>
                                 </div>

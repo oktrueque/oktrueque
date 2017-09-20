@@ -24,9 +24,21 @@ $(document).ready(function () {
        });
    });
    connect();
+
+    $('#text').keypress(function(e) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        if (keycode == '13') {
+            console.log("Enter");
+            e.preventDefault();
+            return false;
+        }
+    });
 });
 
 handleConversation = function(currentConversation){
+    //Enable text and button
+    $('#text').prop('disabled', false);
+    $('#send').prop('disabled', false);
     var idOldConversation = $('#idConversation').val();
     var oldConversation = $('#conversation-'+idOldConversation);
     if(oldConversation.hasClass("current")){
