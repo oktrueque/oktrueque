@@ -2,7 +2,6 @@ package com.oktrueque.configuration;
 
 import com.oktrueque.repository.*;
 import com.oktrueque.service.*;
-import com.oktrueque.service.chat.XmppManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
@@ -12,16 +11,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-/**
- * Created by Facundo on 12/07/2017.
- */
 @Configuration
 @EntityScan(basePackageClasses = {Jsr310JpaConverters.class}, basePackages = "com.oktrueque.model")
 public class ServiceConfig {
 
     @Autowired
     private ComplaintTypeRepository complaintTypeRepository;
-
     @Autowired
     private ComplaintRepository complaintRepository;
     @Autowired
@@ -50,10 +45,6 @@ public class ServiceConfig {
     private ItemTagRepository itemTagRepository;
     @Autowired
     private UserTagRepository userTagRepository;
-    @Autowired
-    private XmppManager xmppManager;
-
-
 
 
     @Bean
@@ -61,7 +52,7 @@ public class ServiceConfig {
 
     @Bean
     public ComplaintService complaintService(){
-        return new ComplaintServiceImpl(complaintRepository,this.emailService());
+        return new ComplaintServiceImpl(complaintRepository,this.emailService(),complaintTypeRepository);
     }
 
 
@@ -93,7 +84,7 @@ public class ServiceConfig {
     @Bean
     public UserService userService(){
         return new UserServiceImpl(userRepository,verificationTokenRepository
-                ,bCryptPasswordEncoder,this.emailService(), this.chatService());
+                ,bCryptPasswordEncoder,this.emailService());
     }
 
     @Bean
@@ -116,8 +107,4 @@ public class ServiceConfig {
         return new UserTagServiceImpl(userTagRepository,this.tagService());
     }
 
-    @Bean
-    public ChatService chatService(){
-        return new ChatServiceImpl(xmppManager, userRepository);
-    }
 }

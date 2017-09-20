@@ -8,7 +8,6 @@ import com.oktrueque.model.Comment;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.User;
 import com.oktrueque.model.UserTag;
-import com.oktrueque.service.ChatService;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.UserService;
 import com.oktrueque.service.UserTagService;
@@ -16,6 +15,8 @@ import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -39,17 +40,15 @@ public class UserController {
     private ItemService itemService;
     private ComplaintService complaintService;
     private ComplaintTypeService complaintTypeService;
-    private ChatService chatService;
 
 
     @Autowired
-    public UserController(UserService userService, UserTagService userTagService, ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService, ChatService chatService) {
+    public UserController(UserService userService, UserTagService userTagService, ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.complaintService = complaintService;
         this.complaintTypeService = complaintTypeService;
-        this.chatService = chatService;
     }
 
 
@@ -66,17 +65,17 @@ public class UserController {
         if (!user.checkUsername()) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El username no caracteres especiales --");
-            return "/register";
+            return "register";
         }
         if (!user.checkEmail()) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email ingresado no es válido --");
-            return "/register";
+            return "register";
         }
         if (userService.checkIfUserExists(user.getEmail(), user.getUsername())) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email o username ingresado ya existen --");
-            return "/register";
+            return "register";
         }
 
         user.setStatus(0);
@@ -84,14 +83,11 @@ public class UserController {
         user.setPhoto1(Constants.returnRandomImage());
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
-        return "/confirmEmail";
+        return "confirmEmail";
     }
 
-
-
-
-    @RequestMapping(method = RequestMethod.POST, value = "/users/denuncias/{username}")
-    public String addComplaint(@ModelAttribute Complaint complaint, Principal principal, @PathVariable String username) {
+    @RequestMapping(method = RequestMethod.POST, value = "/users/complaints/{username}")
+    public ResponseEntity<Complaint> addComplaint(@RequestBody Complaint complaint, Principal principal, @PathVariable String username) {
 
         User userDemandant = userService.getUserByUsername(principal.getName());
         User userTarget = userService.getUserByUsername(username);
@@ -100,10 +96,8 @@ public class UserController {
         complaint.setDate(LocalDateTime.now());
         complaintService.saveComplaint(complaint);
 
-
-        return "redirect:/users/" + username ;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public String getUserProfile(Model model, @PathVariable String username, @PageableDefault(value = 2) Pageable pageable) {
@@ -147,7 +141,6 @@ public class UserController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
-            chatService.logout();
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "index";

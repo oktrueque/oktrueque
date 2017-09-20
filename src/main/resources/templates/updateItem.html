@@ -2,80 +2,114 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <head>
-    <!-- MagicSuggest -->
-    <link th:href="@{/vendors/magicsuggest/magicsuggest-min.css}"
-          href="../static/vendors/magicsuggest/magicsuggest-min.css" rel="stylesheet"/>
-    <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}"
-            src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/vendors/dropify/dist/css/dropify.min.css}"/>
+    <link th:href="@{/vendors/magicsuggest/magicsuggest-min.css}" href="../static/vendors/magicsuggest/magicsuggest-min.css" rel="stylesheet"/>
+    <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}" src="../assets/vendors/dropify/dist/js/dropify.min.js"></script>
+    <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
+    <script th:src="@{/common/js/custom/magicSuggest.js}" src="../static/common/js/custom/magicSuggest.js"></script>
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
         <!-- Ecommerce Product Edit -->
         <section class="panel panel-profile panel-with-borders page-content-inner">
-            <div class="panel-heading">
-                <h2>
-                    Editar Ítem
-                </h2>
-            </div>
-            <div class="panel-body margin-left-30">
-                <div class="row">
+            <div class="container">
+                <div class="panel-heading">
+                    <h2>
+                        Editar Ítem
+                    </h2>
+                    <hr/>
+                </div>
+                <div class="panel-body margin-left-30">
 
-                    <form id="editItemForm" onsubmit="return validations()"
-                          th:action="@{'/profile/items/' + ${item.id} + '/edit'}" th:object="${item}" th:method="PUT">
+                        <form id="editItemForm" onsubmit="return validations()"
+                              th:action="@{'/profile/items/' + ${item.id} + '/edit'}" th:object="${item}" th:method="PUT" enctype="multipart/form-data">
 
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" th:field="*{status}"/>
+                            <input type="hidden" th:field="*{photo1}"/>
+                            <input type="hidden" th:field="*{photo2}"/>
+                            <input type="hidden" th:field="*{photo3}"/>
 
-
-                        <div class="col-lg">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <!--NOMBRE DEL ITEM-->
                                         <label for="itemName" class="control-label">Nombre</label>
                                         <input id="itemName" required="true" th:field="*{name}" type="text"
                                                class="form-control"/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="selectCat" class="control-label">Categoría</label>
+                                        <select required="true" id="selectCat" th:field="*{category}" class="form-control">
+                                            <option value="-1"> Seleccione categoría</option>
+                                            <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                                    th:text="${cat.name}" th:field="*{category}"></option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group col-lg-4">
-                                    <!--DROP DOWN LIST DE CATEGORIA-->
-                                    <label for="selectCat" class="form-control-label">Categoría</label>
-                                    <select required="true" id="selectCat" th:field="*{category}" class="form-control">
-                                        <option value="-1"> Seleccione categoría</option>
-                                        <option th:each="cat : ${categories}" th:value="${cat.id}"
-                                                th:text="${cat.name}" th:field="*{category}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-lg-8">
-                                    <i id="noCatIcon" hidden="false" style="color:red"
-                                       class="glyphicon glyphicon-arrow-left "></i>
+                                    <label for="ms" class="control-label">Etiqueta tu item</label>
+                                    <input id="ms" type="text" class="form-control tagsinput" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-lg-4">
-                                    <label for="tags">Etiqueta tu item</label>
-                                    <input id="tags" type="text" class="form-control tagsinput" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="descTextArea" class="form-control-label">Descripción</label>
-                                <textarea required="true" id="descTextArea" th:field="*{description}"
-                                          class="form-control" rows="7"></textarea>
-                            </div>
-                        </div>
 
-                        <div class="form-actions">
-                            <button id="submit-btn" type="submit" class="btn btn-primary width-150">Guardar</button>
-                        </div>
-                    </form>
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <label for="descTextArea" class="control-label">Descripción</label>
+                                    <textarea required="true" id="descTextArea" th:field="*{description}"
+                                              class="form-control" rows="7"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+                                    
+                                    <img id="photo1" th:src="${photo1}" style="width: 200px; height: 200px;" />
+                                </div>
+                                <div class="col-lg-8">
+                                    <label for="new-photo1" class="control-label">Nueva Imágen</label>
+                                    <input id="new-photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+
+                                    <img id="photo2" th:src="${photo2}" style="width: 200px; height: 200px;" />
+                                </div>
+                                <div class="col-lg-8">
+                                    <label for="new-photo2" class="control-label">Nueva Imágen</label>
+                                    <input id="new-photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-lg-4">
+
+                                    <img id="photo3" th:src="${photo3}" style="width: 200px; height: 200px;" />
+                                </div>
+                                <div class="col-lg-8">
+                                    <label for="new-photo3" class="control-label">Nueva Imágen</label>
+                                    <input id="new-photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button id="submit-btn" type="submit" class="btn btn-primary width-150">Guardar</button>
+                            </div>
+                        </form>
                 </div>
             </div>
         </section>
         <!-- End Ecommerce Product Edit -->
     </section>
 
+
     <script>
+
+        //  DROPIFY  //
+        $(function() {
+            $('.dropify').dropify();
+        });
 
         function validations() {
 
@@ -101,27 +135,18 @@
         var header = [[${_csrf.headerName}]];
         var tags = [[${tags}]];
         var itemId = [[${item.id}]];
-
+        var ms;
 
         document.addEventListener("DOMContentLoaded", function () {
-            var ms = $("#tags").magicSuggest({
-                method: 'get'
-                , data: '/tags'
-                , allowFreeEntries: false
-                , toggleOnClick: true
-                , useTabKey: true
-                , typeDelay: 0
-                , maxSelection: null
-                , required: true
-            });
-            ms.addToSelection(tags);
+            ms.initializeWithTags(tags);
 
             $("#submit-btn").on("click", function () {
+                console.log(ms.getSelection());
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "/profile/items/"+itemId+"/updateItemTags",
-                    data: JSON.stringify(ms.getValue()),
+                    data: JSON.stringify(ms.getSelection()),
                     dataType: 'text',
                     cache: false,
                     timeout: 600000,
@@ -132,7 +157,7 @@
                         console.log("New tags posted succesfully!");
                     },
                     error: function (e) {
-                        console.log("ERROR POSTING TAGS: ", e);
+                        console.log(e);
                     }
                 });
             });

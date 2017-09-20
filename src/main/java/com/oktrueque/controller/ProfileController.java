@@ -6,15 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import javax.transaction.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import javax.print.attribute.standard.Media;
+import javax.xml.ws.Response;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,7 +96,7 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
     public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
         if(!picture.getOriginalFilename().equals("")){
-            String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), user.getPhoto1());
+            String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), null, user.getPhoto1());
             user.setPhoto1(pictureUrl);
         }
         userService.updateUser(user);
@@ -109,10 +116,31 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/items")
-    public String newItem(@ModelAttribute Item item, Principal principal){
+    public ResponseEntity<Item> newItem(@RequestBody Item item){
         item.setStatus(0);
-        item.setUser(userService.getUserByUsername(principal.getName()));
-        itemService.setItem(item);
+        Item itemResponse = itemService.saveItem(item);
+        return new ResponseEntity(itemResponse, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/items/images")
+    public String setItemImages(@ModelAttribute Item item){
+        Item itemDB = itemService.getItemById(item.getId());
+        if(!item.getPictures()[0].getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[0], fileNameItems, item.getId(), "1", item.getPhoto1());
+            itemDB.setPhoto1(pictureUrl);
+            itemDB.setStatus(0);
+        }
+        if(!item.getPictures()[1].getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[1], fileNameItems, item.getId(), "2", item.getPhoto1());
+            itemDB.setPhoto2(pictureUrl);
+            itemDB.setStatus(0);
+        }
+        if(!item.getPictures()[2].getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[2], fileNameItems, item.getId(), "3", item.getPhoto1());
+            itemDB.setPhoto3(pictureUrl);
+            itemDB.setStatus(0);
+        }
+        itemService.updateItem(itemDB);
         return "redirect:/profile";
     }
 
@@ -126,69 +154,90 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}/edit")
     public String fillUpdateView(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
-        List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
+        List<Tag> tags = itemTagService.getItemTags(id);
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("item", item);
-        model.addAttribute("user", item.getUser());
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-        model.addAttribute("sugerencias", false);
+        model.addAttribute("photo1", item.getPhoto1());
+        model.addAttribute("photo2", item.getPhoto2());
+        model.addAttribute("photo3", item.getPhoto3());
         return "updateItem";
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
-    public String updateItemById(Principal principal, @ModelAttribute Item item){
+    public String updateItemById(@ModelAttribute Item item, @ModelAttribute List<MultipartFile> pictures, Principal principal){
+        if(!pictures.get(0).getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(0), fileNameItems, item.getId(), "1", item.getPhoto1());
+            item.setPhoto1(pictureUrl);
+            item.setStatus(0);
+        }
+        if(!pictures.get(1).getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(1), fileNameItems, item.getId(), "2", item.getPhoto1());
+            item.setPhoto2(pictureUrl);
+            item.setStatus(0);
+        }
+        if(!pictures.get(2).getOriginalFilename().equals("")){
+            String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(2), fileNameItems, item.getId(), "3", item.getPhoto1());
+            item.setPhoto3(pictureUrl);
+            item.setStatus(0);
+        }
+
         User user = userService.getUserByUsername(principal.getName());
         item.setUser(user);
-//        item.setStatus(0);
         itemService.updateItem(item);
         return "redirect:/profile/items";
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "profile/trueques/{id}")
-    public String upadteTrueque(@PathVariable Long id, Model model, Principal principal){
+    @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}")
+    public ResponseEntity<List<User>> updateTrueque(@PathVariable Long id, Principal principal){
 
         Trueque trueque = truequeService.getTruequeById(id);
         User user = userService.getUserByUsername(principal.getName());
-
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+        List<User> users = new ArrayList<>();
+        for (UserTrueque ut: userTrueques){
+            if (ut.getId().getUserId()!= user.getId()){
+                users.add(userService.getUserById(ut.getId().getUserId()));}
+        }
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
             trueque.setRejectionDate(LocalDateTime.now());
             truequeService.updateTrueque(trueque);
-            return "redirect:/profile";
+            return new ResponseEntity<>(users,HttpStatus.OK);
         }
-
         if (trueque.getStatus().equals("Activo")){
             trueque.setStatus(4);
             trueque.setRejectionDate(LocalDateTime.now());
             truequeService.updateTrueque(trueque);
-            List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
-            LinkedList<User> users = new LinkedList<>();
+            return new ResponseEntity<>(users,HttpStatus.OK);
 
-            for (UserTrueque ut: userTrueques){
-                if (ut.getId().getUserId()!= user.getId()){
-                    users.add(userService.getUserById(ut.getId().getUserId()));
-                }
-            }
-            Comment comment = new Comment();
-            model.addAttribute("comment", comment);
-            model.addAttribute("users", users);
-            return "canceledTrueque";
         }
-
-        return "redirect:/profile/";
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
 
-
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
-    public String addComment(Principal principal, @ModelAttribute Comment comment){
+    public String addComment(Model model,Principal principal, @ModelAttribute Comment comment,@ModelAttribute Comment comment1,@ModelAttribute Comment comment2){
 
-        comment.setDate(LocalDateTime.now());
-        comment.setUser_origin(userService.getUserByUsername(principal.getName()));
-        commentService.saveComment(comment);
+        if(comment.getUser_target()!=null){
+            comment.setDate(LocalDateTime.now());
+            comment.setUser_origin(userService.getUserByUsername(principal.getName()));
+            commentService.saveComment(comment);
+        }
+
+        if(comment1.getUser_target()!=null){
+            comment1.setDate(LocalDateTime.now());
+            comment1.setUser_origin(userService.getUserByUsername(principal.getName()));
+            commentService.saveComment(comment1);
+            model.addAttribute("comment2", comment2);
+            return "";
+        }
+
+
+
 
         return "redirect:/profile";
     }

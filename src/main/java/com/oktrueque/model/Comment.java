@@ -54,7 +54,7 @@ public class Comment {
         return description;
     }
 
-    public void setDescription(String comment) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

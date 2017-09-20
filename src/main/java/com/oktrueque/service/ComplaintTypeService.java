@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface ComplaintTypeService {
     List<ComplaintType> getComplaintTypes();
+
+
 }

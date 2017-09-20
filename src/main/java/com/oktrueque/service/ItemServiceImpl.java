@@ -68,14 +68,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item setItem(Item item) {
-        return itemRepository.save(item);
-    }
-
-    @Override
     public void updateItem(Item item){
-
-
         itemRepository.save(item);
     }
 
@@ -85,14 +78,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public void saveItem(Item item) {
+    public Item saveItem(Item item) {
         Item itemSaved = itemRepository.save(item);
-        List<Tag> tags = tagRepository.findAllByIdIn(item.getIdTags());
+        List<Tag> tags = item.getTags();
         List<ItemTag> itemTags = new ArrayList<>();
         tags.forEach(t->{
             itemTags.add(new ItemTag(new ItemTagId(itemSaved.getId(),t.getId()),t.getName()));
         });
         itemTagRepository.save(itemTags);
+        return itemSaved;
     }
 
     public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status,Pageable pageable){

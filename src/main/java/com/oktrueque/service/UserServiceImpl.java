@@ -22,22 +22,19 @@ public class UserServiceImpl  implements UserService{
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final ChatService chatService;
 
     public UserServiceImpl(UserRepository userRepository,
                            VerificationTokenRepository verificationTokenRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
-                           EmailService emailService, ChatService chatService){
+                           EmailService emailService){
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.emailService = emailService;
-        this.chatService = chatService;
     }
     @Override
     public User addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        chatService.createNewUser(user);
         return userRepository.save(user);
     }
 

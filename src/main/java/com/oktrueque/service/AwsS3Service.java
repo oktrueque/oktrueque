@@ -25,17 +25,17 @@ import java.util.Random;
 
 @Service
 public class AwsS3Service {
+
     @Value("${aws.s3.accessKey}")
     private String accessKey;
-
     @Value("${aws.s3.secretKey}")
     private String secretKey;
-
     @Value("${aws.s3.region}")
     private String region;
-
     @Value("${aws.s3.bucket}")
     private String bucket;
+    @Value("${dir.images}")
+    private String directoryPath;
 
     private ResponseEntity<URL> upload(String fileName, String uploadKey) {
         AmazonS3 s3client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey))).withRegion(region).build();
@@ -69,18 +69,21 @@ public class AwsS3Service {
         }
     }
 
-    public String uploadFileToS3(MultipartFile file, String fileNamePattern, Long userId, String previousPhoto) {
+    public String uploadFileToS3(MultipartFile file, String fileNamePattern, Long id, String suffix, String previousPhoto) {
         String extension = this.getFileExtension(file.getOriginalFilename()).toLowerCase();
         if(extension.equals("png") || extension.equals("jpg") || extension.equals("jpeg")){
             try {
                 Random random = new Random();
                 String fileName = random.nextInt(10000) + file.getOriginalFilename().replace(" ", "_");
                 BufferedImage croppedImage = cropImageSquare(file.getBytes());
-                String filePath = "./src/main/resources/static/temp/" + fileName;
+                String filePath = directoryPath + fileName;
                 File outputFile = new File(filePath);
                 ImageIO.write(croppedImage, this.getFileExtension(fileName), outputFile);
 
-                ResponseEntity<URL> responseEntity = this.upload(filePath, String.format(fileNamePattern, userId));
+                ResponseEntity<URL> responseEntity;
+                if(suffix != null) responseEntity = this.upload(filePath, String.format(fileNamePattern, id, suffix));
+                else responseEntity = this.upload(filePath, String.format(fileNamePattern, id));
+
                 String url = responseEntity.getBody().toString();
                 if (url.isEmpty()) {
                     throw new Exception("Fail to move file");
@@ -94,7 +97,6 @@ public class AwsS3Service {
             }
         }
         return previousPhoto;
-
     }
 
     private BufferedImage cropImageSquare(byte[] image) throws IOException {

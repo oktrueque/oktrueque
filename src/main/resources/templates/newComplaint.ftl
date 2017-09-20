@@ -16,6 +16,7 @@
 
                 <p>Se ha efectuado una denuncia a ${userTarget.name} ${userTarget.last_name}</p>
                 <p>Realizada por ${userOrigin.name} ${userOrigin.last_name}</p>
+                <p>Del tipo: ${complaintType.name}</p>
                 <p>La misma se detalla a continuacion: ${complaint.description}</p>
 
 
