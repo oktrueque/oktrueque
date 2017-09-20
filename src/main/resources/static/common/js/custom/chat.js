@@ -43,12 +43,13 @@ display = function(messages){
 };
 
 displayMessageWithConversation = function(conversation, message){
+    let userPhoto = message.user.photo1;
     if(message.user.id === userId){
         conversation.append(
             '<div class="conversation-item you">' +
             '<div class="s1">' +
             '<a class="avatar" href="javascript:void(0);">' +
-            '<img src="" alt="Alternative text to the image"/>' +
+            '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
             '<div class="s2">' +
@@ -61,7 +62,7 @@ displayMessageWithConversation = function(conversation, message){
             '<div class="conversation-item">' +
             '<div class="s1">' +
             '<a class="avatar" href="javascript:void(0);">' +
-            '<img src="" alt="Alternative text to the image"/>' +
+            '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
             '<div class="s2">' +
