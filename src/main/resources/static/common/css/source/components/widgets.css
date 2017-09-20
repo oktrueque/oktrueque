@@ -281,7 +281,7 @@
 
 .conversation-block .conversation-item .s2 {
     padding: 10px 15px 1px;
-    background: #f2f4f8;
+    background: #dae4f9;
     margin-left: 70px;
     -webkit-border-radius: 5px;
             border-radius: 5px;
@@ -297,7 +297,7 @@
     display: block;
     content: '';
     border: 7px solid transparent;
-    border-right-color: #f2f4f8;
+    border-right-color: #dae4f9;
 }
 
 .conversation-block .conversation-item.you .s1 {
@@ -313,7 +313,7 @@
     left: auto;
     right: -14px;
     border: 7px solid transparent;
-    border-left-color: #f2f4f8;
+    border-left-color: #dae4f9;
 }
 
 .user-wall .user-wall-item {

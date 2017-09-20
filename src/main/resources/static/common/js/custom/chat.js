@@ -1,8 +1,11 @@
-var userId;
+var user = {};
 var stompClient = null;
 var conversationId = null;
-initialize = function(id){
-    userId = id;
+initialize = function(id, photo){
+    user = {
+        id: id,
+        photo: photo
+    }
 };
 
 $(document).ready(function () {
@@ -32,6 +35,9 @@ handleConversation = function(currentConversation){
     currentConversation.addClass("current");
     conversationId = currentConversation.data('id');
     $('#idConversation').val(conversationId);
+
+    var name = $('#user-'+conversationId).text();
+    $('#conversation-title').text(name);
 };
 
 display = function(messages){
@@ -74,13 +80,14 @@ displayMessageWithConversation = function(conversation, message){
 };
 
 displayMessage = function(message){
+    let userPhoto = message.user.photo1;
     var conversation = $('#conversation');
     if(message.user.id === userId){
         conversation.append(
             '<div class="conversation-item you">' +
             '<div class="s1">' +
             '<a class="avatar" href="javascript:void(0);">' +
-            '<img src="" alt="Alternative text to the image"/>' +
+            '<img src="'+ user.photo +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
             '<div class="s2">' +
@@ -93,7 +100,7 @@ displayMessage = function(message){
             '<div class="conversation-item">' +
             '<div class="s1">' +
             '<a class="avatar" href="javascript:void(0);">' +
-            '<img src="" alt="Alternative text to the image"/>' +
+            '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
             '<div class="s2">' +
@@ -159,7 +166,7 @@ function showMessageOutput(messageOutput) {
 }
 
 showNotification = function(message){
-    console.log(meesage);
+    console.log(message);
 };
 
 
