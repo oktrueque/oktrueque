@@ -2,6 +2,7 @@ package com.oktrueque.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "user_conversation")
@@ -15,6 +16,11 @@ public class UserConversation implements Comparable {
     @ManyToOne
     @JoinColumn(name = "id_send_to")
     private User sendTo;
+    @Column(name = "last_message_text")
+    private String lastMessage;
+    @Column(name = "last_message_time")
+    private Date lastMessageDate;
+
 
     public UserConversation() {
     }
@@ -47,6 +53,22 @@ public class UserConversation implements Comparable {
 
     public void setSendTo(User sendTo) {
         this.sendTo = sendTo;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public Date getLastMessageDate() {
+        return lastMessageDate;
+    }
+
+    public void setLastMessageDate(Date lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
     }
 
     @Override

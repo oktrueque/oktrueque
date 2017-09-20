@@ -31,12 +31,12 @@
                                     </a>
                                 </div>
                                 <div class="s2">
-                                    <!--<small class="messaging-time">8:34PM</small>-->
+                                    <small class="messaging-time" th:text="${#dates.format(uc.lastMessageDate, 'HH:mm')}">8:34PM</small>
                                     <div class="messaging-list-title-name" th:text="${uc.sendTo.name}"></div>
-                                    <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}"></span>
-                                    <!--<div class="messaging-list-title-last color-default">Hello! Where you are now? I want to-->
-                                    <!--talk. Hello! Where you are now? I want to talk-->
-                                    <!--</div>-->
+                                    <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
+                                    <div class="messaging-list-title-last color-default" th:text="${uc.lastMessage}">Hello! Where you are now? I want to
+                                    talk. Hello! Where you are now? I want to talk
+                                    </div>
                                 </div>
                             </div>
                         </th:block>

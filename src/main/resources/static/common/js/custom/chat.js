@@ -143,8 +143,12 @@ function showMessageOutput(messageOutput) {
         displayMessage(messageOutput);
     }
     else{
-        console.log(messageOutput.conversation.id, conversationId);
+        showNotification(messageOutput);
     }
 }
+
+showNotification = function(message){
+    console.log(meesage);
+};
 
 
