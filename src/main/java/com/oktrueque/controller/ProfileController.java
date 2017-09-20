@@ -220,26 +220,12 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
-    public String addComment(Model model,Principal principal, @ModelAttribute Comment comment,@ModelAttribute Comment comment1,@ModelAttribute Comment comment2){
+    public String addComment(Model model,Principal principal, @ModelAttribute Comment comment){
 
-        if(comment.getUser_target()!=null){
             comment.setDate(LocalDateTime.now());
             comment.setUser_origin(userService.getUserByUsername(principal.getName()));
             commentService.saveComment(comment);
-        }
-
-        if(comment1.getUser_target()!=null){
-            comment1.setDate(LocalDateTime.now());
-            comment1.setUser_origin(userService.getUserByUsername(principal.getName()));
-            commentService.saveComment(comment1);
-            model.addAttribute("comment2", comment2);
-            return "";
-        }
-
-
-
-
-        return "redirect:/profile";
+            return "redirect:/profile";
     }
 
 
