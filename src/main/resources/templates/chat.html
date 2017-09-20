@@ -24,7 +24,7 @@
                     <!--Aca buscar los rost-->
                     <div class="messaging-list">
                         <th:block th:each="uc : ${conversations}" >
-                            <div class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}" >
+                            <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}" >
                                 <div class="s1">
                                     <a class="avatar" href="javascript:void(0);">
                                         <img th:src="${uc.sendTo.photo1}" />

@@ -7,8 +7,7 @@ initialize = function(id){
 
 $(document).ready(function () {
    $('.conversation').on('click', function () {
-       conversationId = $(this).data('id');
-       $('#idConversation').val(conversationId);
+       handleConversation($(this));
        $.ajax({
            type : "get",
            url : "/profile/conversations/" + conversationId + "/messages",
@@ -23,6 +22,17 @@ $(document).ready(function () {
    });
    connect();
 });
+
+handleConversation = function(currentConversation){
+    var idOldConversation = $('#idConversation').val();
+    var oldConversation = $('#conversation-'+idOldConversation);
+    if(oldConversation.hasClass("current")){
+        oldConversation.removeClass("current");
+    }
+    currentConversation.addClass("current");
+    conversationId = currentConversation.data('id');
+    $('#idConversation').val(conversationId);
+};
 
 display = function(messages){
     var conversation = $('#conversation');
