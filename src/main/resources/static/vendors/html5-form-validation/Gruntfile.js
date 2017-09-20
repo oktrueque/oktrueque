@@ -11,7 +11,7 @@ module.exports = function (grunt) {
             ' *\n' +
             ' * @author <%= pkg.author.name %>\n' +
             ' * @version <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n' +
-            ' * @link http://www.runningcoder.org/jqueryvalidation/\n' +
+            ' * @link http://www.runningcoder.org/jquery-validation/\n' +
             '*/\n',
 
         clean: {

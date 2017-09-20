@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -15,7 +16,8 @@ import java.util.Map;
 public class EmailServiceImpl implements EmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
-    private static final String MESSAGE= "Error al enviar el mail";
+    private static final String MESSAGE= "Error sending email";
+    private static final String SUCCESS= "Email send";
 
     private final JavaMailSender javaMailSender;
 
@@ -26,6 +28,7 @@ public class EmailServiceImpl implements EmailService {
         this.javaMailSender = javaMailSender;
     }
 
+    @Async
     @Override
     public void sendMail(Email mail, String template) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -39,7 +42,9 @@ public class EmailServiceImpl implements EmailService {
         } catch (MessagingException e) {
            LOGGER.warn(MESSAGE, e);
         }
+        LOGGER.info(SUCCESS);
     }
+
     private String geContentFromTemplate(Map < String, Object > model, String template) {
         StringBuffer content = new StringBuffer();
         try {
