@@ -1,10 +1,11 @@
 var user = {};
 var stompClient = null;
 var conversationId = null;
-initialize = function(id, photo){
+initialize = function(id, photo, groups){
     user = {
         id: id,
-        photo: photo
+        photo: photo,
+        groups: groups
     }
 };
 
@@ -130,8 +131,7 @@ function setConnected(connected) {
     document.getElementById('response').innerHTML = '';
 }
 
-function connect(group) {
-    console.log(group);
+function connect() {
     var socket = new SockJS('/profile/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
@@ -140,9 +140,12 @@ function connect(group) {
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
             showMessageOutput(JSON.parse(messageOutput.body));
         });
-        stompClient.subscribe("/topic/3", function(messageOutput) {
-            showMessageOutput(JSON.parse(messageOutput.body));
-        });
+
+        user.groups.forEach(function(groupId){
+            stompClient.subscribe("/topic/" + groupId, function(messageOutput) {
+                showGroupMessageOutput(JSON.parse(messageOutput.body));
+            });
+        })
     });
 }
 
@@ -155,9 +158,11 @@ function disconnect() {
 }
 
 function sendMessage() {
-    var text = $('#text');
+    var isGroup = $('#conversation-'+conversationId).data('group');
+    console.log(isGroup);
+    let text = $('#text');
     if(text.val()){
-        var message = {
+        let message = {
             user: {id: userId},
             userId: userId,
             message:  text.val(),
@@ -166,21 +171,35 @@ function sendMessage() {
         };
         text.val("");
         displayMessage(message);
-        var sendTo = $('#send-to-' + conversationId).text();
-        // stompClient.send("/app/messages/" + sendTo, {},
-        //     JSON.stringify(message));
-        stompClient.send("/app/messages/room/3", {},
-            JSON.stringify(message));
+        if(isGroup){
+            stompClient.send("/app/messages/room/" + conversationId, {},
+                JSON.stringify(message));
+        }else{
+            let sendTo = $('#send-to-' + conversationId).text();
+            stompClient.send("/app/messages/" + sendTo, {},
+                JSON.stringify(message));
+        }
     }
+
 }
 
 function showMessageOutput(messageOutput) {
-    console.log(messageOutput);
     if(messageOutput.conversation.id === conversationId){
         displayMessage(messageOutput);
     }
     else{
         showNotification(messageOutput);
+    }
+}
+
+function showGroupMessageOutput(messageOutput) {
+    if(messageOutput.user.id !== user.id){
+        if(messageOutput.conversation.id === conversationId){
+            displayMessage(messageOutput);
+        }
+        else{
+            showNotification(messageOutput);
+        }
     }
 }
 

@@ -112,7 +112,8 @@
             /*<![CDATA[*/
             var userId =  /*[[${#authentication.principal.id}]]*/ "";
             var user_photo =  /*[[${#authentication.principal.photo1}]]*/ "";
-            initialize(userId, user_photo);
+            var groups = [[${groups}]];
+            initialize(userId, user_photo, groups);
             /*]]>*/
         </script>
         <!-- End Page Scripts -->
