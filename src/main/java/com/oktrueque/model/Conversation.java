@@ -16,6 +16,10 @@ public class Conversation {
     private LocalDateTime date;
     @Column(name = "id_trueque")
     private Long idTrueque;
+    @Column(name = "last_message_text")
+    private String lastMessage;
+    @Column(name = "last_message_time")
+    private Date lastMessageDate;
 
     public Conversation() {
     }
@@ -51,5 +55,21 @@ public class Conversation {
 
     public void setIdTrueque(Long idTrueque) {
         this.idTrueque = idTrueque;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public Date getLastMessageDate() {
+        return lastMessageDate;
+    }
+
+    public void setLastMessageDate(Date lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
     }
 }

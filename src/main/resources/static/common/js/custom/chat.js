@@ -28,9 +28,8 @@ $(document).ready(function () {
     $('#text').keypress(function(e) {
         var keycode = (e.keyCode ? e.keyCode : e.which);
         if (keycode == '13') {
-            console.log("Enter");
             e.preventDefault();
-            return false;
+            sendMessage();
         }
     });
 });
@@ -131,13 +130,17 @@ function setConnected(connected) {
     document.getElementById('response').innerHTML = '';
 }
 
-function connect() {
+function connect(group) {
+    console.log(group);
     var socket = new SockJS('/profile/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         //setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
+            showMessageOutput(JSON.parse(messageOutput.body));
+        });
+        stompClient.subscribe("/topic/3", function(messageOutput) {
             showMessageOutput(JSON.parse(messageOutput.body));
         });
     });
@@ -153,18 +156,22 @@ function disconnect() {
 
 function sendMessage() {
     var text = $('#text');
-    var message = {
-        user: {id: userId},
-        userId: userId,
-        message:  text.val(),
-        conversationId: conversationId,
-        date: new Date()
-    };
-    text.val("");
-    displayMessage(message);
-    var sendTo = $('#send-to-' + conversationId).text();
-    stompClient.send("/app/messages/" + sendTo, {},
-        JSON.stringify(message));
+    if(text.val()){
+        var message = {
+            user: {id: userId},
+            userId: userId,
+            message:  text.val(),
+            conversationId: conversationId,
+            date: new Date()
+        };
+        text.val("");
+        displayMessage(message);
+        var sendTo = $('#send-to-' + conversationId).text();
+        // stompClient.send("/app/messages/" + sendTo, {},
+        //     JSON.stringify(message));
+        stompClient.send("/app/messages/room/3", {},
+            JSON.stringify(message));
+    }
 }
 
 function showMessageOutput(messageOutput) {

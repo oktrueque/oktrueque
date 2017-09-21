@@ -24,18 +24,37 @@
                     <!--Aca buscar los rost-->
                     <div class="messaging-list">
                         <th:block th:each="uc : ${conversations}" >
-                            <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}" >
-                                <div class="s1">
-                                    <a class="avatar" href="javascript:void(0);">
-                                        <img th:src="${uc.sendTo.photo1}" />
-                                    </a>
+                            <div th:if="${!uc.group}">
+                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}"  >
+                                    <div class="s1">
+                                        <a class="avatar" href="javascript:void(0);">
+                                            <img th:src="${uc.sendTo.photo1}" />
+                                        </a>
+                                    </div>
+                                    <div class="s2">
+                                        <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
+                                        <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name" th:text="${uc.sendTo.name}"></div>
+                                        <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
+                                        <div class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                            talk. Hello! Where you are now? I want to talk
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="s2">
-                                    <small class="messaging-time" th:text="${#dates.format(uc.lastMessageDate, 'HH:mm')}">8:34PM</small>
-                                    <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name" th:text="${uc.sendTo.name}"></div>
-                                    <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
-                                    <div class="messaging-list-title-last color-default" th:text="${uc.lastMessage}">Hello! Where you are now? I want to
-                                    talk. Hello! Where you are now? I want to talk
+                            </div>
+                            <div th:if="${uc.group}">
+                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}" >
+                                    <div class="s1">
+                                        <a class="avatar" href="javascript:void(0);">
+                                            <img src="https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-2" />
+                                        </a>
+                                    </div>
+                                    <div class="s2">
+                                        <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
+                                        <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name">Red de Trueques</div>
+                                        <!--<span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>-->
+                                        <div class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                            talk. Hello! Where you are now? I want to talk
+                                        </div>
                                     </div>
                                 </div>
                             </div>

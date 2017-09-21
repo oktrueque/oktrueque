@@ -1,7 +1,6 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -10,24 +9,17 @@ public class UserConversation implements Comparable {
 
     @EmbeddedId
     private UserConversationId id;
-
-    @Column(name = "date")
-    private LocalDateTime date;
     @ManyToOne
     @JoinColumn(name = "id_send_to")
     private User sendTo;
-    @Column(name = "last_message_text")
-    private String lastMessage;
-    @Column(name = "last_message_time")
-    private Date lastMessageDate;
-
+    @Column(name = "is_group")
+    private Boolean group;
 
     public UserConversation() {
     }
 
-    public UserConversation(UserConversationId id, LocalDateTime date, User sendTo) {
+    public UserConversation(UserConversationId id, Date date, User sendTo) {
         this.id = id;
-        this.date = date;
         this.sendTo = sendTo;
     }
 
@@ -39,14 +31,6 @@ public class UserConversation implements Comparable {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
-
     public User getSendTo() {
         return sendTo;
     }
@@ -55,20 +39,12 @@ public class UserConversation implements Comparable {
         this.sendTo = sendTo;
     }
 
-    public String getLastMessage() {
-        return lastMessage;
+    public Boolean getGroup() {
+        return group;
     }
 
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
-    }
-
-    public Date getLastMessageDate() {
-        return lastMessageDate;
-    }
-
-    public void setLastMessageDate(Date lastMessageDate) {
-        this.lastMessageDate = lastMessageDate;
+    public void setGroup(Boolean group) {
+        this.group = group;
     }
 
     @Override

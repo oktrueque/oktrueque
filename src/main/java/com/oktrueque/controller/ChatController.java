@@ -54,20 +54,23 @@ public class ChatController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-    @MessageMapping("/messages")
-    @SendTo("/topic/messages")
-    public Message send(@Payload MessageLite message) throws Exception {
-        User user = new User();
-        user.setId(message.getUserId());
-        return new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
-    }
-
     @MessageMapping("/messages/{username}")
-    public void send2(@Payload MessageLite message, @DestinationVariable("username") String username, Principal principal) throws Exception {
+    public void send(@Payload MessageLite message, @DestinationVariable("username") String username, Principal principal) throws Exception {
         User user = new User();
         user.setId(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
+        //messageService.saveMessage(response);
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", response);
+    }
+
+    @MessageMapping("/messages/room/{id}")
+    public void sendToGroup(@Payload MessageLite message, @DestinationVariable("id") Long id, Principal principal) throws Exception {
+        User user = new User();
+        user.setId(message.getUserId());
+        Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
+        //messageService.saveMessage(response);
+        //simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", response);
+        simpMessagingTemplate.convertAndSend("/topic/3", response);
     }
 
 }
