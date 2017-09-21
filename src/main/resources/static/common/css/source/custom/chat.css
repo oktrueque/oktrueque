@@ -17,3 +17,7 @@
     resize: none;
     overflow-y: visible;
 }
+
+.notification{
+    color: #b31a27;
+}

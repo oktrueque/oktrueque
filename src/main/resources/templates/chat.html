@@ -16,7 +16,7 @@
                         <div class="search-block">
                             <div class="form-input-icon form-input-icon-right">
                                 <i class="icmn-search"></i>
-                                <input type="text" class="form-control form-control-sm" placeholder="Search..."></input>
+                                <input type="text" class="form-control form-control-sm" placeholder="Search..."/>
                                 <button type="submit" class="search-block-submit "></button>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                                         <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
                                         <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name" th:text="${uc.sendTo.name}"></div>
                                         <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
-                                        <div class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                        <div th:id="${'message-'+uc.id.conversation.id}" class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
                                             talk. Hello! Where you are now? I want to talk
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@
                                         <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
                                         <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name">Red de Trueques</div>
                                         <!--<span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>-->
-                                        <div class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                        <div th:id="${'message-'+uc.id.conversation.id}" class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
                                             talk. Hello! Where you are now? I want to talk
                                         </div>
                                     </div>

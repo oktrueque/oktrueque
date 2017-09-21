@@ -204,6 +204,16 @@ function showGroupMessageOutput(messageOutput) {
 }
 
 showNotification = function(message){
+    console.log('convId', conversationId);
+    $('#user-' + message.conversation.id).html(
+        '<b>' + message.user.name +
+        '</b>'
+    );
+    $('#message-' + message.conversation.id).html(
+        '<b>' + message.message +
+        '</b>' +
+        '<i class="icmn-circle2 pull-right" style="color: rgba(179, 26, 39, 0.58);"></i>'
+    );
     console.log(message);
 };
 
