@@ -298,21 +298,29 @@
 
     <div class="modal fade"  id="modalCreateComment" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" role="document">
-            <form  th:action="@{'/profile/comment'}" name="comment" th:method="POST">
-                <input type="hidden" id="idUser" name="user_target"/>
-                <!--<input type="hidden" th:field="*{score}" th:value="${comment.score}"/>-->
-                <div class="form-group">
-                    <div class="col-lg">
-                        <div class="row">
-                            <div class="form-group">
-                                <label for="descTextArea" class="form-control-label">Descripción</label>
-                                <textarea name="description" id="descTextArea" class="form-control" rows="4"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar Comentario</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Has cancelado el trueque! Deje un comentario acerca de</h4>
+                    <input id="nameUser" type="text" disabled="disabled"/>
                 </div>
-            </form>
+                <form  th:action="@{'/profile/comment'}" name="comment" th:method="POST">
+                    <div class="modal-body">
+                     <input type="hidden" id="idUser" name="user_target"/>
+                      <div class="form-group">
+                        <div class="col-lg">
+                            <div class="row">
+                                 <div class="form-group">
+                                     <label for="commentDescription" class="form-control-label">Descripción</label>
+                                     <textarea name="description" id="commentDescription" class="form-control" rows="4"></textarea>
+                                </div>
+                             </div>
+                         </div>
+                          <button id="sendComment" type="submit"  class="btn btn-primary">Enviar</button>
+                          <button  type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                     </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -324,6 +332,8 @@
         /*<![CDATA[*/
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
+        var x = 0;
+        users = [];
 
         $(document).ready(function(){
             $('.cancel').on('click', function(){
@@ -338,8 +348,8 @@
                     },
                     success: function (data) {
                         console.log(data);
-                        displayUsers(data);
-
+                        hacerComentario(data[x]);
+                        users = data;
                     },
                     error: function (e) {
                         console.log(e);
@@ -350,13 +360,57 @@
 
         });
 
-        displayUsers = function(users){
-            console.log(users);
-            users.forEach(function(user){
+        hacerComentario = function(user){
                 $('#modalCreateComment').modal('show');
                 $('#idUser').val(user.id);
-            });
+                $('#nameUser').val(user.name);
+                x ++;
         };
+
+
+        $('#sendComment').on('click', function(){
+            enviarComentario();
+
+        });
+
+
+        function getNewComment(){
+            let commentDescription = $("#commentDescription").val();
+            let idUser = $("#idUser").val();
+            var comment = {
+                description: commentDescription,
+                user_target: {id: idUser},
+            };
+            return JSON.stringify(comment);
+        }
+
+
+        enviarComentario = function () {
+            $.ajax({
+                type: "POST",
+                url: "profile/comment",
+                contentType: "application/json",
+                data: getNewComment(),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log("Comment Saved",data);
+                    
+
+                    if (x < users.length){
+                        hacerComentario(users[x]);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+
+
         $(function() {
             $('.dropify').dropify();
         });

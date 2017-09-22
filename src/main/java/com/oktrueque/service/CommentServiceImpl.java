@@ -4,6 +4,7 @@ import com.oktrueque.model.Comment;
 import com.oktrueque.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void saveComment(Comment comment) {
+    @Transactional
+    public Comment saveComment(Comment comment) {
 
-        commentRepository.save(comment);
+        Comment CommentSaved = commentRepository.save(comment);
+        return CommentSaved;
     }
 
 }

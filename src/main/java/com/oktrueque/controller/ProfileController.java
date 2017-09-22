@@ -219,13 +219,15 @@ public class ProfileController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
-    public String addComment(Model model,Principal principal, @ModelAttribute Comment comment){
 
-            comment.setDate(LocalDateTime.now());
-            comment.setUser_origin(userService.getUserByUsername(principal.getName()));
-            commentService.saveComment(comment);
-            return "redirect:/profile";
+    @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
+    public ResponseEntity<Comment> addComment(Comment comment, Principal principal){
+
+        comment.setDate(LocalDateTime.now());
+        comment.setUser_origin(userService.getUserByUsername(principal.getName()));
+        Comment commentResponse = commentService.saveComment(comment);
+        return new ResponseEntity<>(commentResponse, HttpStatus.OK);
+
     }
 
 
