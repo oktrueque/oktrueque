@@ -144,6 +144,26 @@
     </div>
     <!--END MODAL PASSWORD RESET SENT-->
 
+    <!--MODAL START - MAIL O USERNAME NOT FOUND-->
+    <div class="modal fade" id="notFoundModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Lo sentimos, no encontramos tu email o nombre de usuario. Regístrate!</span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL - MAIL O USERNAME NOT FOUND-->
 
     <!-- Page Scripts -->
     <script>
@@ -200,6 +220,7 @@
 
             let emailInput = $("#validation-email");
             $("#resetPassLink").on("click", function () {
+               document.getElementById('resetPassLink').setAttribute('style','pointer-events: none; cursor: default;');
                 if(emailInput.val().length!==0){
                     $.ajax({
                         type: "POST",
@@ -213,10 +234,14 @@
                         success: function () {
                             console.log("Ajax sent");
                             $("#modalPasswordReset").modal('show');
+
                         },
                         error: function (e) {
-                            console.log(JSON.stringify(e));
-                            console.log("input: "+emailInput.val());
+                            if(e.status===406){
+                                $('#notFoundModal').modal('show');
+                                document.getElementById('resetPassLink').setAttribute('style','');
+                            }
+
                         }
                     });
                 } else {

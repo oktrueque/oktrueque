@@ -15,7 +15,14 @@
             <div style="padding: 40px 40px 20px 40px; background: #fff;">
                 <p>Hola ${user.getName()}!</p>
                 <p>Tu password se ha restablecido.</p>
-                <p>Nuevo password: ${user.getPassword()}</p>
+                <p>Nuevo password: ${rawPassword}</p>
+
+                <p>Ingresa a tu perfil y restablece una nueva contraseña por tu seguridad.</p>
+
+                <a href="${uri_editar_perfil}"
+                   style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px">
+                    Editar perfil
+                </a>
             </div>
             <div style="text-align: center; font-size: 12px; color: #a09bb9; margin-top: 20px">
                 <p>

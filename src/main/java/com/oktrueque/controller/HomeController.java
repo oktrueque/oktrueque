@@ -38,40 +38,6 @@ public class HomeController {
     }
 
     @RequestMapping(method= RequestMethod.POST, value = "/resetPassword")
-    public ResponseEntity resetPassword(@RequestBody String datos){
-
-        Email emailObject = new Email();
-        String email = "", username = "";
-
-        Map<String,Object> model = new LinkedHashMap<>();
-        Random rand = new Random();
-
-        if(datos.contains("@")){
-            email = datos;
-            User user = userService.getUserByEmailOrUsername(email, username);
-            user.setPassword(email.substring(0,email.indexOf("@"))+rand.nextInt(1000));
-            userService.updateUser(user);
-            emailObject.setMailTo(email);
-            emailObject.setMailSubject("OkTrueque - Reset password");
-            model.put("user",user);
-            emailObject.setModel(model);
-            emailService.sendMail(emailObject,"passwordReset.ftl");
-        } else {
-            username = datos;
-            User user = userService.getUserByEmailOrUsername(email, username);
-            user.setPassword(username+rand.nextInt(1000));
-            userService.updateUser(user);
-            emailObject.setMailTo(user.getEmail());
-            emailObject.setMailSubject("OkTrueque - Reset password");
-            model.put("user",user);
-            emailObject.setModel(model);
-            emailService.sendMail(emailObject,"passwordReset.ftl");
-        }
-
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-
+    public ResponseEntity resetPassword(@RequestBody String datos){return userService.resetPassword(datos);}
 
 }
