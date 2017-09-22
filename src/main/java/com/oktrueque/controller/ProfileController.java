@@ -7,17 +7,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import javax.print.attribute.standard.Media;
 import java.security.Principal;
-import java.util.HashMap;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,9 +37,10 @@ public class ProfileController {
     private String fileNameUsers;
     @Value("${aws.s3.fileName.items}")
     private String fileNameItems;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
+    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.commentService = commentService;
         this.userTagService = userTagService;
@@ -50,6 +49,7 @@ public class ProfileController {
         this.categoryService = categoryService;
         this.truequeService = truequeService;
         this.awsS3Service = awsS3Service;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
@@ -84,18 +84,22 @@ public class ProfileController {
     public String editProfile(Principal principal, Model model){
         User user = userService.getUserByUsername(principal.getName());
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
+        String newPassword = "";
         model.addAttribute("user", user);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
+        model.addAttribute("newPassword",newPassword);
         return "updateProfile";
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
-    public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
+    public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture,@ModelAttribute String newPassword) {
         if(!picture.getOriginalFilename().equals("")){
             String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), null, user.getPhoto1());
             user.setPhoto1(pictureUrl);
         }
+        String encondedPassword = bCryptPasswordEncoder.encode(newPassword);
+        user.setPassword(encondedPassword);
         userService.updateUser(user);
         return "redirect:/profile";
     }

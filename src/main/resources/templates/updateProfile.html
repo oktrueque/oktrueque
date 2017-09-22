@@ -56,6 +56,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div id="nuevoPass" class="form-group col-lg-6">
+                                    <label class="form-control-label" for="nuevoPass">Nueva contraseña</label>
+                                    <input th:field="${newPassword}"
+                                           id="validation[password]"
+                                           class="form-control password"
+                                           name="validation[password]"
+                                           type="password" data-validation="[L>=6]"
+                                           data-validation-message="$ must be at least 6 characters"/>
+                                </div>
+                                <div id="div-pass2" class="form-group form-input-icon form-input-icon-right col-lg-6">
+                                    <label class="form-control-label" for="div-pass2">Confirma la nueva contraseña</label>
+                                    <i id="cross" hidden="true" class="icmn-cross col-lg-6"></i>
+                                    <i id="check" hidden="true" class="icmn-checkmark col-lg-6"></i>
+                                    <input id="pass2"
+                                           name="pass2"
+                                           type="password"
+                                           class="form-control"
+                                           onkeyup="checkPass(); return false;"/>
+                                </div>
+                            </div>
                             <h5></h5>
                             <h5>Intereses personales</h5>
                             <div class="form-group">
@@ -105,6 +126,7 @@
         var header = [[${_csrf.headerName}]];
 
         document.addEventListener("DOMContentLoaded", function () {
+            //document.getElementById('passwordInput').setAttribute('value','');
             var ms = $("#tags").magicSuggest({
                 method: 'get'
                 , data: '/tags'
@@ -142,6 +164,8 @@
 
         /*]]>*/
     </script>
+
+    <script th:src="@{/common/js/custom/register.js}" src="../static/common/js/custom/register.js"></script>
 
 </th:block>
 </html>
