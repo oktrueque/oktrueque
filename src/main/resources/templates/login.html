@@ -96,7 +96,8 @@
 
                         </div>
                         <div class="form-group">
-                            <a href="javascript: void(0);" class="pull-right">Olvidaste tu contraseña?</a>
+                            <a id="resetPassLink" style="cursor: default;" class="pull-right">Recuperar contraseña</a>
+                            <a id="pleaseWait" hidden="true" style="color:red" class="pull-right">Cargando, espere porfavor.</a>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="example6" checked=""/>
@@ -122,6 +123,47 @@
 
     </div>
 
+    <!--MODAL PASSWORD RESET SENT-->
+    <div class="modal fade" id="modalPasswordReset" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Revisa tu correo electronico, tu password se ha restablecido.</span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL PASSWORD RESET SENT-->
+
+    <!--MODAL START - MAIL O USERNAME NOT FOUND-->
+    <div class="modal fade" id="notFoundModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span>Lo sentimos, no encontramos tu email o nombre de usuario. Regístrate!</span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL - MAIL O USERNAME NOT FOUND-->
 
     <!-- Page Scripts -->
     <script>
@@ -167,6 +209,49 @@
                 })
             };
         });
+    </script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            let emailInput = $("#validation-email");
+            $("#resetPassLink").on("click", function () {
+               document.getElementById('resetPassLink').setAttribute('style','pointer-events: none; cursor: wait;');
+               document.getElementById('pleaseWait').setAttribute('hidden','false');
+                if(emailInput.val().length!==0){
+                    $.ajax({
+                        type: "POST",
+                        url: "/resetPassword",
+                        contentType : "application/json",
+                        data: emailInput.val(),
+                        dataType : 'text',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },
+                        success: function () {
+                            $("#modalPasswordReset").modal('show');
+                            document.getElementById('pleaseWait').setAttribute('hidden','true');
+                        },
+                        error: function (e) {
+                            if(e.status===406){
+                                $('#notFoundModal').modal('show');
+                                document.getElementById('resetPassLink').setAttribute('style','');
+                            }
+
+                        }
+                    });
+                } else {
+                    document.getElementById('validation-email').placeholder = 'Inserta mail o username para recuperar la contraseña';
+                    document.getElementById('resetPassLink').setAttribute('style','');
+                }
+            });
+
+        });
+        /*]]>*/
     </script>
     <!-- End Page Scripts -->
 

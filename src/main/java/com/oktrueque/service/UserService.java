@@ -1,6 +1,7 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.User;
+import org.springframework.http.ResponseEntity;
 
 /**
  * Created by Facundo on 12/07/2017.
@@ -22,5 +23,7 @@ public interface UserService {
     User getUserById(long id);
 
     boolean confirmAccount(String username, String token);
+
+    ResponseEntity resetPassword(String datos);
 
 }
