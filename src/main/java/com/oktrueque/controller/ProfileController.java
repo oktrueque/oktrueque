@@ -198,13 +198,13 @@ public class ProfileController {
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
             trueque.setRejectionDate(LocalDateTime.now());
-            //truequeService.updateTrueque(trueque);
+            truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         if (trueque.getStatus().equals("Activo")){
             trueque.setStatus(4);
             trueque.setRejectionDate(LocalDateTime.now());
-            //truequeService.updateTrueque(trueque);
+            truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(users,HttpStatus.OK);
 
         }
@@ -217,8 +217,8 @@ public class ProfileController {
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
         comment.setDate(LocalDateTime.now());
         comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
-        //Comment commentResponse = commentService.saveComment(comment);
-        return new ResponseEntity<>(comment, HttpStatus.OK);
+        Comment commentResponse = commentService.saveComment(comment);
+        return new ResponseEntity<>(commentResponse, HttpStatus.OK);
 
     }
 
