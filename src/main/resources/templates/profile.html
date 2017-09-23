@@ -11,6 +11,7 @@
 
     <!--VALIDATIONS-->
     <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
@@ -156,45 +157,23 @@
                                                         <td th:text="${trueque.peopleCount}"></td>
                                                         <td><span class="label label-info" th:text="${trueque.status}"></span></td>
                                                         <td th:if="${trueque.isPendiente()}" >
-                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
-                                                                <button type="button" class="btn btn-xs">Detalle
-                                                                    <i class="fa fa-bars" aria-hidden="true"/>
-                                                                </button>
+                                                            <a th:href="@{'/trueques/'+${trueque.id}+'/accept'}" class="btn btn-xs btn-success">
+                                                                <i class="fa fa-check" aria-hidden="true"></i> Aceptar
                                                             </a>
-                                                            <form id="confirmForm" th:action="@{'/trueques/'+${trueque.id}+'/accept'}" th:object="${trueque}" th:method="PUT">
-                                                                <!--Aceptar trueque-->
-                                                                <button id="btnConfirmar" type="submit" class="btn btn-xs btn-success" >Aceptar
-                                                                    <i class="fa fa-check" aria-hidden="true"/>
-                                                                </button>
-                                                            </form>
-
-                                                            <form th:action="@{'/profile/trueques/'+${trueque.id}}" th:object="${trueque}" th:method="PUT">
-                                                                <button type="submit" class="btn btn-xs btn-danger">Rechazar</button>
-                                                            </form>
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
+                                                                <i class="fa fa-bars" aria-hidden="true"></i> Detalle
+                                                            </a>
+                                                            <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Rechazar</button>
 
                                                         </td>
                                                         <td th:if="${trueque.isActivo()}">
-                                                            <form id="acceptForm" th:action="@{'/trueques/'+${trueque.id}+'/accept'}" th:object="${trueque}" th:method="PUT">
-                                                                <!--Aceptar trueque-->
-                                                                <button id="btnAccept" type="submit" class="btn btn-xs btn-success">Aceptar
-                                                                    <i class="fa fa-check" aria-hidden="true"/>
-                                                                </button>
-                                                            </form>
-
-                                                            <form th:action="@{'/profile/trueques/'+${trueque.id}}" th:object="${trueque}" th:method="PUT">
-                                                                <!--CANCELAR-->
-                                                                <button type="submit" class="btn btn-xs btn-danger" style="width:30px">Cancelar
-                                                                    <i class="fa fa-times" aria-hidden="true"/>
-                                                                </button>
-                                                            </form>
-
-                                                            <a th:href="'/profile/trueques/' + ${trueque.id}">
-                                                                <!--DETALLE-->
-                                                                <button type="button" class="btn btn-xs" style="width:30px">
-                                                                    <i class="fa fa-bars" aria-hidden="true"/>Detalle
-                                                                </button>
+                                                            <button type="button" class="btn btn-xs btn-success">
+                                                                <i class="fa fa-check" aria-hidden="true"></i> Confirmar
+                                                            </button>
+                                                            <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
+                                                                <i class="fa fa-bars" aria-hidden="true"></i> Detalle
                                                             </a>
-
+                                                            <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Cancelar</button>
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -307,6 +286,7 @@
             </div>
         </div>
     </div>
+
     <!--END MODAL SET IMAGES-->
 
     <!--MESSAGES MODAL-->
@@ -331,8 +311,141 @@
     </div>
     <!--END MESSAGES MODAL-->
 
+    <!--MODAL SET COMMENTS-->
+
+    <div class="modal fade"  id="modalCreateComment" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal-name" class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <input type="hidden" id="idUser" name="user_target"/>
+                        <div class="form-group">
+                            <div class="col-lg">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="commentDescription" class="form-control-label">Comentario</label>
+                                        <textarea id="commentDescription" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="sendComment" type="button"  class="btn btn-primary">Enviar</button>
+                    <button  type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--END MODAL SET COMMENT-->
+
 <!-- Page Scripts -->
-    <script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
+        var x = 0;
+        var users = [];
+
+        $(document).ready(function(){
+            $('.cancel').on('click', function(){
+                var truequeId = $(this).data('id');
+
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "Una vez cancelado, no podrás continuar con esta propuesta de trueque",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $(this).parent().parent().remove();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'profile/trueques/' + truequeId,
+                                contentType: 'application/json',
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader(header, token);
+                                },
+                                success: function (data) {
+                                    if(data){
+                                        users = data;
+                                        x=0;
+                                        makeComment(data[x]);
+                                    }else{
+                                        swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
+                                    }
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    });
+
+            });
+
+            $('#sendComment').on('click', function(){
+                sendComment();
+            });
+        });
+
+        makeComment = function(user){
+            $("#commentDescription").val("");
+            $('#modalCreateComment').modal('show');
+            $('#modal-name').text('¿Te gustaría dejar un comentario acerca de ' + user.name + '?');
+            $('#idUser').val(user.id);
+            x ++;
+        };
+
+        function getNewComment(){
+            let commentDescription = $("#commentDescription").val();
+            let idUser = $("#idUser").val();
+            var comment = {
+                description: commentDescription,
+                user_target: {id: idUser},
+            };
+            console.log(comment);
+            return JSON.stringify(comment);
+        }
+
+
+        sendComment = function () {
+            $.ajax({
+                type: "POST",
+                url: "profile/comment",
+                contentType: "application/json",
+                data: getNewComment(),
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    swal("Comentario Enviado", "Nuestro equipo se encargará de aquí en adelante", "success");
+                    checkMoreComments();
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        };
+
+        checkMoreComments = function(){
+            if (x < users.length){
+                makeComment(users[x]);
+            }else{
+                $('#modalCreateComment').modal('hide');
+            }
+        };
+
         $(function() {
             $('.dropify').dropify();
         });
@@ -346,6 +459,7 @@
                 paging: false
             });
         });
+        /*]]>*/
     </script>
 
     <script th:inline="javascript">

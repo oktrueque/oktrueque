@@ -89,9 +89,10 @@ public class ItemServiceImpl implements ItemService {
         return itemSaved;
     }
 
-    public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status,Pageable pageable){
+    public List<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses,Pageable pageable){
         //  2: Eliminado
-        return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status,pageable);
+        //  3: Banneado
+        return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(username,statuses,pageable);
     }
 
     public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status){

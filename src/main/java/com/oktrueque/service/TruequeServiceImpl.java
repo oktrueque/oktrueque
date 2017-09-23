@@ -132,4 +132,8 @@ public class TruequeServiceImpl implements TruequeService {
         return itemTruequeRepository.findById_TruequeId(id);
     }
 
+    @Override
+    public Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses) {
+        return truequeRepository.findTruequeByIdAndStatusIsNotIn(id, statuses);
+    }
 }

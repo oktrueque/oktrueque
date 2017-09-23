@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -55,16 +56,15 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(user.getUsername(),2, pageable);
+        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(),new int[]{2,3}, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-        Trueque TruequeNuevo;
+        Trueque truequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
-            trueques.add(TruequeNuevo);
+            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTruequeId(), new int[]{2,4});
+            if(truequeNuevo != null) trueques.add(truequeNuevo);
         }
-
 
 
         model.addAttribute("user", user);
@@ -194,52 +194,44 @@ public class ProfileController {
         return "redirect:/profile/items";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "profile/trueques/{id}")
-    public String upadteTrueque(@PathVariable Long id, Model model, Principal principal){
+
+    @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}")
+    public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal){
 
         Trueque trueque = truequeService.getTruequeById(id);
         User user = userService.getUserByUsername(principal.getName());
-
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+        List<UserLite> users = new ArrayList<>();
+        for (UserTrueque ut: userTrueques){
+            if (ut.getId().getUserId()!= user.getId()){
+                users.add(userService.getUserLiteById(ut.getId().getUserId()));}
+        }
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
             trueque.setRejectionDate(LocalDateTime.now());
             truequeService.updateTrueque(trueque);
-            return "redirect:/profile";
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-
         if (trueque.getStatus().equals("Activo")){
             trueque.setStatus(4);
             trueque.setRejectionDate(LocalDateTime.now());
             truequeService.updateTrueque(trueque);
-            List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
-            LinkedList<User> users = new LinkedList<>();
+            return new ResponseEntity<>(users,HttpStatus.OK);
 
-            for (UserTrueque ut: userTrueques){
-                if (ut.getId().getUserId()!= user.getId()){
-                    users.add(userService.getUserById(ut.getId().getUserId()));
-                }
-            }
-            Comment comment = new Comment();
-            model.addAttribute("comment", comment);
-            model.addAttribute("users", users);
-            return "canceledTrueque";
         }
-
-        return "redirect:/profile/";
+        return new ResponseEntity<>(users,HttpStatus.OK);
     }
+
 
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
-    public String addComment(Principal principal, @ModelAttribute Comment comment){
-
+    public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
         comment.setDate(LocalDateTime.now());
-        comment.setUser_origin(userService.getUserByUsername(principal.getName()));
-        commentService.saveComment(comment);
+        comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
+        Comment commentResponse = commentService.saveComment(comment);
+        return new ResponseEntity<>(commentResponse, HttpStatus.OK);
 
-        return "redirect:/profile";
     }
-
-
 
     @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
     public String deleteUserItem(@PathVariable Long id){

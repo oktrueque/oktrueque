@@ -34,7 +34,7 @@ public interface ItemService {
 
     Item saveItem(Item item);
 
-    List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status, Pageable pageable);
+    List<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses, Pageable pageable);
 
     List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status);
 }

@@ -1,6 +1,7 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.User;
+import com.oktrueque.model.UserLite;
 import org.springframework.http.ResponseEntity;
 
 /**
@@ -26,4 +27,7 @@ public interface UserService {
 
     ResponseEntity resetPassword(String datos);
 
+    UserLite getUserLiteById(Long userId);
+
+    UserLite getUserLiteByUsername(String name);
 }
