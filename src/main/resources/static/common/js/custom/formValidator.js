@@ -193,14 +193,7 @@ function checkPass() {
             $("#itemName").focus();
             return false;
 
-        } else if (!/^[a-zA-Z\s]*$/g.test(itemName)){
-            message = 'El nombre solo puede contener letras!';
-            messageSpan.textContent  = message;
-            messageModal.modal('show');
-            $("#itemName").focus();
-            return false;
-
-        } else if (itemDes.length===0){
+        }  else if (itemDes.length===0){
             message = 'Debes describir el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
@@ -208,6 +201,24 @@ function checkPass() {
             return false;
 
         } else return true;
+
+    }
+
+    if(formName==='form-set-images'){
+
+        let photo1 = $('#photo1').val();
+        let photo2 = $('#photo2').val();
+        let photo3 = $('#photo3').val();
+
+        if(photo1!==''||photo2!==''||photo3!==''){
+            return true;
+        } else if(photo1===''&&photo2===''&&photo3===''){
+            message = 'Debes cargar al menos una imagen!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#photo1").focus();
+            return false;
+        }
 
     }
 

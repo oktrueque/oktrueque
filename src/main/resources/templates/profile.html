@@ -72,10 +72,6 @@
                     </dl>
                     <a href="/profile/edit"><button class="btn btn-primary" type="button">Editar</button></a>
                 </div>
-                <!--<div class="panel-footer">-->
-                    <!--&lt;!&ndash;<a href="/profile/edit">Editar</a>&ndash;&gt;-->
-                   <!---->
-                <!--</div>-->
             </section>
         </div>
         <div class="col-xl-8">
@@ -267,8 +263,8 @@
                             </div>
                         </div>
                         <div class="row modal-footer">
-                            <button id="btnCerrar" type="button" class="btn" data-dismiss="#modalCreateItem">Cerrar</button>
-                            <button id="submit-btn" type="button"  class="btn btn-primary">Crear</button>
+                            <button id="btnCerrar" type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                            <button id="submit-btn" type="button" class="btn btn-primary">Crear</button>
                         </div>
                     </div>
 
@@ -302,8 +298,8 @@
                             <input id="photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
                         </div>
                         <div class="row modal-footer">
-                            <button type="button" class="btn" data-dismiss="#modalSetImages">Cerrar</button>
-                            <button id="submit" type="submit"  class="btn btn-primary">Enviar</button>
+                            <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                            <button id="submitImages" type="button"  class="btn btn-primary">Enviar</button>
                         </div>
                     </div>
 
@@ -398,9 +394,9 @@
         document.addEventListener("DOMContentLoaded", function () {
             ms.initialize();
             $("#submit-btn").on("click", function () {
-
             if (isValidated('newItemForm')){
                 $("#modalCreateItem").modal('hide');
+                $("#modalSetImages").modal('show');
 
                 $.ajax({
                     type: "POST",
@@ -424,6 +420,13 @@
                 }
             });
 
+            //VALIDACION DE IMAGENES
+            $("#submitImages").on("click", function () {
+               if(isValidated('form-set-images')){
+                   $("#form-set-images").submit();
+                   $("#modalSetImages").modal('hide');
+               }
+            });
 
             $("#btnCerrar").on("click", function () {
                 $("#modalCreateItem").modal('hide');
