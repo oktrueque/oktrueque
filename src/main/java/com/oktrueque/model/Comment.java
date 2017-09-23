@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 /**
@@ -22,17 +21,17 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
-    private User user_origin;
+    private UserLite user_origin;
 
     @ManyToOne
     @JoinColumn(name = "id_user_target")
-    private User user_target;
+    private UserLite user_target;
     private int score;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime date;
 
-    public Comment(String description, User user_origin, User user_target, int score, LocalDateTime date) {
+    public Comment(String description, UserLite user_origin, UserLite user_target, int score, LocalDateTime date) {
         this.description = description;
         this.user_origin = user_origin;
         this.user_target = user_target;
@@ -58,19 +57,19 @@ public class Comment {
         this.description = description;
     }
 
-    public User getUser_target() {
+    public UserLite getUser_target() {
         return user_target;
     }
 
-    public void setUser_target(User user_target) {
+    public void setUser_target(UserLite user_target) {
         this.user_target = user_target;
     }
 
-    public User getUser_origin() {
+    public UserLite getUser_origin() {
         return user_origin;
     }
 
-    public void setUser_origin(User user_origin) {
+    public void setUser_origin(UserLite user_origin) {
         this.user_origin = user_origin;
     }
 

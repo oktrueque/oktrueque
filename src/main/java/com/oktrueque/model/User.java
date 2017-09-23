@@ -34,7 +34,6 @@ public class User implements UserDetails{
     @Column(name = "status")
     private Integer status;
     @OneToMany(mappedBy = "user")
-    @JsonBackReference
     private List<Item> items;
     @Column(name = "items_amount")
     private Integer itemsAmount;
@@ -45,14 +44,12 @@ public class User implements UserDetails{
     @NotEmpty
     private String username;
     @OneToMany(mappedBy = "user_target")
-    @JsonBackReference
     private List<Comment> comments;
     @Column(name = "score")
     private Integer score;
     @Column(name="wallpaper")
     private String wallpaper;
     @OneToMany(mappedBy = "user_target")
-    @JsonBackReference
     private List<Complaint> complaints;
 
     @Transient

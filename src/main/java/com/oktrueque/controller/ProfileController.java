@@ -186,15 +186,15 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}")
-    public ResponseEntity<List<User>> updateTrueque(@PathVariable Long id, Principal principal){
+    public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal){
 
         Trueque trueque = truequeService.getTruequeById(id);
         User user = userService.getUserByUsername(principal.getName());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
-        List<User> users = new ArrayList<>();
+        List<UserLite> users = new ArrayList<>();
         for (UserTrueque ut: userTrueques){
             if (ut.getId().getUserId()!= user.getId()){
-                users.add(userService.getUserById(ut.getId().getUserId()));}
+                users.add(userService.getUserLiteById(ut.getId().getUserId()));}
         }
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
@@ -215,16 +215,13 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
-    public ResponseEntity<Comment> addComment(Comment comment, Principal principal){
-
+    public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
         comment.setDate(LocalDateTime.now());
-        comment.setUser_origin(userService.getUserByUsername(principal.getName()));
+        comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
         Comment commentResponse = commentService.saveComment(comment);
         return new ResponseEntity<>(commentResponse, HttpStatus.OK);
 
     }
-
-
 
     @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
     public String deleteUserItem(@PathVariable Long id){
