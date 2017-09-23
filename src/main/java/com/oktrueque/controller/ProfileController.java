@@ -84,22 +84,25 @@ public class ProfileController {
     public String editProfile(Principal principal, Model model){
         User user = userService.getUserByUsername(principal.getName());
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
-        String newPassword = "";
         model.addAttribute("user", user);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-        model.addAttribute("newPassword",newPassword);
         return "updateProfile";
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
-    public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture,@ModelAttribute String newPassword) {
+    public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
         if(!picture.getOriginalFilename().equals("")){
             String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), null, user.getPhoto1());
             user.setPhoto1(pictureUrl);
         }
-        String encondedPassword = bCryptPasswordEncoder.encode(newPassword);
-        user.setPassword(encondedPassword);
+        if(user.getNewPassword().equals("")){
+            userService.updateUser(user);
+            return "redirect:/profile";
+        }
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getNewPassword());
+        user.setNewPassword("");
+        user.setPassword(encodedPassword);
         userService.updateUser(user);
         return "redirect:/profile";
     }

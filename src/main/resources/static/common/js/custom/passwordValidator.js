@@ -1,7 +1,11 @@
+var cross = document.getElementById('cross');
+var check = document.getElementById('check');
 
-
-function checkPass()
-{
+function icons(){
+    cross.style.display='none';
+    check.style.display='none';
+}
+function checkPass() {
     //Store the password field objects into variables ...
     var pass1 = document.getElementById('validation[password]');
     var pass2 = document.getElementById('pass2');
@@ -12,7 +16,7 @@ function checkPass()
     var badColor = "#ff6666";
     //Compare the values in the password field 
     //and the confirmation field
-    if(pass1.value == pass2.value){
+    if(pass1.value === pass2.value){
         //The passwords match. 
         //Set the color to the good color and inform
         //the user that they have entered the correct password
@@ -29,19 +33,5 @@ function checkPass()
         cross.style.color = badColor;
         return false;
     }
-};
+}
 
-function icons(){
-    cross.style.display='none';
-    check.style.display='none';
-};
-
-$('#btn-register').click(function(){
-    if(checkPass()){
-        if(document.getElementById('form-checkbox').checked){
-            $('#form-register').submit();
-        }
-    }else{
-        console.log("Algun campo del form tiene problemas")
-    }
-});

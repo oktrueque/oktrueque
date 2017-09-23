@@ -38,6 +38,11 @@
     <script src="../assets/vendors/bootstrap/dist/js/bootstrap.min.js" th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script src="../assets/vendors/html5-form-validation/dist/jquery.validation.min.js" th:src="@{/vendors/html5-form-validation/dist/jquery.validation.min.js}"></script>
     <script src="../assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js" th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
+
+    <!--VALIDATION SCRIPTS-->
+    <script th:src="@{/common/js/custom/passwordValidator.js}" src="../static/common/js/custom/passwordValidator.js"></script>
+    <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
+
 </head>
 <body class="theme-default" onload="icons()">
 
@@ -70,13 +75,14 @@
                             <br/>
                         </div>
                         <br/>
-                        <form id="form-validation" name="form-validation" th:action="@{/register}" th:object="${user}"
-                              method="POST" onsubmit="return checkPass()">
+                        <form id="register-form" name="form-validation" th:action="@{/register}" th:object="${user}"
+                              method="POST">
 
                             <div class="form-group">
                                 <div class="form-input-icon form-input-icon-right">
                                     <input th:field="*{name}"
                                            class="form-control"
+                                           id="nameInput"
                                            placeholder="Nombre"
                                            type="text"/>
                                 </div>
@@ -86,6 +92,7 @@
                                 <div class="">
                                     <input th:field="*{last_name}"
                                            class="form-control"
+                                           id="lastNameInput"
                                            placeholder="Apellido"
                                            type="text"/>
                                 </div>
@@ -95,7 +102,7 @@
                             <div class="form-group">
                                 <div class="form-input-icon form-input-icon-right">
                                     <input th:field="*{email}"
-                                           id="validation-email"
+                                           id="emailInput"
                                            class="form-control"
                                            placeholder="Email"
                                            name="validation[Email]"
@@ -107,7 +114,7 @@
                             <div class="form-group">
                                 <div class="form-input-icon form-input-icon-right">
                                     <input th:field="*{username}"
-                                           id="username-input"
+                                           id="usernameInput"
                                            class="form-control"
                                            placeholder="Nombre de usuario"
                                            type="text"
@@ -144,7 +151,7 @@
                                         Acepto los terminos y condiciones
                                     </label>
                                 </div>
-                                <button id="btnReg" type="submit" value="Registrarse!"
+                                <button id="submit-btn" type="button" value="Registrarse!"
                                         class="btn btn-primary width-150">
                                     Registrarse!
                                 </button>
@@ -154,15 +161,7 @@
                 </div>
             </div>
         </div>
-        <div class="single-page-block-footer text-center">
-            <ul class="list-unstyled list-inline">
-                <li><a href="javascript: void(0);">Terminos de Uso</a></li>
-                <li class="active"><a href="javascript: void(0);">Conformidad</a></li>
-                <li><a href="javascript: void(0);">Informacion Confidencial</a></li>
-                <li><a href="javascript: void(0);">Soporte</a></li>
-                <li><a href="javascript: void(0);">Contacto</a></li>
-            </ul>
-        </div>
+
 
     </div>
     <!-- End Register Page -->
@@ -170,11 +169,20 @@
 
 
     <!-- Page Scripts -->
+
+    <!--FIELD VALIDATIONS-->
+   <script>
+   document.addEventListener("DOMContentLoaded", function () {
+       $('#submit-btn').on("click", function () {
+           if (isValidated("register-form") && checkPass()){
+               $('#register-form').submit();
+           }
+       })
+   });
+   </script>
+
     <script>
-
         $(function () {
-
-
 // Form Validation
             $('#form-validation').validate({
                 submit: {
@@ -234,7 +242,8 @@
         });
 
     </script>
-    <script th:src="@{/common/js/custom/register.js}" src="../static/common/js/custom/register.js"></script>
+
+
 
     <!-- End Page Scripts -->
 </section>

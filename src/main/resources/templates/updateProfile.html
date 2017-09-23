@@ -7,11 +7,15 @@
     <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}" src="../assets/vendors/dropify/dist/js/dropify.min.js"></script>
     <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
 
+    <!--VALIDATION SCRIPTS-->
+    <script th:src="@{/common/js/custom/passwordValidator.js}" src="../static/common/js/custom/passwordValidator.js"></script>
+    <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
+
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
         <div class="page-content-inner">
-            <form id="form" th:action="@{/profile/edit}" th:object="${user}" th:method="PUT"
+            <form id="updateProfile-form" th:action="@{/profile/edit}" th:object="${user}" th:method="PUT"
                   enctype="multipart/form-data">
             <section class="panel panel-profile panel-with-borders col-md-6">
                 <div class="page-content-inner">
@@ -29,29 +33,29 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="l0">Nombre</label>
-                                        <input type="text" class="form-control" id="l0" th:field="*{name}"/>
+                                        <label class="form-control-label" for="name">Nombre</label>
+                                        <input type="text" class="form-control" id="name" th:field="*{name}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="21">Apellido</label>
-                                        <input type="text" class="form-control" id="21" th:field="*{last_name}"/>
+                                        <label class="form-control-label" for="lastName">Apellido</label>
+                                        <input type="text" class="form-control" id="lastName" th:field="*{last_name}"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="23">Email</label>
-                                        <input type="email" readonly="true" class="form-control" id="23"
+                                        <label class="form-control-label" for="email">Email</label>
+                                        <input type="email" readonly="true" class="form-control" id="email"
                                                th:field="*{email}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="22">Nombre de Usuario</label>
-                                        <input type="text" readonly="true" class="form-control" id="22"
+                                        <label class="form-control-label" for="username">Nombre de Usuario</label>
+                                        <input type="text" readonly="true" class="form-control" id="username"
                                                th:field="*{username}"/>
                                     </div>
                                 </div>
@@ -59,7 +63,7 @@
                             <div class="row">
                                 <div id="nuevoPass" class="form-group col-lg-6">
                                     <label class="form-control-label" for="nuevoPass">Nueva contraseña</label>
-                                    <input th:field="${newPassword}"
+                                    <input th:field="*{newPassword}"
                                            id="validation[password]"
                                            class="form-control password"
                                            name="validation[password]"
@@ -68,13 +72,13 @@
                                 </div>
                                 <div id="div-pass2" class="form-group form-input-icon form-input-icon-right col-lg-6">
                                     <label class="form-control-label" for="div-pass2">Confirma la nueva contraseña</label>
-                                    <i id="cross" hidden="true" class="icmn-cross col-lg-6"></i>
-                                    <i id="check" hidden="true" class="icmn-checkmark col-lg-6"></i>
                                     <input id="pass2"
                                            name="pass2"
                                            type="password"
                                            class="form-control"
                                            onkeyup="checkPass(); return false;"/>
+                                    <i id="cross" class="icmn-cross form-group form-input-icon form-input-icon-right"></i>
+                                    <i id="check" class="icmn-checkmark form-group form-input-icon form-input-icon-right"></i>
                                 </div>
                             </div>
                             <h5></h5>
@@ -90,7 +94,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="form-group">
-                                    <button id="submit-btn" type="submit" class="btn btn-primary">Guardar</button>
+                                    <button id="submit-btn" type="button" class="btn btn-primary">Guardar</button>
                                     <button type="button" class="btn btn-default" onclick="history.back()">Atras
                                     </button>
                                 </div>
@@ -111,6 +115,19 @@
             </form>
         </div>
     </section>
+
+
+
+    <!--FORM VALIDATION-->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('#submit-btn').on("click", function () {
+                if (isValidated("updateProfile-form")){
+                        $('#updateProfile-form').submit();
+                } //isValidated maneja las excepciones
+            })
+        });
+    </script>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
@@ -165,7 +182,7 @@
         /*]]>*/
     </script>
 
-    <script th:src="@{/common/js/custom/register.js}" src="../static/common/js/custom/register.js"></script>
+    <script th:src="@{/common/js/custom/passwordValidator.js}" src="../static/common/js/custom/passwordValidator.js"></script>
 
 </th:block>
 </html>
