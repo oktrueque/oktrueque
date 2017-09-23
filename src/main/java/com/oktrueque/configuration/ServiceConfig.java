@@ -45,6 +45,8 @@ public class ServiceConfig {
     private ItemTagRepository itemTagRepository;
     @Autowired
     private UserTagRepository userTagRepository;
+    @Autowired
+    private UserLiteRepository userLiteRepository;
 
 
     @Bean
@@ -52,7 +54,7 @@ public class ServiceConfig {
 
     @Bean
     public ComplaintService complaintService(){
-        return new ComplaintServiceImpl(complaintRepository,this.emailService());
+        return new ComplaintServiceImpl(complaintRepository,this.emailService(),complaintTypeRepository);
     }
 
 
@@ -84,7 +86,7 @@ public class ServiceConfig {
     @Bean
     public UserService userService(){
         return new UserServiceImpl(userRepository,verificationTokenRepository
-                ,bCryptPasswordEncoder,this.emailService());
+                ,bCryptPasswordEncoder,this.emailService(), userLiteRepository);
     }
 
     @Bean

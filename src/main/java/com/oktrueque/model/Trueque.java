@@ -50,8 +50,9 @@ public class Trueque {
         switch (this.status){
             case 0: return "Pendiente";
             case 1: return "Activo";
-            case 2: return "Eliminado";
+            case 2: return "Rechazado";
             case 3: return "Baneado";
+            case 4: return "Cancelado";
             default: return "Sin definir";
     }}
 

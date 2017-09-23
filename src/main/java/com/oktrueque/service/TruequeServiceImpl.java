@@ -68,6 +68,12 @@ public class TruequeServiceImpl implements TruequeService {
         return users;
     }
 
+    @Override
+    public void updateTrueque(Trueque trueque) {
+        truequeRepository.save(trueque);
+    }
+
+
     private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved) {
         participants.entrySet().forEach(entry -> {
             userTruequeRepository.save(
@@ -100,7 +106,7 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("apellidoDestino", userDestino.getLast_name());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
-        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/confirm");
+        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/accept");
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 
@@ -126,4 +132,8 @@ public class TruequeServiceImpl implements TruequeService {
         return itemTruequeRepository.findById_TruequeId(id);
     }
 
+    @Override
+    public Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses) {
+        return truequeRepository.findTruequeByIdAndStatusIsNotIn(id, statuses);
+    }
 }

@@ -24,6 +24,14 @@ public interface TruequeService {
 
     Trueque getTruequeById (long id);
 
+    Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses);
+
     List<User> confirmTruequeAndGetUsersBelongingTo(Long id);
+
+    void updateTrueque (Trueque trueque);
+
+
+
+
 
 }

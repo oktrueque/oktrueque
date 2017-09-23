@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/item.css" th:href="@{/common/css/source/custom/item.css}"/>
+</head>
+<th:block layout:fragment="content">
+    <section class="page-content">
+        <div class="page-content-inner">
+
+            <section class="panel panel-with-borders">
+
+              <div class="container" th:if="${comment}" th:each="user : ${users}">
+                <div class="panel-heading">
+                    <h1> Has cancelado el trueque que llevabas a cabo con </h1>
+                    <h2 th:text="${user.name + ' ' + user.last_name}"></h2>
+                    <h3>Si lo deseas, puede dejar un comentario</h3>
+                </div>
+                <div class="panel-body panel-profile">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 margin-left-20">
+                            <form  th:action="@{'/profile/comment'}" th:object="${comment}" th:method="POST">
+                                <input type="hidden" th:field="*{user_target}"/>
+                               <!--<input type="hidden" th:field="*{score}" th:value="${comment.score}"/>-->
+                                <div class="form-group">
+                                    <div class="col-lg">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="descTextArea" class="form-control-label">Descripción</label>
+                                                <textarea th:field="*{description}" id="descTextArea" class="form-control" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar Comentario</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+              </div>
+
+            </section>
+        </div>
+
+
+        <!-- Page Scripts -->
+        <script src="../static/vendors/datatables-responsive/js/dataTables.responsive.js"
+                th:src="@{/vendors/owl.carousel/dist/owl.carousel.js}"></script>
+        <script>
+            $('.owl-carousel').owlCarousel({
+                loop:true,
+                margin:10,
+                nav:true,
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:3
+                    },
+                    1000:{
+                        items:5
+                    }
+                }
+            })
+        </script>
+
+        <!-- End Page Scripts -->
+    </section>
+
+</th:block>
+</html>

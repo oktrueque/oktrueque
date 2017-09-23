@@ -12,8 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class ProfileController {
 
     private UserService userService;
+    private CommentService commentService;
     private UserTagService userTagService;
     private ItemService itemService;
     private ItemTagService itemTagService;
@@ -35,8 +37,9 @@ public class ProfileController {
     private String fileNameItems;
 
     @Autowired
-    public ProfileController(UserService userService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
+    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
         this.userService = userService;
+        this.commentService = commentService;
         this.userTagService = userTagService;
         this.itemService = itemService;
         this.itemTagService = itemTagService;
@@ -48,15 +51,17 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(user.getUsername(),2, pageable);
+        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(),new int[]{2,3}, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-        Trueque TruequeNuevo;
+        Trueque truequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
-            trueques.add(TruequeNuevo);
+            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTruequeId(), new int[]{2,4});
+            if(truequeNuevo != null) trueques.add(truequeNuevo);
         }
+
+
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);
@@ -66,6 +71,7 @@ public class ProfileController {
         model.addAttribute("item", new Item(0));
         model.addAttribute("categories",categoryService.getCategories());
         model.addAttribute("trueques", trueques);
+
         return "profile";
     }
 
@@ -174,6 +180,45 @@ public class ProfileController {
         item.setUser(user);
         itemService.updateItem(item);
         return "redirect:/profile/items";
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}")
+    public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal){
+
+        Trueque trueque = truequeService.getTruequeById(id);
+        User user = userService.getUserByUsername(principal.getName());
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+        List<UserLite> users = new ArrayList<>();
+        for (UserTrueque ut: userTrueques){
+            if (ut.getId().getUserId()!= user.getId()){
+                users.add(userService.getUserLiteById(ut.getId().getUserId()));}
+        }
+        if (trueque.getStatus().equals("Pendiente")){
+            trueque.setStatus(2);
+            trueque.setRejectionDate(LocalDateTime.now());
+            //truequeService.updateTrueque(trueque);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        if (trueque.getStatus().equals("Activo")){
+            trueque.setStatus(4);
+            trueque.setRejectionDate(LocalDateTime.now());
+            //truequeService.updateTrueque(trueque);
+            return new ResponseEntity<>(users,HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+
+
+
+    @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
+    public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
+        comment.setDate(LocalDateTime.now());
+        comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
+        //Comment commentResponse = commentService.saveComment(comment);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
+
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")

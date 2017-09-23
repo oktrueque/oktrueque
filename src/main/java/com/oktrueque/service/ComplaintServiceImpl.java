@@ -2,11 +2,10 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.Complaint;
 import com.oktrueque.model.Email;
-import com.oktrueque.model.User;
 import com.oktrueque.repository.ComplaintRepository;
+import com.oktrueque.repository.ComplaintTypeRepository;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,11 +15,13 @@ public class ComplaintServiceImpl implements ComplaintService{
 
     private final ComplaintRepository complaintRepository;
     private final EmailService emailService;
+    private final ComplaintTypeRepository complaintTypeRepository;
 
 
-    public ComplaintServiceImpl(ComplaintRepository complaintRepository, EmailService emailService) {
+    public ComplaintServiceImpl(ComplaintRepository complaintRepository, EmailService emailService, ComplaintTypeRepository complaintTypeRepository) {
         this.complaintRepository = complaintRepository;
         this.emailService = emailService;
+        this.complaintTypeRepository = complaintTypeRepository;
     }
 
     @Override
@@ -37,8 +38,8 @@ public class ComplaintServiceImpl implements ComplaintService{
         Map< String, Object > model = new LinkedHashMap<>();
         model.put("userTarget", complaint.getUser_target());
         model.put("userOrigin", complaint.getUser_origin());
+        model.put("complaintType", complaintTypeRepository.getById(complaint.getComplaintType().getId()));
         model.put("complaint", complaint);
-
 
      // model.put("uri_confirm","http://localhost:8080/trueque/"+trueque.getId()+"/confirm");
         email.setModel(model);

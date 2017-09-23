@@ -24,4 +24,5 @@ public class ComplaintTypeServiceImpl implements ComplaintTypeService {
         complaintTypeRepository.findAll().forEach(complaintTypes::add);
         return complaintTypes;
     }
+
 }
