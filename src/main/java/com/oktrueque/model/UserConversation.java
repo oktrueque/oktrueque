@@ -14,6 +14,8 @@ public class UserConversation implements Comparable {
     private User sendTo;
     @Column(name = "is_group")
     private Boolean group;
+    @Column(name = "unread")
+    private Integer unread;
 
     public UserConversation() {
     }
@@ -45,6 +47,14 @@ public class UserConversation implements Comparable {
 
     public void setGroup(Boolean group) {
         this.group = group;
+    }
+
+    public Integer getUnread() {
+        return unread;
+    }
+
+    public void setUnread(Integer unread) {
+        this.unread = unread;
     }
 
     @Override

@@ -64,16 +64,15 @@ public class ChatController {
         User user = new User();
         user.setId(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
-        //messageService.saveMessage(response);
-        simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", response);
+        Message saved = messageService.saveMessage(response);
+        simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", saved);
     }
 
     @MessageMapping("/messages/room/{id}")
     public void sendToGroup(@Payload MessageLite message, @DestinationVariable("id") Long id, Principal principal) throws Exception {
         User user = userService.getUserById(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
-        //messageService.saveMessage(response);
-        //simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", response);
+        messageService.saveMessage(response);
         simpMessagingTemplate.convertAndSend("/topic/" + message.getConversationId(), response);
     }
 

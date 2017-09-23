@@ -4,6 +4,7 @@
 <head>
     <script src="../../static/vendors/sockjs/sockjs.min.js" th:src="@{/vendors/sockjs/sockjs.min.js}"></script>
     <script src="../../static/vendors/sockjs/stomp.min.js" th:src="@{/vendors/sockjs/stomp.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/chat.css" th:href="@{/common/css/source/custom/chat.css}"/>
     <script th:src="@{/common/js/custom/chat.js}"></script>
 </head>
 <th:block layout:fragment="content">
@@ -33,9 +34,13 @@
                                     </div>
                                     <div class="s2">
                                         <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
-                                        <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name" th:text="${uc.sendTo.name}"></div>
+                                        <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name"
+                                             th:classappend="${uc.unread > 0} ? 'bold' : ''" th:text="${uc.sendTo.name}"></div>
                                         <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
-                                        <div th:id="${'message-'+uc.id.conversation.id}" class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                        <span th:if="${uc.unread &gt; 0}" class="label label-warning pull-right" th:text="${uc.unread}"></span>
+                                        <div th:id="${'message-'+uc.id.conversation.id}" class="messaging-list-title-last color-default"
+                                             th:classappend="${uc.unread > 0} ? 'bold' : ''"
+                                             th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
                                             talk. Hello! Where you are now? I want to talk
                                         </div>
                                     </div>
@@ -45,7 +50,7 @@
                                 <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}" >
                                     <div class="s1">
                                         <a class="avatar" href="javascript:void(0);">
-                                            <img src="https://oktrueque.s3-sa-east-1.amazonaws.com/default/U-2" />
+                                            <img src="https://s3-sa-east-1.amazonaws.com/oktrueque/utils/simbolo.png" />
                                         </a>
                                     </div>
                                     <div class="s2">

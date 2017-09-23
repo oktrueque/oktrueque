@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserConversationRepository extends CrudRepository<UserConversation, UserConversationId> {
 
         List<UserConversation> findByIdUserId(Long idUser);
+        List<UserConversation> findByIdConversationId(Long idConversation);
 }
