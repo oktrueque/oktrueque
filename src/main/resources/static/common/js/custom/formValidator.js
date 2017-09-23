@@ -12,12 +12,12 @@ function checkPass() {
     let cross = document.getElementById('cross');
     let check = document.getElementById('check');
     //Store the password field objects into variables ...
-    var pass1 = document.getElementById('validation[password]');
-    var pass2 = document.getElementById('pass2');
+    let pass1 = document.getElementById('pass1');
+    let pass2 = document.getElementById('pass2');
     //Store the Confimation Message Object ...
     //Set the colors we will be using ...
-    var goodColor = "#66cc66";
-    var badColor = "#ff6666";
+    let goodColor = "#66cc66";
+    let badColor = "#ff6666";
     //Compare the values in the password field
     //and the confirmation field
     if(pass1.value === pass2.value){
@@ -50,16 +50,23 @@ function checkPass() {
 
          let nameInput = $('#nameInput').val();
          let lastNameInput = $('#lastNameInput').val();
-         let emailInput =    $('#emailInput').val();
+         let emailInput =    $('#emailInput');
+         let emailInputValue =    $('#emailInput').val();
          let usernameInput = $('#usernameInput').val();
-         let newPassword = $('#validation[password]').val();
-         let pass2 = $('#pass2').val();
+         let newPassword = $('#pass1').val();
+         let pass2 = $('#pass2');
 
          if (!checkPass()) {
              message = 'Las contraseñas deben coincidir!';
              messageSpan.textContent = message;
              messageModal.modal('show');
-             $("#validation[password]").focus();
+             $("#pass1").focus();
+             return false;
+         } else if(newPassword.length<7 || !/[0-9]/g.test(newPassword)){
+             message = 'La contraseña debe ser mayor a 6 caracteres, poseer letras y números!';
+             messageSpan.textContent = message;
+             messageModal.modal('show');
+             $("#nameInput").focus();
              return false;
          } else if(nameInput.length===0){
              message = 'Debes escribir tu nombre!';
@@ -85,13 +92,13 @@ function checkPass() {
              messageModal.modal('show');
              $("#lastNameInput").focus();
              return false;
-         } else if(emailInput.length===0){
+         } else if(emailInputValue.length===0){
              message = 'Debes escribir tu email!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#emailInput").focus();
              return false;
-         } else if(!emailInput.contains("@") || !emailInput.contains(".com")){
+         } else if(!emailInputValue.includes('@') || !emailInputValue.includes('.com')){
              message = 'Formato de email invalido!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -118,8 +125,8 @@ function checkPass() {
          let name = $("#name").val();
          let lastName = $("#lastName").val();
          let email = $("#email").val();
-         let newPassword = $('#validation[password]').val();
-         let pass2 = $('#pass2').val();
+         let newPassword = $('#pass1');
+         let pass2 = $('#pass2');
 
          if (name.length===0) {
              message = 'Debes escribir tu nombre!';
@@ -149,7 +156,7 @@ function checkPass() {
              message = 'Debes ingresar la nueva contraseña!';
              messageSpan.textContent = message;
              messageModal.modal('show');
-             $("#validation[password]").focus();
+             $("#pass1").focus();
              return false;
          } else if(newPassword.length!==0 && pass2.length===0) {
              message = 'Debes repetir la contraseña!';

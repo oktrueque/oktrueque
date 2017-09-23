@@ -8,7 +8,6 @@
     <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
 
     <!--VALIDATION SCRIPTS-->
-    <script th:src="@{/common/js/custom/passwordValidator.js}" src="../static/common/js/custom/passwordValidator.js"></script>
     <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
 
 </head>
@@ -64,7 +63,7 @@
                                 <div id="nuevoPass" class="form-group col-lg-6">
                                     <label class="form-control-label" for="nuevoPass">Nueva contraseña</label>
                                     <input th:field="*{newPassword}"
-                                           id="validation[password]"
+                                           id="pass1"
                                            class="form-control password"
                                            name="validation[password]"
                                            type="password" data-validation="[L>=6]"
@@ -76,7 +75,7 @@
                                            name="pass2"
                                            type="password"
                                            class="form-control"
-                                           onkeyup="checkPass(); return false;"/>
+                                           onkeyup="checkPass();"/>
                                     <i id="cross" class="icmn-cross form-group form-input-icon form-input-icon-right"></i>
                                     <i id="check" class="icmn-checkmark form-group form-input-icon form-input-icon-right"></i>
                                 </div>
@@ -116,6 +115,27 @@
         </div>
     </section>
 
+    <!--MESSAGES MODAL-->
+    <div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+         style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="messageSpan"></span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MESSAGES MODAL-->
 
 
     <!--FORM VALIDATION-->
@@ -181,8 +201,6 @@
 
         /*]]>*/
     </script>
-
-    <script th:src="@{/common/js/custom/passwordValidator.js}" src="../static/common/js/custom/passwordValidator.js"></script>
 
 </th:block>
 </html>

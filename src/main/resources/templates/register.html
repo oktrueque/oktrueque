@@ -40,7 +40,6 @@
     <script src="../assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js" th:src="@{/vendors/bootstrap-show-password/bootstrap-show-password.min.js}"></script>
 
     <!--VALIDATION SCRIPTS-->
-    <script th:src="@{/common/js/custom/passwordValidator.js}" src="../static/common/js/custom/passwordValidator.js"></script>
     <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
 
 </head>
@@ -105,9 +104,7 @@
                                            id="emailInput"
                                            class="form-control"
                                            placeholder="Email"
-                                           name="validation[Email]"
-                                           type="text"
-                                           data-validation="[EMAIL]"/>
+                                           type="text"/>
                                 </div>
                             </div>
 
@@ -117,19 +114,16 @@
                                            id="usernameInput"
                                            class="form-control"
                                            placeholder="Nombre de usuario"
-                                           type="text"
-                                           onfocus="genUsername()"
-                                    />
+                                           type="text"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <input th:field="*{password}"
-                                       id="validation[password]"
+                                       id="pass1"
                                        class="form-control password"
                                        name="validation[password]"
-                                       type="password" data-validation="[L>=6]"
-                                       data-validation-message="$ must be at least 6 characters"
+                                       type="password"
                                        placeholder="Contraseña"/>
                             </div>
 
@@ -166,6 +160,28 @@
     </div>
     <!-- End Register Page -->
 
+    <!--MESSAGES MODAL-->
+    <div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+         style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="messageSpan"></span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MESSAGES MODAL-->
+
 
 
     <!-- Page Scripts -->
@@ -174,11 +190,23 @@
    <script>
    document.addEventListener("DOMContentLoaded", function () {
        $('#submit-btn').on("click", function () {
-           if (isValidated("register-form") && checkPass()){
+           if (isValidated("register-form")){
                $('#register-form').submit();
            }
-       })
+       });
+
+       $('#usernameInput').on('focus', function() {
+
+           let emailInput = $('#emailInput').val();
+
+           let usernameInput = $('#usernameInput');
+
+           usernameInput.val(emailInput.substring(0,emailInput.indexOf("@")).replace(/[^a-z0-9]/gi,''));
+
+       });
    });
+
+
    </script>
 
     <script>
