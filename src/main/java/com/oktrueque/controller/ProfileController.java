@@ -63,7 +63,6 @@ public class ProfileController {
         }
 
 
-
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
         model.addAttribute("hasItems", items.size() != 0 ? true : false);

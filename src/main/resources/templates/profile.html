@@ -349,28 +349,40 @@
         $(document).ready(function(){
             $('.cancel').on('click', function(){
                 var truequeId = $(this).data('id');
-                $(this).parent().parent().remove();
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'profile/trueques/' + truequeId,
-                    contentType: 'application/json',
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
-                    success: function (data) {
-                       if(data){
-                           users = data;
-                           x=0;
-                           makeComment(data[x]);
-                       }else{
-                           swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
-                       }
-                    },
-                    error: function (e) {
-                        console.log(e);
-                    }
-                });
+                swal({
+                    title: "¿Estás seguro?",
+                    text: "Una vez cancelado, no podrás continuar con esta propuesta de trueque",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $(this).parent().parent().remove();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'profile/trueques/' + truequeId,
+                                contentType: 'application/json',
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader(header, token);
+                                },
+                                success: function (data) {
+                                    if(data){
+                                        users = data;
+                                        x=0;
+                                        makeComment(data[x]);
+                                    }else{
+                                        swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
+                                    }
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    });
 
             });
 
@@ -382,7 +394,7 @@
         makeComment = function(user){
             $("#commentDescription").val("");
             $('#modalCreateComment').modal('show');
-            $('#modal-name').text('¿Le gustaría dejar un comentario acerca de ' + user.name + '?');
+            $('#modal-name').text('¿Te gustaría dejar un comentario acerca de ' + user.name + '?');
             $('#idUser').val(user.id);
             x ++;
         };
