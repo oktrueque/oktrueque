@@ -349,6 +349,7 @@
         $(document).ready(function(){
             $('.cancel').on('click', function(){
                 var truequeId = $(this).data('id');
+                $(this).parent().parent().remove();
 
                 $.ajax({
                     type: 'POST',
@@ -358,9 +359,13 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (data) {
-                        users = data;
-                        x=0;
-                        makeComment(data[x]);
+                       if(data){
+                           users = data;
+                           x=0;
+                           makeComment(data[x]);
+                       }else{
+                           swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
+                       }
                     },
                     error: function (e) {
                         console.log(e);

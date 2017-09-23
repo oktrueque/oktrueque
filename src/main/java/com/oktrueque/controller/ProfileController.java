@@ -52,14 +52,14 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(user.getUsername(),2, pageable);
+        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(),new int[]{2,3}, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
-        Trueque TruequeNuevo;
+        Trueque truequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
-            trueques.add(TruequeNuevo);
+            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTruequeId(), new int[]{2,4});
+            if(truequeNuevo != null) trueques.add(truequeNuevo);
         }
 
 
@@ -199,13 +199,13 @@ public class ProfileController {
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
             trueque.setRejectionDate(LocalDateTime.now());
-            truequeService.updateTrueque(trueque);
-            return new ResponseEntity<>(users,HttpStatus.OK);
+            //truequeService.updateTrueque(trueque);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         if (trueque.getStatus().equals("Activo")){
             trueque.setStatus(4);
             trueque.setRejectionDate(LocalDateTime.now());
-            truequeService.updateTrueque(trueque);
+            //truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(users,HttpStatus.OK);
 
         }
@@ -218,8 +218,8 @@ public class ProfileController {
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
         comment.setDate(LocalDateTime.now());
         comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
-        Comment commentResponse = commentService.saveComment(comment);
-        return new ResponseEntity<>(commentResponse, HttpStatus.OK);
+        //Comment commentResponse = commentService.saveComment(comment);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
 
     }
 
