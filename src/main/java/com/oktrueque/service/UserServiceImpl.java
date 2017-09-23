@@ -2,10 +2,11 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.Email;
 import com.oktrueque.model.User;
+import com.oktrueque.model.UserLite;
 import com.oktrueque.model.VerificationToken;
+import com.oktrueque.repository.UserLiteRepository;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.VerificationTokenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +25,19 @@ public class UserServiceImpl  implements UserService{
     private final EmailService emailService;
     private final VerificationTokenRepository verificationTokenRepository;
     private final UserRepository userRepository;
+    private final UserLiteRepository userLiteRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
                            VerificationTokenRepository verificationTokenRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
-                           EmailService emailService){
+                           EmailService emailService,
+                           UserLiteRepository userLiteRepository){
         this.userRepository = userRepository;
         this.verificationTokenRepository = verificationTokenRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.emailService = emailService;
+        this.userLiteRepository = userLiteRepository;
     }
     @Override
     public User addUser(User user) {
@@ -135,5 +139,15 @@ public class UserServiceImpl  implements UserService{
         }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @Override
+    public UserLite getUserLiteById(Long userId) {
+        return userLiteRepository.findUserById(userId);
+    }
+
+    @Override
+    public UserLite getUserLiteByUsername(String name) {
+        return userLiteRepository.findByUsername(name);
     }
 }

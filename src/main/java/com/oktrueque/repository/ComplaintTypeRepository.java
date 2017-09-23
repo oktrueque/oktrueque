@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ComplaintTypeRepository extends CrudRepository<ComplaintType, Integer> {
 
-
+    ComplaintType getById(long id);
 
 }

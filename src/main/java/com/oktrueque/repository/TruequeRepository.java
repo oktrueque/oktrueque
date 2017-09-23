@@ -5,10 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-/**
- * Created by Envy on 15/6/2017.
- */
 public interface TruequeRepository extends CrudRepository<Trueque, Long> {
 
     Trueque findTruequeById(long id);
+    Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses);
 }
