@@ -56,19 +56,7 @@ function checkPass() {
          let newPassword = $('#pass1').val();
          let pass2 = $('#pass2');
 
-         if (!checkPass()) {
-             message = 'Las contraseñas deben coincidir!';
-             messageSpan.textContent = message;
-             messageModal.modal('show');
-             $("#pass1").focus();
-             return false;
-         } else if(newPassword.length<7 || !/[0-9]/g.test(newPassword)){
-             message = 'La contraseña debe ser mayor a 6 caracteres, poseer letras y números!';
-             messageSpan.textContent = message;
-             messageModal.modal('show');
-             $("#nameInput").focus();
-             return false;
-         } else if(nameInput.length===0){
+          if(nameInput.length===0){
              message = 'Debes escribir tu nombre!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -115,6 +103,18 @@ function checkPass() {
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#usernameInput").focus();
+             return false;
+         } else if (!checkPass()) {
+             message = 'Las contraseñas deben coincidir!';
+             messageSpan.textContent = message;
+             messageModal.modal('show');
+             $("#pass1").focus();
+             return false;
+         } else if(newPassword.length<7 || !/[0-9]/g.test(newPassword)){
+             message = 'La contraseña debe ser mayor a 6 caracteres, poseer letras y números!';
+             messageSpan.textContent = message;
+             messageModal.modal('show');
+             $("#pass1").focus();
              return false;
          }
          return true;

@@ -124,7 +124,8 @@
                                        class="form-control password"
                                        name="validation[password]"
                                        type="password"
-                                       placeholder="Contraseña"/>
+                                       placeholder="Contraseña"
+                                       onkeyup="checkPass(); return false;"/>
                             </div>
 
                             <div id="div-pass2" class="form-group form-input-icon form-input-icon-right">
@@ -189,6 +190,7 @@
     <!--FIELD VALIDATIONS-->
    <script>
    document.addEventListener("DOMContentLoaded", function () {
+       $('#nameInput').focus();
        $('#submit-btn').on("click", function () {
            if (isValidated("register-form")){
                $('#register-form').submit();

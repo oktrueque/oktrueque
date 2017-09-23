@@ -65,17 +65,15 @@
                                     <input th:field="*{newPassword}"
                                            id="pass1"
                                            class="form-control password"
-                                           name="validation[password]"
-                                           type="password" data-validation="[L>=6]"
-                                           data-validation-message="$ must be at least 6 characters"/>
+                                           type="password"
+                                           onkeyup="checkPass(); return false;"/>
                                 </div>
                                 <div id="div-pass2" class="form-group form-input-icon form-input-icon-right col-lg-6">
                                     <label class="form-control-label" for="div-pass2">Confirma la nueva contraseña</label>
                                     <input id="pass2"
-                                           name="pass2"
                                            type="password"
                                            class="form-control"
-                                           onkeyup="checkPass();"/>
+                                           onkeyup="checkPass(); return false;"/>
                                     <i id="cross" class="icmn-cross form-group form-input-icon form-input-icon-right"></i>
                                     <i id="check" class="icmn-checkmark form-group form-input-icon form-input-icon-right"></i>
                                 </div>
