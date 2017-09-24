@@ -59,8 +59,15 @@ public class ChatController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/conversations/{id}/clear-unread")
+    public ResponseEntity<Long> clearUnreadMessages(@PathVariable Long id, Principal principal){
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        conversationService.clearUnreadMessages(id, user.getId());
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
     @MessageMapping("/messages/{username}")
-    public void send(@Payload MessageLite message, @DestinationVariable("username") String username, Principal principal) throws Exception {
+    public void send(@Payload MessageLite message, @DestinationVariable("username") String username) throws Exception {
         User user = new User();
         user.setId(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
@@ -69,7 +76,7 @@ public class ChatController {
     }
 
     @MessageMapping("/messages/room/{id}")
-    public void sendToGroup(@Payload MessageLite message, @DestinationVariable("id") Long id, Principal principal) throws Exception {
+    public void sendToGroup(@Payload MessageLite message, @DestinationVariable("id") Long id) throws Exception {
         User user = userService.getUserById(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
         messageService.saveMessage(response);

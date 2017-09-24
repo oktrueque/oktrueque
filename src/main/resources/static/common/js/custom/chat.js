@@ -11,13 +11,16 @@ initialize = function(id, photo, groups){
 
 $(document).ready(function () {
    $('.conversation').on('click', function () {
+       conversationId = $(this).data('id');
        handleConversation($(this));
+       handleNewMessages($(this));
        $.ajax({
            type : "get",
            url : "/profile/conversations/" + conversationId + "/messages",
            success : function(messages) {
                console.log("SUCCESS: ", messages);
                display(messages);
+               clearUnreadMessages();
            },
            error : function(e) {
                console.log("ERROR: ", e);
@@ -35,6 +38,19 @@ $(document).ready(function () {
     });
 });
 
+clearUnreadMessages = function(){
+    $.ajax({
+        type : "get",
+        url : "/profile/conversations/" + conversationId + "/clear-unread",
+        success : function(data) {
+            console.log("SUCCESS: ", data);
+        },
+        error : function(e) {
+            console.log("ERROR: ", e);
+        }
+    });
+};
+
 handleConversation = function(currentConversation){
     //Enable text and button
     $('#text').prop('disabled', false);
@@ -45,11 +61,22 @@ handleConversation = function(currentConversation){
         oldConversation.removeClass("current");
     }
     currentConversation.addClass("current");
-    conversationId = currentConversation.data('id');
     $('#idConversation').val(conversationId);
 
     var name = $('#user-'+conversationId).text();
     $('#conversation-title').text(name);
+};
+
+handleNewMessages = function(currentConversation){
+    $('#user-' + conversationId).css('font-weight', 'normal');
+    let lastMessage = $('#message-' + conversationId);
+    lastMessage.css('font-weight', 'normal');
+    // lastMessage.html(message.message);
+    let span = $('#span-'+conversationId);
+    span.css('display', 'none');
+    // let unread = parseInt(span.attr('data-unread'));
+    // span.attr('data-unread', unread+1);
+    // span.text(unread +1);
 };
 
 display = function(messages){
@@ -91,7 +118,7 @@ displayMessageWithConversation = function(conversation, message){
     }
 };
 
-displayMessage = function(message){
+appendMessage = function(message){
     let userPhoto = message.user.photo1;
     var conversation = $('#conversation');
     if(message.user.id === userId){
@@ -121,15 +148,13 @@ displayMessage = function(message){
             '</div>'
         );
     }
+
 };
 
-function setConnected(connected) {
-    document.getElementById('connect').disabled = connected;
-    document.getElementById('disconnect').disabled = !connected;
-    document.getElementById('conversationDiv').style.visibility
-        = connected ? 'visible' : 'hidden';
-    document.getElementById('response').innerHTML = '';
-}
+setLastMessage = function(id, message){
+    let lastMessage = $('#message-' + id);
+    lastMessage.html(message);
+};
 
 function connect() {
     var socket = new SockJS('/profile/chat');
@@ -170,7 +195,8 @@ function sendMessage() {
             date: new Date()
         };
         text.val("");
-        displayMessage(message);
+        appendMessage(message);
+        setLastMessage(message.conversationId, message.message);
         if(isGroup){
             stompClient.send("/app/messages/room/" + conversationId, {},
                 JSON.stringify(message));
@@ -185,7 +211,8 @@ function sendMessage() {
 
 function showMessageOutput(messageOutput) {
     if(messageOutput.conversation.id === conversationId){
-        displayMessage(messageOutput);
+        appendMessage(messageOutput);
+        setLastMessage(messageOutput.conversation.id, messageOutput.message);
     }
     else{
         showNotification(messageOutput);
@@ -195,7 +222,8 @@ function showMessageOutput(messageOutput) {
 function showGroupMessageOutput(messageOutput) {
     if(messageOutput.user.id !== user.id){
         if(messageOutput.conversation.id === conversationId){
-            displayMessage(messageOutput);
+            appendMessage(messageOutput);
+            setLastMessage(messageOutput.conversation.id, messageOutput.message);
         }
         else{
             showNotification(messageOutput);
@@ -204,15 +232,12 @@ function showGroupMessageOutput(messageOutput) {
 }
 
 showNotification = function(message){
-    console.log('convId', conversationId);
     $('#user-' + message.conversation.id).css('font-weight', 'bold');
-    var lastMessage = $('#message-' + message.conversation.id);
+    let lastMessage = $('#message-' + message.conversation.id);
     lastMessage.css('font-weight', 'bold');
     lastMessage.html(message.message);
-    var span = $('#span-'+message.conversation.id);
-    if(span.hasClass('hide')){
-        span.removeClass('hide');
-    }
+    let span = $('#span-'+message.conversation.id);
+    span.css('display', 'block');
     let unread = parseInt(span.attr('data-unread'));
     span.attr('data-unread', unread+1);
     span.text(unread +1);
