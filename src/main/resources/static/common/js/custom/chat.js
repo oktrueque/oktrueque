@@ -13,7 +13,7 @@ $(document).ready(function () {
    $('.conversation').on('click', function () {
        conversationId = $(this).data('id');
        handleConversation($(this));
-       handleNewMessages($(this));
+       handleNewMessages();
        $.ajax({
            type : "get",
            url : "/profile/conversations/" + conversationId + "/messages",
@@ -67,16 +67,12 @@ handleConversation = function(currentConversation){
     $('#conversation-title').text(name);
 };
 
-handleNewMessages = function(currentConversation){
+handleNewMessages = function(){
     $('#user-' + conversationId).css('font-weight', 'normal');
     let lastMessage = $('#message-' + conversationId);
     lastMessage.css('font-weight', 'normal');
-    // lastMessage.html(message.message);
     let span = $('#span-'+conversationId);
     span.css('display', 'none');
-    // let unread = parseInt(span.attr('data-unread'));
-    // span.attr('data-unread', unread+1);
-    // span.text(unread +1);
 };
 
 display = function(messages){
@@ -85,6 +81,10 @@ display = function(messages){
     messages.forEach(function(message){
         displayMessageWithConversation(conversation, message);
     });
+    conversation.append(
+        '<div id="scroll"></div>'
+    );
+    conversation.animate({scrollTop: $("#scroll").position().top}, 1000);
 };
 
 displayMessageWithConversation = function(conversation, message){
