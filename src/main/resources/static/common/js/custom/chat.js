@@ -208,11 +208,14 @@ showNotification = function(message){
     $('#user-' + message.conversation.id).css('font-weight', 'bold');
     var lastMessage = $('#message-' + message.conversation.id);
     lastMessage.css('font-weight', 'bold');
-    lastMessage.html(
-        message.message +
-        '<i class="icmn-circle2 pull-right" style="color: rgba(179, 26, 39, 0.58);"></i>'
-    );
-    console.log(message);
+    lastMessage.html(message.message);
+    var span = $('#span-'+message.conversation.id);
+    if(span.hasClass('hide')){
+        span.removeClass('hide');
+    }
+    let unread = parseInt(span.attr('data-unread'));
+    span.attr('data-unread', unread+1);
+    span.text(unread +1);
 };
 
 
