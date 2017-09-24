@@ -101,7 +101,7 @@ public class UserServiceImpl  implements UserService{
         String email = "", username = "",rawPassword;
         Map<String,Object> model = new LinkedHashMap<>();
         Random rand = new Random();
-        String editProfileUri = "http://localhost:8080/profile/edit"; //Esto deberia cambiarse cuando este hosteado en amazon.
+        String editProfileUri = urlServer+ "profile/edit";
         if(datos.contains("@")){
             email = datos;
             rawPassword = email.substring(0,email.indexOf("@"))+rand.nextInt(10000);
