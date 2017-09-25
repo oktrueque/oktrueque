@@ -60,6 +60,7 @@
             <section class="panel panel-profile">
                 <div class="panel-body">
                     <h6>Información personal</h6>
+                    <br/>
                     <input id="userId" type="hidden" th:field="${user.id}" />
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
@@ -496,11 +497,11 @@
         function getNewItem(){
             let itemName = $("#itemName").val();
             let itemDes = $("#descTextArea").val();
-            let userId = $("#userId").val();
+            let user = $("#user").val();
             let itemCat = $("#selectCat").val();
             var item = {
                 name: itemName,
-                user: {id: userId},
+                user: {id: user},
                 description: itemDes,
                 category: {id: itemCat},
                 tags: ms.getSelection()

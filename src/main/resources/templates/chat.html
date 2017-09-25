@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layouts/default">
 <head>
-
+    <script src="../../static/vendors/sockjs/sockjs.min.js" th:src="@{/vendors/sockjs/sockjs.min.js}"></script>
+    <script src="../../static/vendors/sockjs/stomp.min.js" th:src="@{/vendors/sockjs/stomp.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/chat.css" th:href="@{/common/css/source/custom/chat.css}"/>
+    <script th:src="@{/common/js/custom/chat.js}"></script>
 </head>
 <th:block layout:fragment="content">
     <section class="page-content">
@@ -12,94 +15,92 @@
                 <div class="panel-sidebar">
                     <div class="messaging-search">
                         <div class="search-block">
-                            <div class="form-input-icon form-input-icon-right">
-                                <i class="icmn-search"></i>
-                                <input type="text" class="form-control form-control-sm" placeholder="Search..."></input>
-                                <button type="submit" class="search-block-submit "></button>
-                            </div>
+                            <h6>Trueques Activos</h6>
                         </div>
                     </div>
                     <!--Aca buscar los rost-->
                     <div class="messaging-list">
-                        <div class="messaging-list-item" th:each="userConv : ${usersChatList}">
-                            <div class="s1">
-                                <a class="avatar" href="javascript:void(0);">
-                                    <img th:src="${userConv.photo1}" ></img>
-                                </a>
+                        <th:block th:each="uc : ${conversations}" >
+                            <div th:if="${!uc.group}">
+                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}"  >
+                                    <div class="s1">
+                                        <a class="avatar" href="javascript:void(0);">
+                                            <img th:src="${uc.sendTo.photo1}" />
+                                        </a>
+                                    </div>
+                                    <div class="s2">
+                                        <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
+                                        <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name"
+                                             th:classappend="${uc.unread > 0} ? 'bold' : ''" th:text="${uc.sendTo.name}"></div>
+                                        <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
+                                        <span th:id="${'span-'+uc.id.conversation.id}"  class="label label-warning pull-right" th:text="${uc.unread}"
+                                              th:attr="data-unread=${uc.unread}" th:classappend="${uc.unread &gt; 0} ? 'show' : 'hide'"></span>
+                                        <div th:id="${'message-'+uc.id.conversation.id}" class="messaging-list-title-last color-default"
+                                             th:classappend="${uc.unread > 0} ? 'bold' : ''"
+                                             th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                            talk. Hello! Where you are now? I want to talk
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="s2">
-                                <!--<small class="messaging-time">8:34PM</small>-->
-                                <div class="messaging-list-title-name" th:text="${userConv.name + ' ' + userConv.last_name} "></div>
-                                <!--<div class="messaging-list-title-last color-default">Hello! Where you are now? I want to-->
-                                <!--talk. Hello! Where you are now? I want to talk-->
-                                <!--</div>-->
+                            <div th:if="${uc.group}">
+                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}" >
+                                    <div class="s1">
+                                        <a class="avatar" href="javascript:void(0);">
+                                            <img src="https://s3-sa-east-1.amazonaws.com/oktrueque/utils/simbolo.png" />
+                                        </a>
+                                    </div>
+                                    <div class="s2">
+                                        <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
+                                        <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name">Red de Trueques</div>
+                                        <span th:id="${'span-'+uc.id.conversation.id}"  class="label label-warning pull-right" th:text="${uc.unread}"
+                                              th:attr="data-unread=${uc.unread}" th:classappend="${uc.unread &gt; 0} ? 'show' : 'hide'"></span>
+                                        <div th:id="${'message-'+uc.id.conversation.id}" class="messaging-list-title-last color-default" th:text="${uc.id.conversation.lastMessage}">Hello! Where you are now? I want to
+                                            talk. Hello! Where you are now? I want to talk
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </th:block>
                     </div>
                 </div>
                 <div class="panel-heading">
                     <div class="pull-right">
                         <div class="dropdown">
-                            <a href="javascript: void(0);" class="dropdown-toggle dropdown-inline-button"
+                            <a href="javascript: void(0);"
                                data-toggle="dropdown" aria-expanded="false">
-                                <i class="dropdown-inline-button-icon icmn-database"></i>
-                                <span class="hidden-lg-down">Actions</span>
-                                <span class="caret"></span>
+                                <i class="icmn-more2"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                                <a class="dropdown-item" href="javascript:void(0)"><i
-                                        class="dropdown-icon icmn-pencil7"></i> Edit Conversation</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i
-                                        class="dropdown-icon icmn-bin3"></i> Delete Conversation</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Perfil del Usuario</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Confirmar Trueque</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:void(0)"><i
-                                        class="dropdown-icon fa fa-recycle"></i> Mark as Spam</a>
+                                <a class="dropdown-item" href="javascript:void(0)">Cancelar Trueque</a>
                             </ul>
                         </div>
                     </div>
-                    <h6 class="messaging-title">Software Developing</h6>
+
+                    <h6 id="conversation-title" class="messaging-title">Chats</h6>
                 </div>
                 <div class="panel-body">
-                    <div class="row">
+                    <div class="container">
                         <div class="col-lg-12">
-                            <div class="conversation-block height-700 custom-scroll">
-                                <div class="conversation-item">
-                                    <div class="s1">
-                                        <a class="avatar" href="javascript:void(0);">
-                                            <img src="../assets/common/img/temp/avatars/3.jpg"
-                                                 alt="Alternative text to the image"></img>
-                                        </a>
-                                    </div>
-                                    <div class="s2">
-                                        <strong>David Scott</strong>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                                            industry</p>
-                                    </div>
-                                </div>
-                                <div class="conversation-item you">
-                                    <div class="s1">
-                                        <a class="avatar" href="javascript:void(0);">
-                                            <img src="../assets/common/img/temp/avatars/4.jpg"
-                                                 alt="Alternative text to the image"></img>
-                                        </a>
-                                    </div>
-                                    <div class="s2">
-                                        <strong>Donald Trump</strong>
-                                        <p>Ok. Thanks!</p>
-                                    </div>
-                                </div>
+                            <div id="conversation" class="conversation-block height-700 custom-scroll">
+
                             </div>
-                            <div class="form-group padding-top-20 margin-bottom-0">
-                                <textarea class="form-control adjustable-textarea" placeholder="Type and press enter"
-                                          style="overflow-x: hidden; word-wrap: break-word; resize: none; overflow-y: visible;"></textarea>
-                                <button class="btn btn-primary width-200 margin-top-10">
-                                    <i class="fa fa-send margin-right-5"></i>
-                                    Send
-                                </button>
-                                <button class="btn btn-link margin-top-10">
-                                    Attach File
-                                </button>
+                            <div id="chat-actions" class="form-group padding-top-20 margin-bottom-0">
+                                <input type="hidden" id="idConversation"/>
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <textarea id="text" class="form-control adjustable-textarea textarea" disabled="disabled" placeholder="Escribe un mensaje aquí"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button id="send" class="btn btn-primary width-100 margin-top-10" disabled="disabled" onclick="sendMessage();">
+                                            <i class="fa fa-send margin-right-5"></i>
+                                            Enviar
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,44 +111,13 @@
         </div>
 
         <!-- Page Scripts -->
-        <script>
-            $(function () {
-                ///////////////////////////////////////////////////
-                // SIDEBAR CURRENT STATE
-                $('.messaging-list-item').on('click', function () {
-                    $('.messaging-list-item').removeClass('current');
-                    $(this).addClass('current');
-                });
-                ///////////////////////////////////////////////////////////
-                // CUSTOM SCROLL
-                if (!cleanUI.hasTouch) {
-                    $('.custom-scroll').each(function () {
-                        $(this).jScrollPane({
-                            autoReinitialise: true,
-                            autoReinitialiseDelay: 100
-                        });
-                        var api = $(this).data('jsp'),
-                            throttleTimeout;
-                        $(window).bind('resize', function () {
-                            if (!throttleTimeout) {
-                                throttleTimeout = setTimeout(function () {
-                                    api.reinitialise();
-                                    throttleTimeout = null;
-                                }, 50);
-                            }
-                        });
-                    });
-                }
-                ///////////////////////////////////////////////////////////
-                // MEDIA PLAYER
-                if (!(typeof angular === 'undefined')) {
-                    $('.mediatec-cleanaudioplayer').cleanaudioplayer();
-                    $('.mediatec-cleanvideoplayer').cleanvideoplayer();
-                }
-                ///////////////////////////////////////////////////////////
-                // ADJUSTABLE TEXTAREA
-                autosize($('.adjustable-textarea'));
-            });
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var userId =  /*[[${#authentication.principal.id}]]*/ "";
+            var user_photo =  /*[[${#authentication.principal.photo1}]]*/ "";
+            var groups = [[${groups}]];
+            initialize(userId, user_photo, groups);
+            /*]]>*/
         </script>
         <!-- End Page Scripts -->
     </section>

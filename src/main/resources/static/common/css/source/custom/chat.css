@@ -1,0 +1,35 @@
+.image-heading{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: -5px;
+    left: -5px;
+    background-color: #f2f4f8;
+    border-color: #dfe4ed;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 500px;
+}
+
+.textarea{
+    overflow-x: hidden;
+    word-wrap: break-word;
+    resize: none;
+    overflow-y: visible;
+}
+
+.notification{
+    color: #b31a27;
+}
+
+.bold{
+    font-weight:bold;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
