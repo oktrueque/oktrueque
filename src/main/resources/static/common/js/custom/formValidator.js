@@ -7,6 +7,8 @@ function icons(){
     let check = document.getElementById('check');
     cross.style.display='none';
     check.style.display='none';
+    check.style.color = "#ffffff";
+    cross.style.color = "#ffffff";
 }
 function checkPass() {
     let cross = document.getElementById('cross');
@@ -44,6 +46,7 @@ function checkPass() {
     let message = "";
     let messageSpan = document.getElementById('messageSpan');
     let messageModal = $('#messageModal');
+
 
 
      if(formName==='register-form'){
@@ -180,14 +183,15 @@ function checkPass() {
         let itemDes = $("#descTextArea").val();
 
         if (selectValue === '-1') {
-            message = 'Debe seleccionar una categoría para crear el item!';
+            message = 'Debes seleccionar una categoría para crear el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
+
             document.getElementById('selectCat').focus();
             return false;
 
         } else if (itemName.length===0) {
-            message = 'Debe asignar un nombre el item!';
+            message = 'Debes asignar un nombre el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
             $("#itemName").focus();
