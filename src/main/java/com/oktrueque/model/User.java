@@ -55,8 +55,12 @@ public class User implements UserDetails{
     @JsonBackReference
     private List<Complaint> complaints;
 
+
     @Transient
     private List<Tag> tags;
+
+    @Transient
+    private String newPassword;
 
     public List<Complaint> getComplaints() {
         return complaints;
@@ -69,7 +73,7 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, List<Tag> tags) {
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, List<Tag> tags, String newPassword) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
@@ -84,6 +88,7 @@ public class User implements UserDetails{
         this.wallpaper = wallpaper;
         this.complaints = complaints;
         this.tags = tags;
+        this.newPassword = newPassword;
     }
 
     public List<Comment> getComments() {
@@ -250,4 +255,11 @@ public class User implements UserDetails{
         return "./static/common/img/temp/photos/"+ number.toString() + ".jpeg";
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 }

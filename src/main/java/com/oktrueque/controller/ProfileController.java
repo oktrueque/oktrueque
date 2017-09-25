@@ -8,10 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,9 +37,10 @@ public class ProfileController {
     private String fileNameUsers;
     @Value("${aws.s3.fileName.items}")
     private String fileNameItems;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service) {
+    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.commentService = commentService;
         this.userTagService = userTagService;
@@ -46,6 +49,7 @@ public class ProfileController {
         this.categoryService = categoryService;
         this.truequeService = truequeService;
         this.awsS3Service = awsS3Service;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
@@ -91,6 +95,13 @@ public class ProfileController {
             String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), null, user.getPhoto1());
             user.setPhoto1(pictureUrl);
         }
+        if(user.getNewPassword().equals("")){
+            userService.updateUser(user);
+            return "redirect:/profile";
+        }
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getNewPassword());
+        user.setNewPassword("");
+        user.setPassword(encodedPassword);
         userService.updateUser(user);
         return "redirect:/profile";
     }
@@ -197,13 +208,13 @@ public class ProfileController {
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
             trueque.setRejectionDate(LocalDateTime.now());
-            //truequeService.updateTrueque(trueque);
+            truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         if (trueque.getStatus().equals("Activo")){
             trueque.setStatus(4);
             trueque.setRejectionDate(LocalDateTime.now());
-            //truequeService.updateTrueque(trueque);
+            truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(users,HttpStatus.OK);
 
         }
@@ -216,8 +227,8 @@ public class ProfileController {
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
         comment.setDate(LocalDateTime.now());
         comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
-        //Comment commentResponse = commentService.saveComment(comment);
-        return new ResponseEntity<>(comment, HttpStatus.OK);
+        Comment commentResponse = commentService.saveComment(comment);
+        return new ResponseEntity<>(commentResponse, HttpStatus.OK);
 
     }
 

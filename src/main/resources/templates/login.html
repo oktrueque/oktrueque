@@ -219,6 +219,7 @@
         document.addEventListener("DOMContentLoaded", function () {
 
             let emailInput = $("#validation-email");
+            emailInput.focus();
             $("#resetPassLink").on("click", function () {
                document.getElementById('resetPassLink').setAttribute('style','pointer-events: none; cursor: wait;');
                document.getElementById('pleaseWait').setAttribute('hidden','false');
