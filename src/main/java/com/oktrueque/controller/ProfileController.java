@@ -205,21 +205,44 @@ public class ProfileController {
             if (ut.getId().getUserId()!= user.getId()){
                 users.add(userService.getUserLiteById(ut.getId().getUserId()));}
         }
+        // PENDIENTE A RECHAZADO
         if (trueque.getStatus().equals("Pendiente")){
             trueque.setStatus(2);
             trueque.setRejectionDate(LocalDateTime.now());
             truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+        // ACTIVO A CANCELADO
         if (trueque.getStatus().equals("Activo")){
             trueque.setStatus(4);
             trueque.setRejectionDate(LocalDateTime.now());
             truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(users,HttpStatus.OK);
-
         }
-        return new ResponseEntity<>(users,HttpStatus.OK);
+       return new ResponseEntity<>(users,HttpStatus.OK);
     }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}/confirm")
+    public ResponseEntity<List<UserLite>> confirmTrueque(@PathVariable Long id, Principal principal){
+
+        Trueque trueque = truequeService.getTruequeById(id);
+        User user = userService.getUserByUsername(principal.getName());
+        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+        List<UserLite> users = new ArrayList<>();
+        for (UserTrueque ut: userTrueques){
+            if (ut.getId().getUserId()!= user.getId()){
+                users.add(userService.getUserLiteById(ut.getId().getUserId()));}
+        }
+        // ACTIVO A CONFIRMADO
+        trueque.setStatus(3);
+        trueque.setEndingDate(LocalDateTime.now());
+        truequeService.updateTrueque(trueque);
+        return new ResponseEntity<>(users,HttpStatus.OK);
+
+    }
+
+
 
 
 
