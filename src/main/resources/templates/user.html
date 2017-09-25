@@ -57,14 +57,12 @@
                     </div>
                 </div>
             </section>
-            <section class="panel">
+            <section class="panel panel-profile">
                 <div class="panel-body">
                     <h6>Information</h6>
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
                         <dd th:text="${user.name + ' ' + user.last_name}">Nombre</dd>
-                        <dt>Calificación</dt>
-                        <dd><small class="label label-success" th:text="${user.score}">8,2</small></dd>
                         <div th:if="${hasTags}">
                             <dt>Intereses</dt>
                             <dd><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
@@ -72,7 +70,7 @@
                     </dl>
                 </div>
             </section>
-            <section class="panel">
+            <section class="panel panel-profile">
                 <div class="panel-body">
                     <div th:if="${hasItems}">
                         <div class="cui-ecommerce--catalog--item" th:each="item : ${items}">
@@ -101,7 +99,7 @@
             </section>
         </div>
         <div class="col-xl-8">
-            <section class="panel profile-user-content">
+            <section class="panel panel-profile">
                 <div class="panel-body">
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="posts" role="tabpanel">
@@ -245,5 +243,6 @@
 </section>
 <div class="main-backdrop"><!-- --></div>
 
+    <div class="main-backdrop"><!-- --></div>
 </th:block>
 </html>
