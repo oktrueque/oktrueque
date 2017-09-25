@@ -6,7 +6,7 @@
     <link th:href="@{/vendors/magicsuggest/magicsuggest-min.css}" href="../static/vendors/magicsuggest/magicsuggest-min.css" rel="stylesheet"/>
     <script th:src="@{/vendors/dropify/dist/js/dropify.min.js}" src="../assets/vendors/dropify/dist/js/dropify.min.js"></script>
     <script th:src="@{/vendors/magicsuggest/magicsuggest-min.js}" src="../static/vendors/magicsuggest/magicsuggest-min.js"></script>
-
+    <script th:src="@{/common/js/custom/magicSuggest.js}" src="../static/common/js/custom/magicSuggest.js"></script>
     <!--VALIDATION SCRIPTS-->
     <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
 
@@ -82,9 +82,9 @@
                             <h5>Intereses personales</h5>
                             <div class="form-group">
 
-                                <label for="tags" class="form-control-label">Escribe aquí tus nuevos intereses
+                                <label for="ms" class="form-control-label">Escribe aquí tus nuevos intereses
                                     personales</label>
-                                <input id="tags" type="text" class="form-control tagsinput"/>
+                                <input id="ms" type="text" class="form-control tagsinput"/>
                                 
 
 
@@ -159,27 +159,18 @@
         var tags = [[${tags}]];
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
+        var ms;
 
         document.addEventListener("DOMContentLoaded", function () {
             //document.getElementById('passwordInput').setAttribute('value','');
-            var ms = $("#tags").magicSuggest({
-                method: 'get'
-                , data: '/tags'
-                , allowFreeEntries: false
-                , toggleOnClick: true
-                , useTabKey: true
-                , typeDelay: 0
-                , maxSelection: null
-                , required: true
-            });
-            ms.addToSelection(tags);
+            ms.initializeWithTags(tags);
 
             $("#submit-btn").on("click", function () {
                 $.ajax({
                     type: "POST",
                     contentType: "application/json",
                     url: "/profile/userTags",
-                    data: JSON.stringify(ms.getValue()),
+                    data: JSON.stringify(ms.getSelection()),
                     dataType: 'text',
                     cache: false,
                     timeout: 600000,

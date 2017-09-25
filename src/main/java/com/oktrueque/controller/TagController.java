@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.List;
 
@@ -44,15 +45,16 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/userTags")
-    public ResponseEntity<Void> saveUserTags(@RequestBody List<Long> tagsId, Principal principal){
+    @Transactional
+    public ResponseEntity<Void> saveUserTags(@RequestBody List<Tag> tags, Principal principal){
         User user = userService.getUserByUsername(principal.getName());
-        List<Tag> tagsList = tagService.findTagsByIds(tagsId);
-        userTagService.deleteAllByUserId(user.getId()); //Los elimino antes, para que solo queden guardados los que estan en el input.
-        userTagService.saveUserTags(user.getId(),tagsList);
+        userTagService.deleteAllByUserId(user.getId());
+        userTagService.saveUserTags(user.getId(),tags);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/items/{id}/updateItemTags")
+    @Transactional
     public ResponseEntity<Void> updateItemTags(@RequestBody List<Tag> tags, @PathVariable Long id){
         Item item = itemService.getItemById(id);
         itemTagService.deleteAllByItemId(item.getId());
