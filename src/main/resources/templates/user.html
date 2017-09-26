@@ -15,11 +15,6 @@
             <div class="profile-header-info">
                 <div class="row">
                     <div class="col-xl-8 col-xl-offset-4">
-                    <!-- Esto todavia no lo saco porque se cae el nombre, podria ser reemplazado por un boton que lleve a los items -->
-                        <!--<div class="width-100 text-center pull-right hidden-md-down">-->
-                            <!--<h2>154</h2>-->
-                            <!--<p>Comentarios</p>-->
-                        <!--</div>-->
                         <div class="width-100 text-center pull-right hidden-md-down">
                             <h2 th:text="${user.itemsAmount}">17</h2>
                             <p>Items</p>
@@ -57,14 +52,12 @@
                     </div>
                 </div>
             </section>
-            <section class="panel">
+            <section class="panel panel-profile">
                 <div class="panel-body">
                     <h6>Information</h6>
                     <dl class="dl-horizontal user-profile-dl">
                         <dt>Nombre Completo</dt>
                         <dd th:text="${user.name + ' ' + user.last_name}">Nombre</dd>
-                        <dt>Calificación</dt>
-                        <dd><small class="label label-success" th:text="${user.score}">8,2</small></dd>
                         <div th:if="${hasTags}">
                             <dt>Intereses</dt>
                             <dd><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
@@ -72,23 +65,25 @@
                     </dl>
                 </div>
             </section>
-            <section class="panel">
+            <section class="panel panel-profile">
                 <div class="panel-body">
                     <div th:if="${hasItems}">
                         <div class="cui-ecommerce--catalog--item" th:each="item : ${items}">
-                            <div class="cui-ecommerce--catalog--item--img">
-                                <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
-                                    <i class="icmn-redo2"><!-- --></i>
+                            <img class="cui-ecommerce--catalog--item--img" th:src="${item.photo1}"/>
+                            <div class="cui-ecommerce-catalog--item--infobox animated row hidden">
+                                <div class="row col-lg-7 col-md-7 col-sm-7">
+                                    <div class="cui-ecommerce--catalog--item--title col-lg-12 col-md-12 col-sm-12">
+                                        <p th:text="${item.name}"></p>
+                                    </div>
+                                    <div class="cui-ecommerce--catalog--item--descr col-lg-12 col-md-12 col-sm-12">
+                                        <P th:text="${item.category.name}"></P>
+                                    </div>
                                 </div>
-                                <a th:href="@{'/items/' + ${item.id}}">
-                                    <img th:src="${item.photo1}"/>
-                                </a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--title">
-                                    <a th:href="@{'/items/' + ${item.id}}" th:text="${item.name}">Nombre</a>
-                            </div>
-                            <div class="cui-ecommerce--catalog--item--descr">
-                                <p th:text="${item.category.name}">Categoria</p>
+                                <div class="cui-ecommerce--catalog--item--turequeyaicon col-lg-5 col-md-5 col-sm-5">
+                                    <a th:href="@{'/items/' + ${item.id}}" class="btn margin-inline btn-warning ">Trueque ya <i class="fa fa-check-circle" aria-hidden="true"></i></a>
+                                </div>
+
+
                             </div>
                         </div>
                         <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
@@ -101,8 +96,8 @@
             </section>
         </div>
         <div class="col-xl-8">
-            <section class="panel profile-user-content">
-                <div class="panel-body">
+            <section class="panel panel-profile">
+                <div class="panel-body panel-margin">
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="posts" role="tabpanel">
                                 <h5>Comentarios</h5>
@@ -121,7 +116,7 @@
                                                         <a href=""><i class="icmn-compass"></i></a>
                                                     </div>
                                                     <strong th:text="${comment.user_origin.name}">Name</strong>
-                                                    <small th:text="${comment.date}"></small>
+                                                    <small th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></small>
                                                 </div>
                                                 <div class="user-wall-post">
                                                     <p th:text="${comment.description}">Comentario</p>
@@ -188,6 +183,7 @@
     </div>
 </div>
 <!-- Page Scripts -->
+    <script th:src="@{/common/js/custom/itemsCatalog.js}" src="../static/common/js/custom/itemsCatalog.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         var token = [[${_csrf.token}]];
@@ -245,5 +241,6 @@
 </section>
 <div class="main-backdrop"><!-- --></div>
 
+    <div class="main-backdrop"><!-- --></div>
 </th:block>
 </html>

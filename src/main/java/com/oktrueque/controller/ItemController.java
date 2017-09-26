@@ -3,6 +3,7 @@ package com.oktrueque.controller;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.ItemTag;
 import com.oktrueque.model.User;
+import com.oktrueque.model.UserLite;
 import com.oktrueque.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class ItemController {
     public String getItemById(@PathVariable Long id, Model model) {
 
         Item item = itemService.getItemById(id);
-        User u = item.getUser();
+        UserLite u = item.getUser();
 
         List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
         model.addAttribute("item", item);
