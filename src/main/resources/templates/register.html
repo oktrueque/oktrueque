@@ -25,9 +25,6 @@
     <!-- v1.0.0 -->
     <link rel="stylesheet" type="text/css" href="../assets/vendors/bootstrap/dist/css/bootstrap.min.css" th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}"/>
 
-    <!-- Clean UI Styles -->
-    <link rel="stylesheet" type="text/css" href="../assets/common/css/source/custom/login.css" th:href="@{/common/css/source/custom/login.css}"/>
-
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../assets/common/css/source/main.css" th:href="@{/common/css/source/main.css}"/>
 
@@ -47,7 +44,7 @@
 
 <section class="page-content">
 
-    <div class="page-content-inner background-img">
+    <div class="page-content-inner" th:style="'background:url(' + ${background} + ');'">
 
         <!-- Register Page -->
         <div class="single-page-block-header">

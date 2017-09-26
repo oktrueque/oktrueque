@@ -58,6 +58,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public String getUserById(Model model) {
         User user1 = new User();
+        Random r = new Random();
+        int index = r.nextInt(5) + 1;
+        model.addAttribute("background", "common/img/temp/login/login-"+ index +".jpg");
         model.addAttribute("user", user1);
         return "register";
     }
@@ -85,6 +88,10 @@ public class UserController {
         user.setPhoto1(Constants.returnRandomImage());
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
+
+        Random r = new Random();
+        int index = r.nextInt(5) + 1;
+        model.addAttribute("background", "common/img/temp/login/login-"+ index +".jpg");
         return "confirmEmail";
     }
 
@@ -138,6 +145,9 @@ public class UserController {
 
     @RequestMapping("/login-error")
     public String loginError(Model model) {
+        Random r = new Random();
+        int index = r.nextInt(5) + 1;
+        model.addAttribute("background", "common/img/temp/login/login-"+ index +".jpg");
         model.addAttribute("loginError", true);
         return "login";
     }
