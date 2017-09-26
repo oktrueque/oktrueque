@@ -10,7 +10,7 @@
             <div class="panel-heading">
                 <h3>¡Encuentra lo que estás buscando!</h3>
                 <th:block th:each="category : ${categories}">
-                    <a th:href="@{/templates/items(id_category=${category.id})}" class="btn btn-oktrueque margin-inline" th:text="${category.name}">
+                    <a th:href="@{/items(id_category=${category.id})}" class="btn btn-oktrueque margin-inline" th:text="${category.name}">
                         Categoria
                     </a>
                 </th:block>
