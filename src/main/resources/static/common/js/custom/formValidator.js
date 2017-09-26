@@ -131,7 +131,7 @@ function checkPass() {
          let newPassword = $('#pass1');
          let pass2 = $('#pass2');
 
-         if (name.length===0) {
+         if (name.length===0 || !name.trim()) {
              message = 'Debes escribir tu nombre!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -143,7 +143,7 @@ function checkPass() {
              messageModal.modal('show');
              $("#name").focus();
              return false;
-         } else if (lastName.length===0){
+         } else if (lastName.length===0 || !lastName.trim()){
              message = 'Debes escribir tu apellido!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -155,13 +155,13 @@ function checkPass() {
              messageModal.modal('show');
              $("#lastName").focus();
              return false;
-         } else if(newPassword.length===0 && pass2.length!==0){
+         } else if((newPassword.length===0 || !newPassword.trim()) && pass2.length!==0){
              message = 'Debes ingresar la nueva contraseña!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#pass1").focus();
              return false;
-         } else if(newPassword.length!==0 && pass2.length===0) {
+         } else if(newPassword.length!==0 && (pass2.length===0) || !pass2.trim() ) {
              message = 'Debes repetir la contraseña!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -190,14 +190,14 @@ function checkPass() {
             document.getElementById('selectCat').focus();
             return false;
 
-        } else if (itemName.length===0) {
+        } else if (itemName.length===0 || !itemName.trim()) {
             message = 'Debes asignar un nombre el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
             $("#itemName").focus();
             return false;
 
-        }  else if (itemDes.length===0){
+        }  else if (itemDes.length===0 || !itemDes.trim()){
             message = 'Debes describir el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
