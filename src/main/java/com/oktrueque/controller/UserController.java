@@ -32,6 +32,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class UserController {
@@ -128,7 +129,10 @@ public class UserController {
     }
 
     @RequestMapping("/login")
-    public String loginUser() {
+    public String loginUser(Model model) {
+        Random r = new Random();
+        int result = r.nextInt(5) + 1;
+        model.addAttribute("background", "common/img/temp/login/login-"+ result +".jpg");
         return "login";
     }
 
