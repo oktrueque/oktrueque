@@ -170,10 +170,10 @@
                                                         </td>
                                                         <td th:if="${trueque.isActivo()}">
                                                             <button type="button" class="btn btn-xs btn-success confirm" th:attr="data-id=${trueque.id}">Confirmar</button>
+                                                            <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Cancelar</button>
                                                             <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
                                                                 <i class="fa fa-bars" aria-hidden="true"></i> Detalle
                                                             </a>
-                                                            <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Cancelar</button>
                                                         </td>
                                                     </tr>
                                                     </tbody>
