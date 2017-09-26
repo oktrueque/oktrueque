@@ -44,12 +44,17 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Page<Item> getItemsByCategory(int id_category, Pageable pageable) {
-        return itemRepository.findByCategory_Id(id_category, pageable);
+     return itemRepository.findByCategory_Id(id_category, pageable);
     }
 
     @Override
     public Page<Item> findAll(Pageable pageable) {
         return itemRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Item> findByStatus(int status, Pageable pageable) {
+        return itemRepository.findByStatus(status,pageable);
     }
 
     @Override

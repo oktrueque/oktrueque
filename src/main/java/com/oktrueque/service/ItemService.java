@@ -22,6 +22,8 @@ public interface ItemService {
 
     Page<Item> findAll(Pageable pageable);
 
+    Page<Item> findByStatus(int status, Pageable pageable);
+
     Page<Item> getItemsByName(String name, Pageable pageable);
 
     List<Item> getItemsByUserUsername(String username, Pageable pageable);

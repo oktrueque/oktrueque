@@ -42,7 +42,7 @@ public class ItemController {
         Page<Item> items = null;
         PageWrapper<Item> page = null;
         if (id_category == null && item_name == null) {
-            items = itemService.findAll(pageable);
+            items = itemService.findByStatus(1,pageable);
             page = new PageWrapper<>(items, "/items");
         }
         if (id_category != null) {
