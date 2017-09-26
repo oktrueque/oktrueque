@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -120,8 +121,10 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/items")
-    public ResponseEntity<Item> newItem(@RequestBody Item item){
+    public ResponseEntity<Item> newItem(@RequestBody Item item, Principal principal){
+        UserLite user = userService.getUserLiteByUsername(principal.getName());
         item.setStatus(0);
+        item.setUser(user);
         Item itemResponse = itemService.saveItem(item);
         return new ResponseEntity(itemResponse, HttpStatus.OK);
     }
@@ -188,7 +191,7 @@ public class ProfileController {
             item.setStatus(0);
         }
 
-        User user = userService.getUserByUsername(principal.getName());
+        UserLite user = userService.getUserLiteByUsername(principal.getName());
         item.setUser(user);
         itemService.updateItem(item);
         return "redirect:/profile/items";

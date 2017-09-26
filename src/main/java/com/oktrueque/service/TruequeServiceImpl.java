@@ -83,7 +83,7 @@ public class TruequeServiceImpl implements TruequeService {
         });
     }
 
-    private UserTrueque createUserTrueque(Trueque truequeSaved, User user, Integer orden) {
+    private UserTrueque createUserTrueque(Trueque truequeSaved, UserLite user, Integer orden) {
         UserTrueque userTrueque = (orden.equals(1)) ?
                 new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, true) :
                 new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
@@ -94,7 +94,7 @@ public class TruequeServiceImpl implements TruequeService {
         return new ItemTrueque(new ItemTruequeId(truequeSaved.getId(), item.getId()));
     }
 
-    private void sendMailTo(User userOrigen, User userDestino,
+    private void sendMailTo(UserLite userOrigen, UserLite userDestino,
                             List<Item> itemsPropuestos, List<Item> itemsDemandados, Trueque trueque){
         Email email = new Email();
         email.setMailTo(userDestino.getEmail());

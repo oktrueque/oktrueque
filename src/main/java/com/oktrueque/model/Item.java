@@ -19,7 +19,7 @@ public class Item {
     private String description;
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User user;
+    private UserLite user;
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
@@ -43,7 +43,7 @@ public class Item {
         this.status = status;
     }
 
-    public Item(Long id, String name, String description, User user, Category category) {
+    public Item(Long id, String name, String description, UserLite user, Category category) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -51,7 +51,7 @@ public class Item {
         this.category = category;
     }
 
-    public Item(String name, String description, User user, Category category, String photo1, String photo2, String photo3) {
+    public Item(String name, String description, UserLite user, Category category, String photo1, String photo2, String photo3) {
         this.name = name;
         this.description = description;
         this.user = user;
@@ -86,11 +86,11 @@ public class Item {
         this.description = description;
     }
 
-    public User getUser() {
+    public UserLite getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLite user) {
         this.user = user;
     }
 

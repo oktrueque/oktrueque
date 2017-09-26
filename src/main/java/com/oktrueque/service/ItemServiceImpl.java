@@ -77,7 +77,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @Transactional
     public Item saveItem(Item item) {
         Item itemSaved = itemRepository.save(item);
         List<Tag> tags = item.getTags();
