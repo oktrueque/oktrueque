@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -225,7 +226,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
-        comment.setDate(LocalDateTime.now());
+        comment.setDate(new Date());
         comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
         Comment commentResponse = commentService.saveComment(comment);
         return new ResponseEntity<>(commentResponse, HttpStatus.OK);

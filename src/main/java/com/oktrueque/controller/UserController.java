@@ -13,6 +13,7 @@ import com.oktrueque.service.UserService;
 import com.oktrueque.service.UserTagService;
 import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -100,9 +101,9 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
-    public String getUserProfile(Model model, @PathVariable String username, @PageableDefault(value = 2) Pageable pageable) {
+    public String getUserProfile(Model model, @PathVariable String username) {
         User user = userService.getUserByUsername(username);
-        List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), pageable);
+        List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), new PageRequest(0,2));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<Comment> comments = user.getComments();
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();

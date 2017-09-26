@@ -1,14 +1,8 @@
 package com.oktrueque.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
-
-/**
- * Created by Fabrizio SPOSETTI on 03/07/2017.
- */
+import java.util.Date;
 
 @Entity
 @Table(name = "comments")
@@ -28,10 +22,9 @@ public class Comment {
     private UserLite user_target;
     private int score;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime date;
+    private Date date;
 
-    public Comment(String description, UserLite user_origin, UserLite user_target, int score, LocalDateTime date) {
+    public Comment(String description, UserLite user_origin, UserLite user_target, int score, Date date) {
         this.description = description;
         this.user_origin = user_origin;
         this.user_target = user_target;
@@ -81,11 +74,11 @@ public class Comment {
         this.score = score;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }
