@@ -91,7 +91,7 @@ displayMessageWithConversation = function(conversation, message){
     let userPhoto = message.user.photo1;
     if(message.user.id === userId){
         conversation.append(
-            '<div class="conversation-item you">' +
+            '<div id="message-'+ message.id +'" class="conversation-item you">' +
             '<div class="s1">' +
             '<a class="avatar" href="javascript:void(0);">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
@@ -104,7 +104,7 @@ displayMessageWithConversation = function(conversation, message){
         );
     }else{
         conversation.append(
-            '<div class="conversation-item">' +
+            '<div id="message-'+ message.id +'" class="conversation-item">' +
             '<div class="s1">' +
             '<a class="avatar" href="javascript:void(0);">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
@@ -148,7 +148,7 @@ appendMessage = function(message){
             '</div>'
         );
     }
-
+    $('#conversation').animate({scrollTop: $('#conversation').prop("scrollHeight")}, 500);
 };
 
 setLastMessage = function(id, message){
