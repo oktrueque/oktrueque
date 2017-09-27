@@ -41,6 +41,61 @@ function checkPass() {
     }
 }
 
+function isEmpty(val) {
+
+    // test results
+    //---------------
+    // []        true, empty array
+    // {}        true, empty object
+    // null      true
+    // undefined true
+    // ""        true, empty string
+    // ''        true, empty string
+    // 0         false, number
+    // true      false, boolean
+    // false     false, boolean
+    // Date      false
+    // function  false
+
+    if (val === undefined)
+        return true;
+
+    if (typeof (val) == 'function' || typeof (val) == 'number' || typeof (val) == 'boolean' || Object.prototype.toString.call(val) === '[object Date]')
+        return false;
+
+    if (val == null || val.length === 0)        // null or 0 length array
+        return true;
+
+    if (typeof (val) == "object") {
+        // empty object
+
+        var r = true;
+
+        for (var f in val)
+            r = false;
+
+        return r;
+    }
+
+    if((!val || /^\s*$/.test(val))){return true;}
+
+    return false;
+}
+
+function hasOnlyLetterAndSpaces(val) {
+
+    if(!/^[a-zA-Z\s]*$/g.test(val)) {return true;}
+
+    return false;
+}
+
+function hasCharacters(val) {
+
+    if(!/^[a-zA-Z0-9]*$/g.test(val)) {return true;}
+
+    return false;
+}
+
  function isValidated(formName) {
 
     let message = "";
@@ -59,31 +114,31 @@ function checkPass() {
          let newPassword = $('#pass1').val();
          let pass2 = $('#pass2');
 
-          if(nameInput.length===0){
+          if(isEmpty(nameInput)){
              message = 'Debes escribir tu nombre!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#nameInput").focus();
              return false;
-         } else if(!/^[a-zA-Z\s]*$/g.test(nameInput)){
+         } else if(hasOnlyLetterAndSpaces(nameInput)){
              message = 'El nombre debe contener solo letras!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#nameInput").focus();
              return false;
-         } else if(lastNameInput.length===0){
+         } else if(isEmpty(lastNameInput)){
              message = 'Debes escribir tu apellido!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#lastNameInput").focus();
              return false;
-         } else if(!/^[a-zA-Z\s]*$/g.test(lastNameInput)){
+         } else if(hasOnlyLetterAndSpaces(lastNameInput)){
              message = 'El apellido debe contener solo letras!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#lastNameInput").focus();
              return false;
-         } else if(emailInputValue.length===0){
+         } else if(isEmpty(emailInputValue)){
              message = 'Debes escribir tu email!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -95,13 +150,13 @@ function checkPass() {
              messageModal.modal('show');
              $("#emailInput").focus();
              return false;
-         } else if(usernameInput.length===0){
+         } else if(isEmpty(usernameInput)){
              message = 'Debes escribir tu nombre de usuario!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#usernameInput").focus();
              return false;
-         } else if(!/^[a-zA-Z0-9]*$/g.test(usernameInput)){
+         } else if(hasCharacters(usernameInput)){
              message = 'El nombre de usuario no puede contener carácteres!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -129,39 +184,41 @@ function checkPass() {
          let lastName = $("#lastName").val();
          let email = $("#email").val();
          let newPassword = $('#pass1');
+         let newPasswordVal = $('#pass1').val();
          let pass2 = $('#pass2');
+         let pass2Val = $('#pass2').val();
 
-         if (name.length===0 || !name.trim()) {
+         if (isEmpty(name)) {
              message = 'Debes escribir tu nombre!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#name").focus();
              return false;
-         } else if (!/^[a-zA-Z\s]*$/g.test(name)){
+         } else if (hasOnlyLetterAndSpaces(name)){
              message = 'El nombre solo puede contener letras!';
              messageSpan.textContent  = message;
              messageModal.modal('show');
              $("#name").focus();
              return false;
-         } else if (lastName.length===0 || !lastName.trim()){
+         } else if (isEmpty(lastName)){
              message = 'Debes escribir tu apellido!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#lastName").focus();
              return false;
-         } else if (!/^[a-zA-Z\s]*$/g.test(lastName)) {
+         } else if (hasOnlyLetterAndSpaces(lastName)) {
              message = 'El apellido solo puede contener letras!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#lastName").focus();
              return false;
-         } else if((newPassword.length===0 || !newPassword.trim()) && pass2.length!==0){
+         } else if(isEmpty(newPassword) && !isEmpty(pass2)){
              message = 'Debes ingresar la nueva contraseña!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#pass1").focus();
              return false;
-         } else if(newPassword.length!==0 && (pass2.length===0) || !pass2.trim() ) {
+         } else if(!isEmpty(newPassword) && isEmpty(pass2)) {
              message = 'Debes repetir la contraseña!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -186,18 +243,17 @@ function checkPass() {
             message = 'Debes seleccionar una categoría para crear el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
-
             document.getElementById('selectCat').focus();
             return false;
 
-        } else if (itemName.length===0 || !itemName.trim()) {
+        } else if (isEmpty(itemName)) {
             message = 'Debes asignar un nombre el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
             $("#itemName").focus();
             return false;
 
-        }  else if (itemDes.length===0 || !itemDes.trim()){
+        }  else if (isEmpty(itemDes)){
             message = 'Debes describir el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
