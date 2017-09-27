@@ -42,7 +42,9 @@ public class ProfileController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService, ItemService itemService, ItemTagService itemTagService, CategoryService categoryService, TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService,
+                             ItemService itemService, ItemTagService itemTagService, CategoryService categoryService,
+                             TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
         this.commentService = commentService;
         this.userTagService = userTagService;

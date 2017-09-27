@@ -3,6 +3,7 @@ package com.oktrueque.controller;
 import com.oktrueque.model.*;
 import com.oktrueque.service.ConversationService;
 import com.oktrueque.service.MessageService;
+import com.oktrueque.service.MessageServiceImpl;
 import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,8 @@ public class ChatController {
     private final UserService userService;
 
     @Autowired
-    public ChatController(ConversationService conversationService, MessageService messageService, SimpMessagingTemplate simpMessagingTemplate, UserService userService) {
+    public ChatController(ConversationService conversationService, MessageService messageService,
+                          SimpMessagingTemplate simpMessagingTemplate, UserService userService) {
         this.conversationService = conversationService;
         this.messageService = messageService;
         this.simpMessagingTemplate = simpMessagingTemplate;

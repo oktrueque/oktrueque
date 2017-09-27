@@ -47,6 +47,12 @@ public class ServiceConfig {
     private UserTagRepository userTagRepository;
     @Autowired
     private UserLiteRepository userLiteRepository;
+    @Autowired
+    private MessageRepository messageRepository;
+    @Autowired
+    private UserConversationRepository userConversationRepository;
+    @Autowired
+    private ConversationRepository conversationRepository;
 
 
     @Bean
@@ -56,7 +62,6 @@ public class ServiceConfig {
     public ComplaintService complaintService(){
         return new ComplaintServiceImpl(complaintRepository,this.emailService(),complaintTypeRepository);
     }
-
 
     @Bean
     public CategoryService categoryService(){
@@ -109,4 +114,13 @@ public class ServiceConfig {
         return new UserTagServiceImpl(userTagRepository,this.tagService());
     }
 
+    @Bean
+    public MessageService messageService(){
+        return new MessageServiceImpl(messageRepository,userConversationRepository,conversationRepository);
+    }
+
+    @Bean
+    public ConversationService conversationService(){
+        return new ConversationServiceImpl(userConversationRepository);
+    }
 }

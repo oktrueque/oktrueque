@@ -1,10 +1,10 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Item;
-import com.oktrueque.model.Trueque;
+import com.oktrueque.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +36,8 @@ public interface ItemService {
 
     Item saveItem(Item item);
 
-    List<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses, Pageable pageable);
+    List<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses,Pageable pageable);
 
     List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status);
+
 }

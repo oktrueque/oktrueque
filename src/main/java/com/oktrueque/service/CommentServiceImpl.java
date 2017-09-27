@@ -31,7 +31,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public Comment saveComment(Comment comment) {
-
         Comment CommentSaved = commentRepository.save(comment);
         return CommentSaved;
     }

@@ -1,29 +1,19 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.UserConversation;
-import com.oktrueque.repository.UserConversationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-public class ConversationService {
+/**
+ * Created by tomas on 26/9/2017.
+ */
+public interface ConversationService {
 
-    private final UserConversationRepository userConversationRepository;
 
-    @Autowired
-    public ConversationService(UserConversationRepository userConversationRepository) {
-        this.userConversationRepository = userConversationRepository;
-    }
-
-    public List<UserConversation> getAllConversationByUserId(Long userId){
-        return userConversationRepository.findByIdUserId(userId);
-    }
+    List<UserConversation> getAllConversationByUserId(Long userId);
 
     @Transactional
-    public void clearUnreadMessages(Long conversationId, Long userId) {
-        userConversationRepository.clearUnreadMessages(userId, conversationId);
-    }
+    void clearUnreadMessages(Long conversationId, Long userId);
+
 }

@@ -92,10 +92,12 @@ public class UserServiceImpl  implements UserService{
         return true;
     }
 
+    @Override
     public User getUserById(long id){
         return userRepository.findUserById(id);
     }
 
+    @Override
     public ResponseEntity resetPassword(String datos){
         Email emailObject = new Email();
         String email = "", username = "",rawPassword;

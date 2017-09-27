@@ -32,18 +32,14 @@ public class ComplaintServiceImpl implements ComplaintService{
 
     private void sendMailTo(Complaint complaint){
         Email email = new Email();
-        email.setMailTo("fabrisposetti10@gmail.com");
+        email.setMailTo("oktrueque@gmail.com");
         email.setMailSubject("Nueva denuncia!");
-
         Map< String, Object > model = new LinkedHashMap<>();
         model.put("userTarget", complaint.getUser_target());
         model.put("userOrigin", complaint.getUser_origin());
         model.put("complaintType", complaintTypeRepository.getById(complaint.getComplaintType().getId()));
         model.put("complaint", complaint);
-
-     // model.put("uri_confirm","http://localhost:8080/trueque/"+trueque.getId()+"/confirm");
         email.setModel(model);
         emailService.sendMail(email,"newComplaint.ftl");
-
     }
 }

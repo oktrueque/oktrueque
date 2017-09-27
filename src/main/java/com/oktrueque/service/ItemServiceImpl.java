@@ -77,6 +77,7 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
     }
 
+    @Override
     public List<Item> getNonDeletedItems(String username){
         return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,2);
     }
@@ -93,12 +94,14 @@ public class ItemServiceImpl implements ItemService {
         return itemSaved;
     }
 
+    @Override
     public List<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses,Pageable pageable){
         //  2: Eliminado
         //  3: Banneado
         return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(username,statuses,pageable);
     }
 
+    @Override
     public List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status){
         //  2: Eliminado
         return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status);

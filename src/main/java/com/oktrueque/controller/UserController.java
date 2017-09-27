@@ -45,7 +45,8 @@ public class UserController {
 
 
     @Autowired
-    public UserController(UserService userService, UserTagService userTagService, ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
+    public UserController(UserService userService, UserTagService userTagService,
+                          ItemService itemService, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.userTagService = userTagService;
         this.itemService = itemService;
