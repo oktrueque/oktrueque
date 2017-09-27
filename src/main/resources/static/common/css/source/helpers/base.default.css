@@ -354,7 +354,7 @@ nav.left-menu .left-menu-inner {
 }
 
 nav.left-menu .left-menu-list-root {
-  /*  margin: 15px 0px; */
+    margin: 15px 0px;
 }
 
 nav.left-menu .left-menu-list li {
@@ -392,15 +392,13 @@ nav.left-menu .left-menu-list li.left-menu-list-opened > .left-menu-link .left-m
 
 nav.left-menu .left-menu-list li .left-menu-link {
     display: block;
-    padding: 20px 25px;
-    font-weight: 300;
+    padding: 10px 25px;
+    font-weight: 600;
     outline: none;
-    color: #000000;
-    font-size: larger;
+    color: #24222f;
     -webkit-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
-    text-transform: uppercase;
 }
 
 nav.left-menu .left-menu-list li .left-menu-link i{
@@ -431,7 +429,7 @@ nav.left-menu .left-menu-list li .left-menu-link .left-menu-link-icon {
     display: inline-block;
     width: 22px;
     font-size: 1rem;
-    color: #000000;
+    color: #24222f;
 }
 
 nav.left-menu .left-menu-list li .left-menu-item {
@@ -457,7 +455,7 @@ nav.left-menu .left-menu-list li.left-menu-list-submenu > .left-menu-link:after 
     width: 0px;
     height: 0px;
     border-width: 5px 0px 5px 5px;
-    border-color: transparent transparent transparent #d2d9e5;
+    border-color: transparent transparent transparent #24222f;
     border-style: solid;
     position: absolute;
     top: 17px;
@@ -531,7 +529,7 @@ nav.left-menu .left-menu-block .left-menu-block-item {
         height: 80px;
         top: 0px;
         z-index: 120;
-        border-bottom: 0px solid #dfe4ed;
+        border-bottom: 1px solid #dfe4ed;
         border-right: 0px;
     }
     body.menu-top nav.left-menu * {
@@ -603,7 +601,7 @@ nav.left-menu .left-menu-block .left-menu-block-item {
         border-top-color: transparent !important;
     }
     body.menu-top nav.left-menu .left-menu-list-root > li:first-child > .left-menu-link {
-        border-left: 0px solid #dfe4ed;
+        border-left: 1px solid #dfe4ed;
     }
     body.menu-top nav.left-menu .left-menu-list-root > li > .left-menu-link {
         position: relative;
@@ -611,8 +609,8 @@ nav.left-menu .left-menu-block .left-menu-block-item {
         line-height: 1;
         text-align: center;
         padding-top: 42px;
-        border-right: 0px solid #dfe4ed;
-        border-bottom: 0px solid #dfe4ed;
+        border-right: 1px solid #dfe4ed;
+        border-bottom: 1px solid #dfe4ed;
     }
     body.menu-top nav.left-menu .left-menu-list-root > li > .left-menu-link .left-menu-link-icon {
         position: absolute;
