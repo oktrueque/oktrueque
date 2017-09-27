@@ -1,13 +1,33 @@
 var user = {};
 var stompClient = null;
 var conversationId = null;
-initialize = function(id, photo, groups){
+initialize = function(id, photo, name, groups){
     user = {
         id: id,
         photo: photo,
+        name: name,
         groups: groups
     }
 };
+
+var vis = (function(){
+    var stateKey, eventKey, keys = {
+        hidden: "visibilitychange",
+        webkitHidden: "webkitvisibilitychange",
+        mozHidden: "mozvisibilitychange",
+        msHidden: "msvisibilitychange"
+    };
+    for (stateKey in keys) {
+        if (stateKey in document) {
+            eventKey = keys[stateKey];
+            break;
+        }
+    }
+    return function(c) {
+        if (c) document.addEventListener(eventKey, c);
+        return !document[stateKey];
+    }
+})();
 
 $(document).ready(function () {
    $('.conversation').on('click', function () {
@@ -147,8 +167,24 @@ appendMessage = function(message){
             '</div>' +
             '</div>'
         );
+        if(!vis()){
+            pushNotification(message);
+        }
     }
     $('#conversation').animate({scrollTop: $('#conversation').prop("scrollHeight")}, 500);
+};
+
+pushNotification = function(message){
+    console.log(message);
+    Push.create(message.user.name, {
+        body: message.message,
+        icon: '/simbolo-landing.png',
+        timeout: 4000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 };
 
 setLastMessage = function(id, message){
@@ -192,7 +228,8 @@ function sendMessage() {
             message:  text.val(),
             conversationId: conversationId,
             date: new Date(),
-            userPhoto: user.photo
+            userPhoto: user.photo,
+            name: user.name
         };
         text.val("");
         appendMessage(message);

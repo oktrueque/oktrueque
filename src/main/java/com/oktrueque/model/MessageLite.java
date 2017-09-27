@@ -9,15 +9,17 @@ public class MessageLite {
     private Long userId;
     private Date date;
     private String userPhoto;
+    private String name;
 
     public MessageLite(){}
 
-    public MessageLite(String message, Long idConversation, Long userId, Date date, String userPhoto) {
+    public MessageLite(String message, Long idConversation, Long userId, Date date, String userPhoto, String name) {
         this.message = message;
         this.conversationId = idConversation;
         this.userId = userId;
         this.date = date;
         this.userPhoto = userPhoto;
+        this.name = name;
     }
 
     public String getMessage() {
@@ -58,5 +60,13 @@ public class MessageLite {
 
     public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

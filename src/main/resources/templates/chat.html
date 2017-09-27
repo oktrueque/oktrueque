@@ -4,6 +4,7 @@
 <head>
     <script src="../../static/vendors/sockjs/sockjs.min.js" th:src="@{/vendors/sockjs/sockjs.min.js}"></script>
     <script src="../../static/vendors/sockjs/stomp.min.js" th:src="@{/vendors/sockjs/stomp.min.js}"></script>
+    <script src="../../static/vendors/pushjs/push.min.js" th:src="@{/vendors/pushjs/push.min.js}"></script>
     <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/chat.css" th:href="@{/common/css/source/custom/chat.css}"/>
     <script th:src="@{/common/js/custom/chat.js}"></script>
 </head>
@@ -115,8 +116,9 @@
             /*<![CDATA[*/
             var userId =  /*[[${#authentication.principal.id}]]*/ "";
             var user_photo =  /*[[${#authentication.principal.photo1}]]*/ "";
+            var name =  /*[[${#authentication.principal.name}]]*/ "";
             var groups = [[${groups}]];
-            initialize(userId, user_photo, groups);
+            initialize(userId, user_photo, name, groups);
             /*]]>*/
         </script>
         <!-- End Page Scripts -->

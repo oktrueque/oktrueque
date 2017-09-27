@@ -73,6 +73,7 @@ public class ChatController {
         UserLite user = new UserLite();
         user.setId(message.getUserId());
         user.setPhoto1(message.getUserPhoto());
+        user.setName(message.getName());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
         Message saved = messageService.saveMessage(response);
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", saved);
