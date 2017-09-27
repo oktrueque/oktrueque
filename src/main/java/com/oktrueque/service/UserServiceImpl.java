@@ -92,7 +92,7 @@ public class UserServiceImpl  implements UserService{
         return true;
     }
 
-    public User getUserById(long id){
+    public UserLite getUserById(long id){
         return userRepository.findUserById(id);
     }
 

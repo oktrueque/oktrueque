@@ -1,13 +1,14 @@
 package com.oktrueque.repository;
 
 import com.oktrueque.model.User;
+import com.oktrueque.model.UserLite;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long>{
 
 
-     User findUserById(long id);
+     UserLite findUserById(long id);
 
      User findByEmailOrUsername(String email, String username);
 

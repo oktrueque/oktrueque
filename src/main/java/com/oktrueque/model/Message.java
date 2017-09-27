@@ -20,7 +20,7 @@ public class Message {
     private String message;
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User user;
+    private UserLite user;
 
     public Message() {
     }
@@ -30,7 +30,7 @@ public class Message {
         this.message = message;
     }
 
-    public Message(Date date, Conversation conversation, String message, User user) {
+    public Message(Date date, Conversation conversation, String message, UserLite user) {
         this.date = date;
         this.conversation = conversation;
         this.message = message;
@@ -69,11 +69,11 @@ public class Message {
         this.message = message;
     }
 
-    public User getUser() {
+    public UserLite getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLite user) {
         this.user = user;
     }
 }

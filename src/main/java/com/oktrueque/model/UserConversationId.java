@@ -14,12 +14,12 @@ public class UserConversationId implements Serializable{
     private Conversation conversation;
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User user;
+    private UserLite user;
 
     public UserConversationId() {
     }
 
-    public UserConversationId(Conversation conversationId, User userId) {
+    public UserConversationId(Conversation conversationId, UserLite userId) {
         this.conversation = conversationId;
         this.user = userId;
     }
@@ -32,11 +32,11 @@ public class UserConversationId implements Serializable{
         this.conversation = conversation;
     }
 
-    public User getUser() {
+    public UserLite getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserLite user) {
         this.user = user;
     }
 

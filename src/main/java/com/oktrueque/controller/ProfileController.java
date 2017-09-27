@@ -288,8 +288,8 @@ public class ProfileController {
         User userLogged = userService.getUserByUsername(principal.getName());
         Trueque trueque = truequeService.getTruequeById(id);
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
-        LinkedList<User> users = new LinkedList<>();
-        User userNuevo;
+        LinkedList<UserLite> users = new LinkedList<>();
+        UserLite userNuevo;
         List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
         LinkedList<Item> items = new LinkedList<>();
         Item itemNuevo;

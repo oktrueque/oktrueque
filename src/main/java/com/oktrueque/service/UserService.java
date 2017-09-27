@@ -21,7 +21,7 @@ public interface UserService {
 
     void sendVerificationToken(User user);
 
-    User getUserById(long id);
+    UserLite getUserById(long id);
 
     boolean confirmAccount(String username, String token);
 
