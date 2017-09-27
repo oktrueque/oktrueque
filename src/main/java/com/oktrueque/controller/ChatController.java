@@ -70,8 +70,9 @@ public class ChatController {
 
     @MessageMapping("/messages/{username}")
     public void send(@Payload MessageLite message, @DestinationVariable("username") String username) throws Exception {
-        User user = new User();
+        UserLite user = new UserLite();
         user.setId(message.getUserId());
+        user.setPhoto1(message.getUserPhoto());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
         Message saved = messageService.saveMessage(response);
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", saved);
@@ -79,7 +80,7 @@ public class ChatController {
 
     @MessageMapping("/messages/room/{id}")
     public void sendToGroup(@Payload MessageLite message, @DestinationVariable("id") Long id) throws Exception {
-        User user = userService.getUserById(message.getUserId());
+        UserLite user = userService.getUserLiteById(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
         messageService.saveMessage(response);
         simpMessagingTemplate.convertAndSend("/topic/" + message.getConversationId(), response);

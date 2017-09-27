@@ -184,7 +184,6 @@ function disconnect() {
 
 function sendMessage() {
     var isGroup = $('#conversation-'+conversationId).data('group');
-    console.log(isGroup);
     let text = $('#text');
     if(text.val()){
         let message = {
@@ -192,7 +191,8 @@ function sendMessage() {
             userId: userId,
             message:  text.val(),
             conversationId: conversationId,
-            date: new Date()
+            date: new Date(),
+            userPhoto: user.photo
         };
         text.val("");
         appendMessage(message);

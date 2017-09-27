@@ -1,6 +1,7 @@
 package com.oktrueque.repository;
 
 import com.oktrueque.model.User;
+import com.oktrueque.model.UserLite;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

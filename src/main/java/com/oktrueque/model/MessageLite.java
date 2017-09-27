@@ -8,14 +8,16 @@ public class MessageLite {
     private Long conversationId;
     private Long userId;
     private Date date;
+    private String userPhoto;
 
     public MessageLite(){}
 
-    public MessageLite(String message, Long idConversation, Long userId, Date date) {
+    public MessageLite(String message, Long idConversation, Long userId, Date date, String userPhoto) {
         this.message = message;
         this.conversationId = idConversation;
         this.userId = userId;
         this.date = date;
+        this.userPhoto = userPhoto;
     }
 
     public String getMessage() {
@@ -48,5 +50,13 @@ public class MessageLite {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
     }
 }
