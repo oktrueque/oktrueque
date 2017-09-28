@@ -47,12 +47,12 @@ function connect(data) {
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
-            showNotification(messageOutput.body);
+            showNotification(JSON.parse(messageOutput.body));
         });
 
         data.groups.forEach(function(groupId){
             stompClient.subscribe("/topic/" + groupId, function(messageOutput) {
-                showNotification(messageOutput.body);
+                showNotification(JSON.parse(messageOutput.body));
             });
         })
     });
@@ -66,9 +66,20 @@ showNotification = function(message){
     span.text(unread +1);
 
     if(!vis()){
-        console.log('EStoy', message);
         pushNotification(message);
     }
+};
+
+pushNotification = function(response){
+    Push.create(response.user.name, {
+        body: response.message,
+        icon: response.user.photo1,
+        timeout: 4000,
+        onClick: function () {
+            window.focus();
+            this.close();
+        }
+    });
 };
 
 function disconnect() {
@@ -77,16 +88,3 @@ function disconnect() {
     }
     console.log("Disconnected");
 }
-
-pushNotification = function(message){
-    console.log(message);
-    Push.create(message.user.name, {
-        body: message.message,
-        icon: '/simbolo-landing.png',
-        timeout: 4000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
-};

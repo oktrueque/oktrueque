@@ -175,10 +175,9 @@ appendMessage = function(message){
 };
 
 pushNotification = function(message){
-    console.log(message);
     Push.create(message.user.name, {
         body: message.message,
-        icon: '/simbolo-landing.png',
+        icon: message.user.photo1,
         timeout: 4000,
         onClick: function () {
             window.focus();
