@@ -38,7 +38,6 @@ $(document).ready(function () {
            type : "get",
            url : "/profile/conversations/" + conversationId + "/messages",
            success : function(messages) {
-               console.log("SUCCESS: ", messages);
                display(messages);
                clearUnreadMessages(conversationId);
            },
@@ -67,11 +66,32 @@ clearUnreadMessages = function(conversationId){
             truequeId: truequeId
         },
         success : function(data) {
-            console.log("SUCCESS: ", data);
+            displayTruequeDetail(data);
         },
         error : function(e) {
             console.log("ERROR: ", e);
         }
+    });
+};
+
+displayTruequeDetail = function(data){
+    let detail = $('#trueque-detail');
+    detail.html("");
+    Object.keys(data).forEach(function(user){
+        let li = document.createElement("LI");
+        li.appendChild(document.createTextNode(user));
+        li.setAttribute("class", "trueque-item");
+        let ul = document.createElement("UL");
+
+        data[user].forEach(function(item){
+            let itemNode = document.createElement("LI");
+            itemNode.appendChild(document.createTextNode(item.name));
+            itemNode.setAttribute("class", "trueque-item");
+            ul.appendChild(itemNode);
+        });
+
+        li.appendChild(ul);
+        detail.append(li);
     });
 };
 
