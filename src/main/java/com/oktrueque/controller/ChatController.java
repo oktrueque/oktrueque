@@ -75,10 +75,7 @@ public class ChatController {
 
     @MessageMapping("/messages/{username}")
     public void send(@Payload MessageLite message, @DestinationVariable("username") String username) throws Exception {
-        UserLite user = new UserLite();
-        user.setId(message.getUserId());
-        user.setPhoto1(message.getUserPhoto());
-        user.setName(message.getName());
+        UserLite user = userService.getUserLiteById(message.getUserId());
         Message response = new Message(new Date(), new Conversation(message.getConversationId()), message.getMessage(), user);
         Message saved = messageService.saveMessage(response);
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/reply", saved);
