@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ChatController {
@@ -53,6 +51,13 @@ public class ChatController {
         model.addAttribute("groups", groups);
         model.addAttribute("user", user);
         return "chat";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/conversations/notifications")
+    public ResponseEntity<Map<String, Object>> getUnreadConversations(Principal principal){
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        Map map = conversationService.getUnreadMessages(user);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/conversations/{id}/messages")

@@ -1,13 +1,12 @@
 package com.oktrueque.service;
 
+import com.oktrueque.model.User;
 import com.oktrueque.model.UserConversation;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
-/**
- * Created by tomas on 26/9/2017.
- */
 public interface ConversationService {
 
 
@@ -16,4 +15,5 @@ public interface ConversationService {
     @Transactional
     void clearUnreadMessages(Long conversationId, Long userId);
 
+    Map<String, Object> getUnreadMessages(User user);
 }
