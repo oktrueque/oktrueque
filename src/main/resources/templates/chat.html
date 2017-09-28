@@ -27,7 +27,7 @@
                                         </a>
                                     </div>
                                     <div class="s2">
-                                        <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
+                                        <small class="messaging-time" th:text="${uc.id.conversation.lastMessageDate}? ${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
                                         <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name"
                                              th:classappend="${uc.unread > 0} ? 'bold' : ''" th:text="${uc.sendTo.name}"></div>
                                         <span th:id="${'send-to-'+ uc.id.conversation.id}" th:text="${uc.sendTo.username}" style="display: none;"></span>
@@ -49,7 +49,7 @@
                                         </a>
                                     </div>
                                     <div class="s2">
-                                        <small class="messaging-time" th:text="${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
+                                        <small class="messaging-time" th:text="${uc.id.conversation.lastMessageDate}? ${#dates.format(uc.id.conversation.lastMessageDate, 'HH:mm')}">8:34PM</small>
                                         <div th:id="${'user-'+uc.id.conversation.id}" class="messaging-list-title-name">Red de Trueques</div>
                                         <span th:id="${'span-'+uc.id.conversation.id}"  class="label label-warning pull-right" th:text="${uc.unread}"
                                               th:attr="data-unread=${uc.unread}" th:classappend="${uc.unread &gt; 0} ? 'show' : 'hide'"></span>

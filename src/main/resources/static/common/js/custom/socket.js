@@ -6,7 +6,6 @@ $(document).ready(function(){
         url : "/profile/conversations/notifications",
         success : function(data) {
             displayInSidebar(data.unread);
-            console.log("SUCCESS: ", data);
             connect(data);
         },
         error : function(e) {
@@ -35,9 +34,11 @@ var vis = (function(){
 })();
 
 function displayInSidebar(count){
-    console.log(count);
+    let unread = parseInt(count);
     let span = $('#sb-messages');
-    span.text(count);
+    if(unread > 0){
+        span.text(count);
+    }
     span.attr('data-unread', count);
 };
 
@@ -45,11 +46,9 @@ function connect(data) {
     let socket = new SockJS('/profile/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
-        console.log('Connected: ' + frame);
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
             showNotification(JSON.parse(messageOutput.body));
         });
-
         data.groups.forEach(function(groupId){
             stompClient.subscribe("/topic/" + groupId, function(messageOutput) {
                 showNotification(JSON.parse(messageOutput.body));

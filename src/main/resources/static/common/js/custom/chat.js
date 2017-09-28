@@ -92,6 +92,7 @@ handleNewMessages = function(){
     let lastMessage = $('#message-' + conversationId);
     lastMessage.css('font-weight', 'normal');
     let span = $('#span-'+conversationId);
+    span.attr('data-unread', 0);
     span.css('display', 'none');
 };
 
@@ -195,12 +196,9 @@ function connect() {
     var socket = new SockJS('/profile/chat');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
-        //setConnected(true);
-        console.log('Connected: ' + frame);
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
             showMessageOutput(JSON.parse(messageOutput.body));
         });
-
         user.groups.forEach(function(groupId){
             stompClient.subscribe("/topic/" + groupId, function(messageOutput) {
                 showGroupMessageOutput(JSON.parse(messageOutput.body));
