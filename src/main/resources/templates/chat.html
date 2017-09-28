@@ -17,10 +17,10 @@
                         </div>
                     </div>
                     <!--Aca buscar los rost-->
-                    <div class="messaging-list">
+                    <div class="messaging-list custom-height">
                         <th:block th:each="uc : ${conversations}" >
                             <div th:if="${!uc.group}">
-                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}"  >
+                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}, data-trueque=${uc.id.conversation.idTrueque}"  >
                                     <div class="s1">
                                         <a class="avatar" href="javascript:void(0);">
                                             <img th:src="${uc.sendTo.photo1}" />
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div th:if="${uc.group}">
-                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}" >
+                                <div th:id="${'conversation-'+uc.id.conversation.id}" class="messaging-list-item conversation" th:attr="data-id=${uc.id.conversation.id}, data-group=${uc.group}, data-trueque=${uc.id.conversation.idTrueque}" >
                                     <div class="s1">
                                         <a class="avatar" href="javascript:void(0);">
                                             <img src="https://s3-sa-east-1.amazonaws.com/oktrueque/utils/simbolo.png" />
@@ -60,6 +60,26 @@
                                 </div>
                             </div>
                         </th:block>
+                    </div>
+                    <div>
+                        <div class="messaging-search">
+                            <h6>Detalle del Trueque</h6>
+                        </div>
+                        <br/>
+                        <ul>
+                            <li class="trueque-item">Fabrizio Sposetti
+                                <ul>
+                                    <li class="trueque-item">Pelota de soccer</li>
+                                    <li class="trueque-item">Parlantes de PC</li>
+                                </ul>
+                            </li>
+                            <li class="trueque-item">Facundo Rossi
+                                <ul>
+                                    <li class="trueque-item">GTA V para PS3</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <a href="javascript: void(0);" class="btn btn-link margin-inline pull-right">Editar</a>
                     </div>
                 </div>
                 <div class="panel-heading">

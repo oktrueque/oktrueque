@@ -65,7 +65,7 @@ public class ProfileController {
         Trueque truequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
-            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTruequeId(), new int[]{2,4});
+            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTrueque().getId(), new int[]{2,4});
             if(truequeNuevo != null) trueques.add(truequeNuevo);
         }
 
@@ -208,8 +208,8 @@ public class ProfileController {
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
         List<UserLite> users = new ArrayList<>();
         for (UserTrueque ut: userTrueques){
-            if (ut.getId().getUserId()!= user.getId()){
-                users.add(userService.getUserLiteById(ut.getId().getUserId()));}
+            if (ut.getId().getUser().getId()!= user.getId()){
+                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));}
         }
         // PENDIENTE A RECHAZADO
         if (trueque.getStatus().equals("Pendiente")){
@@ -237,8 +237,8 @@ public class ProfileController {
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
         List<UserLite> users = new ArrayList<>();
         for (UserTrueque ut: userTrueques){
-            if (ut.getId().getUserId()!= user.getId()){
-                users.add(userService.getUserLiteById(ut.getId().getUserId()));}
+            if (ut.getId().getUser().getId()!= user.getId()){
+                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));}
         }
         // ACTIVO A CONFIRMADO
         trueque.setStatus(3);
@@ -277,7 +277,7 @@ public class ProfileController {
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque trueque: userTrueques){
 
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTruequeId());
+            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTrueque().getId());
             trueques.add(TruequeNuevo);
         }
         model.addAttribute("trueques", trueques);
@@ -296,12 +296,12 @@ public class ProfileController {
         LinkedList<Item> items = new LinkedList<>();
         Item itemNuevo;
         for (ItemTrueque itemTrueque: itemsTrueques){
-                itemNuevo = itemService.getItemById(itemTrueque.getId().getItemId());
+                itemNuevo = itemService.getItemById(itemTrueque.getId().getItem().getId());
                 items.add(itemNuevo);
         }
         for (UserTrueque userTrueque: userTrueques){
-            if(userTrueque.getId().getUserId()!= userLogged.getId()){
-                userNuevo = userService.getUserById(userTrueque.getId().getUserId());
+            if(userTrueque.getId().getUser().getId()!= userLogged.getId()){
+                userNuevo = userService.getUserById(userTrueque.getId().getUser().getId());
                 users.add(userNuevo);
             }
         }

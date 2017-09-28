@@ -40,7 +40,7 @@ $(document).ready(function () {
            success : function(messages) {
                console.log("SUCCESS: ", messages);
                display(messages);
-               clearUnreadMessages();
+               clearUnreadMessages(conversationId);
            },
            error : function(e) {
                console.log("ERROR: ", e);
@@ -58,10 +58,14 @@ $(document).ready(function () {
     });
 });
 
-clearUnreadMessages = function(){
+clearUnreadMessages = function(conversationId){
+    let truequeId = $('#conversation-'+conversationId).data('trueque');
     $.ajax({
         type : "get",
-        url : "/profile/conversations/" + conversationId + "/clear-unread",
+        url : "/profile/conversations/" + conversationId + "/trueque",
+        data:{
+            truequeId: truequeId
+        },
         success : function(data) {
             console.log("SUCCESS: ", data);
         },

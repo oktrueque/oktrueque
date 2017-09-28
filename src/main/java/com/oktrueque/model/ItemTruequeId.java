@@ -1,44 +1,43 @@
 package com.oktrueque.model;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
-
-/**
- * Created by Facundo on 8/23/2017.
- */
 
 @Embeddable
 public class ItemTruequeId implements Serializable{
 
-    @Column(name = "id_trueque")
-    private Long truequeId;
-    @Column(name = "id_item")
-    private Long itemId;
+    @ManyToOne
+    @JoinColumn(name = "id_trueque")
+    private Trueque trueque;
+    @ManyToOne
+    @JoinColumn(name = "id_item")
+    private Item item;
 
     public ItemTruequeId() {
     }
 
-    public ItemTruequeId(Long truequeId, Long itemId) {
-        this.truequeId = truequeId;
-        this.itemId = itemId;
+    public ItemTruequeId(Trueque trueque, Item item) {
+        this.trueque = trueque;
+        this.item = item;
     }
 
-    public Long getItemId() {
-        return itemId;
+    public Trueque getTrueque() {
+        return trueque;
     }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public void setTrueque(Trueque trueque) {
+        this.trueque = trueque;
     }
 
-    public Long getTruequeId() {
-        return truequeId;
+    public Item getItem() {
+        return item;
     }
 
-    public void setTruequeId(Long truequeId) {
-        this.truequeId = truequeId;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     @Override
@@ -46,13 +45,13 @@ public class ItemTruequeId implements Serializable{
         if (this == o) return true;
         if (!(o instanceof ItemTruequeId)) return false;
         ItemTruequeId that = (ItemTruequeId) o;
-        return Objects.equals(truequeId, that.getTruequeId()) &&
-                Objects.equals(itemId, that.getItemId());
+        return Objects.equals(trueque.getId(), that.getTrueque().getId()) &&
+                Objects.equals(item.getId(), that.getItem().getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(truequeId, itemId);
+        return Objects.hash(trueque.getId(), item.getId());
     }
 
 

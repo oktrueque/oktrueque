@@ -5,9 +5,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * Created by Facundo on 8/23/2017.
- */
 @Entity
 @Table(name = "users_trueques")
 public class UserTrueque implements Comparable {

@@ -1,10 +1,7 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.*;
-import com.oktrueque.service.ConversationService;
-import com.oktrueque.service.MessageService;
-import com.oktrueque.service.MessageServiceImpl;
-import com.oktrueque.service.UserService;
+import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.*;
@@ -29,14 +27,16 @@ public class ChatController {
     private final MessageService messageService;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final UserService userService;
+    private final TruequeService truequeService;
 
     @Autowired
     public ChatController(ConversationService conversationService, MessageService messageService,
-                          SimpMessagingTemplate simpMessagingTemplate, UserService userService) {
+                          SimpMessagingTemplate simpMessagingTemplate, UserService userService, TruequeService truequeService) {
         this.conversationService = conversationService;
         this.messageService = messageService;
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.userService = userService;
+        this.truequeService = truequeService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/conversations")
@@ -66,11 +66,12 @@ public class ChatController {
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/profile/conversations/{id}/clear-unread")
-    public ResponseEntity<Long> clearUnreadMessages(@PathVariable Long id, Principal principal){
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/conversations/{id}/trueque")
+    public ResponseEntity<Map<String, Object>> clearUnreadMessages(@PathVariable Long id, @RequestParam Long truequeId, Principal principal){
         User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         conversationService.clearUnreadMessages(id, user.getId());
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        Map map = truequeService.getTruequeDetail(truequeId);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
     @MessageMapping("/messages/{username}")

@@ -13,11 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-
-/**
- * Created by Envy on 15/6/2017.
- */
+import java.util.stream.Collectors;
 
 public class TruequeServiceImpl implements TruequeService {
 
@@ -57,10 +53,10 @@ public class TruequeServiceImpl implements TruequeService {
         Trueque truequeSaved = truequeRepository.findOne(id);
         truequeSaved.setStatus(1);
         truequeSaved.setAcceptanceDate(LocalDateTime.now());
-        List<UserTrueque> userTrueques = userTruequeRepository.getUserTruequeById_TruequeId(id);
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(id);
         List<User> users = new ArrayList<>();
         userTrueques.forEach(t ->{
-            users.add(userRepository.findOne(t.getId().getUserId()));
+            users.add(userRepository.findOne(t.getId().getUser().getId()));
             if(!t.isConfirm()){
                 t.setConfirm(true);
             }
@@ -85,13 +81,13 @@ public class TruequeServiceImpl implements TruequeService {
 
     private UserTrueque createUserTrueque(Trueque truequeSaved, UserLite user, Integer orden) {
         UserTrueque userTrueque = (orden.equals(1)) ?
-                new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, true) :
-                new UserTrueque(new UserTruequeId(truequeSaved.getId(), user.getId()), orden, false);
+                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, true) :
+                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, false);
         return userTrueque;
     }
 
     private ItemTrueque createItemTrueque(Trueque truequeSaved, Item item) {
-        return new ItemTrueque(new ItemTruequeId(truequeSaved.getId(), item.getId()));
+        return new ItemTrueque(new ItemTruequeId(truequeSaved, item));
     }
 
     private void sendMailTo(UserLite userOrigen, UserLite userDestino,
@@ -114,12 +110,12 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     public List<UserTrueque> getUserTruequeById_UserId(long id){
-        return userTruequeRepository.getUserTruequeById_UserId(id);
+        return userTruequeRepository.findByIdUserId(id);
     }
 
     @Override
     public List<UserTrueque> getUserTruequeById_TruequeId(long id){
-        return userTruequeRepository.getUserTruequeById_TruequeId(id);
+        return userTruequeRepository.findByIdTruequeId(id);
     }
 
     @Override
@@ -135,5 +131,28 @@ public class TruequeServiceImpl implements TruequeService {
     @Override
     public Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses) {
         return truequeRepository.findTruequeByIdAndStatusIsNotIn(id, statuses);
+    }
+
+    @Override
+    public Map<String, Object> getTruequeDetail(Long truequeId) {
+        Map map = new LinkedHashMap();
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(truequeId);
+        List<ItemTrueque> itemTrueques = itemTruequeRepository.findById_TruequeId(truequeId);
+        UserLite user;
+        Item item;
+        for (UserTrueque ut : userTrueques){
+            List<Item> items = new ArrayList<>();
+            user = ut.getId().getUser();
+            for(ItemTrueque itemTrueque : itemTrueques){
+                item = itemTrueque.getId().getItem();
+                if(item.getUser().getId().equals(user.getId())){
+                    items.add(item);
+                }
+            }
+
+            map.put(user.getName() + " " + user.getLast_name()
+                    , items);
+        }
+        return map;
     }
 }

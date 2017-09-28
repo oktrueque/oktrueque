@@ -9,9 +9,6 @@ import com.oktrueque.model.UserTrueque;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Facundo on 12/07/2017.
- */
 public interface TruequeService {
 
     void saveTrueque(Map<Integer,List<Item>> participants);
@@ -30,8 +27,5 @@ public interface TruequeService {
 
     void updateTrueque (Trueque trueque);
 
-
-
-
-
+    Map getTruequeDetail(Long truequeId);
 }

@@ -33,3 +33,12 @@
 .show{
     display: block;
 }
+
+.custom-height{
+    height: 350px;
+    overflow: auto;
+}
+
+.trueque-item{
+    margin: 5px;
+}
