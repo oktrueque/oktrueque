@@ -1,6 +1,7 @@
 var user = {};
 var stompClient = null;
 var conversationId = null;
+var itemsid = [];
 var token = null;
 var header = null;
 initialize = function(id, photo, name, groups, t, h){
@@ -91,17 +92,21 @@ clearUnreadMessages = function(conversationId){
 displayTruequeDetail = function(data){
     let detail = $('#trueque-detail');
     detail.html("");
-    Object.keys(data).forEach(function(user){
+    Object.keys(data).forEach(function(u){
         let li = document.createElement("LI");
-        li.appendChild(document.createTextNode(user));
+        li.appendChild(document.createTextNode(u));
         li.setAttribute("class", "trueque-item");
         let ul = document.createElement("UL");
 
-        data[user].forEach(function(item){
+        data[u].forEach(function(item){
             let itemNode = document.createElement("LI");
             itemNode.appendChild(document.createTextNode(item.name));
             itemNode.setAttribute("class", "trueque-item");
             ul.appendChild(itemNode);
+
+            if(item.user.id === user.id){
+                itemsid.push(item.id);
+            }
         });
 
         li.appendChild(ul);
@@ -341,25 +346,40 @@ editTrueque = function(){
     let idTrueque = $('#conversation-'+conversationId).data('trueque');
 
     $('#items-offered div').each(function(li){
-        ids.push($(this).attr('id'));
+        ids.push(parseInt($(this).attr('id')));
     });
-    console.log(ids);
-    $.ajax({
-        type: "POST",
-        url: "/trueques/15",
-        contentType: "application/json",
-        data: JSON.stringify(ids),
-        dataType: "json",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(header, token);
-        },
-        success: function (data) {
-            console.log('Eeeeeee');
-            // swal("Trueque Editado", "Nosotros nos encargaremos de notificar a los demás usuarios", "success");
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    });
+    console.log(itemsid, ids);
+    if(!(itemsid.sort().compare(ids.sort()))) {
+        $.ajax({
+            type: "POST",
+            url: "/trueques/15",
+            contentType: "application/json",
+            data: JSON.stringify(ids),
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                console.log('Eeeeeee');
+                // swal("Trueque Editado", "Nosotros nos encargaremos de notificar a los demás usuarios", "success");
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    }
+
 };
 
+// Utils
+
+Array.prototype.compare = function(testArr) {
+    if (this.length != testArr.length) return false;
+    for (var i = 0; i < testArr.length; i++) {
+        if (this[i].compare) { //To test values in nested arrays
+            if (!this[i].compare(testArr[i])) return false;
+        }
+        else if (this[i] !== testArr[i]) return false;
+    }
+    return true;
+};
