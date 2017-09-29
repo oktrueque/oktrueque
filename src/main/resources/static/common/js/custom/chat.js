@@ -55,6 +55,13 @@ $(document).ready(function () {
             sendMessage();
         }
     });
+
+    $('.link-add').on('click', function(){
+        addElementToTrueque($(this));
+    });
+    $('.link-remove').on('click', function(){
+        removeElementToTrueque($(this));
+    });
 });
 
 clearUnreadMessages = function(conversationId){
@@ -301,4 +308,24 @@ showNotification = function(message){
     span.text(unread +1);
 };
 
+//Edit Trueque methods
+addElementToTrueque = function(element){
+    element.removeClass("icmn-arrow-up15 link-add");
+    element.addClass("icmn-arrow-down15 link-remove");
+    element.bind('click', function(){
+        removeElementToTrueque($(this));
+    });
+    let item = element.parent().detach();
+    $('#items-offered').append(item);
+};
+
+removeElementToTrueque = function(element){
+    element.removeClass("icmn-arrow-down15 link-remove");
+    element.addClass("icmn-arrow-up15 link-add");
+    element.bind('click', function(){
+        addElementToTrueque($(this));
+    });
+    let item = element.parent().detach();
+    $('#items-left').append(item);
+};
 

@@ -42,3 +42,13 @@
 .trueque-item{
     margin: 5px;
 }
+
+.link-add{
+    cursor: pointer;
+    color: #0f9a5e;
+}
+
+.link-remove{
+    cursor: pointer;
+    color: #fb434a;
+}
