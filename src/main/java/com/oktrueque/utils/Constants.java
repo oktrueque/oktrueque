@@ -6,6 +6,13 @@ import java.util.Random;
 
 public class Constants {
 
+    public static final int TRUEQUE_STATUS_PENDING = 0;
+    public static final int TRUEQUE_STATUS_ACTIVE = 1;
+    public static final int TRUEQUE_STATUS_REJECTED = 2;
+    public static final int TRUEQUE_STATUS_CANCELED = 3;
+    public static final int TRUEQUE_STATUS_UPDATING = 4;
+    public static final int TRUEQUE_STATUS_CONFIRMED = 5;
+
     private static final Map<Integer, String> defaultProfilePictures;
     static
     {

@@ -4,13 +4,17 @@ import com.oktrueque.model.Item;
 import com.oktrueque.model.User;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.TruequeService;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -52,8 +56,13 @@ public class TruequeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/trueques/{idTrueque}")
-    public ResponseEntity editTrueque(@PathVariable Long idTrueque, @RequestBody List<Long> ids){
-        System.out.println(ids);
+    @Transactional
+    public ResponseEntity editTrueque(@PathVariable Long idTrueque, @RequestBody List<Long> ids, Principal principal){
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        truequeService.updateTrueque(idTrueque, ids, user.getId());
+//        truequeService.deleteItemTrueque(idTrueque, user.getId());
+//        truequeService.saveItemTrueque(idTrueque, ids);
+//        truequeService.updateTrueque(idTrueque, Constants.TRUEQUE_STATUS_UPDATING);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

@@ -5,6 +5,7 @@ import com.oktrueque.repository.ItemTruequeRepository;
 import com.oktrueque.repository.TruequeRepository;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.UserTruequeRepository;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.transaction.Transactional;
@@ -51,14 +52,14 @@ public class TruequeServiceImpl implements TruequeService {
     @Transactional
     public List<User> confirmTruequeAndGetUsersBelongingTo(Long id) {
         Trueque truequeSaved = truequeRepository.findOne(id);
-        truequeSaved.setStatus(1);
+        truequeSaved.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
         truequeSaved.setAcceptanceDate(LocalDateTime.now());
         List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(id);
         List<User> users = new ArrayList<>();
         userTrueques.forEach(t ->{
             users.add(userRepository.findOne(t.getId().getUser().getId()));
-            if(!t.isConfirm()){
-                t.setConfirm(true);
+            if(!t.getStatus().equals(Constants.TRUEQUE_STATUS_ACTIVE)){
+                t.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
             }
         });
         return users;
@@ -81,8 +82,8 @@ public class TruequeServiceImpl implements TruequeService {
 
     private UserTrueque createUserTrueque(Trueque truequeSaved, UserLite user, Integer orden) {
         UserTrueque userTrueque = (orden.equals(1)) ?
-                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, true) :
-                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, false);
+                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, Constants.TRUEQUE_STATUS_ACTIVE) :
+                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, Constants.TRUEQUE_STATUS_PENDING);
         return userTrueque;
     }
 
@@ -154,5 +155,48 @@ public class TruequeServiceImpl implements TruequeService {
                     , items);
         }
         return map;
+    }
+
+    @Override
+    public void updateTrueque(Long idTrueque, Integer status) {
+        Trueque trueque = truequeRepository.findTruequeById(idTrueque);
+        trueque.setStatus(status);
+        truequeRepository.save(trueque);
+    }
+
+    @Override
+    public void deleteItemTrueque(Long idTrueque, Long idUser){
+        itemTruequeRepository.deleteAllByIdTruequeIdAndIdItemUserId(idTrueque, idUser);
+    }
+
+    @Override
+    public void saveItemTrueque(Long idTrueque, List<Long> idItems){
+        List<ItemTrueque> itemTrueques = new ArrayList<>();
+        idItems.forEach(idItem -> itemTrueques.add(new ItemTrueque(new ItemTruequeId(idTrueque, idItem))));
+        itemTruequeRepository.save(itemTrueques);
+    }
+
+    @Override
+    @Transactional
+    public void updateTrueque(Long idTrueque, List<Long> idItems, Long idUser) {
+        //Edit itemTrueque
+        itemTruequeRepository.deleteAllByIdTruequeIdAndIdItemUserId(idTrueque, idUser);
+        List<ItemTrueque> itemTrueques = new ArrayList<>();
+        idItems.forEach(idItem -> itemTrueques.add(new ItemTrueque(new ItemTruequeId(idTrueque, idItem))));
+        itemTruequeRepository.save(itemTrueques);
+
+        //Edit trueque status
+        Trueque trueque = truequeRepository.findTruequeById(idTrueque);
+        trueque.setStatus(Constants.TRUEQUE_STATUS_UPDATING);
+        truequeRepository.save(trueque);
+
+        //Edit userTrueque
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(idTrueque);
+        userTrueques.forEach(ut ->{
+            if(!ut.getId().getUser().getId().equals(idUser)){
+                ut.setStatus(Constants.TRUEQUE_STATUS_UPDATING);
+            }
+        });
+        userTruequeRepository.save(userTrueques);
     }
 }

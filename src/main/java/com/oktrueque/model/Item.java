@@ -39,6 +39,10 @@ public class Item {
     public Item() {
     }
 
+    public Item(Long id){
+        this.id = id;
+    }
+
     public Item(int status) {
         this.status = status;
     }

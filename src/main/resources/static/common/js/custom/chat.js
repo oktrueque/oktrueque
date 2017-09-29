@@ -36,6 +36,7 @@ var vis = (function(){
 
 $(document).ready(function () {
    $('.conversation').on('click', function () {
+       itemsid = [];
        conversationId = $(this).data('id');
        handleConversation($(this));
        handleNewMessages();
@@ -62,7 +63,7 @@ $(document).ready(function () {
     });
 
     $('#edit-trueque').on('click', function(){
-        editTrueque();
+        editTrueque(this);
     });
     $('#get-items').on('click', function(){
         getItemsForUpdating();
@@ -108,6 +109,8 @@ displayTruequeDetail = function(data){
 
         li.appendChild(ul);
         detail.append(li);
+
+        $('#get-items').removeClass('display-none')
     });
 };
 
@@ -338,33 +341,34 @@ removeElementToTrueque = function(element){
     $('#items-left').append(item);
 };
 
-editTrueque = function(){
+editTrueque = function(btn){
     let ids = [];
     let idTrueque = $('#conversation-'+conversationId).data('trueque');
 
     $('#items-offered div').each(function(li){
         ids.push(parseInt($(this).attr('id')));
     });
-    console.log(itemsid, ids);
     if(!(itemsid.sort().compare(ids.sort()))) {
+        var l = Ladda.create(btn);
+        l.start();
+
         $.ajax({
             type: "POST",
-            url: "/trueques/15",
+            url: "/trueques/" + idTrueque,
             contentType: "application/json",
             data: JSON.stringify(ids),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
             },
             success: function (data) {
-                console.log('Eeeeeee');
-                // swal("Trueque Editado", "Nosotros nos encargaremos de notificar a los demás usuarios", "success");
+                l.stop();
+                $('#modalTruequeDetail').modal('hide');
             },
             error: function (e) {
                 console.log(e);
             }
         });
     }
-
 };
 
 getItemsForUpdating = function(){

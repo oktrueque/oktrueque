@@ -33,6 +33,10 @@ public class Trueque {
     public Trueque() {
     }
 
+    public Trueque(Long id){
+        this.id = id;
+    }
+
     public Trueque(Integer status) {
         this.status = status;
         this.proposalDate = LocalDateTime.now();

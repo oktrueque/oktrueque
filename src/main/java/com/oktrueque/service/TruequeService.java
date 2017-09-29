@@ -28,4 +28,12 @@ public interface TruequeService {
     void updateTrueque (Trueque trueque);
 
     Map getTruequeDetail(Long truequeId);
+
+    void updateTrueque(Long idTrueque, Integer status);
+
+    void updateTrueque(Long idTrueque, List<Long> idItems, Long idUser);
+
+    void deleteItemTrueque(Long idTrueque, Long idUser);
+
+    void saveItemTrueque(Long idTrueque, List<Long> idItems);
 }

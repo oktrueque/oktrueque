@@ -24,6 +24,11 @@ public class ItemTruequeId implements Serializable{
         this.item = item;
     }
 
+    public ItemTruequeId(Long idTrueque, Long idItem){
+        this.trueque = new Trueque(idTrueque);
+        this.item = new Item(idItem);
+    }
+
     public Trueque getTrueque() {
         return trueque;
     }
