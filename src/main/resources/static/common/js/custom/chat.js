@@ -61,14 +61,11 @@ $(document).ready(function () {
         }
     });
 
-    $('.link-add').on('click', function(){
-        addElementToTrueque($(this));
-    });
-    $('.link-remove').on('click', function(){
-        removeElementToTrueque($(this));
-    });
     $('#edit-trueque').on('click', function(){
         editTrueque();
+    });
+    $('#get-items').on('click', function(){
+        getItemsForUpdating();
     });
 });
 
@@ -355,7 +352,6 @@ editTrueque = function(){
             url: "/trueques/15",
             contentType: "application/json",
             data: JSON.stringify(ids),
-            dataType: "json",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
             },
@@ -371,8 +367,59 @@ editTrueque = function(){
 
 };
 
-// Utils
+getItemsForUpdating = function(){
+    $('#modalTruequeDetail').modal('show');
+    $('#items-offered').html(
+        '<div class="loader"></div>'
+    );
+    $('#items-left').html(
+        '<div class="loader"></div>'
+    );
+    $.ajax({
+        type : "get",
+        url : "/users/" + user.id + "/items",
+        success : function(data) {
+            displayItemsForEdit(data);
+        },
+        error : function(e) {
+            console.log("ERROR: ", e);
+        }
+    });
+};
 
+displayItemsForEdit = function(items){
+  $('#items-offered').html("");
+  $('#items-left').html("");
+
+  items.forEach(function(item){
+      if(itemsid.includes(item.id)){
+          $('#items-offered').append(
+              '<div id="'+ item.id +'">' +
+              '<li>' + item.name +
+              '<i class="icmn-arrow-down15 pull-right link-remove"></i>' +
+              '</li>' +
+              '</div>'
+          );
+      }else{
+          $('#items-left').append(
+              '<div id="'+ item.id +'">' +
+              '<li>' + item.name +
+              '<i class="icmn-arrow-up15 pull-right link-add"></i>' +
+              '</li>' +
+              '</div>'
+          );
+      }
+  });
+
+    $('.link-add').on('click', function(){
+        addElementToTrueque($(this));
+    });
+    $('.link-remove').on('click', function(){
+        removeElementToTrueque($(this));
+    });
+
+};
+// Utils
 Array.prototype.compare = function(testArr) {
     if (this.length != testArr.length) return false;
     for (var i = 0; i < testArr.length; i++) {

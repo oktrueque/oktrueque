@@ -107,5 +107,8 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findByUser_UsernameAndStatusIsNotOrderByIdDesc(username,status);
     }
 
-
+    @Override
+    public List<Item> getItemsByUserId(Long id) {
+        return itemRepository.findByUserId(id);
+    }
 }

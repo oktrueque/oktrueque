@@ -40,4 +40,5 @@ public interface ItemService {
 
     List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status);
 
+    List<Item> getItemsByUserId(Long id);
 }

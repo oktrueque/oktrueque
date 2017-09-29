@@ -173,5 +173,11 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/users/{id}/items")
+    public ResponseEntity<List<Item>> getItemsByUserid(@PathVariable Long id){
+        return new ResponseEntity<>(itemService.getItemsByUserId(id), HttpStatus.OK);
+
+    }
+
 
 }
