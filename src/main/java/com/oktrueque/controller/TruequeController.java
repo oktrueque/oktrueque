@@ -5,12 +5,11 @@ import com.oktrueque.model.User;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.TruequeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -50,5 +49,11 @@ public class TruequeController {
     public String confirmTrueque(@PathVariable Long id){
         List<User> users = truequeService.confirmTruequeAndGetUsersBelongingTo(id);
         return "redirect:/profile/trueques/" + id;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/trueques/{idTrueque}")
+    public ResponseEntity editTrueque(@PathVariable Long idTrueque, @RequestBody List<Long> ids){
+        System.out.println(ids);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

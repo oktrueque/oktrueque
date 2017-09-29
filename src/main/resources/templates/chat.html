@@ -133,19 +133,25 @@
                                     <div class="row">
                                         <h6>Ofrecidos</h6>
                                         <ul id="items-offered">
-                                            <li>Pelota Basket NBA
-                                                <i class="icmn-arrow-down15 pull-right link-remove"></i>
-                                            </li>
+                                            <div id="1">
+                                                <li>Pelota Basket NBA
+                                                    <i class="icmn-arrow-down15 pull-right link-remove"></i>
+                                                </li>
+                                            </div>
                                         </ul>
                                         <hr/>
                                         <h6>Restantes</h6>
                                         <ul id="items-left">
-                                            <li>Parlantes Woffer New
-                                                <i class="icmn-arrow-up15 pull-right link-add"></i>
-                                            </li>
-                                            <li>Musculosa para gimnasio
-                                                <i class="icmn-arrow-up15 pull-right link-add"></i>
-                                            </li>
+                                            <div id="2">
+                                                <li>Parlantes Woffer New
+                                                    <i class="icmn-arrow-up15 pull-right link-add"></i>
+                                                </li>
+                                            </div>
+                                            <div id="3">
+                                                <li>Musculosa para gimnasio
+                                                    <i class="icmn-arrow-up15 pull-right link-add"></i>
+                                                </li>
+                                            </div>
                                         </ul>
                                     </div>
                                 </div>
@@ -153,7 +159,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="sendComment" type="button"  class="btn btn-primary s">Enviar</button>
+                        <button id="edit-trueque" type="button"  class="btn btn-primary">Aceptar</button>
                         <button  type="button" class="btn" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -167,7 +173,9 @@
             var user_photo =  /*[[${#authentication.principal.photo1}]]*/ "";
             var name =  /*[[${#authentication.principal.name}]]*/ "";
             var groups = [[${groups}]];
-            initialize(userId, user_photo, name, groups);
+            var token = [[${_csrf.token}]];
+            var header = [[${_csrf.headerName}]];
+            initialize(userId, user_photo, name, groups, token, header);
             /*]]>*/
         </script>
         <!-- End Page Scripts -->

@@ -1,13 +1,17 @@
 var user = {};
 var stompClient = null;
 var conversationId = null;
-initialize = function(id, photo, name, groups){
+var token = null;
+var header = null;
+initialize = function(id, photo, name, groups, t, h){
     user = {
         id: id,
         photo: photo,
         name: name,
         groups: groups
-    }
+    };
+    token = t;
+    headers = h;
 };
 
 var vis = (function(){
@@ -61,6 +65,9 @@ $(document).ready(function () {
     });
     $('.link-remove').on('click', function(){
         removeElementToTrueque($(this));
+    });
+    $('#edit-trueque').on('click', function(){
+        editTrueque();
     });
 });
 
@@ -315,7 +322,7 @@ addElementToTrueque = function(element){
     element.bind('click', function(){
         removeElementToTrueque($(this));
     });
-    let item = element.parent().detach();
+    let item = element.parent().parent().detach();
     $('#items-offered').append(item);
 };
 
@@ -325,7 +332,34 @@ removeElementToTrueque = function(element){
     element.bind('click', function(){
         addElementToTrueque($(this));
     });
-    let item = element.parent().detach();
+    let item = element.parent().parent().detach();
     $('#items-left').append(item);
+};
+
+editTrueque = function(){
+    let ids = [];
+    let idTrueque = $('#conversation-'+conversationId).data('trueque');
+
+    $('#items-offered div').each(function(li){
+        ids.push($(this).attr('id'));
+    });
+    console.log(ids);
+    $.ajax({
+        type: "POST",
+        url: "/trueques/15",
+        contentType: "application/json",
+        data: JSON.stringify(ids),
+        dataType: "json",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+        success: function (data) {
+            console.log('Eeeeeee');
+            // swal("Trueque Editado", "Nosotros nos encargaremos de notificar a los demás usuarios", "success");
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    });
 };
 
