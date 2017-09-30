@@ -112,7 +112,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/users/{username}")
     public String getUserProfile(Model model, @PathVariable String username) {
         User user = userService.getUserByUsername(username);
-        List<Item> items = itemService.getItemsByUserUsername(user.getUsername(), new PageRequest(0,2));
+        List<Item> items = itemService.getItemsByUserUsernameAndStatus(user.getUsername(), Constants.ITEM_STATUS_ACTIVE, new PageRequest(0,2));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<Comment> comments = user.getComments();
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();

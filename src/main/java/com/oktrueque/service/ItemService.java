@@ -4,7 +4,7 @@ import com.oktrueque.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
 
 public interface ItemService {
@@ -21,11 +21,13 @@ public interface ItemService {
 
     Page<Item> findByStatus(int status, Pageable pageable);
 
-    Page<Item> searchItems(String name, String principal, Pageable pageable);
+    Page<Item> searchItems(String name, Principal principal, Pageable pageable);
 
     List<Item> getItemsByUserUsername(String username, Pageable pageable);
 
     List<Item> getItemsByUserUsername(String username);
+
+    List<Item> getItemsByUserUsernameAndStatus(String username, Integer status, Pageable pageable);
 
     void updateItem(Item item);
 

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -61,13 +62,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> searchItems(String name, String principal, Pageable pageable) {
+    public Page<Item> searchItems(String name, Principal principal, Pageable pageable) {
         Pattern pattern = Pattern.compile("^(:)(\\w+)");
         Matcher matcher = pattern.matcher(name);
         if (matcher.find()) {
-            if(matcher.group(2).equals(principal)){
+            if((principal != null) && (matcher.group(2).equals(principal))){
                 return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(
-                        principal, new int[]{Constants.ITEM_STATUS_DELETED, Constants.ITEM_STATUS_BANNED}, pageable);
+                        principal.getName(), new int[]{Constants.ITEM_STATUS_DELETED, Constants.ITEM_STATUS_BANNED}, pageable);
             }
             return itemRepository.findByStatusAndUserUsername(Constants.TRUEQUE_STATUS_ACTIVE, matcher.group(2), pageable);
         }
@@ -77,6 +78,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getItemsByUserUsername(String username, Pageable pageable) {
         return itemRepository.findByUser_Username(username, pageable);
+    }
+
+    @Override
+    public List<Item> getItemsByUserUsernameAndStatus(String username, Integer status, Pageable pageable) {
+        return itemRepository.findByStatusAndUserUsername(status, username, pageable).getContent();
     }
 
     @Override

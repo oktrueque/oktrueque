@@ -57,7 +57,7 @@ public class ItemController {
         }
         if (search != null) {
             try {
-                items = itemService.searchItems(search, principal.getName(), pageable);
+                items = itemService.searchItems(search, principal, pageable);
                 page = new PageWrapper<>(items, "/items?search=" + search);
             } catch (Exception e) {
                 LOGGER.info("Busqueda por name incorrecta", e);
