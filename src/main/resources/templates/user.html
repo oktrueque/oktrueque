@@ -87,7 +87,9 @@
 
                             </div>
                         </div>
-                        <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                        <div th:if="${user.itemsAmount > #lists.size(items)}" th:with="result=${user.itemsAmount - #lists.size(items)}">
+                            <a th:href="@{/items(search=${':'+user.username})}" class="btn btn-default width-full" th:text="${'Ver Más (' + result + ')'}">Ver Más</a>
+                        </div>
                     </div>
                     <div th:if="${!hasItems}">
                         <p th:text="${'Parece que ' + user.name + ' no tiene artículos para intercambiar por el momento'}"></p>

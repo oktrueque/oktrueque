@@ -38,11 +38,11 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/items")
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category,
-                           @RequestParam(value = "item_name", required = false) String item_name,
+                           @RequestParam(value = "search", required = false) String search,
                            Pageable pageable, Model model, Principal principal) {
         Page<Item> items = null;
         PageWrapper<Item> page = null;
-        if (id_category == null && item_name == null) {
+        if (id_category == null && search == null) {
             items = itemService.findByStatus(1,pageable);
             page = new PageWrapper<>(items, "/items");
         }
@@ -55,10 +55,10 @@ public class ItemController {
                 LOGGER.info("Busqueda por categoria incorrecta", e);
             }
         }
-        if (item_name != null) {
+        if (search != null) {
             try {
-                items = itemService.searchItems(item_name, principal.getName(), pageable);
-                page = new PageWrapper<>(items, "/items?item_name=" + item_name);
+                items = itemService.searchItems(search, principal.getName(), pageable);
+                page = new PageWrapper<>(items, "/items?search=" + search);
             } catch (Exception e) {
                 LOGGER.info("Busqueda por name incorrecta", e);
             }
