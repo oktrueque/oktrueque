@@ -34,10 +34,21 @@ var vis = (function(){
     }
 })();
 
+showLoader = function(){
+    $('#conversation').html(
+        '<div class="loader-little"></div>'
+    );
+    $('#trueque-detail').html(
+        '<div class="loader-little"></div>'
+    );
+    $('#get-items').addClass('display-none');
+};
+
 $(document).ready(function () {
    $('.conversation').on('click', function () {
        itemsid = [];
        conversationId = $(this).data('id');
+       showLoader();
        handleConversation($(this));
        handleNewMessages();
        $.ajax({
@@ -380,10 +391,10 @@ editTrueque = function(btn){
 getItemsForUpdating = function(){
     $('#modalTruequeDetail').modal('show');
     $('#items-offered').html(
-        '<div class="loader"></div>'
+        '<div class="loader-little"></div>'
     );
     $('#items-left').html(
-        '<div class="loader"></div>'
+        '<div class="loader-little"></div>'
     );
     $.ajax({
         type : "get",

@@ -64,6 +64,16 @@
     margin: 0 auto;
 }
 
+.loader-little{
+    border: 5px solid #d0d0d0;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
