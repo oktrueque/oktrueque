@@ -12,6 +12,11 @@ public class Constants {
     public static final int TRUEQUE_STATUS_CANCELED = 3;
     public static final int TRUEQUE_STATUS_CONFIRMED = 4;
 
+    public static final int ITEM_STATUS_PENDING = 0;
+    public static final int ITEM_STATUS_ACTIVE = 1;
+    public static final int ITEM_STATUS_DELETED = 2;
+    public static final int ITEM_STATUS_BANNED = 3;
+
     private static final Map<Integer, String> defaultProfilePictures;
     static
     {

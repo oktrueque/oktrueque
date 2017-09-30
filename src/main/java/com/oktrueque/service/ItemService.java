@@ -7,9 +7,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Facundo on 12/07/2017.
- */
 public interface ItemService {
 
     Item getItemById(Long id);
@@ -40,5 +37,5 @@ public interface ItemService {
 
     List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status);
 
-    List<Item> getItemsByUserId(Long id);
+    List<Item> getItemsByUserIdAndStatus(Long id, int status);
 }

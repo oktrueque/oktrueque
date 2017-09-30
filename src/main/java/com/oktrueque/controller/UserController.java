@@ -175,7 +175,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{id}/items")
     public ResponseEntity<List<Item>> getItemsByUserid(@PathVariable Long id){
-        return new ResponseEntity<>(itemService.getItemsByUserId(id), HttpStatus.OK);
+        return new ResponseEntity<>(itemService.getItemsByUserIdAndStatus(id, Constants.ITEM_STATUS_ACTIVE), HttpStatus.OK);
 
     }
 

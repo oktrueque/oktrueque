@@ -108,7 +108,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getItemsByUserId(Long id) {
-        return itemRepository.findByUserId(id);
+    public List<Item> getItemsByUserIdAndStatus(Long id, int status) {
+        return itemRepository.findByUserIdAndStatus(id, status);
     }
 }
