@@ -18,11 +18,15 @@
             <div class="panel-body">
                 <div class="cui-ecommerce--catalog">
                     <div th:if="${category != null}">
-                        <h3 th:text="${category.name}">Category Name</h3>
-                        <hr/>
+                        <div class="container">
+                            <h3 th:text="${category.name}">Category Name</h3>
+                            <hr/>
+                        </div>
                     </div>
                     <div th:if="${items.isEmpty()}">
-                        <p>Lo sentimos, no tenemos items para mostrarte en este momento, ¡Inténtalo nuevamente más tarde!</p>
+                        <div class="container">
+                            <p>Lo sentimos, no tenemos items para mostrarte en este momento, ¡Inténtalo nuevamente más tarde!</p>
+                        </div>
                     </div>
                     <div class="row">
                         <th:block th:each="item : ${items}">

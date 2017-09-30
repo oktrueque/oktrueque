@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -38,7 +39,7 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET, value = "/items")
     public String getItems(@RequestParam(value = "id_category", required = false) Integer id_category,
                            @RequestParam(value = "item_name", required = false) String item_name,
-                           Pageable pageable, Model model) {
+                           Pageable pageable, Model model, Principal principal) {
         Page<Item> items = null;
         PageWrapper<Item> page = null;
         if (id_category == null && item_name == null) {
@@ -56,8 +57,7 @@ public class ItemController {
         }
         if (item_name != null) {
             try {
-                items = itemService.getItemsByName(item_name, pageable);
-                model.addAttribute("item_name", item_name);
+                items = itemService.searchItems(item_name, principal.getName(), pageable);
                 page = new PageWrapper<>(items, "/items?item_name=" + item_name);
             } catch (Exception e) {
                 LOGGER.info("Busqueda por name incorrecta", e);

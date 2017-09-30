@@ -13,7 +13,9 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     List<Item> findByUser_Username(String username);
     List<Item> findByUser_Username(String username, Pageable pageable);
     List<Item> findByUser_UsernameAndStatusIsNotOrderByIdDesc(String username, int status);
-    List<Item> findByUser_UsernameAndStatusIsNotInOrderByIdDesc(String username, int[] statuses, Pageable pageable);
+    List<Item> findByUser_UsernameAndStatusIsNotInOrderByIdDesc(String username, int[] statuses);
+    Page<Item> findByUser_UsernameAndStatusIsNotInOrderByIdDesc(String username, int[] statuses, Pageable pageable);
+    Page<Item> findByStatusAndUserUsername(Integer status, String username, Pageable pageable);
     Page<Item> findByStatus(int status, Pageable pageable);
     List<Item> findByUserIdAndStatus(Long id, Integer status);
 
