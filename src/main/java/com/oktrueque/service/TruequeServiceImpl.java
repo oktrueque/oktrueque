@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TruequeServiceImpl implements TruequeService {
@@ -53,7 +50,7 @@ public class TruequeServiceImpl implements TruequeService {
     public List<User> confirmTruequeAndGetUsersBelongingTo(Long id) {
         Trueque truequeSaved = truequeRepository.findOne(id);
         truequeSaved.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
-        truequeSaved.setAcceptanceDate(LocalDateTime.now());
+        truequeSaved.setAcceptanceDate(new Date());
         List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(id);
         List<User> users = new ArrayList<>();
         userTrueques.forEach(t ->{

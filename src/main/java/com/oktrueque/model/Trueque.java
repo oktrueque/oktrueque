@@ -4,10 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
-/**
- * Created by Envy on 14/6/2017.
- */
 @Entity
 @Table(name = "trueques")
 public class Trueque {
@@ -20,13 +18,13 @@ public class Trueque {
     private Integer status;
     @Column(name = "proposal_date")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private LocalDateTime proposalDate;
+    private Date proposalDate;
     @Column(name = "acceptance_date")
-    private LocalDateTime acceptanceDate;
+    private Date acceptanceDate;
     @Column(name = "rejection_date")
-    private LocalDateTime rejectionDate;
+    private Date rejectionDate;
     @Column(name = "ending_date")
-    private LocalDateTime endingDate;
+    private Date endingDate;
     @Column(name = "peopleCount")
     private Integer peopleCount;
 
@@ -39,7 +37,7 @@ public class Trueque {
 
     public Trueque(Integer status) {
         this.status = status;
-        this.proposalDate = LocalDateTime.now();
+        this.proposalDate = new Date();
     }
 
     public Long getId() {
@@ -70,35 +68,35 @@ public class Trueque {
         this.status = status;
     }
 
-    public LocalDateTime getProposalDate() {
+    public Date getProposalDate() {
         return proposalDate;
     }
 
-    public void setProposalDate(LocalDateTime proposalDate) {
+    public void setProposalDate(Date proposalDate) {
         this.proposalDate = proposalDate;
     }
 
-    public LocalDateTime getAcceptanceDate() {
+    public Date getAcceptanceDate() {
         return acceptanceDate;
     }
 
-    public void setAcceptanceDate(LocalDateTime acceptanceDate) {
+    public void setAcceptanceDate(Date acceptanceDate) {
         this.acceptanceDate = acceptanceDate;
     }
 
-    public LocalDateTime getRejectionDate() {
+    public Date getRejectionDate() {
         return rejectionDate;
     }
 
-    public void setRejectionDate(LocalDateTime rejectionDate) {
+    public void setRejectionDate(Date rejectionDate) {
         this.rejectionDate = rejectionDate;
     }
 
-    public LocalDateTime getEndingDate() {
+    public Date getEndingDate() {
         return endingDate;
     }
 
-    public void setEndingDate(LocalDateTime endingDate) {
+    public void setEndingDate(Date endingDate) {
         this.endingDate = endingDate;
     }
 
