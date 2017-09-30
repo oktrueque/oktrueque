@@ -31,7 +31,7 @@ public interface TruequeService {
 
     void updateTrueque(Long idTrueque, Integer status);
 
-    void updateTrueque(Long idTrueque, List<Long> idItems, Long idUser);
+    String updateTrueque(Long idTrueque, List<Long> idItems, Long idUser);
 
     void deleteItemTrueque(Long idTrueque, Long idUser);
 

@@ -178,25 +178,21 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public void updateTrueque(Long idTrueque, List<Long> idItems, Long idUser) {
+    public String updateTrueque(Long idTrueque, List<Long> idItems, Long idUser) {
+        //Edit userTrueque
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(idTrueque);
+        for(UserTrueque ut : userTrueques){
+            if(ut.getStatus().equals(Constants.TRUEQUE_STATUS_CONFIRMED)){
+                return String.format("%s ya ha confirmado el trueque, no es posible actualizarlo", ut.getId().getUser().getName());
+            }
+        }
+
         //Edit itemTrueque
         itemTruequeRepository.deleteAllByIdTruequeIdAndIdItemUserId(idTrueque, idUser);
         List<ItemTrueque> itemTrueques = new ArrayList<>();
         idItems.forEach(idItem -> itemTrueques.add(new ItemTrueque(new ItemTruequeId(idTrueque, idItem))));
         itemTruequeRepository.save(itemTrueques);
 
-        //Edit trueque status
-        Trueque trueque = truequeRepository.findTruequeById(idTrueque);
-        trueque.setStatus(Constants.TRUEQUE_STATUS_UPDATING);
-        truequeRepository.save(trueque);
-
-        //Edit userTrueque
-        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(idTrueque);
-        userTrueques.forEach(ut ->{
-            if(!ut.getId().getUser().getId().equals(idUser)){
-                ut.setStatus(Constants.TRUEQUE_STATUS_UPDATING);
-            }
-        });
-        userTruequeRepository.save(userTrueques);
+        return null;
     }
 }

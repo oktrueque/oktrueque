@@ -360,9 +360,15 @@ editTrueque = function(btn){
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
             },
-            success: function (data) {
+            success: function (message) {
+                console.log(message);
                 l.stop();
                 $('#modalTruequeDetail').modal('hide');
+                if(message){
+                    swal("Algo anda mal", message, "error");
+                }else{
+                    swal("Trueque Actualizado", "Esta propuesta de trueque ha sido correctamente actualizada", "success");
+                }
             },
             error: function (e) {
                 console.log(e);

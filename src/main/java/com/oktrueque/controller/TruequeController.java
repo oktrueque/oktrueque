@@ -57,12 +57,9 @@ public class TruequeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/trueques/{idTrueque}")
     @Transactional
-    public ResponseEntity editTrueque(@PathVariable Long idTrueque, @RequestBody List<Long> ids, Principal principal){
+    public ResponseEntity<String> editTrueque(@PathVariable Long idTrueque, @RequestBody List<Long> ids, Principal principal){
         User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        truequeService.updateTrueque(idTrueque, ids, user.getId());
-//        truequeService.deleteItemTrueque(idTrueque, user.getId());
-//        truequeService.saveItemTrueque(idTrueque, ids);
-//        truequeService.updateTrueque(idTrueque, Constants.TRUEQUE_STATUS_UPDATING);
-        return new ResponseEntity(HttpStatus.OK);
+        String message = truequeService.updateTrueque(idTrueque, ids, user.getId());
+        return new ResponseEntity(message, HttpStatus.OK);
     }
 }
