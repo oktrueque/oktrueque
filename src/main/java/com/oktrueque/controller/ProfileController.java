@@ -4,6 +4,7 @@ import com.oktrueque.model.*;
 import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -57,9 +58,9 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
-    public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
+    public String getProfile(Principal principal, Model model, @PageableDefault(value = 2) Pageable pageable){
         User user = userService.getUserByUsername(principal.getName());
-        List<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(),new int[]{2,3}, pageable);
+        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(),new int[]{2,3}, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
         Trueque truequeNuevo;
@@ -72,8 +73,9 @@ public class ProfileController {
 
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
-        model.addAttribute("hasItems", items.size() != 0 ? true : false);
-        model.addAttribute("items", items);
+        model.addAttribute("hasItems", items.getContent().size() != 0 ? true : false);
+        model.addAttribute("items", items.getContent());
+        model.addAttribute("itemsCount", items.getTotalElements());
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
         model.addAttribute("item", new Item(0));

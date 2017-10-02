@@ -63,10 +63,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Page<Item> searchItems(String name, Principal principal, Pageable pageable) {
-        Pattern pattern = Pattern.compile("^(:)(\\w+)");
+        Pattern pattern = Pattern.compile("^(@)(\\w+)");
         Matcher matcher = pattern.matcher(name);
         if (matcher.find()) {
-            if((principal != null) && (matcher.group(2).equals(principal))){
+            if((principal != null) && (matcher.group(2).equals(principal.getName()))){
                 return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(
                         principal.getName(), new int[]{Constants.ITEM_STATUS_DELETED, Constants.ITEM_STATUS_BANNED}, pageable);
             }
@@ -113,10 +113,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses,Pageable pageable){
+    public Page<Item> findByUser_UsernameAndStatusIsNotInOrderById(String username,int[] statuses,Pageable pageable){
         //  2: Eliminado
         //  3: Banneado
-        return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(username,statuses,pageable).getContent();
+        return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(username,statuses,pageable);
     }
 
     @Override

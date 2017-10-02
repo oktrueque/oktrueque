@@ -88,7 +88,7 @@
                             </div>
                         </div>
                         <div th:if="${user.itemsAmount > #lists.size(items)}" th:with="result=${user.itemsAmount - #lists.size(items)}">
-                            <a th:href="@{/items(search=${':'+user.username})}" class="btn btn-default width-full" th:text="${'Ver Más (' + result + ')'}">Ver Más</a>
+                            <a th:href="@{/items(search=${'@'+user.username})}" class="btn btn-default width-full" th:text="${'Ver Más (' + result + ')'}">Ver Más</a>
                         </div>
                     </div>
                     <div th:if="${!hasItems}">

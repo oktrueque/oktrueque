@@ -130,7 +130,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="/profile/items" class="btn btn-default width-full" th:text="${'Ver Más (' + user.itemsAmount + ')'}">Ver Más</a>
+                                <div th:if="${itemsCount > #lists.size(items)}" th:with="result=${itemsCount - #lists.size(items)}">
+                                    <a th:href="@{/items(search=${'@'+user.username})}" class="btn btn-default width-full" th:text="${'Ver Más (' + result + ')'}">Ver Más</a>
+                                </div>
                             </div>
                             <div th:if="${!hasItems}" class="tab-pane active" id="posts" role="tabpanel">
                                 Parece que aún no tienes items.
