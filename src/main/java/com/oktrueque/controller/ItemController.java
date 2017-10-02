@@ -101,14 +101,6 @@ public class ItemController {
         return "redirect:/items";
     }
 
-//    @RequestMapping(method= RequestMethod.POST, value="/users/{username}/item")
-//    public String setItem(@ModelAttribute Item item, @PathVariable String username) {
-//        item.setStatus(0);
-//        item.setUser(userService.getUserByUsername(username));
-//        itemService.setItem(item);
-//        return "redirect:/users/" + username;
-//    }
-
     @RequestMapping(value= "/users/{username}/item", method = RequestMethod.GET)
     public String itemForm(@PathVariable String username, Model model){
         Item item2 = new Item();

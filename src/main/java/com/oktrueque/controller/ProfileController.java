@@ -155,13 +155,6 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/profile/items")
-    public String getItemsByUser(Model model, Principal principal){
-    List<Item> items = itemService.findByUser_UsernameAndStatusIsNotOrderById(principal.getName(),2);
-    model.addAttribute("items", items);
-    return "loggedUserItems";
-    }
-
     @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}/edit")
     public String fillUpdateView(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
