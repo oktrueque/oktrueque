@@ -43,8 +43,11 @@
                                             <P th:text="${item.category.name}"></P>
                                         </div>
                                         </div>
-                                        <div class="cui-ecommerce--catalog--item--turequeyaicon col-lg-5 col-md-5 col-sm-5">
+                                        <div th:if="${!loggedIn}" class="cui-ecommerce--catalog--item--turequeyaicon col-lg-5 col-md-5 col-sm-5">
                                             <button class="btn margin-inline btn-warning ">Trueque ya <i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                                        </div>
+                                        <div th:if="${loggedIn}" class="cui-ecommerce--catalog--item--turequeyaicon col-lg-5 col-md-5 col-sm-5">
+                                            <label class="label label-warning" th:text="${item.getStatusValue()}"></label>
                                         </div>
 
 

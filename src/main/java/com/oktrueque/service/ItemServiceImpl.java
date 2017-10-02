@@ -11,10 +11,11 @@ import com.oktrueque.utils.Constants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,17 +63,22 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> searchItems(String name, Principal principal, Pageable pageable) {
+    public Map<String, Object> searchItems(String name, Principal principal, Pageable pageable) {
         Pattern pattern = Pattern.compile("^(@)(\\w+)");
         Matcher matcher = pattern.matcher(name);
+        Map<String, Object> map = new LinkedHashMap<>();
         if (matcher.find()) {
             if((principal != null) && (matcher.group(2).equals(principal.getName()))){
-                return itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(
-                        principal.getName(), new int[]{Constants.ITEM_STATUS_DELETED, Constants.ITEM_STATUS_BANNED}, pageable);
+                map.put("items", itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(
+                        principal.getName(), new int[]{Constants.ITEM_STATUS_DELETED, Constants.ITEM_STATUS_BANNED}, pageable));
+                map.put("loggedIn", true);
+                return map;
             }
-            return itemRepository.findByStatusAndUserUsername(Constants.TRUEQUE_STATUS_ACTIVE, matcher.group(2), pageable);
+            map.put("items", itemRepository.findByStatusAndUserUsername(Constants.TRUEQUE_STATUS_ACTIVE, matcher.group(2), pageable));
+            return map;
         }
-        return itemRepository.findByNameContains(name, pageable);
+        map.put("items", itemRepository.findByNameContains(name, pageable));
+        return map;
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
@@ -21,7 +22,7 @@ public interface ItemService {
 
     Page<Item> findByStatus(int status, Pageable pageable);
 
-    Page<Item> searchItems(String name, Principal principal, Pageable pageable);
+    Map<String, Object> searchItems(String name, Principal principal, Pageable pageable);
 
     List<Item> getItemsByUserUsername(String username, Pageable pageable);
 

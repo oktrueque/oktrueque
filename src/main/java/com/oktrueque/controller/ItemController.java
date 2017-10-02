@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -42,6 +43,7 @@ public class ItemController {
                            Pageable pageable, Model model, Principal principal) {
         Page<Item> items = null;
         PageWrapper<Item> page = null;
+        model.addAttribute("loggedIn", false);
         if (id_category == null && search == null) {
             items = itemService.findByStatus(1,pageable);
             page = new PageWrapper<>(items, "/items");
@@ -57,7 +59,9 @@ public class ItemController {
         }
         if (search != null) {
             try {
-                items = itemService.searchItems(search, principal, pageable);
+                Map<String, Object> map = itemService.searchItems(search, principal, pageable);
+                items = (Page<Item>) map.get("items");
+                if(map.containsKey("loggedIn")) model.addAttribute("loggedIn", map.get("loggedIn"));
                 page = new PageWrapper<>(items, "/items?search=" + search);
             } catch (Exception e) {
                 LOGGER.info("Busqueda por name incorrecta", e);
