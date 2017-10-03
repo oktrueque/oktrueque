@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
     <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/item.css" th:href="@{/common/css/source/custom/item.css}"/>
+    <div sec:authorize="isAuthenticated()">
+        <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
+    </div>
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
