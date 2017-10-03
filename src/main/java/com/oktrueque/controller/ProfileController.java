@@ -257,11 +257,9 @@ public class ProfileController {
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
-    public String deleteUserItem(@PathVariable Long id){
-        Item item = itemService.getItemById(id);
-        item.setStatus(2);
-        itemService.updateItem(item);
-        return "redirect:/profile/items";
+    public ResponseEntity<Item> deleteUserItem(@PathVariable Long id){
+        Item item = itemService.deleteIfPossible(id);
+        return new ResponseEntity(item, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques")

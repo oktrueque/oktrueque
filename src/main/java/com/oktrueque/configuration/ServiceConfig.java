@@ -80,7 +80,7 @@ public class ServiceConfig {
 
     @Bean
     public ItemService itemService(){
-        return new ItemServiceImpl(itemRepository, itemTagRepository, tagRepository);
+        return new ItemServiceImpl(itemRepository, itemTagRepository, itemTruequeRepository);
     }
 
     @Bean

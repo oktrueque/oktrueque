@@ -9,5 +9,6 @@ import java.util.List;
 public interface ItemTruequeRepository extends PagingAndSortingRepository<ItemTrueque,ItemTruequeId> {
 
     List<ItemTrueque> findById_TruequeId(long id);
+    List<ItemTrueque> findById_ItemId(long id);
     void deleteAllByIdTruequeIdAndIdItemUserId(Long truequeId, Long userId);
 }

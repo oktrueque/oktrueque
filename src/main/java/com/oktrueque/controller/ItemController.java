@@ -5,6 +5,7 @@ import com.oktrueque.model.ItemTag;
 import com.oktrueque.model.User;
 import com.oktrueque.model.UserLite;
 import com.oktrueque.service.*;
+import com.oktrueque.utils.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.GET, value="/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
 
-        Item item = itemService.getItemById(id);
+        Item item = itemService.getItemByIdAndStatus(id, Constants.ITEM_STATUS_ACTIVE);
         UserLite u = item.getUser();
 
         List<ItemTag> tags = itemTagService.getItemTagByItemId(id);

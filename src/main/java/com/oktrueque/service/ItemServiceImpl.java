@@ -1,11 +1,9 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Item;
-import com.oktrueque.model.ItemTag;
-import com.oktrueque.model.ItemTagId;
-import com.oktrueque.model.Tag;
+import com.oktrueque.model.*;
 import com.oktrueque.repository.ItemRepository;
 import com.oktrueque.repository.ItemTagRepository;
+import com.oktrueque.repository.ItemTruequeRepository;
 import com.oktrueque.repository.TagRepository;
 import com.oktrueque.utils.Constants;
 import org.springframework.data.domain.Page;
@@ -24,17 +22,22 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final ItemTagRepository itemTagRepository;
-    private final TagRepository tagRepository;
+    private final ItemTruequeRepository itemTruequeRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, ItemTagRepository itemTagRepository, TagRepository tagRepository){
+    public ItemServiceImpl(ItemRepository itemRepository, ItemTagRepository itemTagRepository, ItemTruequeRepository itemTruequeRepository){
         this.itemRepository = itemRepository;
         this.itemTagRepository = itemTagRepository;
-        this.tagRepository = tagRepository;
+        this.itemTruequeRepository = itemTruequeRepository;
     }
 
     @Override
     public Item getItemById(Long id) {
         return itemRepository.findOne(id);
+    }
+
+    @Override
+    public Item getItemByIdAndStatus(Long id, Integer status) {
+        return itemRepository.findByIdAndStatus(id, status);
     }
 
     @Override
@@ -134,5 +137,17 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getItemsByUserIdAndStatus(Long id, int status) {
         return itemRepository.findByUserIdAndStatus(id, status);
+    }
+
+    @Override
+    public Item deleteIfPossible(Long id) {
+        List<ItemTrueque> itemTrueques = itemTruequeRepository.findById_ItemId(id);
+        if(itemTrueques.size() == 0){
+            Item item = itemRepository.findOne(id);
+            item.setStatus(Constants.ITEM_STATUS_DELETED);
+            itemRepository.save(item);
+            return item;
+        }
+        return null;
     }
 }

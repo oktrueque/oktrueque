@@ -12,6 +12,8 @@ public interface ItemService {
 
     Item getItemById(Long id);
 
+    Item getItemByIdAndStatus(Long id, Integer status);
+
     void addItem(Item item);
 
     void deleteItem(Long id);
@@ -41,4 +43,6 @@ public interface ItemService {
     List<Item> findByUser_UsernameAndStatusIsNotOrderById(String username,int status);
 
     List<Item> getItemsByUserIdAndStatus(Long id, int status);
+
+    Item deleteIfPossible(Long id);
 }
