@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<head>
+    <div sec:authorize="isAuthenticated()">
+        <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
+    </div>
+</head>
+<th:block layout:fragment="content">
+<section class="page-content">
+    <div class="page-content-inner">
+        <section class="panel panel-with-borders">
+            <div class="panel-heading">
+                <h3>Ayuda al usuario</h3>
+            </div>
+            <div class="panel-body">
+                <div class="cui-ecommerce--catalog">
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>¿Que es <img class="logo-inverse" height="25px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/>?</h4></div>
+                        <div class="col-lg-12">En <img class="logo-inverse" height="17px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> sabemos el valor que le das a tus objetos y por eso te brindamos el Sitio Web ideal para que logres intercambiarlo por algo de tu interes!<br/> Te recomendamos que heches un vistazo a los items de otros usuarios, encuentres y te animes a realizar una propuesta sin miedo ni compromiso! <br/><br/> Para ver los items publicados haz click aquí → <a href="itemsCatalog.html">Ver Items Publicados</a><br/><br/>
+                            Te recomendamos que crees una cuenta totalmente gratuita para poder aceptar y proponer trueques. Click aqui para crear una cuenta <a href="register.html">Registrarse</a></div>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>¿ <img class="logo-inverse" height="25px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> es gratis?</h4></div>
+                        <div class="col-lg-12">Si. En un futuro podras tambien acceder a los servicios premium de la pagina web a traves de la misma.</div>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>Quiero crear mi usuario en <img class="logo-inverse" height="25px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> ¿Como lo hago?</h4></div>
+                        <div class="col-lg-12 margin-bottom-15">Puedes obtener tu cuenta totalmente gratuita siguiendo los siguientes pasos:</div>
+                        <ol>
+                            <li class="margin-bottom-5">Deberás completar con tus datos el registro. Los datos deben ser reales, te enviaremos un mail de confirmación a tu dirección de correo electrónico. Puedes dirigirte al registro haciendo click en el siguiente enlace:<a href="register.html">Registro</a></li>
+                            <li class="margin-bottom-5">Verifica tu casilla de correo electronico, y confirma tu cuenta de <img class="logo-inverse" height="17px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> haciendo click en el enlace que te enviaremos</li>
+                            <li class="margin-bottom-5">Disfruta de tu cuenta gratuita de <img class="logo-inverse" height="17px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> </li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>Tengo problemas para ingresar a mi cuenta ¿como lo soluciono?</h4></div>
+                        <div class="col-lg-12 margin-bottom-15">Esto puede deberse a diferente razones. Deberías intentar las siguientes acciones:</div>
+                        <ul>
+                            <li class="margin-bottom-5">Verificar que estas ingresando correctamente tus datos. Ten cuidado de no confundirte en el uso de mayúsculas y minúsculas.</li>
+                            <li class="margin-bottom-5">Prueba recuperando tu contraseña, puede que te la hayas olvidado! En el Login encontraras dicha acción para la cual deberás ingresar el correo electrónico con el cual te has registrado en <img class="logo-inverse" height="17px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/>. Te enviaremos un mail con instrucciones para recuperarla.</li>
+                            <li class="margin-bottom-5">Si nada de esto funciona, ingresa a la pagina principal de <img class="logo-inverse" height="17px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> y al final de la misma encontraras un formulario para poder comunicarte con nosotros. Te responderemos a la brevedad para solucionar tu problema.</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12 margin-bottom-15"><h4>¿Como publico un objeto de mi propiedad?</h4></div>
+                        <ol>
+                            <li class="margin-bottom-5">Ingresa a tu perfil haciendo click en el extremo superior derecho de la pagina.</li>
+                            <li class="margin-bottom-5">Si es tu primera vez ingresando un item podras visualizar el siguiente mensaje “Parece que aún no tienes items. Click acá para agregar uno!”. Si ya publicaste objetos anteriormente, podras publicar más haciendo click en el boton con el signo + para agregar otros.</li>
+                            <li class="margin-bottom-5">En la ventana emergente, deberás introducir los datos de tu objeto. Recuerda que cuanto mas precisa sea la descripción.</li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12 margin-bottom-15"><h4>He cometido un error al ingresar mis datos personales ¿Como los corrijo?</h4></div>
+                        <ol>
+                            <li class="margin-bottom-5">Ingresa a tu perfil haciendo click en el extremo superior derecho de la pagina.</li>
+                            <li class="margin-bottom-5">Una vez en tu perfil encontraras cerca de tu informacion personal un boton para editar tu perfil.</li>
+                            <li class="margin-bottom-5">Modifica los campos en los que te has equivocado y guarda los cambios.</li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>Un usuario me está molestando y/o faltando el respeto ¿Como pido ayuda?</h4></div>
+                        <div class="col-lg-12 margin-bottom-15">En el caso en que te hayas equivocado al ingresar tu e-mail, te sugerimos registrarte nuevamente.<br/><br/>
+                            Si por lo contrario te equivocaste en cualquiera de los otros datos:</div>
+                        <ol>
+                            <li class="margin-bottom-5">Deberás ingresar al perfil del usuario que quieres denunciar por mal comportamiento.</li>
+                            <li class="margin-bottom-5">Una vez en su perfil, debajo de su nombre, encontraras el botón para denunciarlo.</li>
+                            <li class="margin-bottom-5">Completa el formulario emergente con la mayor cantidad de información posible. Por favor, debes ser serio a la hora de realizar denuncias, es nuestra principal herramienta para ayudarte a ti frente a cualquier inconveniente.</li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>Me interesa un objeto ¿Como inicio un trueque?</h4></div><br/>
+                        <div class="col-lg-12 margin-bottom-15">Puedes iniciar un trueque de diferentes maneras:</div>
+                        <ol>
+                            <li class="margin-bottom-5">Al hacer click en un item de tu interes, podras visualizar el boton trueque ya, el cual te permitira realizar una propuesta de trueque</li>
+                            <li class="margin-bottom-5">Tambien encontraras el boton de trueque ya al posicionar tu mouse sobre un item en la tabla de items de la pagina</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+</th:block>
+</html>

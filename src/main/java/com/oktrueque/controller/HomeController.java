@@ -40,4 +40,8 @@ public class HomeController {
     @RequestMapping(method= RequestMethod.POST, value = "/resetPassword")
     public ResponseEntity resetPassword(@RequestBody String datos){return userService.resetPassword(datos);}
 
+    @RequestMapping(method = RequestMethod.GET, value = "/help")
+    public String getHelpPage(Model model){
+        return "help";
+    }
 }
