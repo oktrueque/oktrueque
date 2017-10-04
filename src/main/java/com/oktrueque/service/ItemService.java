@@ -18,7 +18,7 @@ public interface ItemService {
 
     void deleteItem(Long id);
 
-    Page<Item> getItemsByCategory(int id_category, Pageable pageable);
+    Page<Item> getItemsByCategory(int id_category, int status, Pageable pageable);
 
     Page<Item> findAll(Pageable pageable);
 

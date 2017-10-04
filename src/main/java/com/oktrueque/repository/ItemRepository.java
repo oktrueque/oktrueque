@@ -8,9 +8,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
-    Page<Item> findByCategory_Id(int id, Pageable pageable);
+    Page<Item> findByCategory_IdAndStatus(int id, int status, Pageable pageable);
     Item findByIdAndStatus(long id, int status);
-    Page<Item> findByNameContains(String name, Pageable pageable);
+    Page<Item> findByNameContainsAndStatus(String name, int status, Pageable pageable);
     List<Item> findByUser_Username(String username);
     List<Item> findByUser_Username(String username, Pageable pageable);
     List<Item> findByUser_UsernameAndStatusIsNotOrderByIdDesc(String username, int status);

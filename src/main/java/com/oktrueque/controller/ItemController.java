@@ -55,7 +55,7 @@ public class ItemController {
         }
         if (id_category != null) {
             try {
-                items = itemService.getItemsByCategory(id_category, pageable);
+                items = itemService.getItemsByCategory(id_category,Constants.ITEM_STATUS_ACTIVE, pageable);
                 model.addAttribute("category", categoryService.getCategory(id_category));
                 page = new PageWrapper<>(items, "/items?id_category=" + id_category);
             } catch (Exception e) {

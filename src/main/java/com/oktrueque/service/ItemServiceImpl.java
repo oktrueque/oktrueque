@@ -51,8 +51,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> getItemsByCategory(int id_category, Pageable pageable) {
-     return itemRepository.findByCategory_Id(id_category, pageable);
+    public Page<Item> getItemsByCategory(int id_category, int status, Pageable pageable) {
+     return itemRepository.findByCategory_IdAndStatus(id_category, status, pageable);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ItemServiceImpl implements ItemService {
             map.put("items", itemRepository.findByStatusAndUserUsername(Constants.TRUEQUE_STATUS_ACTIVE, matcher.group(2), pageable));
             return map;
         }
-        map.put("items", itemRepository.findByNameContains(name, pageable));
+        map.put("items", itemRepository.findByNameContainsAndStatus(name, Constants.ITEM_STATUS_ACTIVE, pageable));
         return map;
     }
 
