@@ -42,7 +42,7 @@ public class User implements UserDetails{
     @NotNull
     @NotEmpty
     private String username;
-    @OneToMany(mappedBy = "user_target")
+    @OneToMany(mappedBy = "userTarget")
     private List<Comment> comments;
     @Column(name = "score")
     private Integer score;

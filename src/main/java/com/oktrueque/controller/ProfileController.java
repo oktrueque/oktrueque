@@ -15,9 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -69,7 +67,7 @@ public class ProfileController {
             truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTrueque().getId(), new int[]{2,4});
             if(truequeNuevo != null) trueques.add(truequeNuevo);
         }
-
+        List<Comment> comments = commentService.getCommentsByUserTargetId(user.getId());
 
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
@@ -81,6 +79,8 @@ public class ProfileController {
         model.addAttribute("item", new Item(0));
         model.addAttribute("categories",categoryService.getCategories());
         model.addAttribute("trueques", trueques);
+        model.addAttribute("comments", comments);
+        model.addAttribute("hasComments", comments.size() != 0 ? true : false);
 
         return "profile";
     }
@@ -250,7 +250,7 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
         comment.setDate(new Date());
-        comment.setUser_origin(userService.getUserLiteByUsername(principal.getName()));
+        comment.setUserOrigin(userService.getUserLiteByUsername(principal.getName()));
         Comment commentResponse = commentService.saveComment(comment);
         return new ResponseEntity<>(commentResponse, HttpStatus.OK);
 

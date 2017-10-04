@@ -1,7 +1,6 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,19 +14,19 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
-    private UserLite user_origin;
+    private UserLite userOrigin;
 
     @ManyToOne
     @JoinColumn(name = "id_user_target")
-    private UserLite user_target;
+    private UserLite userTarget;
     private int score;
 
     private Date date;
 
-    public Comment(String description, UserLite user_origin, UserLite user_target, int score, Date date) {
+    public Comment(String description, UserLite userOrigin, UserLite userTarget, int score, Date date) {
         this.description = description;
-        this.user_origin = user_origin;
-        this.user_target = user_target;
+        this.userOrigin = userOrigin;
+        this.userTarget = userTarget;
         this.score = score;
         this.date = date;
     }
@@ -50,20 +49,20 @@ public class Comment {
         this.description = description;
     }
 
-    public UserLite getUser_target() {
-        return user_target;
+    public UserLite getUserTarget() {
+        return userTarget;
     }
 
-    public void setUser_target(UserLite user_target) {
-        this.user_target = user_target;
+    public void setUserTarget(UserLite userTarget) {
+        this.userTarget = userTarget;
     }
 
-    public UserLite getUser_origin() {
-        return user_origin;
+    public UserLite getUserOrigin() {
+        return userOrigin;
     }
 
-    public void setUser_origin(UserLite user_origin) {
-        this.user_origin = user_origin;
+    public void setUserOrigin(UserLite userOrigin) {
+        this.userOrigin = userOrigin;
     }
 
     public int getScore() {

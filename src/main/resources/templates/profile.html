@@ -93,6 +93,13 @@
                                     Trueques
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link"  data-toggle="tab" data-target="#comments" role="tab">
+                                    <i class="icmn-info"></i>
+                                    Comentarios
+                                </a>
+                            </li>
+
                             <div th:if="${hasItems}" >
                             <li style="float: right" class="nav-item">
                                 <button id="new-item" type="button" class="btn btn-icon btn-info margin-inline">
@@ -179,6 +186,48 @@
                                                     </tr>
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="comments" role="tabpanel">
+                                <div class="tab-pane active"  role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="margin-bottom-50">
+                                                <div th:if="${hasComments}">
+                                                    <div class="user-wall">
+                                                        <div class="user-wall-item clearfix" th:each="comment : ${comments}">
+                                                            <div class="s1">
+                                                                <a class="avatar" href="javascript:void(0);">
+                                                                    <img th:src="${comment.userOrigin.photo1}" />
+                                                                </a>
+                                                            </div>
+                                                            <div class="s2">
+                                                                <div class="user-wall-item-head">
+                                                                    <div class="pull-right">
+                                                                        <a href=""><i class="icmn-compass"></i></a>
+                                                                    </div>
+                                                                    <strong th:text="${comment.userOrigin.name}">Name</strong>
+                                                                    <small th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></small>
+                                                                </div>
+                                                                <div class="user-wall-post">
+                                                                    <p th:text="${comment.description}">Comentario</p>
+                                                                </div>
+                                                                <div class="user-wall-controls">
+                                                                    <div class="cui-ecommerce--product--rating">
+                                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score)}"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
+                                                    </div>
+                                                </div>
+                                                <div th:if="${!hasComments}">
+                                                    <p th:text="${'Parece que no hay comentarios sobre ' + user.name + ' por el momento'}"></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -323,7 +372,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <input type="hidden" id="idUser" name="user_target"/>
+                        <input type="hidden" id="idUser" name="userTarget"/>
                         <div class="form-group">
                             <div class="col-lg">
                                 <div class="row">
@@ -474,7 +523,7 @@
             let idUser = $("#idUser").val();
             var comment = {
                 description: commentDescription,
-                user_target: {id: idUser},
+                userTarget: {id: idUser},
             };
             console.log(comment);
             return JSON.stringify(comment);

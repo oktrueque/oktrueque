@@ -13,4 +13,6 @@ public interface CommentService {
 
     Comment saveComment(Comment comment);
 
+    List<Comment> getCommentsByUserTargetId(Long userTargetId);
+
 }

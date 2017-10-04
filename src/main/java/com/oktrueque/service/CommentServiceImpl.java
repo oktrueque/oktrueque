@@ -35,4 +35,9 @@ public class CommentServiceImpl implements CommentService {
         return CommentSaved;
     }
 
+    @Override
+    public List<Comment> getCommentsByUserTargetId(Long userTargetId){
+        return commentRepository.findByUserTarget_Id(userTargetId);
+    }
+
 }

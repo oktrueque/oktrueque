@@ -112,7 +112,7 @@
                                         <div class="user-wall-item clearfix" th:each="comment : ${comments}">
                                             <div class="s1">
                                                 <a class="avatar" href="javascript:void(0);">
-                                                    <img th:src="${comment.user_origin.photo1}" />
+                                                    <img th:src="${comment.userOrigin.photo1}" />
                                                 </a>
                                             </div>
                                             <div class="s2">
@@ -120,7 +120,7 @@
                                                     <div class="pull-right">
                                                         <a href=""><i class="icmn-compass"></i></a>
                                                     </div>
-                                                    <strong th:text="${comment.user_origin.name}">Name</strong>
+                                                    <strong th:text="${comment.userOrigin.name}">Name</strong>
                                                     <small th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></small>
                                                 </div>
                                                 <div class="user-wall-post">
