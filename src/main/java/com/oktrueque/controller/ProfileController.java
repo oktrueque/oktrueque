@@ -39,11 +39,13 @@ public class ProfileController {
     @Value("${aws.s3.fileName.items}")
     private String fileNameItems;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ComplaintService complaintService;
+    private ComplaintTypeService complaintTypeService;
 
     @Autowired
     public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService,
                              ItemService itemService, ItemTagService itemTagService, CategoryService categoryService,
-                             TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                             TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.commentService = commentService;
         this.userTagService = userTagService;
@@ -53,6 +55,8 @@ public class ProfileController {
         this.truequeService = truequeService;
         this.awsS3Service = awsS3Service;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.complaintService = complaintService;
+        this.complaintTypeService = complaintTypeService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
@@ -68,6 +72,7 @@ public class ProfileController {
             if(truequeNuevo != null) trueques.add(truequeNuevo);
         }
         List<Comment> comments = commentService.getCommentsByUserTargetId(user.getId());
+        List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore()!=null? true : false);
@@ -81,6 +86,7 @@ public class ProfileController {
         model.addAttribute("trueques", trueques);
         model.addAttribute("comments", comments);
         model.addAttribute("hasComments", comments.size() != 0 ? true : false);
+        model.addAttribute("complaintTypes",complaintTypes);
 
         return "profile";
     }
