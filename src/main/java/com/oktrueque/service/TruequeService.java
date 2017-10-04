@@ -36,4 +36,7 @@ public interface TruequeService {
     void deleteItemTrueque(Long idTrueque, Long idUser);
 
     void saveItemTrueque(Long idTrueque, List<Long> idItems);
+
+    boolean isTimeToAsk(Trueque trueque);
+
 }

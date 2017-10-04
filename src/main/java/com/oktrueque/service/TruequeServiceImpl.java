@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class TruequeServiceImpl implements TruequeService {
@@ -172,6 +173,23 @@ public class TruequeServiceImpl implements TruequeService {
         idItems.forEach(idItem -> itemTrueques.add(new ItemTrueque(new ItemTruequeId(idTrueque, idItem))));
         itemTruequeRepository.save(itemTrueques);
     }
+
+    @Override
+    public boolean isTimeToAsk(Trueque trueque) {
+        if (trueque.getStatus().equals("Activo")) {
+            if (itsBeenSevenDays(trueque.getAcceptanceDate())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean itsBeenSevenDays(Date acceptanceDate) {
+        long diff = (new Date().getTime() - acceptanceDate.getTime())/(1000 * 60 * 60 * 24);
+        if (diff>7) {return true;}
+        return false;
+        }
+
 
     @Override
     @Transactional

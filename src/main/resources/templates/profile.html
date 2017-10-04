@@ -395,6 +395,41 @@
 
     <!--END MODAL SET COMMENT-->
 
+    <!--MODAL TRUEQUE QUESTION-->
+
+    <div class="modal fade"  id="modalCreateQuestion" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal-n" class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <input type="hidden"  name="userTarget"/>
+                        <div class="form-group">
+                            <div class="col-lg">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="commentDescription" class="form-control-label">Comentario</label>
+                                        <textarea id="" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button"  class="btn btn-primary s">Enviar</button>
+                    <button  type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--END MODAL TRUEQUE QUESTION-->
+
+
 
 
 <!-- Page Scripts -->
@@ -404,6 +439,41 @@
         var header = [[${_csrf.headerName}]];
         var x = 0;
         var users = [];
+        var trueques = [];
+
+
+
+        $(document).ready(function(){
+            $.ajax({
+                type: 'GET',
+                url: 'profile/trueques/ask',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data)
+//                    if(data){
+//                        console.log(data)
+//                        trueque = data;
+//                        x=0;
+//                        makeQuestion(data[x]);
+//                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+        });
+
+//        makeQuestion = function(trueque){
+//            $("#commentDescription").val("");
+//            $('#modalCreateQuestion').modal('show');
+//            $('#modal-n').text('¿Te gustaría dejar un comentario acerca de ' + user.name + '?');
+//            $('#idUser').val(trueque.id);
+//            x ++;
+//        };
 
         $(document).ready(function(){
             $('.cancel').on('click', function(){
@@ -506,9 +576,12 @@
                 });
 
 
+
             $('#sendComment').on('click', function(){
                 sendComment();
             });
+
+
 
         makeComment = function(user){
             $("#commentDescription").val("");

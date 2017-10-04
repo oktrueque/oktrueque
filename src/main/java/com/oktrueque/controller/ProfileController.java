@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
+import java.util.*;
 
 
 @Controller
@@ -303,4 +299,30 @@ public class ProfileController {
         model.addAttribute("trueque", trueque);
         return "truequeDetail";
     }
+
+
+    @RequestMapping(method= RequestMethod.GET, value="profile/trueques/ask")
+    public ResponseEntity<Map<String, Object>>askTrueques(Principal principal){
+
+        User user = userService.getUserByUsername(principal.getName());
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
+        LinkedList<Trueque> trueques = new LinkedList<>();
+
+        for (UserTrueque userTrueque: userTrueques){
+                Trueque truequeNuevo = truequeService.getTruequeById(userTrueque.getId().getTrueque().getId());
+                if(truequeService.isTimeToAsk(truequeNuevo)) {
+                    trueques.add(truequeNuevo);
+                }
+        }
+        Map map = new LinkedHashMap();
+        map.put("trueques", trueques);
+        map.put("userTrueques", userTrueques);
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+
+    }
+
+
+
+
 }
