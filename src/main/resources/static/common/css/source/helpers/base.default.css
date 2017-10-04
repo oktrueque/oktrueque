@@ -2353,6 +2353,8 @@ body.theme-blue .cwt__footer {
     border: 2px solid #B30227;
 }
 
-
+.no-padding{
+    padding: 0px !important;
+}
 
 
