@@ -282,6 +282,33 @@ function hasCharacters(val) {
 
     }
 
+    if(formName==='frm-complaint'){
+
+        let selectValue = document.getElementById('complaint-type').value;
+        let descriptionVal = $('#description').val();
+
+        if (selectValue === '-1') {
+            message = 'Debes seleccionar un tipo de denuncia para realizarla!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            document.getElementById('complaint-type').focus();
+            return false;
+        } else if (isEmpty(descriptionVal)) {
+            message = 'Debes describir la denuncia!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#description").focus();
+            return false;
+
+        }
+
+            return true;
+
+
+
+
+    }
+
 
 
 }

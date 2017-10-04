@@ -207,10 +207,10 @@
                                                             <div class="s2">
                                                                 <div class="user-wall-item-head">
                                                                     <div class="pull-right">
-                                                                        <a href=""><i class="icmn-compass"></i></a>
+                                                                        <a th:attr="data-username=${comment.userTarget.username}" data-toggle="modal" data-target="#modal-complaint" class="userTargetUsername"><i class="icmn-compass"></i></a>
                                                                     </div>
                                                                     <strong th:text="${comment.userOrigin.name}">Name</strong>
-                                                                    <small th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></small>
+                                                                    <small th:text="${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}"></small>
                                                                 </div>
                                                                 <div class="user-wall-post">
                                                                     <p th:text="${comment.description}">Comentario</p>
@@ -222,7 +222,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
                                                     </div>
                                                 </div>
                                                 <div th:if="${!hasComments}">
@@ -341,7 +340,7 @@
 
     <!--MESSAGES MODAL-->
     <div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
-         style=" vertical-align: middle;">
+         style=" vertical-align: middle; z-index: 3000;">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="background-color: #ced5d8">
                 <div class="modal-header">
@@ -394,6 +393,50 @@
     </div>
 
     <!--END MODAL SET COMMENT-->
+
+    <!-- MODAL COMPLAINT -->
+    <div class="modal fade"  id="modal-complaint" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <form id="frm-complaint">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Denunciar</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="complaint-type">Tipo de Denuncia</label>
+                                    <select id="complaint-type" class="form-control input-field" data-error=".errorTxt1">
+                                        <option value="-1"> Seleccione tipo de denuncia</option>
+                                        <option th:each="complaintType : ${complaintTypes}"
+                                                th:value="${complaintType.id}" th:text="${complaintType.name}">                                                                </option>
+                                    </select>
+                                    <div class="errorTxt1"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="control-label">Motivo</label>
+                                    <textarea id="description" class="form-control input-field" placeholder="Mensaje *" data-error=".errorTxt2"></textarea>
+                                    <div class="errorTxt2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                        <button id="btn-complaint" type="button" class="btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- END MODAL COMPLAINT -->
 
 
 
@@ -565,21 +608,85 @@
         /*]]>*/
     </script>
 
+    <!--<script th:inline="javascript">-->
+        <!--/*<![CDATA[*/-->
+
+        <!--var score = [[${user.score}]]/2;-->
+        <!--var hasScore = [[${hasScore}]];-->
+        <!--if(hasScore){-->
+            <!--var i;-->
+            <!--for(i = 0; i < score; i++){-->
+                <!--$('.stars').append('<i class="icmn-star-full"></i>');-->
+            <!--}-->
+            <!--for(i; i < 5; i++){-->
+                <!--$('.stars').append('<i class="icmn-star-empty"></i>');-->
+            <!--}-->
+        <!--}-->
+
+        <!--/*]]>*/-->
+    <!--</script>-->
+
     <script th:inline="javascript">
         /*<![CDATA[*/
-
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
         var score = [[${user.score}]]/2;
-        var hasScore = [[${hasScore}]];
-        if(hasScore){
-            var i;
-            for(i = 0; i < score; i++){
-                $('.stars').append('<i class="icmn-star-full"></i>');
-            }
-            for(i; i < 5; i++){
-                $('.stars').append('<i class="icmn-star-empty"></i>');
-            }
+        var username = [[${user.username}]];
+        var i;
+        for(i = 0; i < score; i++){
+            $('.stars').append('<i class="icmn-star-full"></i>');
+        }
+        for(i; i < 5; i++){
+            $('.stars').append('<i class="icmn-star-empty"></i>');
         }
 
+        var getComplaint = function(){
+            let complaint = {
+                complaintType: {
+                    id: $('#complaint-type').val()
+                },
+                description: $('#description').val()
+            };
+            return complaint;
+        };
+
+    $(document).ready(function () {
+
+
+
+        $('.userTargetUsername').on('click', function () {
+
+            var username = $(this).data('username');
+            
+
+        });
+
+        $('#btn-complaint').on('click', function () {
+            if(isValidated('frm-complaint')){
+                var l = Ladda.create(this);
+                l.start();
+                let complaint = getComplaint();
+                $.ajax({
+                    type: "POST",
+                    url: "/users/complaints/" + username,
+                    contentType : "application/json",
+                    data: JSON.stringify(complaint),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        l.stop();
+                        $('#modal-complaint').modal('toggle');
+                        swal("Denuncia enviada", "Nuestro equipo se encargará de aquí en adelante", "success");
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            }
+        });
+
+    });
         /*]]>*/
     </script>
 
