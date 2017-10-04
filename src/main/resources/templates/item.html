@@ -20,7 +20,7 @@
                             <i class="icmn-more2"></i>
                         </a>
                         <ul sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}" class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                            <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-compass"></i> Denunciar este item</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modal-complaint" href="javascript:void(0)"><i class="dropdown-icon icmn-compass"></i> Denunciar este item</a>
                         </ul>
                         <ul sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == user.id}" class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
                             <a class="dropdown-item" th:href="@{'/profile/items/' + ${item.id} + '/edit'}"><i class="dropdown-icon icmn-pencil"></i> Editar item</a>
@@ -183,7 +183,46 @@
         <!-- End Ecommerce Product Details -->
 
     </div>
-
+    <div class="modal fade"  id="modal-complaint" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <form id="frm-complaint">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Denunciar</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="complaint-type">Tipo de Denuncia</label>
+                                    <select id="complaint-type" class="form-control input-field" data-error=".errorTxt1">
+                                        <option value="-1"> Seleccione tipo de denuncia</option>
+                                        <option th:each="complaintType : ${complaintTypes}"
+                                                th:value="${complaintType.id}" th:text="${complaintType.name}">                                                                </option>
+                                    </select>
+                                    <div class="errorTxt1"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="control-label">Motivo</label>
+                                    <textarea id="description" class="form-control input-field" placeholder="Mensaje *" data-error=".errorTxt2"></textarea>
+                                    <div class="errorTxt2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                        <button id="btn-complaint" type="button" class="btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Page Scripts -->
     <script src="../static/vendors/datatables-responsive/js/dataTables.responsive.js"
@@ -192,6 +231,7 @@
         /*<![CDATA[*/
         let token = [[${_csrf.token}]];
         let header = [[${_csrf.headerName}]];
+        let username = [[${user.username}]];
 
         $('.owl-carousel').owlCarousel({
             loop:true,
@@ -209,6 +249,16 @@
                 }
             }
         });
+
+        let getComplaint = function(){
+            let complaint = {
+                complaintType: {
+                    id: $('#complaint-type').val()
+                },
+                description: $('#description').val()
+            };
+            return complaint;
+        };
 
         $(document).ready(function(){
             $('#delete-item').on('click', function(){
@@ -246,6 +296,29 @@
                         }
                     });
 
+            });
+
+            $('#btn-complaint').on('click', function () {
+                let complaint = getComplaint();
+                var l = Ladda.create(this);
+                l.start();
+                $.ajax({
+                    type: "POST",
+                    url: "/users/complaints/" + username,
+                    contentType : "application/json",
+                    data: JSON.stringify(complaint),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        l.stop();
+                        $('#modal-complaint').modal('toggle');
+                        swal("Denuncia enviada", "Nuestro equipo se encargará de aquí en adelante", "success");
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
             });
         });
         /*]]>*/

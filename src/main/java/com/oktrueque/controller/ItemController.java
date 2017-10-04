@@ -1,8 +1,8 @@
 package com.oktrueque.controller;
 
+import com.oktrueque.model.ComplaintType;
 import com.oktrueque.model.Item;
 import com.oktrueque.model.ItemTag;
-import com.oktrueque.model.User;
 import com.oktrueque.model.UserLite;
 import com.oktrueque.service.*;
 import com.oktrueque.utils.Constants;
@@ -29,13 +29,17 @@ public class ItemController {
     private CategoryService categoryService;
     private UserService userService;
     private ItemTagService itemTagService;
+    private ComplaintService complaintService;
+    private ComplaintTypeService complaintTypeService;
 
     @Autowired
-    public ItemController(ItemService itemService, CategoryService categoryService, UserService userService, ItemTagService itemTagService){
+    public ItemController(ItemService itemService, CategoryService categoryService, UserService userService, ItemTagService itemTagService, ComplaintService complaintService, ComplaintTypeService complaintTypeService){
         this.itemService = itemService;
         this.categoryService = categoryService;
         this.userService = userService;
         this.itemTagService = itemTagService;
+        this.complaintService = complaintService;
+        this.complaintTypeService = complaintTypeService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/items")
@@ -79,8 +83,9 @@ public class ItemController {
 
         Item item = itemService.getItemByIdAndStatus(id, Constants.ITEM_STATUS_ACTIVE);
         UserLite u = item.getUser();
-
+        List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
         List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
+        model.addAttribute("complaintTypes", complaintTypes);
         model.addAttribute("item", item);
         model.addAttribute("user", u);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);

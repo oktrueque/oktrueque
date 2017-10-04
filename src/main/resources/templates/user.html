@@ -210,12 +210,13 @@
                 },
                 description: $('#description').val()
             };
-            console.log(complaint);
             return complaint;
         };
 
         $(document).ready(function () {
             $('#btn-complaint').on('click', function () {
+                var l = Ladda.create(this);
+                l.start();
                 let complaint = getComplaint();
                 $.ajax({
                     type: "POST",
@@ -226,15 +227,14 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (data) {
-                        console.log("SUCCESS", data);
+                        l.stop();
+                        $('#modal-complaint').modal('toggle');
                         swal("Denuncia enviada", "Nuestro equipo se encargará de aquí en adelante", "success");
                     },
                     error: function (e) {
                         console.log(e);
                     }
                 });
-
-                $('#modal-complaint').modal('toggle');
             });
         });
 
