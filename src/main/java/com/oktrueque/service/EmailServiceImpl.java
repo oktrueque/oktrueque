@@ -61,6 +61,9 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public ResponseEntity contact(Email email){
+        Map<String,Object> model = new LinkedHashMap<>();
+        model.put("emailContent",email.getMailContent());
+        email.setModel(model);
         sendMail(email,"contactUs.ftl");
         return new ResponseEntity(HttpStatus.OK);
     }

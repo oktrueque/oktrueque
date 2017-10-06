@@ -13,7 +13,7 @@
                 </tr>
             </table>
             <div style="padding: 40px 40px 20px 40px; background: #fff;">
-                <p>${getMailContent()}</p>
+                <p>${emailContent}</p>
             </div>
             <div style="text-align: center; font-size: 12px; color: #a09bb9; margin-top: 20px">
                 <p>

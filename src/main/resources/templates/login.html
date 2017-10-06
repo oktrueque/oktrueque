@@ -335,6 +335,7 @@
 
                 if (isValidated('contactUsForm')) {
                     $('#contactUsModal').modal('hide');
+
                     $.ajax({
                         type: "POST",
                         url: "/contact",
@@ -345,8 +346,6 @@
                             xhr.setRequestHeader(header, token);
                         },
                         success: function () {
-                        console.log('Mail ajax sent');
-                        console.log(message);
                         },
                         error: function (e) {
                         console.log(JSON.stringify(e));
