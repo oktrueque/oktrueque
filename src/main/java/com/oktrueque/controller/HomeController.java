@@ -33,9 +33,7 @@ public class HomeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/contact")
-    public ResponseEntity contactUs(@RequestBody Email email){
-        return new ResponseEntity(HttpStatus.OK);
-    }
+    public ResponseEntity contactUs(@RequestBody Email email){return emailService.contact(email);}
 
     @RequestMapping(method= RequestMethod.POST, value = "/resetPassword")
     public ResponseEntity resetPassword(@RequestBody String datos){return userService.resetPassword(datos);}

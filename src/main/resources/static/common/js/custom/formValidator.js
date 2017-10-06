@@ -301,10 +301,35 @@ function hasCharacters(val) {
             return false;
 
         }
-
             return true;
+    }
 
+    if(formName==='contactUsForm'){
 
+        let nameAndLastnameInputVal = $("#nameAndLastNameInput").val();
+        let emailInputVal = $("#emailInput").val();
+        let messageInputVal = $("#messageInput").val();
+
+        if (isEmpty(nameAndLastnameInputVal)) {
+            message = 'Debes escribir tu nombre!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#nameAndLastNameInput").focus();
+            return false;
+        } else if(isEmpty(emailInputVal) || !emailInputVal.includes('@') || !emailInputVal.includes('.com')){
+            message = 'Debes escribir tu mail o el formato de tu mail es incorrecto!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#emailInput").focus();
+            return false;
+        } else if(isEmpty(messageInputVal)){
+            message = 'Debes escribir tu mensaje!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#messageInput").focus();
+            return false;
+        }
+        return true;
 
 
     }
