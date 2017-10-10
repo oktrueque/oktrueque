@@ -85,13 +85,17 @@ public class ItemController {
         UserLite u = item.getUser();
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
         List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
+        List<Item> itemsSuggested = itemService.getItemsByCategory(item.getCategory(),item.getId());
         model.addAttribute("complaintTypes", complaintTypes);
         model.addAttribute("item", item);
         model.addAttribute("user", u);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
-        model.addAttribute("sugerencias", true);
-
+        model.addAttribute("sugerencias", false);
+        if(!itemsSuggested.isEmpty()){
+            model.addAttribute("sugerencias", true);
+            model.addAttribute("itemsSuggested",itemsSuggested);
+        }
         return "item";
 
     }

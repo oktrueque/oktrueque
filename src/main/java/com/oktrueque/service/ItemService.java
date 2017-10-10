@@ -45,4 +45,6 @@ public interface ItemService {
     List<Item> getItemsByUserIdAndStatus(Long id, int status);
 
     Item deleteIfPossible(Long id);
+
+    List<Item> getItemsByCategory(Category category, Long id);
 }
