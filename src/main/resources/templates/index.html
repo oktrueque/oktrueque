@@ -21,6 +21,9 @@
 		<link href="css/owl.carousel.css" rel="stylesheet" th:href="@{/common/css/source/landing/owl.carousel.css}"/>
 		<link href="css/owl.theme.default.min.css"  rel="stylesheet" th:href="@{/common/css/source/landing/owl.theme.default.min.css}"/>
 		<link href="css/style.css" rel="stylesheet" th:href="@{/common/css/source/landing/style.css}"/>
+
+		<!--VALIDATIONS-->
+		<script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
 	</head>
 	<body id="page-top">
 		<!-- Navigation -->
@@ -323,17 +326,17 @@
 						</div>
 					</div>
 					<div class="col-md-9">
-						<form name="sentMessage" id="contactForm" novalidate="">
+						<form  id="contactForm">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Nombre *" id="contact-name" required="" data-validation-required-message="Please enter your name."/>
+										<input id="nameAndLastNameInput" type="text" class="form-control" />
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">
-										<input type="email" class="form-control" placeholder="Email *" id="contact-email" required="" data-validation-required-message="Please enter your email address."/>
+										<input type="email" class="form-control" placeholder="Email" id="emailInput" />
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>
@@ -341,7 +344,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
-										<textarea class="form-control" placeholder="Mensaje *" id="mailContent" required="" data-validation-required-message="Please enter a message."></textarea>
+										<textarea class="form-control" placeholder="Mensaje" id="messageInput"></textarea>
 										<p class="help-block text-danger"></p>
 									</div>
 								</div>
@@ -350,7 +353,7 @@
 							<div class="row">
 								<div class="col-lg-12 text-center">
 									<div id="success"></div>
-									<button id="btn-contact" type="button" class="btn">Enviar</button>
+									<button id="btnSend" type="button" class="btn">Enviar</button>
 								</div>
 							</div>
 						</form>
@@ -387,6 +390,29 @@
 			</div>
 		</div>
 
+		<!--MESSAGES MODAL-->
+		<div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+			 style=" vertical-align: middle; z-index: 3000;">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="background-color: #ced5d8">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">Aviso</h4>
+					</div>
+					<div class="modal-body text-center">
+						<span id="messageSpan"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--END MESSAGES MODAL-->
+
 		<!-- Bootstrap core JavaScript
 			================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
@@ -402,42 +428,49 @@
 
 
 		<script th:inline="javascript">
-            /*<![CDATA[*/
+			/*<![CDATA[*/
 
-			$(document).ready(function(){
-			    $('#btn-contact').click(function(){
+            var token = [[${_csrf.token}]];
+            var header = [[${_csrf.headerName}]];
 
-                    var token = [[${_csrf.token}]];
-                    var header = [[${_csrf.headerName}]];
+            document.addEventListener("DOMContentLoaded", function () {
 
-			        var data = {
-			            name: $('#contact-name').val(),
-						email: $('#contact-email').val(),
-						message: $('#contact-message').val()
-					};
+//         ---------------   CONTACTO   -----------------
 
-					console.log(data);
-                    $.ajax({
-                        type: "POST",
-                        contentType: "application/json",
-                        url: "/contact",
-                        data: JSON.stringify(data),
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader(header, token);
-                        },
-                        success: function () {
-                            console.log("Email Sended");
-                        },
-                        error: function (e) {
-                            console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
-                        }
+                $("#btnSend").on("click", function () {
 
-                    });
+                    let message = 'Hola! Mi nombre es ' +$("#nameAndLastNameInput").val() +' y mi email es ' +$("#emailInput").val() +'. Mi mensaje para ustedes es: ' +$("#messageInput").val();
 
-				});
-			});
+                    let email = {
 
-            /*]]>*/
+                        mailTo: 'oktrueque@gmail.com',
+                        mailSubject: 'Contacto',
+                        mailContent: message,
+                        contentType: 'text/plain'
+
+                    };
+
+                    if (isValidated('contactUsForm')) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/contact",
+                            contentType: "application/json",
+                            data: JSON.stringify(email),
+                            dataType: 'text',
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            success: function () {
+                            },
+                            error: function (e) {
+                                console.log(JSON.stringify(e));
+                            }
+                        });
+                    }
+                });
+
+            });
+			/*]]>*/
 		</script>
 	</body>
 </html>

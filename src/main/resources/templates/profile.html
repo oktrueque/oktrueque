@@ -82,19 +82,19 @@
                     <div class="nav-tabs-horizontal">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#posts" role="tab">
+                                <a class="nav-link active" id="link-item" href="javascript: void(0);" data-toggle="tab" data-target="#posts" role="tab">
                                     <i class="icmn-menu3"></i>
                                     Items
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#messaging" role="tab">
+                                <a class="nav-link" id="link-trueque" href="javascript: void(0);" data-toggle="tab" data-target="#messaging" role="tab">
                                     <i class="icmn-image-compare"></i>
                                     Trueques
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"  data-toggle="tab" data-target="#comments" role="tab">
+                                <a class="nav-link" id="link-comment" data-toggle="tab" data-target="#comments" role="tab">
                                     <i class="icmn-info"></i>
                                     Comentarios
                                 </a>
@@ -147,8 +147,8 @@
                                     Click acá para agregar uno!
                                 </a>
                             </div>
-                            <div class="tab-pane" id="messaging" role="tabpanel">
-                                <div class="tab-pane active" id="posts" role="tabpanel">
+                            <div  class="tab-pane" id="messaging" role="tabpanel">
+                                <div class="tab-pane active"  role="tabpanel">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="margin-bottom-50">
@@ -200,17 +200,17 @@
                                                     <div class="user-wall">
                                                         <div class="user-wall-item clearfix" th:each="comment : ${comments}">
                                                             <div class="s1">
-                                                                <a class="avatar" href="javascript:void(0);">
+                                                                <a class="avatar" th:href="@{'/users/' + ${comment.userOrigin.username}}" >
                                                                     <img th:src="${comment.userOrigin.photo1}" />
                                                                 </a>
                                                             </div>
                                                             <div class="s2">
                                                                 <div class="user-wall-item-head">
                                                                     <div class="pull-right">
-                                                                        <a href=""><i class="icmn-compass"></i></a>
+                                                                        <a th:attr="data-userorigindata=${comment.userOrigin.username}" data-toggle="modal" data-target="#modal-complaint" class="userOriginUsername"><i class="icmn-compass"></i></a>
                                                                     </div>
                                                                     <strong th:text="${comment.userOrigin.name}">Name</strong>
-                                                                    <small th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></small>
+                                                                    <small th:text="${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}"></small>
                                                                 </div>
                                                                 <div class="user-wall-post">
                                                                     <p th:text="${comment.description}">Comentario</p>
@@ -222,7 +222,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
                                                     </div>
                                                 </div>
                                                 <div th:if="${!hasComments}">
@@ -341,7 +340,7 @@
 
     <!--MESSAGES MODAL-->
     <div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
-         style=" vertical-align: middle;">
+         style=" vertical-align: middle; z-index: 3000;">
         <div class="modal-dialog" role="document">
             <div class="modal-content" style="background-color: #ced5d8">
                 <div class="modal-header">
@@ -401,34 +400,29 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 id="modal-n" class="modal-title"></h4>
+                    <h4 class="modal-title">No olvides actualizar el estado de tus trueques!</h4>
                 </div>
                 <div class="modal-body">
                     <div class="container">
-                        <input type="hidden"  name="userTarget"/>
                         <div class="form-group">
                             <div class="col-lg">
                                 <div class="row">
                                     <div class="form-group">
-                                        <label for="commentDescription" class="form-control-label">Comentario</label>
-                                        <textarea id="" class="form-control" rows="4"></textarea>
+                                        <label for="commentDescription" class="form-control-label">Notamos que tienes algunos activos hace mas de 7 días con las siguientes personas</label>
+                                        <ul id="trueques-pending"></ul>
                                     </div>
                                 </div>
                             </div>
+                            <button  type="button" class="btn btn-xs btn-danger" data-dismiss="modal">Cerrar</button>
+                            <a id="verTruequesBtn" class="btn btn-xs">
+                                <i class="fa fa-bars" aria-hidden="true"></i> Ver Tus Trueques
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button"  class="btn btn-primary s">Enviar</button>
-                    <button  type="button" class="btn" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!--END MODAL TRUEQUE QUESTION-->
-
 
 
 
@@ -439,7 +433,7 @@
         var header = [[${_csrf.headerName}]];
         var x = 0;
         var users = [];
-        var trueques = [];
+        var userId= /*[[${#authentication.principal.id}]]*/ "";
 
 
 
@@ -453,12 +447,11 @@
                 },
                 success: function (data) {
                     console.log(data)
-//                    if(data){
-//                        console.log(data)
-//                        trueque = data;
-//                        x=0;
-//                        makeQuestion(data[x]);
-//                    }
+                    if(data){
+                        console.log(data)
+                        usersTrueque = data;
+                         makeQuestion(usersTrueque);
+                    }
                 },
                 error: function (e) {
                     console.log(e);
@@ -467,15 +460,37 @@
 
         });
 
-//        makeQuestion = function(trueque){
-//            $("#commentDescription").val("");
-//            $('#modalCreateQuestion').modal('show');
-//            $('#modal-n').text('¿Te gustaría dejar un comentario acerca de ' + user.name + '?');
-//            $('#idUser').val(trueque.id);
-//            x ++;
-//        };
+        makeQuestion = function(usersTrueque){
+            var ul = $("#trueques-pending");
+            ul.html("");
+            $("#commentDescription").val("");
+            $('#modalCreateQuestion').modal('show');
+            usersTrueque.forEach(function(userT){
+                if (userId != userT.id.user.id){
+                    let userTNode = document.createElement("LI");
+                    userTNode.appendChild(document.createTextNode(userT.id.user.name));
+                    ul.append(userTNode);
+                }
+            });
+
+        };
 
         $(document).ready(function(){
+            $('#verTruequesBtn').on('click', function () {
+
+                document.getElementById('posts').setAttribute('class','tab-pane');
+                document.getElementById('messaging').setAttribute('class','tab-pane active');
+                document.getElementById('link-comment').setAttribute('class','nav-link');
+                document.getElementById('link-item').setAttribute('class','nav-link');
+                document.getElementById('link-trueque').setAttribute('class','nav-link active');
+
+
+                $('#modalCreateQuestion').modal('hide');
+                console.log('modifico');
+
+            });
+
+
             $('.cancel').on('click', function(){
                 var truequeId = $(this).data('id');
 
@@ -582,7 +597,6 @@
             });
 
 
-
         makeComment = function(user){
             $("#commentDescription").val("");
             $('#modalCreateComment').modal('show');
@@ -638,21 +652,82 @@
         /*]]>*/
     </script>
 
+    <!--<script th:inline="javascript">-->
+        <!--/*<![CDATA[*/-->
+
+        <!--var score = [[${user.score}]]/2;-->
+        <!--var hasScore = [[${hasScore}]];-->
+        <!--if(hasScore){-->
+            <!--var i;-->
+            <!--for(i = 0; i < score; i++){-->
+                <!--$('.stars').append('<i class="icmn-star-full"></i>');-->
+            <!--}-->
+            <!--for(i; i < 5; i++){-->
+                <!--$('.stars').append('<i class="icmn-star-empty"></i>');-->
+            <!--}-->
+        <!--}-->
+
+        <!--/*]]>*/-->
+    <!--</script>-->
+
     <script th:inline="javascript">
         /*<![CDATA[*/
-
+        var token = [[${_csrf.token}]];
+        var header = [[${_csrf.headerName}]];
         var score = [[${user.score}]]/2;
-        var hasScore = [[${hasScore}]];
-        if(hasScore){
-            var i;
-            for(i = 0; i < score; i++){
-                $('.stars').append('<i class="icmn-star-full"></i>');
-            }
-            for(i; i < 5; i++){
-                $('.stars').append('<i class="icmn-star-empty"></i>');
-            }
+        var username = [[${user.username}]];
+        var i;
+        for(i = 0; i < score; i++){
+            $('.stars').append('<i class="icmn-star-full"></i>');
+        }
+        for(i; i < 5; i++){
+            $('.stars').append('<i class="icmn-star-empty"></i>');
         }
 
+        var getComplaint = function(){
+            let complaint = {
+                complaintType: {
+                    id: $('#complaint-type').val()
+                },
+                description: $('#description').val()
+            };
+            return complaint;
+        };
+
+    $(document).ready(function () {
+
+        let userorigindata;
+
+        $('.userOriginUsername').on('click', function () {
+            userorigindata = $(this).data('userorigindata');
+        });
+
+        $('#btn-complaint').on('click', function () {
+            if(isValidated('frm-complaint')){
+                var l = Ladda.create(this);
+                l.start();
+                let complaint = getComplaint();
+                $.ajax({
+                    type: "POST",
+                    url: "/users/complaints/" + userorigindata,
+                    contentType : "application/json",
+                    data: JSON.stringify(complaint),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        l.stop();
+                        $('#modal-complaint').modal('toggle');
+                        swal("Denuncia enviada", "Nuestro equipo se encargará de aquí en adelante", "success");
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
+                });
+            }
+        });
+
+    });
         /*]]>*/
     </script>
 

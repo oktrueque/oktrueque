@@ -35,11 +35,13 @@ public class ProfileController {
     @Value("${aws.s3.fileName.items}")
     private String fileNameItems;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ComplaintService complaintService;
+    private ComplaintTypeService complaintTypeService;
 
     @Autowired
     public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService,
                              ItemService itemService, ItemTagService itemTagService, CategoryService categoryService,
-                             TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder) {
+                             TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.commentService = commentService;
         this.userTagService = userTagService;
@@ -49,40 +51,44 @@ public class ProfileController {
         this.truequeService = truequeService;
         this.awsS3Service = awsS3Service;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.complaintService = complaintService;
+        this.complaintTypeService = complaintTypeService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
-    public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable){
+    public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable) {
         User user = userService.getUserByUsername(principal.getName());
-        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(),new int[]{2,3}, pageable);
+        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3}, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
-        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         Trueque truequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-        for (UserTrueque trueque: userTrueques){
-            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTrueque().getId(), new int[]{2,4});
-            if(truequeNuevo != null) trueques.add(truequeNuevo);
+        for (UserTrueque trueque : userTrueques) {
+            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTrueque().getId(), new int[]{2, 4});
+            if (truequeNuevo != null) trueques.add(truequeNuevo);
         }
         List<Comment> comments = commentService.getCommentsByUserTargetId(user.getId());
+        List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
         model.addAttribute("user", user);
-        model.addAttribute("hasScore", user.getScore()!=null? true : false);
+        model.addAttribute("hasScore", user.getScore() != null ? true : false);
         model.addAttribute("hasItems", items.getContent().size() != 0 ? true : false);
         model.addAttribute("items", items.getContent());
         model.addAttribute("itemsCount", items.getTotalElements());
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
         model.addAttribute("item", new Item(0));
-        model.addAttribute("categories",categoryService.getCategories());
+        model.addAttribute("categories", categoryService.getCategories());
         model.addAttribute("trueques", trueques);
         model.addAttribute("comments", comments);
         model.addAttribute("hasComments", comments.size() != 0 ? true : false);
+        model.addAttribute("complaintTypes", complaintTypes);
 
         return "profile";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/edit")
-    public String editProfile(Principal principal, Model model){
+    public String editProfile(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
         model.addAttribute("user", user);
@@ -93,11 +99,11 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/edit")
     public String updateProfile(@ModelAttribute User user, @ModelAttribute MultipartFile picture) {
-        if(!picture.getOriginalFilename().equals("")){
+        if (!picture.getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(picture, fileNameUsers, user.getId(), null, user.getPhoto1());
             user.setPhoto1(pictureUrl);
         }
-        if(user.getNewPassword().equals("")){
+        if (user.getNewPassword().equals("")) {
             userService.updateUser(user);
             return "redirect:/profile";
         }
@@ -108,7 +114,7 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}")
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
         List<ItemTag> tags = itemTagService.getItemTagByItemId(id);
@@ -120,8 +126,8 @@ public class ProfileController {
         return "item";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/profile/items")
-    public ResponseEntity<Item> newItem(@RequestBody Item item, Principal principal){
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/items")
+    public ResponseEntity<Item> newItem(@RequestBody Item item, Principal principal) {
         UserLite user = userService.getUserLiteByUsername(principal.getName());
         item.setStatus(0);
         item.setUser(user);
@@ -130,19 +136,19 @@ public class ProfileController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/items/images")
-    public String setItemImages(@ModelAttribute Item item){
+    public String setItemImages(@ModelAttribute Item item) {
         Item itemDB = itemService.getItemById(item.getId());
-        if(!item.getPictures()[0].getOriginalFilename().equals("")){
+        if (!item.getPictures()[0].getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[0], fileNameItems, item.getId(), "1", item.getPhoto1());
             itemDB.setPhoto1(pictureUrl);
             itemDB.setStatus(0);
         }
-        if(!item.getPictures()[1].getOriginalFilename().equals("")){
+        if (!item.getPictures()[1].getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[1], fileNameItems, item.getId(), "2", item.getPhoto1());
             itemDB.setPhoto2(pictureUrl);
             itemDB.setStatus(0);
         }
-        if(!item.getPictures()[2].getOriginalFilename().equals("")){
+        if (!item.getPictures()[2].getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(item.getPictures()[2], fileNameItems, item.getId(), "3", item.getPhoto1());
             itemDB.setPhoto3(pictureUrl);
             itemDB.setStatus(0);
@@ -151,7 +157,7 @@ public class ProfileController {
         return "redirect:/profile";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/profile/items/{id}/edit")
+    @RequestMapping(method = RequestMethod.GET, value = "/profile/items/{id}/edit")
     public String fillUpdateView(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
         List<Tag> tags = itemTagService.getItemTags(id);
@@ -166,19 +172,19 @@ public class ProfileController {
         return "updateItem";
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value="/profile/items/{id}/edit")
-    public String updateItemById(@ModelAttribute Item item, @ModelAttribute List<MultipartFile> pictures, Principal principal){
-        if(!pictures.get(0).getOriginalFilename().equals("")){
+    @RequestMapping(method = RequestMethod.PUT, value = "/profile/items/{id}/edit")
+    public String updateItemById(@ModelAttribute Item item, @ModelAttribute List<MultipartFile> pictures, Principal principal) {
+        if (!pictures.get(0).getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(0), fileNameItems, item.getId(), "1", item.getPhoto1());
             item.setPhoto1(pictureUrl);
             item.setStatus(0);
         }
-        if(!pictures.get(1).getOriginalFilename().equals("")){
+        if (!pictures.get(1).getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(1), fileNameItems, item.getId(), "2", item.getPhoto1());
             item.setPhoto2(pictureUrl);
             item.setStatus(0);
         }
-        if(!pictures.get(2).getOriginalFilename().equals("")){
+        if (!pictures.get(2).getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(2), fileNameItems, item.getId(), "3", item.getPhoto1());
             item.setPhoto3(pictureUrl);
             item.setStatus(0);
@@ -192,59 +198,58 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}")
-    public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal){
+    public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal) {
 
         Trueque trueque = truequeService.getTruequeById(id);
         User user = userService.getUserByUsername(principal.getName());
-        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         List<UserLite> users = new ArrayList<>();
-        for (UserTrueque ut: userTrueques){
-            if (ut.getId().getUser().getId()!= user.getId()){
-                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));}
+        for (UserTrueque ut : userTrueques) {
+            if (ut.getId().getUser().getId() != user.getId()) {
+                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));
+            }
         }
         // PENDIENTE A RECHAZADO
-        if (trueque.getStatus().equals("Pendiente")){
+        if (trueque.getStatus().equals("Pendiente")) {
             trueque.setStatus(2);
             trueque.setRejectionDate(new Date());
             truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         // ACTIVO A CANCELADO
-        if (trueque.getStatus().equals("Activo")){
+        if (trueque.getStatus().equals("Activo")) {
             trueque.setStatus(4);
             trueque.setRejectionDate(new Date());
             truequeService.updateTrueque(trueque);
-            return new ResponseEntity<>(users,HttpStatus.OK);
+            return new ResponseEntity<>(users, HttpStatus.OK);
         }
-       return new ResponseEntity<>(users,HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 
     @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}/confirm")
-    public ResponseEntity<List<UserLite>> confirmTrueque(@PathVariable Long id, Principal principal){
+    public ResponseEntity<List<UserLite>> confirmTrueque(@PathVariable Long id, Principal principal) {
 
         Trueque trueque = truequeService.getTruequeById(id);
         User user = userService.getUserByUsername(principal.getName());
-        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_TruequeId(id);
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         List<UserLite> users = new ArrayList<>();
-        for (UserTrueque ut: userTrueques){
-            if (ut.getId().getUser().getId()!= user.getId()){
-                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));}
+        for (UserTrueque ut : userTrueques) {
+            if (ut.getId().getUser().getId() != user.getId()) {
+                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));
+            }
         }
         // ACTIVO A CONFIRMADO
         trueque.setStatus(3);
         trueque.setEndingDate(new Date());
         truequeService.updateTrueque(trueque);
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
 
     }
 
 
-
-
-
-    @RequestMapping(method = RequestMethod.POST, value="/profile/comment")
-    public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal){
+    @RequestMapping(method = RequestMethod.POST, value = "/profile/comment")
+    public ResponseEntity<Comment> addComment(@RequestBody Comment comment, Principal principal) {
         comment.setDate(new Date());
         comment.setUserOrigin(userService.getUserLiteByUsername(principal.getName()));
         Comment commentResponse = commentService.saveComment(comment);
@@ -252,19 +257,19 @@ public class ProfileController {
 
     }
 
-    @RequestMapping(method= RequestMethod.DELETE, value="/profile/items/{id}")
-    public ResponseEntity<Item> deleteUserItem(@PathVariable Long id){
+    @RequestMapping(method = RequestMethod.DELETE, value = "/profile/items/{id}")
+    public ResponseEntity<Item> deleteUserItem(@PathVariable Long id) {
         Item item = itemService.deleteIfPossible(id);
         return new ResponseEntity(item, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques")
-    public String getTruequesByUser(Model model, Principal principal){
+    public String getTruequesByUser(Model model, Principal principal) {
         User user = userService.getUserByUsername(principal.getName());
-        List<UserTrueque> userTrueques= truequeService.getUserTruequeById_UserId(user.getId());
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         Trueque TruequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-        for (UserTrueque trueque: userTrueques){
+        for (UserTrueque trueque : userTrueques) {
 
             TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTrueque().getId());
             trueques.add(TruequeNuevo);
@@ -275,7 +280,7 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques/{id}")
-    public String getTruequeById(Model model,@PathVariable Long id,Principal principal){
+    public String getTruequeById(Model model, @PathVariable Long id, Principal principal) {
         User userLogged = userService.getUserByUsername(principal.getName());
         Trueque trueque = truequeService.getTruequeById(id);
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
@@ -284,12 +289,12 @@ public class ProfileController {
         List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
         LinkedList<Item> items = new LinkedList<>();
         Item itemNuevo;
-        for (ItemTrueque itemTrueque: itemsTrueques){
-                itemNuevo = itemService.getItemById(itemTrueque.getId().getItem().getId());
-                items.add(itemNuevo);
+        for (ItemTrueque itemTrueque : itemsTrueques) {
+            itemNuevo = itemService.getItemById(itemTrueque.getId().getItem().getId());
+            items.add(itemNuevo);
         }
-        for (UserTrueque userTrueque: userTrueques){
-            if(userTrueque.getId().getUser().getId()!= userLogged.getId()){
+        for (UserTrueque userTrueque : userTrueques) {
+            if (userTrueque.getId().getUser().getId() != userLogged.getId()) {
                 userNuevo = userService.getUserById(userTrueque.getId().getUser().getId());
                 users.add(userNuevo);
             }
@@ -301,28 +306,24 @@ public class ProfileController {
     }
 
 
-    @RequestMapping(method= RequestMethod.GET, value="profile/trueques/ask")
-    public ResponseEntity<Map<String, Object>>askTrueques(Principal principal){
+    @RequestMapping(method = RequestMethod.GET, value = "profile/trueques/ask")
+    public ResponseEntity<UserTrueque> askTrueques(Principal principal) {
 
         User user = userService.getUserByUsername(principal.getName());
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
-        LinkedList<Trueque> trueques = new LinkedList<>();
+        List<UserTrueque> userTruequesToPass = new LinkedList<>();
+        List<UserTrueque> userTruequesTo = new LinkedList<>();
 
-        for (UserTrueque userTrueque: userTrueques){
-                Trueque truequeNuevo = truequeService.getTruequeById(userTrueque.getId().getTrueque().getId());
-                if(truequeService.isTimeToAsk(truequeNuevo)) {
-                    trueques.add(truequeNuevo);
-                }
+        for (UserTrueque userTrueque : userTrueques) {
+            if (truequeService.isTimeToAsk(userTrueque.getId().getTrueque())){
+                userTruequesToPass.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque
+                        .getId().getTrueque().getId()));
+            }
         }
-        Map map = new LinkedHashMap();
-        map.put("trueques", trueques);
-        map.put("userTrueques", userTrueques);
 
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        return new ResponseEntity(userTruequesToPass, HttpStatus.OK);
 
     }
-
-
 
 
 }

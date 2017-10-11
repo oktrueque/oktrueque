@@ -150,4 +150,9 @@ public class ItemServiceImpl implements ItemService {
         }
         return null;
     }
+
+    @Override
+    public List<Item> getItemsByCategory(Category category, Long id) {
+        return itemRepository.findTop4ByCategoryAndIdNot(category, id);
+    }
 }

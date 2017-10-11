@@ -282,6 +282,58 @@ function hasCharacters(val) {
 
     }
 
+    if(formName==='frm-complaint'){
+
+        let selectValue = document.getElementById('complaint-type').value;
+        let descriptionVal = $('#description').val();
+
+        if (selectValue === '-1') {
+            message = 'Debes seleccionar un tipo de denuncia para realizarla!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            document.getElementById('complaint-type').focus();
+            return false;
+        } else if (isEmpty(descriptionVal)) {
+            message = 'Debes describir la denuncia!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#description").focus();
+            return false;
+
+        }
+            return true;
+    }
+
+    if(formName==='contactUsForm'){
+
+        let nameAndLastnameInputVal = $("#nameAndLastNameInput").val();
+        let emailInputVal = $("#emailInput").val();
+        let messageInputVal = $("#messageInput").val();
+
+        if (isEmpty(nameAndLastnameInputVal)) {
+            message = 'Debes escribir tu nombre!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#nameAndLastNameInput").focus();
+            return false;
+        } else if(isEmpty(emailInputVal) || !emailInputVal.includes('@') || !emailInputVal.includes('.com')){
+            message = 'Debes escribir tu mail o el formato de tu mail es incorrecto!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#emailInput").focus();
+            return false;
+        } else if(isEmpty(messageInputVal)){
+            message = 'Debes escribir tu mensaje!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#messageInput").focus();
+            return false;
+        }
+        return true;
+
+
+    }
+
 
 
 }

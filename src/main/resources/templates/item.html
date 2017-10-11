@@ -141,45 +141,46 @@
             </div>
         </section>
 
-
-        <section class="panel  panel-with-borders" th:if="${sugerencias}">
+        <section class="panel panel-with-borders" th:if="${sugerencias}">
             <div class="panel-heading">
-                <h2>Productos Sugeridos</h2>
-
+                <h2>
+                    Sugerencias
+                </h2>
             </div>
             <div class="panel-body">
                 <div class="cui-ecommerce--catalog">
                     <div class="row">
-                        <div class="well well-lg">
-                            <div class="cui-ecommerce--catalog--item">
-                                <div class="cui-ecommerce--catalog--item--img">
-                                    <div class="cui-ecommerce--catalog--item--like cui-ecommerce--catalog--item--like__selected">
-                                        <i class="icmn-heart3 cui-ecommerce--catalog--item--like--liked"><!-- --></i>
-                                        <i class="icmn-heart4 cui-ecommerce--catalog--item--like--unliked"><!-- --></i>
-                                    </div>
-                                    <a ref="#">
-                                        <img src="https://image.ibb.co/dQCENQ/pava.jpg" />
-                                    </a>
-                                </div>
-                                <div class="cui-ecommerce--catalog--item--title">
-                                   Producto
-                                </div>
-                                <div class="cui-ecommerce--catalog--item--descr">
-                                    Descripcion
-                                    <div class="cui-ecommerce--catalog--item--descr--sizes">
+                        <th:block th:each="itemSuggested : ${itemsSuggested}">
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                                <a th:href="@{'/items/' + ${itemSuggested.id}}">
+                                    <div class="cui-ecommerce--catalog--item">
+                                        <img class="cui-ecommerce--catalog--item--img" th:src="${itemSuggested.photo1}"/>
+                                        <div class="cui-ecommerce-catalog--item--infobox animated row hidden">
+                                            <div class="row col-lg-7 col-md-7 col-sm-7">
+                                                <div class="cui-ecommerce--catalog--item--title col-lg-12 col-md-12 col-sm-12">
+                                                    <p th:text="${itemSuggested.name}"></p>
+                                                </div>
+                                                <div class="cui-ecommerce--catalog--item--descr col-lg-12 col-md-12 col-sm-12">
+                                                    <P th:text="${itemSuggested.category.name}"></P>
+                                                </div>
+                                            </div>
+                                            <!--<div th:if="${!loggedIn}" class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;turequeyaicon col-lg-5 col-md-5 col-sm-5">-->
+                                                <!--<button class="btn margin-inline btn-warning ">Trueque ya <i class="fa fa-check-circle" aria-hidden="true"></i></button>-->
+                                            <!--</div>-->
+                                            <!--<div th:if="${loggedIn}" class="cui-ecommerce&#45;&#45;catalog&#45;&#45;item&#45;&#45;turequeyaicon col-lg-5 col-md-5 col-sm-5">-->
+                                                <!--<label class="label label-warning" th:text="${itemSug.getStatusValue()}"></label>-->
+                                            <!--</div>-->
 
-                                    </div>
 
-                                </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div>
-
-                        </div>
+                        </th:block>
                     </div>
                 </div>
-
+            </div>
         </section>
-
         <!-- End Ecommerce Product Details -->
 
     </div>
@@ -323,8 +324,10 @@
         });
         /*]]>*/
     </script>
+    <script th:src="@{/common/js/custom/itemsCatalog.js}" src="../static/common/js/custom/itemsCatalog.js"></script>
 
-<!-- End Page Scripts -->
+
+    <!-- End Page Scripts -->
 </section>
 
 </th:block>
