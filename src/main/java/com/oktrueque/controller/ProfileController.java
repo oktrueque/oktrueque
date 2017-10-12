@@ -308,21 +308,19 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "profile/trueques/ask")
     public ResponseEntity<UserTrueque> askTrueques(Principal principal) {
-
         User user = userService.getUserByUsername(principal.getName());
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         List<UserTrueque> userTruequesToPass = new LinkedList<>();
-        List<UserTrueque> userTruequesTo = new LinkedList<>();
-
         for (UserTrueque userTrueque : userTrueques) {
             if (truequeService.isTimeToAsk(userTrueque.getId().getTrueque())){
                 userTruequesToPass.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque
                         .getId().getTrueque().getId()));
             }
         }
-
+        if (userTruequesToPass.size()==0){
+            return new ResponseEntity(false, HttpStatus.OK);
+        }
         return new ResponseEntity(userTruequesToPass, HttpStatus.OK);
-
     }
 
 
