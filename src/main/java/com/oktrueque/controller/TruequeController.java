@@ -1,9 +1,12 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Item;
+import com.oktrueque.model.Tag;
 import com.oktrueque.model.User;
 import com.oktrueque.service.ItemService;
 import com.oktrueque.service.TruequeService;
+import com.oktrueque.service.UserService;
+import com.oktrueque.service.UserTagService;
 import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,17 +28,27 @@ public class TruequeController {
 
     private ItemService itemService;
     private TruequeService truequeService;
+    private UserService userService;
+    private UserTagService userTagService;
 
     @Autowired
-    public TruequeController(ItemService itemService, TruequeService truequeService){
+    public TruequeController(ItemService itemService, TruequeService truequeService, UserService userService, UserTagService userTagService){
         this.itemService = itemService;
         this.truequeService = truequeService;
+        this.userService = userService;
+        this.userTagService = userTagService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
     public String getUsersItems(@RequestParam(value = "username-user-offerer") String UserOfferer, @RequestParam(value = "username-user-demandant") String UserDemandant, Model model){
+        User user = userService.getUserByUsername(UserOfferer);
+        List<Tag> tags = userTagService.getTagByUserTags(user.getId());
         model.addAttribute("itemsUserOffer", itemService.getItemsByUserUsername(UserOfferer));
         model.addAttribute("itemsUserDemand", itemService.getItemsByUserUsername(UserDemandant));
+        model.addAttribute("offerer", userService.getUserByUsername(UserOfferer));
+        model.addAttribute("demandant", userService.getUserByUsername(UserDemandant));
+        model.addAttribute("hasTags", tags.size() != 0 ? true : false);
+        model.addAttribute("tags", tags);
         return "trueque";
     }
 

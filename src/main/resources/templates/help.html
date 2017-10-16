@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
+    <link rel="stylesheet" type="text/css" href="../../resources/static/common/css/source/custom/help.css"
+          th:href="@{/common/css/source/custom/help.css}"/>
     <div sec:authorize="isAuthenticated()">
         <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
     </div>
@@ -41,31 +43,36 @@
                                 <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/fnjPab/Recuperar_Contrasena.jpg" alt="Recuperar_Contrasena" border="0"/></div>
                                <div class="col-lg-12 no-padding margin-bottom-5 text-center">Te enviaremos un mail con instrucciones para recuperarla.</div> </li>
                             <li class="margin-bottom-5">Si nada de esto funciona, ingresa a la pagina principal de <img class="logo-inverse" height="17px" src="../../static/common/img/LogoSinSlogan.png" th:src="@{/common/img/LogoSinSlogan.png}" alt="OkTrueque"/> y al final de la misma encontraras un formulario para poder comunicarte con nosotros. Te responderemos a la brevedad para solucionar tu problema.</li>
+                            <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://preview.ibb.co/c6FGtw/Contactanos.jpg" alt="Contactanos" border="0"/></div>
                         </ul>
                     </div>
                     <div class="col-lg-12 margin-bottom-40">
                         <div class="col-lg-12 margin-bottom-15"><h4>¿Como publico un objeto de mi propiedad?</h4></div>
                         <ol>
-                            <li class="margin-bottom-5">Ingresa a tu perfil haciendo click en el extremo superior derecho de la pagina.</li>
+                            <li class="margin-bottom-5">Ingresa a tu perfil haciendo click en el extremo superior derecho de la pagina.
+                                <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block top-margin-10" src="https://image.ibb.co/i1azDw/Entrar_Al_Perfil.jpg" alt="Entrar_Al_Perfil" border="0"/></div>
+                            </li>
                             <li class="margin-bottom-5">Si es tu primera vez ingresando un item podras visualizar el siguiente mensaje “Parece que aún no tienes items. Click acá para agregar uno!”. Si ya publicaste objetos anteriormente, podras publicar más haciendo click en el boton con el signo + para agregar otros.</li>
+                            <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/n9krtw/Click_Aqui_Para_Agregar_Uno.jpg" alt="Click_Aqui_Para_Agregar_Uno" border="0"/></div>
                             <li class="margin-bottom-5">En la ventana emergente, deberás introducir los datos de tu objeto. Recuerda que cuanto mas precisa sea la descripción.</li>
+                            <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/fmEvLb/Crear_Item_Modal.jpg" alt="Crear_Item_Modal" border="0"/></div>
                         </ol>
                     </div>
                     <div class="col-lg-12 margin-bottom-40">
                         <div class="col-lg-12 margin-bottom-15"><h4>He cometido un error al ingresar mis datos personales ¿Como los corrijo?</h4></div>
+                        <div class="col-lg-12 margin-bottom-15">En el caso en que te hayas equivocado al ingresar tu e-mail, te sugerimos registrarte nuevamente.<br/><br/>
+                            Si por lo contrario te equivocaste en cualquiera de los otros datos:</div>
                         <ol>
-                            <li class="margin-bottom-5">Ingresa a tu perfil haciendo click en el extremo superior derecho de la pagina.</li>
-                            <li class="margin-bottom-5">Una vez en tu perfil encontraras cerca de tu informacion personal un boton para editar tu perfil.</li>
+                            <li class="margin-bottom-5">Ingresa a tu perfil haciendo click en el extremo superior derecho de la pagina. <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block top-margin-10" src="https://image.ibb.co/i1azDw/Entrar_Al_Perfil.jpg" alt="Entrar_Al_Perfil" border="0"/></div></li>
+                            <li class="margin-bottom-5">Una vez en tu perfil encontraras cerca de tu informacion personal un boton para editar tu perfil. <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block top-margin-10" src="https://image.ibb.co/iTU6RG/Editar_Perfil.jpg" alt="Editar_Perfil" border="0"/></div></li>
                             <li class="margin-bottom-5">Modifica los campos en los que te has equivocado y guarda los cambios.</li>
                         </ol>
                     </div>
                     <div class="col-lg-12 margin-bottom-40">
                         <div class="col-lg-12"><h4>Un usuario me está molestando y/o faltando el respeto ¿Como pido ayuda?</h4></div>
-                        <div class="col-lg-12 margin-bottom-15">En el caso en que te hayas equivocado al ingresar tu e-mail, te sugerimos registrarte nuevamente.<br/><br/>
-                            Si por lo contrario te equivocaste en cualquiera de los otros datos:</div>
                         <ol>
-                            <li class="margin-bottom-5">Deberás ingresar al perfil del usuario que quieres denunciar por mal comportamiento.</li>
-                            <li class="margin-bottom-5">Una vez en su perfil, debajo de su nombre, encontraras el botón para denunciarlo.</li>
+                            <li class="margin-bottom-5">Deberás ingresar al perfil del usuario que quieres denunciar por mal comportamiento.<div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block"  src="https://image.ibb.co/jaKsYw/Entrar_APerfil_De_Otro.jpg" alt="Entrar_APerfil_De_Otro" border="0"/></div></li>
+                            <li class="margin-bottom-5">Una vez en su perfil, debajo de su nombre, encontraras el botón para denunciarlo. <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block"  src="https://image.ibb.co/cKKC0b/Denunciar_Usuario.jpg" alt="Denunciar_Usuario" border="0"/></div></li>
                             <li class="margin-bottom-5">Completa el formulario emergente con la mayor cantidad de información posible. Por favor, debes ser serio a la hora de realizar denuncias, es nuestra principal herramienta para ayudarte a ti frente a cualquier inconveniente.</li>
                         </ol>
                     </div>
@@ -73,8 +80,17 @@
                         <div class="col-lg-12"><h4>Me interesa un objeto ¿Como inicio un trueque?</h4></div><br/>
                         <div class="col-lg-12 margin-bottom-15">Puedes iniciar un trueque de diferentes maneras:</div>
                         <ol>
-                            <li class="margin-bottom-5">Al hacer click en un item de tu interes, podras visualizar el boton trueque ya, el cual te permitira realizar una propuesta de trueque</li>
-                            <li class="margin-bottom-5">Tambien encontraras el boton de trueque ya al posicionar tu mouse sobre un item en la tabla de items de la pagina</li>
+                            <li class="margin-bottom-5">Al hacer click en un item de tu interes, podras visualizar el boton trueque ya, el cual te permitira realizar una propuesta de trueque <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block"  src="https://preview.ibb.co/eExzfb/Detalle_Item.jpg" alt="Detalle_Item" border="0"/></div><div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/fkm6tw/truequeya.jpg" alt="truequeya" border="0"/></div></li>
+                            <li class="margin-bottom-5">Tambien encontraras el boton de trueque ya al posicionar tu mouse sobre un item en la tabla de items de la pagina <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/gCzy6G/truequeyabarraitems.jpg" alt="truequeyabarraitems" border="0"/></div></li>
+                        </ol>
+                    </div>
+                    <div class="col-lg-12 margin-bottom-40">
+                        <div class="col-lg-12"><h4>Quiero eliminar un item que ya he subido</h4></div><br/>
+                        <div class="col-lg-12 margin-bottom-15">Deberias seguir los siguientes pasos:</div>
+                        <ol>
+                            <li class="margin-bottom-5">Ingresa a los detalles de tu item haciendo click en el nombre o foto del objeto a eliminar<div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block"  src="https://preview.ibb.co/dEzLLb/Item_Propio.jpg" alt="Item_Propio" border="0"/></div></li>
+                            <li class="margin-bottom-5">En el margen superior derecho encontraras un menu desplegable que cuenta con la opcion para eliminar el item <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/fhtx0b/menu_Item_Eliminar.jpg" alt="menu_Item_Eliminar" border="0"/></div></li>
+                            <li class="margin-bottom-5">Confirma para eliminar el item de manera permanente <div class="col-lg-12 no-padding margin-bottom-15"><img class="center-block" src="https://image.ibb.co/hfLufb/Confirmar_Eliminar_Item.jpg" alt="Confirmar_Eliminar_Item" border="0"/></div></li>
                         </ol>
                     </div>
                 </div>

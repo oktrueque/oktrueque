@@ -2345,14 +2345,6 @@ body.theme-blue .cwt__footer {
     font-size: 12px;
 }
 
-.panel-trueque-dashed{
-    border: 2px dashed #B30227;
-}
-
-.panel-trueque-complete{
-    border: 2px solid #B30227;
-}
-
 .no-padding{
     padding: 0px !important;
 }
