@@ -190,7 +190,7 @@ public class ProfileController {
         UserLite user = userService.getUserLiteByUsername(principal.getName());
         item.setUser(user);
         itemService.updateItem(item);
-        return "redirect:/profile/items";
+        return "redirect:/profile";
     }
 
 
