@@ -2,16 +2,12 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.Comment;
 import com.oktrueque.repository.CommentRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Fabrizio SPOSETTI on 03/07/2017.
- */
-
 
 public class CommentServiceImpl implements CommentService {
 
@@ -40,4 +36,8 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.findByUserTarget_Id(userTargetId);
     }
 
+    @Override
+    public Page<Comment> getCommentsByUserTargetId(Long userTargetId, Pageable pageable) {
+        return commentRepository.findByUserTarget_Id(userTargetId, pageable);
+    }
 }

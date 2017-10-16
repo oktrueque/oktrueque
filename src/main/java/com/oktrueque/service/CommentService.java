@@ -1,12 +1,11 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.Comment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-/**
- * Created by Facundo on 12/07/2017.
- */
 public interface CommentService {
 
     List<Comment> getComments();
@@ -14,5 +13,7 @@ public interface CommentService {
     Comment saveComment(Comment comment);
 
     List<Comment> getCommentsByUserTargetId(Long userTargetId);
+
+    Page<Comment> getCommentsByUserTargetId(Long userTargetId, Pageable pageable);
 
 }

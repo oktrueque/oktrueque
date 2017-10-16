@@ -197,7 +197,7 @@
                                         <div class="col-lg-12">
                                             <div class="margin-bottom-50 container">
                                                 <div th:if="${hasComments}">
-                                                    <div class="user-wall">
+                                                    <div id="comments-wall" class="user-wall">
                                                         <div class="user-wall-item clearfix" th:each="comment : ${comments}">
                                                             <div class="s1">
                                                                 <a class="avatar" th:href="@{'/users/' + ${comment.userOrigin.username}}" >
@@ -221,6 +221,9 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div th:if="${!comments.last}">
+                                                            <a id="comments-more" href="javascript: void(0);" th:attr="data-number=${comments.number}" class="btn btn-default width-full ladda-button" data-style="zoom-in">Ver Más</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -683,30 +686,16 @@
         /*]]>*/
     </script>
 
-    <!--<script th:inline="javascript">-->
-        <!--/*<![CDATA[*/-->
-
-        <!--var score = [[${user.score}]]/2;-->
-        <!--var hasScore = [[${hasScore}]];-->
-        <!--if(hasScore){-->
-            <!--var i;-->
-            <!--for(i = 0; i < score; i++){-->
-                <!--$('.stars').append('<i class="icmn-star-full"></i>');-->
-            <!--}-->
-            <!--for(i; i < 5; i++){-->
-                <!--$('.stars').append('<i class="icmn-star-empty"></i>');-->
-            <!--}-->
-        <!--}-->
-
-        <!--/*]]>*/-->
-    <!--</script>-->
-
     <script th:inline="javascript">
         /*<![CDATA[*/
+
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
         var score = [[${user.score}]]/2;
         var username = [[${user.username}]];
+        var page = [[${comments}]];
+        var userTarget;
+
         var i;
         for(i = 0; i < score; i++){
             $('.stars').append('<i class="icmn-star-full"></i>');
@@ -725,9 +714,88 @@
             return complaint;
         };
 
-    $(document).ready(function () {
+        displayComments = function(page){
+          let wall = $('#comments-wall');
+          let btnVerMas = $('#comments-more');
 
-        let userTarget;
+          //Borro los eventos para denuncias y Ver mas
+          btnVerMas.off('click');
+          $('.userTarget').off('click');
+          btnVerMas.remove();
+
+          //Muestro comentarios
+          page.content.forEach(function(comment){
+              let date = new Date(comment.date);
+              wall.append(
+                  '<div class="user-wall-item clearfix">' +
+                  '<div class="s1">' +
+                  '<a class="avatar" href="/users/'+ comment.userOrigin.username +'">' +
+                  '<img src="'+ comment.userOrigin.photo1 +'" />' +
+                  '</a>' +
+                  '</div>' +
+                  '<div class="s2">' +
+                  '<div class="user-wall-item-head">' +
+                  '<div class="pull-right">' +
+                  '<a class="userTarget" data-username="'+ comment.userOrigin.username +'"><i class="icmn-compass"></i></a>' +
+                  '</div>' +
+                  '<strong>'+ comment.userOrigin.name +'</strong>' +
+                  '<small>'+ (date.getMonth()+1) + '-' + date.getDate() + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + '</small>' +
+                  '</div>' +
+                  '<div class="user-wall-post">' +
+                  '<p>'+ comment.description +'</p>' +
+                  '</div>' +
+                  '<div class="user-wall-controls">' +
+                  '<div id="stars-' + comment.id + '" class="cui-ecommerce--product--rating">' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>'
+              );
+              let stars = comment.score/2;
+              for (i = 0; i < stars; i++) {
+                  $('#stars-' + comment.id + '').append(
+                      '<i class="icmn-star-full"></i>'
+                  );
+              }
+          });
+
+            //Seteo los evento para denuncias y Ver mas si corresponde
+            $('.userTarget').on('click', function () {
+                userTarget = $(this).data('username');
+                $('#modal-complaint').modal('show');
+            });
+            if(!page.last){
+                wall.append(btnVerMas);
+                $('#comments-more').on('click', function(){
+                    var l = Ladda.create(this);
+                    l.start();
+                    let number = $(this).data('number');
+                    getComments(number);
+                });
+            }
+        };
+
+        getComments = function(number){
+            $.ajax({
+                type: 'GET',
+                url: 'profile/comments/paginated',
+                data: {
+                    "page": number +1,
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    displayComments(data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        };
+
+    $(document).ready(function () {
 
         $('.userTarget').on('click', function () {
             userTarget = $(this).data('username');
@@ -757,6 +825,13 @@
                     }
                 });
             }
+        });
+
+        $('#comments-more').on('click', function(){
+            var l = Ladda.create(this);
+            l.start();
+            let number = $(this).data('number');
+            getComments(number);
         });
 
     });

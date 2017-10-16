@@ -5,6 +5,7 @@ import com.oktrueque.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,6 @@ public class ProfileController {
     @Value("${aws.s3.fileName.items}")
     private String fileNameItems;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private ComplaintService complaintService;
     private ComplaintTypeService complaintTypeService;
 
     @Autowired
@@ -51,21 +51,20 @@ public class ProfileController {
         this.truequeService = truequeService;
         this.awsS3Service = awsS3Service;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.complaintService = complaintService;
         this.complaintTypeService = complaintTypeService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
-    public String getProfile(Principal principal, Model model, @PageableDefault(value = 5) Pageable pageable) {
+    public String getProfile(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
-        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3}, pageable);
+        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3}, new PageRequest(0,5));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque userTrueque : userTrueques) {
             trueques.add(userTrueque.getId().getTrueque());
         }
-        List<Comment> comments = commentService.getCommentsByUserTargetId(user.getId());
+        Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
         model.addAttribute("user", user);
@@ -79,7 +78,7 @@ public class ProfileController {
         model.addAttribute("categories", categoryService.getCategories());
         model.addAttribute("trueques", trueques);
         model.addAttribute("comments", comments);
-        model.addAttribute("hasComments", comments.size() != 0 ? true : false);
+        model.addAttribute("hasComments", comments.getTotalElements() != 0 ? true : false);
         model.addAttribute("complaintTypes", complaintTypes);
 
         return "profile";
