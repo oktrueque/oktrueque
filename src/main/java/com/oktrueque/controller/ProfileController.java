@@ -61,11 +61,9 @@ public class ProfileController {
         Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3}, pageable);
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
-        Trueque truequeNuevo;
         LinkedList<Trueque> trueques = new LinkedList<>();
-        for (UserTrueque trueque : userTrueques) {
-            truequeNuevo = truequeService.findTruequeByIdAndStatusIsNotIn(trueque.getId().getTrueque().getId(), new int[]{2, 4});
-            if (truequeNuevo != null) trueques.add(truequeNuevo);
+        for (UserTrueque userTrueque : userTrueques) {
+            trueques.add(userTrueque.getId().getTrueque());
         }
         List<Comment> comments = commentService.getCommentsByUserTargetId(user.getId());
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();

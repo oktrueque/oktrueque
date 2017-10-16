@@ -195,7 +195,7 @@
                                 <div class="tab-pane active"  role="tabpanel">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="margin-bottom-50">
+                                            <div class="margin-bottom-50 container">
                                                 <div th:if="${hasComments}">
                                                     <div class="user-wall">
                                                         <div class="user-wall-item clearfix" th:each="comment : ${comments}">
@@ -207,7 +207,7 @@
                                                             <div class="s2">
                                                                 <div class="user-wall-item-head">
                                                                     <div class="pull-right">
-                                                                        <a th:attr="data-userorigindata=${comment.userOrigin.username}" data-toggle="modal" data-target="#modal-complaint" class="userOriginUsername"><i class="icmn-compass"></i></a>
+                                                                        <a th:attr="data-username=${comment.userOrigin.username}" class="userTarget"><i class="icmn-compass"></i></a>
                                                                     </div>
                                                                     <strong th:text="${comment.userOrigin.name}">Name</strong>
                                                                     <small th:text="${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}"></small>
@@ -217,7 +217,7 @@
                                                                 </div>
                                                                 <div class="user-wall-controls">
                                                                     <div class="cui-ecommerce--product--rating">
-                                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score)}"></i>
+                                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score/2)}"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -335,7 +335,6 @@
             </div>
         </div>
     </div>
-
     <!--END MODAL SET IMAGES-->
 
     <!--MESSAGES MODAL-->
@@ -358,11 +357,9 @@
             </div>
         </div>
     </div>
-
     <!--END MESSAGES MODAL-->
 
     <!--MODAL SET COMMENTS-->
-
     <div class="modal fade"  id="modalCreateComment" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -391,11 +388,9 @@
             </div>
         </div>
     </div>
-
     <!--END MODAL SET COMMENT-->
 
     <!--MODAL TRUEQUE QUESTION-->
-
     <div class="modal fade"  id="modalCreateQuestion" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -423,7 +418,50 @@
             </div>
         </div>
     </div>
+    <!--END MODAL QUESTION-->
 
+    <!-- MODAL COMPLAINT -->
+    <div class="modal fade"  id="modal-complaint" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <form id="frm-complaint">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <h4 class="modal-title">Denunciar</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label for="complaint-type">Tipo de Denuncia</label>
+                                    <select id="complaint-type" class="form-control input-field" data-error=".errorTxt1">
+                                        <option value="-1"> Seleccione tipo de denuncia</option>
+                                        <option th:each="complaintType : ${complaintTypes}"
+                                                th:value="${complaintType.id}" th:text="${complaintType.name}">                                                                </option>
+                                    </select>
+                                    <div class="errorTxt1"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label class="control-label">Motivo</label>
+                                    <textarea id="description" class="form-control input-field" placeholder="Mensaje *" data-error=".errorTxt2"></textarea>
+                                    <div class="errorTxt2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                        <button id="btn-complaint" type="button" class="btn btn-primary">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- END MODAL COMPLAINT -->
 
 
 <!-- Page Scripts -->
@@ -458,24 +496,7 @@
                 }
             });
 
-        });
 
-        makeQuestion = function(usersTrueque){
-            var ul = $("#trueques-pending");
-            ul.html("");
-            $("#commentDescription").val("");
-            $('#modalCreateQuestion').modal('show');
-            usersTrueque.forEach(function(userT){
-                if (userId != userT.id.user.id){
-                    let userTNode = document.createElement("LI");
-                    userTNode.appendChild(document.createTextNode(userT.id.user.name));
-                    ul.append(userTNode);
-                }
-            });
-
-        };
-
-        $(document).ready(function(){
             $('#verTruequesBtn').on('click', function () {
 
                 document.getElementById('posts').setAttribute('class','tab-pane');
@@ -549,53 +570,64 @@
                     .columns.adjust()
                     .responsive.recalc();
             });
-        });
 
-            $(document).ready(function(){
-                $('.confirm').on('click', function(){
-                    var truequeId = $(this).data('id');
 
-                    swal({
-                        title: "¿El trueque se ha realizado con exito?",
-                        text: "¿Se ha llevado a cabo el intercambio de objetos con exito?",
-                        buttons: true,
+            $('.confirm').on('click', function(){
+                var truequeId = $(this).data('id');
 
-                    })
-                        .then((willDelete) => {
-                            if (willDelete) {
-                                $(this).parent().parent().remove();
+                swal({
+                    title: "¿El trueque se ha realizado con exito?",
+                    text: "¿Se ha llevado a cabo el intercambio de objetos con exito?",
+                    buttons: true,
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: 'profile/trueques/' + truequeId + '/confirm/',
-                                    contentType: 'application/json',
-                                    beforeSend: function (xhr) {
-                                        xhr.setRequestHeader(header, token);
-                                    },
-                                    success: function (data) {
-                                        if(data){
-                                            users = data;
-                                            x=0;
-                                            makeComment(data[x]);
-                                        }else{
-                                            swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
-                                        }
-                                    },
-                                    error: function (e) {
-                                        console.log(e);
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $(this).parent().parent().remove();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'profile/trueques/' + truequeId + '/confirm/',
+                                contentType: 'application/json',
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader(header, token);
+                                },
+                                success: function (data) {
+                                    if(data){
+                                        users = data;
+                                        x=0;
+                                        makeComment(data[x]);
+                                    }else{
+                                        swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
                                     }
-                                });
-                            }
-                        });
-                     });
-                });
-
-
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    });
+            });
 
             $('#sendComment').on('click', function(){
                 sendComment();
             });
+        });
 
+        makeQuestion = function(usersTrueque){
+            var ul = $("#trueques-pending");
+            ul.html("");
+            $("#commentDescription").val("");
+            $('#modalCreateQuestion').modal('show');
+            usersTrueque.forEach(function(userT){
+                if (userId != userT.id.user.id){
+                    let userTNode = document.createElement("LI");
+                    userTNode.appendChild(document.createTextNode(userT.id.user.name));
+                    ul.append(userTNode);
+                }
+            });
+
+        };
 
         makeComment = function(user){
             $("#commentDescription").val("");
@@ -615,7 +647,6 @@
             console.log(comment);
             return JSON.stringify(comment);
         }
-
 
         sendComment = function () {
             $.ajax({
@@ -696,10 +727,11 @@
 
     $(document).ready(function () {
 
-        let userorigindata;
+        let userTarget;
 
-        $('.userOriginUsername').on('click', function () {
-            userorigindata = $(this).data('userorigindata');
+        $('.userTarget').on('click', function () {
+            userTarget = $(this).data('username');
+            $('#modal-complaint').modal('show');
         });
 
         $('#btn-complaint').on('click', function () {
@@ -709,7 +741,7 @@
                 let complaint = getComplaint();
                 $.ajax({
                     type: "POST",
-                    url: "/users/complaints/" + userorigindata,
+                    url: "/users/complaints/" + userTarget,
                     contentType : "application/json",
                     data: JSON.stringify(complaint),
                     beforeSend: function (xhr) {
