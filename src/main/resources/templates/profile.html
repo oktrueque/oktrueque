@@ -379,6 +379,16 @@
                                         <label for="commentDescription" class="form-control-label">Comentario</label>
                                         <textarea id="commentDescription" class="form-control" rows="4"></textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="scoreComboBox" class="form-control-label">¿Como calificarías al usuario?</label>
+                                        <select class="form-control" id="scoreComboBox" name="score">
+                                            <option value="2">Malo</option>
+                                            <option value="4">Regular</option>
+                                            <option value="6">Bueno</option>
+                                            <option value="8">Muy bueno</option>
+                                            <option value="10">Excelente</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -564,11 +574,15 @@
         function getNewComment(){
             let commentDescription = $("#commentDescription").val();
             let idUser = $("#idUser").val();
+            let comboBox = $('#scoreComboBox');
+            let value = comboBox.options[comboBox.selectedIndex].text;
             var comment = {
                 description: commentDescription,
                 userTarget: {id: idUser},
+                score: value
             };
-            console.log(comment);
+            console.log(JSON.stringify(comment));
+            console.log(comboBox.options[comboBox.selectedIndex].text);
             return JSON.stringify(comment);
         }
 
