@@ -1,7 +1,6 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -13,7 +12,7 @@ public class Conversation {
     @Column(name = "id")
     private Long id;
     @Column(name = "date")
-    private LocalDateTime date;
+    private Date date;
     @Column(name = "id_trueque")
     private Long idTrueque;
     @Column(name = "last_message_text")
@@ -28,9 +27,15 @@ public class Conversation {
         this.id = id;
     }
 
-    public Conversation(LocalDateTime date, Long idTrueque) {
+    public Conversation(Date date, Long idTrueque) {
         this.date = date;
         this.idTrueque = idTrueque;
+    }
+
+    public Conversation(Date date, Long idTrueque, String lastMessage) {
+        this.date = date;
+        this.idTrueque = idTrueque;
+        this.lastMessage = lastMessage;
     }
 
     public Long getId() {
@@ -41,11 +46,11 @@ public class Conversation {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

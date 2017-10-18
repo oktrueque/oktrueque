@@ -85,7 +85,7 @@ public class ServiceConfig {
 
     @Bean
     public TruequeService truequeService(){
-        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository,this.emailService(),userRepository);
+        return new TruequeServiceImpl(truequeRepository,itemTruequeRepository,userTruequeRepository,this.emailService(),userRepository, this.conversationService());
     }
 
     @Bean
@@ -121,6 +121,6 @@ public class ServiceConfig {
 
     @Bean
     public ConversationService conversationService(){
-        return new ConversationServiceImpl(userConversationRepository);
+        return new ConversationServiceImpl(conversationRepository, userConversationRepository);
     }
 }

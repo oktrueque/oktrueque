@@ -233,7 +233,7 @@ public class ProfileController {
         List<UserLite> users = new ArrayList<>();
         for (UserTrueque ut : userTrueques) {
             if (ut.getId().getUser().getId() != user.getId()) {
-                users.add(userService.getUserLiteById(ut.getId().getUser().getId()));
+                users.add(ut.getId().getUser());
             }
         }
         // ACTIVO A CONFIRMADO

@@ -1,7 +1,6 @@
 package com.oktrueque.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "user_conversation")
@@ -11,7 +10,7 @@ public class UserConversation implements Comparable {
     private UserConversationId id;
     @ManyToOne
     @JoinColumn(name = "id_send_to")
-    private User sendTo;
+    private UserLite sendTo;
     @Column(name = "is_group")
     private Boolean group;
     @Column(name = "unread")
@@ -20,9 +19,15 @@ public class UserConversation implements Comparable {
     public UserConversation() {
     }
 
-    public UserConversation(UserConversationId id, Date date, User sendTo) {
+    public UserConversation(UserConversationId id, UserLite sendTo) {
         this.id = id;
         this.sendTo = sendTo;
+    }
+
+    public UserConversation(UserConversationId id, Boolean group) {
+        this.id = id;
+        this.group = group;
+        this.unread = 0;
     }
 
     public UserConversationId getId() {
@@ -33,11 +38,11 @@ public class UserConversation implements Comparable {
         this.id = id;
     }
 
-    public User getSendTo() {
+    public UserLite getSendTo() {
         return sendTo;
     }
 
-    public void setSendTo(User sendTo) {
+    public void setSendTo(UserLite sendTo) {
         this.sendTo = sendTo;
     }
 

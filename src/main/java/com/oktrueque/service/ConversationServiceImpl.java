@@ -1,23 +1,22 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.User;
-import com.oktrueque.model.UserConversation;
+import com.oktrueque.model.*;
+import com.oktrueque.repository.ConversationRepository;
 import com.oktrueque.repository.UserConversationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConversationServiceImpl implements ConversationService {
 
+    private final ConversationRepository conversationRepository;
     private final UserConversationRepository userConversationRepository;
 
     @Autowired
-    public ConversationServiceImpl(UserConversationRepository userConversationRepository) {
+    public ConversationServiceImpl(ConversationRepository conversationRepository, UserConversationRepository userConversationRepository) {
+        this.conversationRepository = conversationRepository;
         this.userConversationRepository = userConversationRepository;
     }
 
@@ -45,5 +44,23 @@ public class ConversationServiceImpl implements ConversationService {
         map.put("unread", count);
         map.put("groups", groups);
         return map;
+    }
+
+    @Override
+    @Transactional
+    public void createConversation(Trueque trueque, List<UserTrueque> userTrueques) {
+        Conversation conversation = conversationRepository.save(new Conversation(new Date(), trueque.getId(), "Comienza una nueva conversación"));
+        Boolean isGroup = userTrueques.size()>2;
+        List<UserConversation> userConversations = new ArrayList<>();
+        for (int i = 0; i < userTrueques.size(); i++) {
+            UserTrueque ut = userTrueques.get(i);
+            UserConversation userConversation = new UserConversation(new UserConversationId(conversation, ut.getId().getUser()), isGroup);
+            if(!isGroup){
+                if(i == 0) userConversation.setSendTo(userTrueques.get(1).getId().getUser());
+                if(i == 1) userConversation.setSendTo(userTrueques.get(0).getId().getUser());
+            }
+            userConversations.add(userConversation);
+        }
+        userConversationRepository.save(userConversations);
     }
 }

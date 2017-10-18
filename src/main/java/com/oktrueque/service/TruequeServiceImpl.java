@@ -9,10 +9,7 @@ import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class TruequeServiceImpl implements TruequeService {
 
@@ -25,14 +22,16 @@ public class TruequeServiceImpl implements TruequeService {
     private final UserTruequeRepository userTruequeRepository;
     private final UserRepository userRepository;
     private final EmailService emailService;
+    private final ConversationService conversationService;
 
     public TruequeServiceImpl(TruequeRepository truequeRepository, ItemTruequeRepository itemTruequeRepository,
-                              UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository) {
+                              UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository, ConversationService conversationService) {
         this.truequeRepository = truequeRepository;
         this.itemTruequeRepository = itemTruequeRepository;
         this.userTruequeRepository = userTruequeRepository;
         this.emailService = emailService;
         this.userRepository = userRepository;
+        this.conversationService = conversationService;
     }
 
     @Override
@@ -49,19 +48,34 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public List<User> confirmTruequeAndGetUsersBelongingTo(Long id) {
+    public void confirmTruequeAndGetUsersBelongingTo(Long id, String username) {
         Trueque truequeSaved = truequeRepository.findOne(id);
-        truequeSaved.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
-        truequeSaved.setAcceptanceDate(new Date());
-        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(id);
-        List<User> users = new ArrayList<>();
-        userTrueques.forEach(t ->{
-            users.add(userRepository.findOne(t.getId().getUser().getId()));
-            if(!t.getStatus().equals(Constants.TRUEQUE_STATUS_ACTIVE)){
-                t.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
+        if(!this.updateUserTruequeStatus(truequeSaved, username, Constants.TRUEQUE_STATUS_ACTIVE)){
+            truequeSaved.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
+            truequeSaved.setAcceptanceDate(new Date());
+            truequeRepository.save(truequeSaved);
+            this.createChat(truequeSaved);
+        }
+    }
+
+    private Boolean updateUserTruequeStatus(Trueque trueque, String username, Integer status){
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
+        Boolean usersLeft = false;
+        for(UserTrueque ut : userTrueques){
+            if(ut.getId().getUser().getUsername().equals(username)){
+                ut.setStatus(status);
+                userTruequeRepository.save(ut);
             }
-        });
-        return users;
+            if(ut.getStatus() < status){
+                usersLeft = true;
+            }
+        }
+        return usersLeft;
+    }
+
+    private void createChat(Trueque trueque){
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
+        conversationService.createConversation(trueque, userTrueques);
     }
 
     @Override
@@ -102,7 +116,7 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("apellidoDestino", userDestino.getLast_name());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
-        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/accept");
+        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/user/"+ userDestino.getUsername() +"/accept");
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 
