@@ -27,6 +27,8 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
     Page<Item> findByStatusAndUserUsername(Integer status, String username, Pageable pageable);
 
+    List<Item> findByStatusAndUserUsername(Integer status, String username);
+
     Page<Item> findByStatus(int status, Pageable pageable);
 
     List<Item> findByUserIdAndStatus(Long id, Integer status);

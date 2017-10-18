@@ -90,6 +90,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public List<Item> getItemsByUserUsernameAndStatus(String username, Integer status) {
+        return itemRepository.findByStatusAndUserUsername(status, username);
+    }
+
+    @Override
     public List<Item> getItemsByUserUsernameAndStatus(String username, Integer status, Pageable pageable) {
         return itemRepository.findByStatusAndUserUsername(status, username, pageable).getContent();
     }

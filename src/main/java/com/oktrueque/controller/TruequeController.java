@@ -43,9 +43,9 @@ public class TruequeController {
     public String getUsersItems(@RequestParam(value = "username-user-offerer") String UserOfferer, @RequestParam(value = "username-user-demandant") String UserDemandant, Model model){
         User user = userService.getUserByUsername(UserOfferer);
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
-        model.addAttribute("itemsUserOffer", itemService.getItemsByUserUsername(UserOfferer));
-        model.addAttribute("itemsUserDemand", itemService.getItemsByUserUsername(UserDemandant));
-        model.addAttribute("offerer", userService.getUserByUsername(UserOfferer));
+        model.addAttribute("itemsUserOffer", itemService.getItemsByUserUsernameAndStatus(UserOfferer, Constants.ITEM_STATUS_ACTIVE));
+        model.addAttribute("itemsUserDemand", itemService.getItemsByUserUsernameAndStatus(UserDemandant, Constants.ITEM_STATUS_ACTIVE));
+        model.addAttribute("offerer", user);
         model.addAttribute("demandant", userService.getUserByUsername(UserDemandant));
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);

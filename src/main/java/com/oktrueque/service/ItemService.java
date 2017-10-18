@@ -30,6 +30,8 @@ public interface ItemService {
 
     List<Item> getItemsByUserUsername(String username);
 
+    List<Item> getItemsByUserUsernameAndStatus(String username, Integer status);
+
     List<Item> getItemsByUserUsernameAndStatus(String username, Integer status, Pageable pageable);
 
     void updateItem(Item item);
