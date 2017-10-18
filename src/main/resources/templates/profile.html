@@ -382,6 +382,7 @@
                                     <div class="form-group">
                                         <label for="scoreComboBox" class="form-control-label">¿Como calificarías al usuario?</label>
                                         <select class="form-control" id="scoreComboBox" name="score">
+                                            <option value="-1">Seleccionar</option>
                                             <option value="2">Malo</option>
                                             <option value="4">Regular</option>
                                             <option value="6">Bueno</option>
@@ -564,25 +565,25 @@
 
             });
 
-            $('#tbl-items').DataTable({
-                responsive: true,
-                searching: false,
-                lengthChange: false,
-                info: false,
-                paging: false
-            });
-            $('#tbl-trueques').DataTable({
-                responsive: true,
-                searching: false,
-                lengthChange: false,
-                info: false,
-                paging: false
-            });
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                $($.fn.dataTable.tables(true)).DataTable()
-                    .columns.adjust()
-                    .responsive.recalc();
-            });
+//            $('#tbl-items').DataTable({
+//                responsive: true,
+//                searching: false,
+//                lengthChange: false,
+//                info: false,
+//                paging: false
+//            });
+//            $('#tbl-trueques').DataTable({
+//                responsive: true,
+//                searching: false,
+//                lengthChange: false,
+//                info: false,
+//                paging: false
+//            });
+//            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+//                $($.fn.dataTable.tables(true)).DataTable()
+//                    .columns.adjust()
+//                    .responsive.recalc();
+//            });
 
 
             $('.confirm').on('click', function(){
@@ -623,7 +624,10 @@
             });
 
             $('#sendComment').on('click', function(){
-                sendComment();
+                if(isValidated('commentModal')){
+                    sendComment();
+                }
+
             });
         });
 
@@ -660,8 +664,6 @@
                 userTarget: {id: idUser},
                 score: scoreValue
             };
-            console.log(JSON.stringify(comment));
-            console.log(comboBox.options[comboBox.selectedIndex].text);
             return JSON.stringify(comment);
         }
 

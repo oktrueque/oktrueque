@@ -334,6 +334,29 @@ function hasCharacters(val) {
 
     }
 
+    if(formName==='commentModal'){
+
+      let scoreComboBox = document.getElementById('scoreComboBox').value;
+      let commentDescripcion = $('#commentDescription');
+
+      if(isEmpty(commentDescripcion.val())){
+          message = 'Debes describir el comentario!';
+          messageSpan.textContent  = message;
+          messageModal.modal('show');
+          $("#commentDescription").focus();
+          return false;
+      } else if(scoreComboBox==='-1'){
+          message = 'Debes seleccionar una calificacion!';
+          messageSpan.textContent  = message;
+          messageModal.modal('show');
+          $("#scoreComboBox").focus();
+          return false;
+      }
+
+      return true;
+
+    }
+
 
 
 }

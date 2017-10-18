@@ -45,7 +45,8 @@ public class CommentServiceImpl implements CommentService {
             suma += comentario.getScore();
             cont++;
         }
-        User user = userRepository.findByEmailOrUsername("",comment.getUserTarget().getUsername());
+
+        User user = userRepository.findUserById(comment.getUserTarget().getId());
         Integer prom = suma/cont;
         user.setScore(prom); //Esto da nullPointerException
         userRepository.save(user);
