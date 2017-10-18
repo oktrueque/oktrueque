@@ -5,9 +5,8 @@
 }
 
 .item{
-    position: relative;
-    margin-left: 50%;
-    margin-top: 40%;
-    -webkit-transform: translateY(-50%) translateX(-50%);
+    max-width: 100%;
+    max-height: inherit;
+    min-width: 100%;
 }
 
