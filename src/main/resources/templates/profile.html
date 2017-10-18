@@ -653,12 +653,12 @@
         function getNewComment(){
             let commentDescription = $("#commentDescription").val();
             let idUser = $("#idUser").val();
-            let comboBox = $('#scoreComboBox');
-            let value = comboBox.options[comboBox.selectedIndex].text;
+            let comboBox = document.getElementById('scoreComboBox');
+            let scoreValue = comboBox.selectedIndex;
             var comment = {
                 description: commentDescription,
                 userTarget: {id: idUser},
-                score: value
+                score: scoreValue
             };
             console.log(JSON.stringify(comment));
             console.log(comboBox.options[comboBox.selectedIndex].text);
@@ -678,6 +678,7 @@
                 success: function (data) {
                     swal("Comentario Enviado", "Nuestro equipo se encargará de aquí en adelante", "success");
                     checkMoreComments();
+
                 },
                 error: function (e) {
                     console.log(e);
