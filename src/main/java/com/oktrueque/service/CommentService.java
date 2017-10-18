@@ -15,4 +15,6 @@ public interface CommentService {
 
     List<Comment> getCommentsByUserTargetId(Long userTargetId);
 
+    void updateUserScore(Comment comment);
+
 }
