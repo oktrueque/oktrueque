@@ -15,7 +15,7 @@
        <!-- Ecommerce Product Details -->
         <div th:if="${hasTags}" class="col-lg-12 margin-bottom-10 tip-panel">
         <section class="panel panel-with-borders">
-        <div class="col-lg-12 panel-heading" ><span class="tip">Tip!</span> Recuerda que a facundo le interesan: <span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></div>
+        <div class="col-lg-12 panel-heading" ><span class="tip">Tip!</span> Recuerda que a facundo le interesa: <span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></div>
         </section>
         </div>
 <div class="col-md-6" id="izquierda-panel">
@@ -36,7 +36,7 @@
                                         <span class="col-lg-12 card-title " th:text="${item.name}"></span>
                                         <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
                                         <div class="col-lg-6 checkbox checkbox-info">
-                                            <input th:id="'item-demand-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
+                                            <input th:id="'item-offer-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
                                             <label th:for="'item-offer-' + ${item.id}">
                                                 Seleccionar
                                             </label>
@@ -75,7 +75,7 @@
                                             <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
                                             <div class="col-lg-6 checkbox checkbox-info">
                                                 <input th:id="'item-demand-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
-                                                <label th:for="'item-offer-' + ${item.id}">
+                                                <label th:for="'item-demand-' + ${item.id}">
                                                     Seleccionar
                                                 </label>
                                             </div>
