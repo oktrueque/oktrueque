@@ -55,7 +55,9 @@ $(document).ready(function () {
            type : "get",
            url : "/profile/conversations/" + conversationId + "/messages",
            success : function(messages) {
-               display(messages);
+               if(messages){
+                   display(messages);
+               }
                clearUnreadMessages(conversationId);
            },
            error : function(e) {
