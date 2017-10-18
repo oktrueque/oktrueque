@@ -166,22 +166,23 @@
                                                         <td th:text="${#dates.format(trueque.proposalDate, 'dd-MM-yyyy')}"></td>
                                                         <td th:text="${trueque.peopleCount}"></td>
                                                         <td><span class="label label-info" th:text="${trueque.status}"></span></td>
-                                                        <td th:if="${trueque.isPendiente()}" >
-                                                            <a th:href="@{'/trueques/'+${trueque.id}+'/accept'}" class="btn btn-xs btn-success">
-                                                                <i class="fa fa-check" aria-hidden="true"></i> Aceptar
-                                                            </a>
-                                                            <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
-                                                                <i class="fa fa-bars" aria-hidden="true"></i> Detalle
-                                                            </a>
-                                                            <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Rechazar</button>
-
-                                                        </td>
-                                                        <td th:if="${trueque.isActivo()}">
-                                                            <button type="button" class="btn btn-xs btn-success confirm" th:attr="data-id=${trueque.id}">Confirmar</button>
-                                                            <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Cancelar</button>
-                                                            <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
-                                                                <i class="fa fa-bars" aria-hidden="true"></i> Detalle
-                                                            </a>
+                                                        <td >
+                                                            <div th:if="${trueque.isPendiente()}">
+                                                                <a th:href="@{'/trueques/'+${trueque.id}+'/accept'}" class="btn btn-xs btn-success">
+                                                                    <i class="fa fa-check" aria-hidden="true"></i> Aceptar
+                                                                </a>
+                                                                <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
+                                                                    <i class="fa fa-bars" aria-hidden="true"></i> Detalle
+                                                                </a>
+                                                                <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Rechazar</button>
+                                                            </div>
+                                                            <div th:if="${trueque.isActivo()}">
+                                                                <button type="button" class="btn btn-xs btn-success confirm" th:attr="data-id=${trueque.id}">Confirmar</button>
+                                                                <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Cancelar</button>
+                                                                <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
+                                                                    <i class="fa fa-bars" aria-hidden="true"></i> Detalle
+                                                                </a>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     </tbody>
@@ -378,6 +379,17 @@
                                     <div class="form-group">
                                         <label for="commentDescription" class="form-control-label">Comentario</label>
                                         <textarea id="commentDescription" class="form-control" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scoreComboBox" class="form-control-label">¿Como calificarías al usuario?</label>
+                                        <select class="form-control" id="scoreComboBox" name="score">
+                                            <option value="-1">Seleccionar</option>
+                                            <option value="2">Malo</option>
+                                            <option value="4">Regular</option>
+                                            <option value="6">Bueno</option>
+                                            <option value="8">Muy bueno</option>
+                                            <option value="10">Excelente</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -613,7 +625,10 @@
             });
 
             $('#sendComment').on('click', function(){
-                sendComment();
+                if(isValidated('commentModal')){
+                    sendComment();
+                }
+
             });
         });
 
@@ -643,11 +658,13 @@
         function getNewComment(){
             let commentDescription = $("#commentDescription").val();
             let idUser = $("#idUser").val();
+            let comboBox = document.getElementById('scoreComboBox');
+            let scoreValue = comboBox.selectedIndex;
             var comment = {
                 description: commentDescription,
                 userTarget: {id: idUser},
+                score: scoreValue
             };
-            console.log(comment);
             return JSON.stringify(comment);
         }
 
@@ -664,6 +681,7 @@
                 success: function (data) {
                     swal("Comentario Enviado", "Nuestro equipo se encargará de aquí en adelante", "success");
                     checkMoreComments();
+
                 },
                 error: function (e) {
                     console.log(e);

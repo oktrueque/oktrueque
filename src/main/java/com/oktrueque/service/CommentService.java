@@ -16,4 +16,7 @@ public interface CommentService {
 
     Page<Comment> getCommentsByUserTargetId(Long userTargetId, Pageable pageable);
 
+    void updateUserScore(Comment comment);
+
+
 }

@@ -70,7 +70,7 @@ public class ServiceConfig {
 
     @Bean
     public CommentService commentService(){
-        return new CommentServiceImpl(commentRepository);
+        return new CommentServiceImpl(commentRepository, userRepository);
     }
 
     @Bean
