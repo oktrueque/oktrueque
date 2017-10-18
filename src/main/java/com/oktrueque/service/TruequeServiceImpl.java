@@ -40,6 +40,7 @@ public class TruequeServiceImpl implements TruequeService {
     public void saveTrueque(Map<Integer, List<Item>> participants) {
         Trueque truequeToSave = new Trueque(0);
         truequeToSave.setPeopleCount(participants.size());
+        truequeToSave.setProposalDate(new Date());
         Trueque truequeSaved = truequeRepository.save(truequeToSave);
         saveItemsAndUsers(participants, truequeSaved);
         sendMailTo(participants.get(1).get(0).getUser(),participants.get(2).get(0).getUser(),
