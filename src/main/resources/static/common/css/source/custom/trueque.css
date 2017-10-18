@@ -1,0 +1,47 @@
+.card{
+    height: 150px !important;
+    margin-bottom: 15px !important;
+    box-shadow: grey;
+}
+
+.card-title{
+    font-size: 16px;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-top: 0px solid #dfe4ed;
+    padding-top: 10px;
+    padding-left: 0px !important;
+}
+
+.ver-mas-label > a, .ver-mas-label > a > i{
+    color: #2fb0a0;
+}
+
+
+.derecha-panel{
+    border-left: 4px solid rgba(135, 135, 135, 0.4);
+}
+
+.tip{
+    font-weight: bolder;
+    font-size: 16px;
+    color: #56df4c;
+}
+
+.card-descr{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 62px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.card-photo{
+    max-height: 100%;
+}
+
+.cui-ecommerce--catalog--item--title > span{
+    margin-left: 10px;
+}

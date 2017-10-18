@@ -82,19 +82,19 @@
                     <div class="nav-tabs-horizontal">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#posts" role="tab">
+                                <a class="nav-link active" id="link-item" href="javascript: void(0);" data-toggle="tab" data-target="#posts" role="tab">
                                     <i class="icmn-menu3"></i>
                                     Items
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#messaging" role="tab">
+                                <a class="nav-link" id="link-trueque" href="javascript: void(0);" data-toggle="tab" data-target="#messaging" role="tab">
                                     <i class="icmn-image-compare"></i>
                                     Trueques
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"  data-toggle="tab" data-target="#comments" role="tab">
+                                <a class="nav-link" id="link-comment" data-toggle="tab" data-target="#comments" role="tab">
                                     <i class="icmn-info"></i>
                                     Comentarios
                                 </a>
@@ -147,8 +147,8 @@
                                     Click acá para agregar uno!
                                 </a>
                             </div>
-                            <div class="tab-pane" id="messaging" role="tabpanel">
-                                <div class="tab-pane active" id="posts" role="tabpanel">
+                            <div  class="tab-pane" id="messaging" role="tabpanel">
+                                <div class="tab-pane active"  role="tabpanel">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="margin-bottom-50">
@@ -195,9 +195,9 @@
                                 <div class="tab-pane active"  role="tabpanel">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="margin-bottom-50">
+                                            <div class="margin-bottom-50 container">
                                                 <div th:if="${hasComments}">
-                                                    <div class="user-wall">
+                                                    <div id="comments-wall" class="user-wall">
                                                         <div class="user-wall-item clearfix" th:each="comment : ${comments}">
                                                             <div class="s1">
                                                                 <a class="avatar" th:href="@{'/users/' + ${comment.userOrigin.username}}" >
@@ -207,7 +207,7 @@
                                                             <div class="s2">
                                                                 <div class="user-wall-item-head">
                                                                     <div class="pull-right">
-                                                                        <a th:attr="data-userorigindata=${comment.userOrigin.username}" data-toggle="modal" data-target="#modal-complaint" class="userOriginUsername"><i class="icmn-compass"></i></a>
+                                                                        <a th:attr="data-username=${comment.userOrigin.username}" class="userTarget"><i class="icmn-compass"></i></a>
                                                                     </div>
                                                                     <strong th:text="${comment.userOrigin.name}">Name</strong>
                                                                     <small th:text="${#dates.format(comment.date,'dd-MM-yyyy HH:mm')}"></small>
@@ -217,10 +217,13 @@
                                                                 </div>
                                                                 <div class="user-wall-controls">
                                                                     <div class="cui-ecommerce--product--rating">
-                                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score)}"></i>
+                                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score/2)}"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div th:if="${!comments.last}">
+                                                            <a id="comments-more" href="javascript: void(0);" th:attr="data-number=${comments.number}" class="btn btn-default width-full ladda-button" data-style="zoom-in">Ver Más</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -319,11 +322,11 @@
                     <div class="modal-body">
                         <div class="col-lg">
                             <h5>Fotos del Item</h5>
-                            <input id="photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <input id="photo1" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="2M" />
                             <br/>
-                            <input id="photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <input id="photo2" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="2M" />
                             <br/>
-                            <input id="photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="300K" />
+                            <input id="photo3" type="file" class="dropify" name="pictures" accept="image/*" data-max-file-size="2M" />
                         </div>
                         <div class="row modal-footer">
                             <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
@@ -335,7 +338,6 @@
             </div>
         </div>
     </div>
-
     <!--END MODAL SET IMAGES-->
 
     <!--MESSAGES MODAL-->
@@ -358,11 +360,9 @@
             </div>
         </div>
     </div>
-
     <!--END MESSAGES MODAL-->
 
     <!--MODAL SET COMMENTS-->
-
     <div class="modal fade"  id="modalCreateComment" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -401,8 +401,37 @@
             </div>
         </div>
     </div>
-
     <!--END MODAL SET COMMENT-->
+
+    <!--MODAL TRUEQUE QUESTION-->
+    <div class="modal fade"  id="modalCreateQuestion" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">No olvides actualizar el estado de tus trueques!</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group">
+                            <div class="col-lg">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="commentDescription" class="form-control-label">Notamos que tienes algunos activos hace mas de 7 días con las siguientes personas</label>
+                                        <ul id="trueques-pending"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <button  type="button" class="btn btn-xs btn-danger" data-dismiss="modal">Cerrar</button>
+                            <a id="verTruequesBtn" class="btn btn-xs">
+                                <i class="fa fa-bars" aria-hidden="true"></i> Ver Tus Trueques
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MODAL QUESTION-->
 
     <!-- MODAL COMPLAINT -->
     <div class="modal fade"  id="modal-complaint" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="display: none;">
@@ -413,7 +442,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">Denunciar</h4>
+                        <h4 class="modal-title">Denunciar</h4>
                     </div>
                     <div class="modal-body">
                         <div class="container">
@@ -445,9 +474,7 @@
             </form>
         </div>
     </div>
-
     <!-- END MODAL COMPLAINT -->
-
 
 
 <!-- Page Scripts -->
@@ -457,8 +484,47 @@
         var header = [[${_csrf.headerName}]];
         var x = 0;
         var users = [];
+        var userId= /*[[${#authentication.principal.id}]]*/ "";
+
+
 
         $(document).ready(function(){
+            $.ajax({
+                type: 'GET',
+                url: 'profile/trueques/ask',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data)
+                    if(data!=false){
+                        console.log(data)
+                        usersTrueque = data;
+                         makeQuestion(usersTrueque);
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+
+
+            $('#verTruequesBtn').on('click', function () {
+
+                document.getElementById('posts').setAttribute('class','tab-pane');
+                document.getElementById('messaging').setAttribute('class','tab-pane active');
+                document.getElementById('link-comment').setAttribute('class','nav-link');
+                document.getElementById('link-item').setAttribute('class','nav-link');
+                document.getElementById('link-trueque').setAttribute('class','nav-link active');
+
+
+                $('#modalCreateQuestion').modal('hide');
+                console.log('modifico');
+
+            });
+
+
             $('.cancel').on('click', function(){
                 var truequeId = $(this).data('id');
 
@@ -517,51 +583,64 @@
                     .columns.adjust()
                     .responsive.recalc();
             });
-        });
 
-            $(document).ready(function(){
-                $('.confirm').on('click', function(){
-                    var truequeId = $(this).data('id');
 
-                    swal({
-                        title: "¿El trueque se ha realizado con exito?",
-                        text: "¿Se ha llevado a cabo el intercambio de objetos con exito?",
-                        buttons: true,
+            $('.confirm').on('click', function(){
+                var truequeId = $(this).data('id');
 
-                    })
-                        .then((willDelete) => {
-                            if (willDelete) {
-                                $(this).parent().parent().remove();
+                swal({
+                    title: "¿El trueque se ha realizado con exito?",
+                    text: "¿Se ha llevado a cabo el intercambio de objetos con exito?",
+                    buttons: true,
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: 'profile/trueques/' + truequeId + '/confirm/',
-                                    contentType: 'application/json',
-                                    beforeSend: function (xhr) {
-                                        xhr.setRequestHeader(header, token);
-                                    },
-                                    success: function (data) {
-                                        if(data){
-                                            users = data;
-                                            x=0;
-                                            makeComment(data[x]);
-                                        }else{
-                                            swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
-                                        }
-                                    },
-                                    error: function (e) {
-                                        console.log(e);
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $(this).parent().parent().remove();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'profile/trueques/' + truequeId + '/confirm/',
+                                contentType: 'application/json',
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader(header, token);
+                                },
+                                success: function (data) {
+                                    if(data){
+                                        users = data;
+                                        x=0;
+                                        makeComment(data[x]);
+                                    }else{
+                                        swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
                                     }
-                                });
-                            }
-                        });
-                     });
-                });
-
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+                        }
+                    });
+            });
 
             $('#sendComment').on('click', function(){
                 sendComment();
             });
+        });
+
+        makeQuestion = function(usersTrueque){
+            var ul = $("#trueques-pending");
+            ul.html("");
+            $("#commentDescription").val("");
+            $('#modalCreateQuestion').modal('show');
+            usersTrueque.forEach(function(userT){
+                if (userId != userT.id.user.id){
+                    let userTNode = document.createElement("LI");
+                    userTNode.appendChild(document.createTextNode(userT.id.user.name));
+                    ul.append(userTNode);
+                }
+            });
+
+        };
 
         makeComment = function(user){
             $("#commentDescription").val("");
@@ -585,7 +664,6 @@
             console.log(comboBox.options[comboBox.selectedIndex].text);
             return JSON.stringify(comment);
         }
-
 
         sendComment = function () {
             $.ajax({
@@ -622,30 +700,16 @@
         /*]]>*/
     </script>
 
-    <!--<script th:inline="javascript">-->
-        <!--/*<![CDATA[*/-->
-
-        <!--var score = [[${user.score}]]/2;-->
-        <!--var hasScore = [[${hasScore}]];-->
-        <!--if(hasScore){-->
-            <!--var i;-->
-            <!--for(i = 0; i < score; i++){-->
-                <!--$('.stars').append('<i class="icmn-star-full"></i>');-->
-            <!--}-->
-            <!--for(i; i < 5; i++){-->
-                <!--$('.stars').append('<i class="icmn-star-empty"></i>');-->
-            <!--}-->
-        <!--}-->
-
-        <!--/*]]>*/-->
-    <!--</script>-->
-
     <script th:inline="javascript">
         /*<![CDATA[*/
+
         var token = [[${_csrf.token}]];
         var header = [[${_csrf.headerName}]];
         var score = [[${user.score}]]/2;
         var username = [[${user.username}]];
+        var page = [[${comments}]];
+        var userTarget;
+
         var i;
         for(i = 0; i < score; i++){
             $('.stars').append('<i class="icmn-star-full"></i>');
@@ -664,12 +728,92 @@
             return complaint;
         };
 
+        displayComments = function(page){
+          let wall = $('#comments-wall');
+          let btnVerMas = $('#comments-more');
+
+          //Borro los eventos para denuncias y Ver mas
+          btnVerMas.off('click');
+          $('.userTarget').off('click');
+          btnVerMas.remove();
+
+          //Muestro comentarios
+          page.content.forEach(function(comment){
+              let date = new Date(comment.date);
+              wall.append(
+                  '<div class="user-wall-item clearfix">' +
+                  '<div class="s1">' +
+                  '<a class="avatar" href="/users/'+ comment.userOrigin.username +'">' +
+                  '<img src="'+ comment.userOrigin.photo1 +'" />' +
+                  '</a>' +
+                  '</div>' +
+                  '<div class="s2">' +
+                  '<div class="user-wall-item-head">' +
+                  '<div class="pull-right">' +
+                  '<a class="userTarget" data-username="'+ comment.userOrigin.username +'"><i class="icmn-compass"></i></a>' +
+                  '</div>' +
+                  '<strong>'+ comment.userOrigin.name +'</strong>' +
+                  '<small>'+ (date.getMonth()+1) + '-' + date.getDate() + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() + '</small>' +
+                  '</div>' +
+                  '<div class="user-wall-post">' +
+                  '<p>'+ comment.description +'</p>' +
+                  '</div>' +
+                  '<div class="user-wall-controls">' +
+                  '<div id="stars-' + comment.id + '" class="cui-ecommerce--product--rating">' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>' +
+                  '</div>'
+              );
+              let stars = comment.score/2;
+              for (i = 0; i < stars; i++) {
+                  $('#stars-' + comment.id + '').append(
+                      '<i class="icmn-star-full"></i>'
+                  );
+              }
+          });
+
+            //Seteo los evento para denuncias y Ver mas si corresponde
+            $('.userTarget').on('click', function () {
+                userTarget = $(this).data('username');
+                $('#modal-complaint').modal('show');
+            });
+            if(!page.last){
+                wall.append(btnVerMas);
+                $('#comments-more').on('click', function(){
+                    var l = Ladda.create(this);
+                    l.start();
+                    let number = $(this).data('number');
+                    getComments(number);
+                });
+            }
+        };
+
+        getComments = function(number){
+            $.ajax({
+                type: 'GET',
+                url: 'profile/comments/paginated',
+                data: {
+                    "page": number +1,
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    displayComments(data);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        };
+
     $(document).ready(function () {
 
-        let userorigindata;
-
-        $('.userOriginUsername').on('click', function () {
-            userorigindata = $(this).data('userorigindata');
+        $('.userTarget').on('click', function () {
+            userTarget = $(this).data('username');
+            $('#modal-complaint').modal('show');
         });
 
         $('#btn-complaint').on('click', function () {
@@ -679,7 +823,7 @@
                 let complaint = getComplaint();
                 $.ajax({
                     type: "POST",
-                    url: "/users/complaints/" + userorigindata,
+                    url: "/users/complaints/" + userTarget,
                     contentType : "application/json",
                     data: JSON.stringify(complaint),
                     beforeSend: function (xhr) {
@@ -695,6 +839,13 @@
                     }
                 });
             }
+        });
+
+        $('#comments-more').on('click', function(){
+            var l = Ladda.create(this);
+            l.start();
+            let number = $(this).data('number');
+            getComments(number);
         });
 
     });

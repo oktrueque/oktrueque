@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
+    <link rel="stylesheet" type="text/css" href="../../resources/static/common/css/source/custom/trueque.css"
+          th:href="@{/common/css/source/custom/trueque.css}"/>
     <link rel="stylesheet" th:href="@{/common/css/source/custom/checkbox.css}"/>
     <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
 </head>
@@ -11,45 +13,12 @@
     <div class="page-content-inner">
 
        <!-- Ecommerce Product Details -->
-    <div class="col-md-6">
-    <section class="panel panel-with-borders">
-        <div class="panel-heading">
-            <!-- <button type="button" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar</button> -->
-            <h2>Sus items</h2>
+        <div th:if="${hasTags}" class="col-lg-12 margin-bottom-10 tip-panel">
+        <section class="panel panel-with-borders">
+        <div class="col-lg-12 panel-heading" ><span class="tip">Tip!</span> Recuerda que a facundo le interesan: <span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></div>
+        </section>
         </div>
-        <div class="panel-body ">
-            <div class="cui-ecommerce--catalog panel-trueque-complete">
-                <div class="row">
-                        <th:block th:each="item : ${itemsUserDemand}">
-                            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-                                <div class="cui-ecommerce--catalog--item">
-                                    <div class="cui-ecommerce--catalog--item--img">
-                                        <div class="cui-ecommerce--catalog--item--like">
-
-                                        </div>
-                                        <a href="javascript: void(0);">
-                                            <img th:src="${item.photo1}" />
-                                        </a>
-                                    </div>
-                                    <div class="cui-ecommerce--catalog--item--title">
-
-                                        <div class="checkbox checkbox-info">
-                                            <input th:id="'item-demand-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
-                                            <label th:for="'item-demand-' + ${item.id}" th:text="${item.name}">
-                                                Info
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </th:block>
-                    </div>
-                </div>
-            </div>
-    </section>
-</div>
-<div class="col-md-6">
+<div class="col-md-6" id="izquierda-panel">
     <section class="panel panel-with-borders">
         <div class="panel-heading">
             <h2>
@@ -60,25 +29,25 @@
             <div class="cui-ecommerce--catalog panel-trueque-complete">
                 <div class="row">
                     <th:block th:each="item : ${itemsUserOffer}">
-                        <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-                            <div class="cui-ecommerce--catalog--item">
-                                <div class="cui-ecommerce--catalog--item--img">
-                                    <div class="cui-ecommerce--catalog--item--like">
-
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="card cui-ecommerce--catalog--item">
+                                <div class="col-lg-6 ">
+                                    <div class="col-lg-12 no-padding">
+                                        <span class="col-lg-12 card-title " th:text="${item.name}"></span>
+                                        <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
+                                        <div class="col-lg-6 checkbox checkbox-info">
+                                            <input th:id="'item-demand-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
+                                            <label th:for="'item-offer-' + ${item.id}">
+                                                Seleccionar
+                                            </label>
+                                        </div>
+                                        <div class="col-lg-6 padding-top-5 ver-mas-label"><a target="_blank" th:href="@{'/items/' + ${item.id}}"><i class="fa fa-info-circle"></i>Ver más</a></div>
                                     </div>
-                                    <a href="javascript: void(0);">
-                                        <img th:src="${item.photo1}" />
-                                    </a>
                                 </div>
-                                <div class="cui-ecommerce--catalog--item--title">
-
-                                    <div class="checkbox checkbox-info">
-                                        <input th:id="'item-offer-' + ${item.id}" class="styled" type="checkbox" name="itemsOffer" th:value="${item.id}"/>
-                                        <label th:for="'item-offer-' + ${item.id}" th:text="${item.name}">
-                                            Info
-                                        </label>
+                                <div class="col-lg-6 card-photo">
+                                    <div class="col-lg-12 ">
+                                        <div class="col-lg-12 no-padding"><div class="col-lg-12 no-padding"><img width="100%" th:src="${item.photo1}"/></div></div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -86,11 +55,50 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-footer">
-                <button type="submit" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar</button>
-            </div>
     </section>
 </div>
+        <div class="col-md-6 derecha-panel" >
+            <section class="panel panel-with-borders">
+                <div class="panel-heading" >
+                    <!-- <button type="button" class="btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar</button> -->
+                    <h2>Items de <span th:text="${demandant.name}"></span></h2>
+                </div>
+                <div class="panel-body">
+                    <div class="cui-ecommerce--catalog panel-trueque-complete">
+                        <div class="row">
+                            <th:block th:each="item : ${itemsUserDemand}">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="card cui-ecommerce--catalog--item">
+                                        <div class="col-lg-6 ">
+                                        <div class="col-lg-12 no-padding">
+                                            <span class="col-lg-12 card-title " th:text="${item.name}"></span>
+                                            <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
+                                            <div class="col-lg-6 checkbox checkbox-info">
+                                                <input th:id="'item-demand-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
+                                                <label th:for="'item-offer-' + ${item.id}">
+                                                    Seleccionar
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6 padding-top-5 ver-mas-label"><a target="_blank" th:href="@{'/items/' + ${item.id}}"><i class="fa fa-info-circle"></i>Ver más</a></div>
+                                        </div>
+                                        </div>
+                                        <div class="col-lg-6 card-photo">
+                                        <div class="col-lg-12 ">
+                                            <div class="col-lg-12 no-padding"><div class="col-lg-12 no-padding"><img width="100%" th:src="${item.photo1}"/></div></div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="panel-footer">
+            <button type="submit" class="col-lg-offset-4 col-lg-4 margin-top-50 margin-bottom-50 btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar Oferta</button>
+        </div>
     </div>
     </form>
     </section>

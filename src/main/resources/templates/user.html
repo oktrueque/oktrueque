@@ -117,8 +117,10 @@
                                             </div>
                                             <div class="s2">
                                                 <div class="user-wall-item-head">
-                                                    <div class="pull-right">
-                                                        <a href=""><i class="icmn-compass"></i></a>
+                                                    <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id != user.id}" class="pull-right">
+                                                        <a data-toggle="modal" data-target="#modal-complaint">
+                                                            <i class="icmn-compass" aria-hidden="true"></i>
+                                                        </a>
                                                     </div>
                                                     <strong th:text="${comment.userOrigin.name}">Name</strong>
                                                     <small th:text="${#dates.format(comment.date, 'dd-MM-yyyy HH:mm')}"></small>
@@ -128,12 +130,11 @@
                                                 </div>
                                                 <div class="user-wall-controls">
                                                     <div class="cui-ecommerce--product--rating">
-                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score)}"></i>
+                                                        <i class="icmn-star-full" th:each="i : ${#numbers.sequence( 1, comment.score/2)}"></i>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="javascript: void(0);" class="btn btn-default width-full">Ver Más</a>
                                     </div>
                                 </div>
                                 <div th:if="${!hasComments}">
