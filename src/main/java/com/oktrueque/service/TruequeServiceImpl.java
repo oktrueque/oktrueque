@@ -48,13 +48,25 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public void confirmTruequeAndGetUsersBelongingTo(Long id, String username) {
+    public void acceptTruequeAndGetUsersBelongingTo(Long id, String username) {
         Trueque truequeSaved = truequeRepository.findOne(id);
         if(!this.updateUserTruequeStatus(truequeSaved, username, Constants.TRUEQUE_STATUS_ACTIVE)){
             truequeSaved.setStatus(Constants.TRUEQUE_STATUS_ACTIVE);
             truequeSaved.setAcceptanceDate(new Date());
             truequeRepository.save(truequeSaved);
             this.createChat(truequeSaved);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void confirmTrueque(Long id, String username) {
+        Trueque truequeSaved = truequeRepository.findOne(id);
+        if(!this.updateUserTruequeStatus(truequeSaved, username, Constants.TRUEQUE_STATUS_CONFIRMED)){
+            truequeSaved.setStatus(Constants.TRUEQUE_STATUS_CONFIRMED);
+            truequeSaved.setEndingDate(new Date());
+            truequeRepository.save(truequeSaved);
+            this.deleteChat(truequeSaved);
         }
     }
 
@@ -76,6 +88,11 @@ public class TruequeServiceImpl implements TruequeService {
     private void createChat(Trueque trueque){
         List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
         conversationService.createConversation(trueque, userTrueques);
+    }
+
+    private void deleteChat(Trueque trueque){
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
+        conversationService.deleteConversation(trueque, userTrueques);
     }
 
     @Override
@@ -204,7 +221,6 @@ public class TruequeServiceImpl implements TruequeService {
         if (diff>7) {return true;}
         return false;
         }
-
 
     @Override
     @Transactional

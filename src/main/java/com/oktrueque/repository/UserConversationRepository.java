@@ -16,4 +16,5 @@ public interface UserConversationRepository extends CrudRepository<UserConversat
         @Modifying(clearAutomatically = true)
         @Query("UPDATE UserConversation uc SET uc.unread = 0 WHERE uc.id.user.id = :userId AND uc.id.conversation.id = :conversationId")
         int clearUnreadMessages(@Param("userId") Long userId, @Param("conversationId") Long conversationId);
+        void deleteAllByIdConversationId(Long conversationId);
 }

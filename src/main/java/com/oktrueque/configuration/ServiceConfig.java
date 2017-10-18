@@ -121,6 +121,6 @@ public class ServiceConfig {
 
     @Bean
     public ConversationService conversationService(){
-        return new ConversationServiceImpl(conversationRepository, userConversationRepository);
+        return new ConversationServiceImpl(conversationRepository, userConversationRepository, messageRepository);
     }
 }

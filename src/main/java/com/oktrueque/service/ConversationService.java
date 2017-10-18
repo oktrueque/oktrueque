@@ -20,4 +20,6 @@ public interface ConversationService {
     Map<String, Object> getUnreadMessages(User user);
 
     void createConversation(Trueque trueque, List<UserTrueque> userTrueques);
+
+    void deleteConversation(Trueque trueque, List<UserTrueque> userTrueques);
 }

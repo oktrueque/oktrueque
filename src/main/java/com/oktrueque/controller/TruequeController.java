@@ -64,7 +64,7 @@ public class TruequeController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}/user/{username}/accept")
     public String confirmTrueque(@PathVariable Long id, @PathVariable String username){
-        truequeService.confirmTruequeAndGetUsersBelongingTo(id, username);
+        truequeService.acceptTruequeAndGetUsersBelongingTo(id, username);
         return "redirect:/profile/trueques/" + id;
     }
 

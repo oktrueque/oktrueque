@@ -2,6 +2,7 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.*;
 import com.oktrueque.repository.ConversationRepository;
+import com.oktrueque.repository.MessageRepository;
 import com.oktrueque.repository.UserConversationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,11 +14,13 @@ public class ConversationServiceImpl implements ConversationService {
 
     private final ConversationRepository conversationRepository;
     private final UserConversationRepository userConversationRepository;
+    private final MessageRepository messageRepository;
 
     @Autowired
-    public ConversationServiceImpl(ConversationRepository conversationRepository, UserConversationRepository userConversationRepository) {
+    public ConversationServiceImpl(ConversationRepository conversationRepository, UserConversationRepository userConversationRepository, MessageRepository messageRepository) {
         this.conversationRepository = conversationRepository;
         this.userConversationRepository = userConversationRepository;
+        this.messageRepository = messageRepository;
     }
 
     @Override
@@ -62,5 +65,14 @@ public class ConversationServiceImpl implements ConversationService {
             userConversations.add(userConversation);
         }
         userConversationRepository.save(userConversations);
+    }
+
+    @Override
+    @Transactional
+    public void deleteConversation(Trueque trueque, List<UserTrueque> userTrueques) {
+        Conversation conversation = conversationRepository.findFirstByIdTrueque(trueque.getId());
+        userConversationRepository.deleteAllByIdConversationId(conversation.getId());
+        messageRepository.deleteAllByConversationId(conversation.getId());
+        conversationRepository.delete(conversation);
     }
 }

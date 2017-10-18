@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
     List<Message> findAllByConversationId(Long conversationId);
+    void deleteAllByConversationId(Long conversationId);
 }

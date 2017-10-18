@@ -225,23 +225,9 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}/confirm")
-    public ResponseEntity<List<UserLite>> confirmTrueque(@PathVariable Long id, Principal principal) {
-
-        Trueque trueque = truequeService.getTruequeById(id);
-        User user = userService.getUserByUsername(principal.getName());
-        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
-        List<UserLite> users = new ArrayList<>();
-        for (UserTrueque ut : userTrueques) {
-            if (ut.getId().getUser().getId() != user.getId()) {
-                users.add(ut.getId().getUser());
-            }
-        }
-        // ACTIVO A CONFIRMADO
-        trueque.setStatus(3);
-        trueque.setEndingDate(new Date());
-        truequeService.updateTrueque(trueque);
-        return new ResponseEntity<>(users, HttpStatus.OK);
-
+    public ResponseEntity<Void> confirmTrueque(@PathVariable Long id, Principal principal) {
+        truequeService.confirmTrueque(id, principal.getName());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
