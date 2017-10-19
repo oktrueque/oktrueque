@@ -1,12 +1,23 @@
 .item-height{
     width: 100%;
-    height: 500px;
     max-height: 500px;
 }
 
 .item{
-    max-width: 100%;
     max-height: inherit;
+    min-height: 100%;
     min-width: 100%;
 }
 
+#which-category{
+    color: #514d6a;
+}
+
+.cui-ecommerce--product--option_title{
+    font-weight: bolder;
+}
+
+#panel-profile-oktrueque{
+    margin-top: 0px;
+    padding-top: 0px;
+}
