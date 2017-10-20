@@ -7,15 +7,13 @@ import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserLiteRepository;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.VerificationTokenRepository;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class UserServiceImpl  implements UserService{
 
@@ -42,6 +40,7 @@ public class UserServiceImpl  implements UserService{
     @Override
     public User addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRegisterDate(new Date());
         return userRepository.save(user);
     }
 

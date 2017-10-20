@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -41,11 +42,14 @@ public class UserLite{
     private Integer score;
     @Column(name="wallpaper")
     private String wallpaper;
+    @Column(name = "register_date")
+    private Date registerDate;
+
 
     public UserLite() {
     }
 
-    public UserLite(String name, String last_name, String email, String password, Integer status, Integer itemsAmount, String photo1, String username, Integer score, String wallpaper) {
+    public UserLite(String name, String last_name, String email, String password, Integer status, Integer itemsAmount, String photo1, String username, Integer score, String wallpaper, Date registerDate) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
@@ -56,6 +60,15 @@ public class UserLite{
         this.username = username;
         this.score = score;
         this.wallpaper = wallpaper;
+        this.registerDate = registerDate;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
     public Long getId() {

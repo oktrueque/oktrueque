@@ -50,6 +50,9 @@ public class User implements UserDetails{
     private String wallpaper;
     @OneToMany(mappedBy = "user_target")
     private List<Complaint> complaints;
+    @Column(name = "register_date")
+    private Date registerDate;
+
 
 
     @Transient
@@ -69,7 +72,7 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, List<Tag> tags, String newPassword) {
+    public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, Date registerDate, List<Tag> tags, String newPassword) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
@@ -83,8 +86,17 @@ public class User implements UserDetails{
         this.score = score;
         this.wallpaper = wallpaper;
         this.complaints = complaints;
+        this.registerDate = registerDate;
         this.tags = tags;
         this.newPassword = newPassword;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
     public List<Comment> getComments() {
