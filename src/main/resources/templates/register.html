@@ -121,7 +121,7 @@
                                        class="form-control password"
                                        name="validation[password]"
                                        type="password"
-                                       placeholder="Contraseña"
+                                       placeholder="Contraseña. Debe contener letras y números."
                                        onkeyup="checkPass(); return false;"/>
                             </div>
 
@@ -199,9 +199,9 @@
            let emailInput = $('#emailInput').val();
 
            let usernameInput = $('#usernameInput');
-
+            if(isEmpty(usernameInput.val())){
            usernameInput.val(emailInput.substring(0,emailInput.indexOf("@")).replace(/[^a-z0-9]/gi,''));
-
+            }
        });
    });
 
