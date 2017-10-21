@@ -39,21 +39,13 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12 margin-left-20 margin-top-10 carousel-padding ">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner item-height" role="listbox">
-                                <div class="carousel-item active" align="center">
-                                    <img class="item" th:src="${item.photo1}" alt="First slide"/>
-                                </div>
-                                <div class="carousel-item" align="center">
-                                    <img class="item" th:src="${item.photo2}" alt="First slide"/>
-                                </div>
-                                <div class="carousel-item" align="center">
-                                    <img class="item" th:src="${item.photo3}" alt="First slide"/>
-                                </div>
+                            <!--<ol class="carousel-indicators">-->
+                                <!--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>-->
+                                <!--<li data-target="#carousel-example-generic" data-slide-to="1"></li>-->
+                                <!--<li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
+                            <!--</ol>-->
+                            <div id="item-carousel" class="carousel-inner item-height" role="listbox">
+                                <!--Las fotos se setean por javascript-->
                             </div>
                             <a class="left carousel-control" data-target="#carousel-example-generic" role="button" data-slide="prev">
                                 <span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>
@@ -255,6 +247,33 @@
         let token = [[${_csrf.token}]];
         let header = [[${_csrf.headerName}]];
         let username = [[${user.username}]];
+        let item = [[${item}]];
+        let photoAmount = 0;
+
+        $(function(){
+            var carousel = $('#item-carousel');
+            if(item.photo1 !== "" && item.photo1 !== null){
+                carousel.append(
+                    '<div class="carousel-item active" align="center">' +
+                    '<img class="item" src="'+ item.photo1 +'" alt="First slide"/>' +
+                    '</div>'
+                );
+            }
+            if(item.photo2 !== "" && item.photo2 !== null){
+                carousel.append(
+                    '<div class="carousel-item" align="center">' +
+                    '<img class="item" src="'+ item.photo2 +'" alt="Second slide"/>' +
+                    '</div>'
+                );
+            }
+            if(item.photo3 !== "" && item.photo3 !== null){
+                carousel.append(
+                    '<div class="carousel-item" align="center">' +
+                    '<img class="item" src="'+ item.photo3 +'" alt="Third slide"/>' +
+                    '</div>'
+                );
+            }
+        });
 
         $('.owl-carousel').owlCarousel({
             loop:true,

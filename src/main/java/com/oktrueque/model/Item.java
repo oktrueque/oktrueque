@@ -163,4 +163,15 @@ public class Item {
     public void setPictures(MultipartFile[] pictures) {
         this.pictures = pictures;
     }
+
+    public void setPhoto(int index, String url){
+        switch (index){
+            case 1: this.setPhoto1(url);
+                break;
+            case 2: this.setPhoto2(url);
+                break;
+            case 3: this.setPhoto3(url);
+                break;
+        }
+    }
 }

@@ -171,19 +171,22 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/items/{id}/edit")
     public String updateItemById(@ModelAttribute Item item, @ModelAttribute List<MultipartFile> pictures, Principal principal) {
+        int index = 1;
         if (!pictures.get(0).getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(0), fileNameItems, item.getId(), "1", item.getPhoto1());
-            item.setPhoto1(pictureUrl);
+            item.setPhoto(index, pictureUrl);
+            index++;
             item.setStatus(0);
         }
         if (!pictures.get(1).getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(1), fileNameItems, item.getId(), "2", item.getPhoto1());
-            item.setPhoto2(pictureUrl);
+            item.setPhoto(index, pictureUrl);
+            index++;
             item.setStatus(0);
         }
         if (!pictures.get(2).getOriginalFilename().equals("")) {
             String pictureUrl = awsS3Service.uploadFileToS3(pictures.get(2), fileNameItems, item.getId(), "3", item.getPhoto1());
-            item.setPhoto3(pictureUrl);
+            item.setPhoto(index, pictureUrl);
             item.setStatus(0);
         }
 
