@@ -17,6 +17,8 @@ public class Constants {
     public static final int ITEM_STATUS_DELETED = 2;
     public static final int ITEM_STATUS_BANNED = 3;
 
+    public static final String IMG_PICTURE_DEFAULT = "https://s3-sa-east-1.amazonaws.com/oktrueque/default/default-image.png";
+
     private static final Map<Integer, String> defaultProfilePictures;
     static
     {

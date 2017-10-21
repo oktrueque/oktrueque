@@ -2,6 +2,7 @@ package com.oktrueque.controller;
 
 import com.oktrueque.model.*;
 import com.oktrueque.service.*;
+import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -128,6 +129,7 @@ public class ProfileController {
         UserLite user = userService.getUserLiteByUsername(principal.getName());
         item.setStatus(0);
         item.setUser(user);
+        item.setPhoto1(Constants.IMG_PICTURE_DEFAULT);
         Item itemResponse = itemService.saveItem(item);
         return new ResponseEntity(itemResponse, HttpStatus.OK);
     }
