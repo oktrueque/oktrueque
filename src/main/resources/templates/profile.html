@@ -296,7 +296,7 @@
                         </div>
                         <div class="row modal-footer">
                             <button id="btnCerrar" type="button" class="btn" data-dismiss="modal">Cerrar</button>
-                            <button id="submit-btn" type="button" class="btn btn-primary">Crear</button>
+                            <button id="submit-btn" type="button" class="btn btn-primary ladda-button" data-style="zoom-in">Crear</button>
                         </div>
                     </div>
 
@@ -885,8 +885,8 @@
             ms.initialize();
             $("#submit-btn").on("click", function () {
             if (isValidated('newItemForm')){
-                $("#modalCreateItem").modal('hide');
-                $("#modalSetImages").modal('show');
+                var l = Ladda.create(this);
+                l.start();
 
                 $.ajax({
                     type: "POST",
@@ -898,7 +898,8 @@
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (data) {
-                        console.log("Item Saved");
+                        l.stop();
+                        $("#modalCreateItem").modal('hide');
                         $('#itemId').val(data.id);
                         $('#modalSetImages').modal('show');
                     },
