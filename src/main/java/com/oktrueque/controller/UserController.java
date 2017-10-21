@@ -162,6 +162,14 @@ public class UserController {
         return "index";
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/delete")
+    public String deleteUser(Principal principal,HttpServletRequest request, HttpServletResponse response) {
+        User user = userService.getUserByUsername(principal.getName());
+        user.setStatus(2);
+        userService.updateUser(user);
+        return logout(request, response);
+    }
+
 
     @RequestMapping(value="/{username}/{token}/confirm", method = RequestMethod.GET)
     @Transactional

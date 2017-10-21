@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,4 +43,13 @@ public class HomeController {
     public String getHelpPage(Model model){
         return "help";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/deleteAccount")
+    public String getDeleteAccountPage(Model model, Principal principal){
+        User user = userService.getUserByUsername(principal.getName());
+        model.addAttribute("user", user);
+        return "deleteAccount";
+    }
+
+
 }

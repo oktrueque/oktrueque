@@ -115,9 +115,15 @@ public class User implements UserDetails{
         this.username = username;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
+    public String getStatus() {
+        switch (this.status){
+            case 0: return "Registrado";
+            case 1: return "Activo";
+            case 2: return "Eliminado";
+            case 3: return "Baneado";
+            default: return "Sin definir";
+        }}
+
 
     public void setStatus(Integer status) {
         this.status = status;

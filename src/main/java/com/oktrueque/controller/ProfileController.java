@@ -77,6 +77,7 @@ public class ProfileController {
         model.addAttribute("tags", tags);
         model.addAttribute("item", new Item(0));
         model.addAttribute("categories", categoryService.getCategories());
+        model.addAttribute("hasTrueques", trueques.size() != 0 ? true : false);
         model.addAttribute("trueques", trueques);
         model.addAttribute("comments", comments);
         model.addAttribute("hasComments", comments.getTotalElements() != 0 ? true : false);
@@ -111,6 +112,8 @@ public class ProfileController {
         userService.updateUser(user);
         return "redirect:/profile";
     }
+
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
