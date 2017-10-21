@@ -115,7 +115,11 @@ public class User implements UserDetails{
         this.username = username;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getStatusName() {
         switch (this.status){
             case 0: return "Registrado";
             case 1: return "Activo";
