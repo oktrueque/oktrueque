@@ -1,4 +1,4 @@
-/* 
+/*
  *  Owl Carousel - Animate Plugin
  */
 .owl-carousel .animated {
@@ -37,7 +37,7 @@
   }
 }
 
-/* 
+/*
  * 	Owl Carousel - Auto Height Plugin
  */
 .owl-height {
@@ -48,7 +48,7 @@
   transition: height 500ms ease-in-out;
 }
 
-/* 
+/*
  *  Core Owl Carousel CSS File
  */
 .owl-carousel {
@@ -143,7 +143,7 @@
   display: block;
 }
 
-/* 
+/*
  * 	Owl Carousel - Lazy Load Plugin
  */
 .owl-carousel .owl-item .owl-lazy {
@@ -158,7 +158,7 @@
   transform-style: preserve-3d;
 }
 
-/* 
+/*
  * 	Owl Carousel - Video Plugin
  */
 .owl-carousel .owl-video-wrapper {
@@ -213,4 +213,103 @@
 .owl-carousel .owl-video-frame {
   position: relative;
   z-index: 1;
+}
+
+.no-vertical-padding{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.fa-book{
+  color: #478037 !important;
+}
+
+.fa-music{
+  color: steelblue !important;
+}
+
+.fa-briefcase{
+  color: #c09853 !important;
+}
+
+.fa-shopping-cart{
+  color: #B30227 !important;
+}
+
+@media only screen and (max-width: 768px){
+
+  .texto-slider{
+    padding-top: 0 !important;
+    left: 50% !important;
+  }
+
+  .navbar-fixed-top{
+    -webkit-box-sizing: inherit !important;
+    box-sizing: inherit !important;
+  }
+
+  .section-title > a > h2{
+    margin-bottom: 20px !important;
+    font-size: 30px !important;
+  }
+
+  .height-280{
+    height: 280px !important;
+  }
+
+  .section-title > h2{
+    margin-bottom: 20px !important;
+    font-size: 30px !important;
+  }
+
+  section{
+    padding: 30px 0 !important;
+  }
+
+  .image-landing{
+    height: 150px !important;
+  }
+
+  .image-responsive-oktrueque{
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .section-cta{
+    padding: 10px 0 0 0 !important;
+  }
+
+  .reduced-text-mobile{
+    font-size: 15px !important;
+    line-height: 15px !important;
+    font-weight: 500 !important;
+  }
+
+  .section-title > p{
+    margin: 0px 20px 30px 20px!important;
+    line-height: 20px !important;
+    font-size: 15px !important;
+  }
+
+  .button-cta{
+    padding: 13px 10px !important;
+  }
+
+  .texto-intro-heading{
+    font-size: 25px !important;
+    line-height: 30px !important;
+  }
+
+  .owl-prev{
+    padding: 10px 20px !important;
+  }
+
+  .owl-controls{
+    margin-top: -20px !important;
+  }
+
+  .owl-next{
+    padding: 10px 20px !important;
+  }
+
 }
