@@ -313,3 +313,41 @@
   }
 
 }
+
+
+.mz-module-about:hover, .mz-module-about:hover > h3, .mz-module-about:hover > p, .mz-module-about:hover > i{
+  color: #FFFFFF !important;
+}
+
+.mz-module-about > p{
+  color: #676767 !important;
+  font-weight: 400 !important;
+}
+
+#mz-module-about-libros:hover{
+  background-color: #478037 !important;
+}
+
+#mz-module-about-instrumentos:hover{
+  background-color: steelblue !important;
+}
+
+#mz-module-about-muebles:hover{
+  background-color: #c09853 !important;
+}
+
+#mz-module-about-indumentaria:hover{
+  background-color: #B30227 !important;
+}
+
+.mz-module-button{
+  background-color: rgba(42, 42, 42, 0.86) !important;
+  color: #d8d8d8 !important;
+}
+
+.mz-module > a:hover, .mz-module > a {
+  padding : 0;
+  text-transform : none;
+  text-decoration: none !important;
+  color: #FFFFFF !important;
+}
