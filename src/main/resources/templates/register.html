@@ -27,6 +27,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="../assets/common/css/source/main.css" th:href="@{/common/css/source/main.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/register.css"
+          th:href="@{/common/css/source/custom/register.css}"/>
 
     <!-- Vendors Scripts -->
     <!-- v1.0.0 -->
@@ -141,13 +143,16 @@
                                     Acepto los terminos y condiciones
                                 </label>
                             </div>
-                            <div class="form-actions">
+                            <div id="register-form-actions" class="form-actions no-margin">
                                 <button id="submit-btn" type="button" value="Registrarse!"
                                         class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
                                     Registrarse!
                                 </button>
-                                <a style="float: right" href="/login">Ingresar</a>
+                                <div class="col-lg-12 no-horizontal-padding col-xs-12 separador-line-top padding-top-20">
+                                    <div id="text-margin-top-5" class="col-lg-8 col-xs-12"><span>Ya tenes una cuenta?</span></div><div class="col-lg-4 no-horizontal-padding col-xs-12"><a class="btn btn-success btn-cellphone-fullwidth" style="float: right" href="/login">Ingresar</a></div>
+                                </div>
                             </div>
+
                         </form>
                     </div>
                 </div>

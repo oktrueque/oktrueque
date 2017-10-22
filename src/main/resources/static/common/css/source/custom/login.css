@@ -1,7 +1,9 @@
-
+#btn-iniciar-sesion-custom-oktrueque{
+    width: 100%;
+    margin-bottom: 20px
+}
 
 @media only screen and (max-width: 768px){
-
     .separador-line-top{
         text-align: center;
         padding-top: 5px !important;
@@ -17,7 +19,5 @@
         width: 100%;
     }
 
-    #submit-btn{
-        margin-bottom: 15px !important;
-    }
 }
+
