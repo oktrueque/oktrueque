@@ -168,13 +168,18 @@ function hasCharacters(val) {
              messageModal.modal('show');
              $("#pass1").focus();
              return false;
-         } else if(newPassword.length<7 || !/[0-9]/g.test(newPassword)){
+         } else if(newPassword.length<6 || !/[0-9]/g.test(newPassword)){
              message = 'La contraseña debe ser mayor a 6 caracteres, poseer letras y números!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#pass1").focus();
              return false;
-         }
+         } else if(!document.getElementById('terminosCondicionesInput').checked) {
+              message = 'Debes aceptar los terminos y condiciones para registrarte';
+              messageSpan.textContent = message;
+              messageModal.modal('show');
+              return false;
+          }
          return true;
      }
 

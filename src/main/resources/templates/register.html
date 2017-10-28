@@ -113,7 +113,8 @@
                                            id="usernameInput"
                                            class="form-control"
                                            placeholder="Nombre de usuario"
-                                           type="text"/>
+                                           type="text"
+                                           data-placement="right"/>
                                 </div>
                             </div>
 
@@ -123,8 +124,9 @@
                                        class="form-control password"
                                        name="validation[password]"
                                        type="password"
-                                       placeholder="Contraseña. Debe contener letras y números."
-                                       onkeyup="checkPass(); return false;"/>
+                                       placeholder="Contraseña."
+                                       onkeyup="checkPass(); return false;"
+                                       data-placement="right" />
                             </div>
 
                             <div id="div-pass2" class="form-group form-input-icon form-input-icon-right">
@@ -139,7 +141,7 @@
                             </div>
                             <div>
                                 <label>
-                                    <input required="true" type="checkbox" name="example6" checked="false"/>
+                                    <input id="terminosCondicionesInput" required="true" type="checkbox" name="example6" checked="false"/>
                                     Acepto los terminos y condiciones
                                 </label>
                             </div>
@@ -192,6 +194,8 @@
     <!--FIELD VALIDATIONS-->
    <script>
    document.addEventListener("DOMContentLoaded", function () {
+       $('#pass1').tooltip({'trigger':'focus', 'title': 'La contraseña debe contener letras, numeros y un minimo de 6 caracteres.'});
+       $('#usernameInput').tooltip({'trigger':'focus', 'title': 'El nombre de usuario no puede contener caracteres o símbolos.'});
        $('#nameInput').focus();
        $('#submit-btn').on("click", function () {
            if (isValidated("register-form")){
@@ -258,19 +262,6 @@
             $(window).on('resize', function () {
                 changeImgPositon();
             });
-
-// Mouse Move 3d Effect
-            var rotation = function (e) {
-                var perX = (e.clientX / $(window).width()) - 0.5;
-                var perY = (e.clientY / $(window).height()) - 0.5;
-                TweenMax.to(".effect-3d-element", 0.4, {
-                    rotationY: 15 * perX,
-                    rotationX: 15 * perY,
-                    ease: Linear.easeNone,
-                    transformPerspective: 1000,
-                    transformOrigin: "center"
-                })
-            };
         });
 
     </script>
