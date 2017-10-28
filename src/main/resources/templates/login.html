@@ -112,9 +112,9 @@
                             <button id="btn-iniciar-sesion-custom-oktrueque" type="submit" class="btn btn-primary btn-iniciar-sesion">
                                 Iniciar Sesión
                             </button>
-                            <div class="col-lg-12 no-horizontal-padding separador-line-top">
+                            <!--<div class="col-lg-12 no-horizontal-padding separador-line-top">-->
                             <div id="text-margin-top-5" class="col-lg-6 no-horizontal-padding col-xs-12"><span>Todavia no tenes una cuenta?</span></div><div class="col-lg-6 no-horizontal-padding col-xs-12"><a class="btn btn-success btn-cellphone-fullwidth" style="float: right" href="/register">Crear cuenta gratuita</a></div>
-                            </div>
+                            <!--</div>-->
                             </div>
                     </form>
                 </div>
@@ -264,18 +264,7 @@
             $(window).on('resize', function () {
                 changeImgPositon();
             });
-            // Mouse Move 3d Effect
-            var rotation = function (e) {
-                var perX = (e.clientX / $(window).width()) - 0.5;
-                var perY = (e.clientY / $(window).height()) - 0.5;
-                TweenMax.to(".effect-3d-element", 0.4, {
-                    rotationY: 15 * perX,
-                    rotationX: 15 * perY,
-                    ease: Linear.easeNone,
-                    transformPerspective: 1000,
-                    transformOrigin: "center"
-                })
-            };
+
         });
     </script>
     <script th:inline="javascript">
