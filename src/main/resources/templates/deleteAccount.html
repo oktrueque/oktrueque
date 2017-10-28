@@ -11,19 +11,17 @@
     <section class="page-content">
         <div class="page-content-inner">
             <form  th:action="@{/user/delete}" th:object="${user}" th:method="PUT">
-                <section class="panel panel-profile panel-with-borders col-md-6">
+                <section>
                     <div class="page-content-inner">
-                        <div class="panel-body">
-                            <h5 th:text="${user.name + ', ¿Seguro deseas eliminar tu cuenta?'}"></h5>
-                        </div>
-                            <div class="form-actions">
+                        <h5 th:text="${user.name + ', ¿Seguro deseas eliminar tu cuenta?'}"></h5>
+                        <div class="form-actions">
                                 <div class="form-group">
                                     <button type="sumbit" class="btn btn-primary">SI</button>
                                     <button type="button" class="btn btn-default" onclick="history.back()">Atras
                                     </button>
                                 </div>
-                            </div>
                         </div>
+                    </div>
                 </section>
             </form>
         </div>
