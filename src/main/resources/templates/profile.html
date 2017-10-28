@@ -68,9 +68,9 @@
                         <dd th:text="${user.username}">Username</dd>
                         <dt>Email</dt>
                         <dd th:text="${user.email}">Email</dd>
-                        <dt>Intereses</dt>
+                        <dt>Tags</dt>
                         <dd th:if="${hasTags}"><span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></dd>
-                        <dd th:if="${!hasTags}">Parece que no has actualizado tus intereses.</dd>
+                        <dd th:if="${!hasTags}">Parece que no has actualizado tus tags.</dd>
                     </dl>
                     <a href="/profile/edit"><button class="btn btn-primary" type="button">Editar</button></a>
                 </div>

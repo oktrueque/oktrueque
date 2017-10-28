@@ -27,7 +27,7 @@ public class UserConversation implements Comparable {
     public UserConversation(UserConversationId id, Boolean group) {
         this.id = id;
         this.group = group;
-        this.unread = 0;
+        this.unread = 1;
     }
 
     public UserConversationId getId() {
