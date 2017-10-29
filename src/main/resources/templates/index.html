@@ -151,86 +151,14 @@
 			</div>
 			<div class="row row-0-gutter">
 				<!-- start portfolio item -->
-				<div class=" col-md-4 col-0-gutter col-xs-4">
+				<div class=" col-md-4 col-0-gutter col-xs-4" th:each="item : ${items}">
 					<div class=" ot-portfolio-item">
 						<figure class="image-landing effect-bubba">
-							<img src="https://image.ibb.co/nqMSRk/reloj.jpg" alt="img02" class="prueba image-responsive-oktrueque" />
+							<img th:src="${item.photo1}" alt="item" class="prueba image-responsive-oktrueque" />
 							<figcaption>
-								<h2>Reloj Rolex</h2>
-								<p>Accesorios</p>
-								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
-							</figcaption>
-						</figure>
-					</div>
-				</div>
-				<!-- end portfolio item -->
-				<!-- start portfolio item -->
-				<div class=" col-md-4 col-0-gutter col-xs-4">
-					<div class="ot-portfolio-item">
-						<figure class="image-landing effect-bubba">
-							<img src="https://image.ibb.co/gbvMmk/mesa.jpg"  alt="img02" class="prueba image-responsive-oktrueque" />
-							<figcaption>
-								<h2>Mesa de Madera</h2>
-								<p>Muebles</p>
-								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
-							</figcaption>
-						</figure>
-					</div>
-				</div>
-				<!-- end portfolio item -->
-				<!-- start portfolio item -->
-				<div class=" col-md-4 col-0-gutter col-xs-4">
-					<div class="ot-portfolio-item">
-						<figure class="image-landing effect-bubba">
-							<img src="https://image.ibb.co/kTsRmk/celu.jpg" alt="img02" class="prueba image-responsive-oktrueque" />
-							<figcaption>
-								<h2>iPhone 6s</h2>
-								<p>Electronicos</p>
-								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
-							</figcaption>
-						</figure>
-					</div>
-				</div>
-				<!-- end portfolio item -->
-			</div>
-			<div class="row row-0-gutter">
-				<!-- start portfolio item -->
-				<div class=" col-md-4 col-0-gutter col-xs-4">
-					<div class="ot-portfolio-item">
-						<figure class="image-landing effect-bubba">
-							<img src="https://image.ibb.co/cCZve5/sillon.jpg"  alt="img02" class="prueba image-responsive-oktrueque" />
-							<figcaption>
-								<h2>Sillon</h2>
-								<p>Muebles</p>
-								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
-							</figcaption>
-						</figure>
-					</div>
-				</div>
-				<!-- end portfolio item -->
-				<!-- start portfolio item -->
-				<div class="col-md-4 col-0-gutter col-xs-4">
-					<div class="ot-portfolio-item">
-						<figure class="image-landing effect-bubba">
-							<img src="https://image.ibb.co/erPQCQ/bici3.jpg"   alt="img02" class="prueba image-responsive-oktrueque" />
-							<figcaption>
-								<h2>Bicicleta Deportiva</h2>
-								<p>Accesorios</p>
-								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
-							</figcaption>
-						</figure>
-					</div>
-				</div>
-				<!-- end portfolio item -->
-				<!-- start portfolio item -->
-				<div class="col-md-4 col-0-gutter col-xs-4">
-					<div class="ot-portfolio-item">
-						<figure class="image-landing effect-bubba">
-							<img src="https://image.ibb.co/gU2sRk/coche.jpg"  alt="img02" class="prueba image-responsive-oktrueque" />
-							<figcaption>
-								<h2>Cochecito</h2>
-								<p>Accesorio</p>
-								<a href="#" data-toggle="modal" data-target="#Modal-1">View more</a>
+								<h2 th:text="${item.name}">Reloj Rolex</h2>
+								<p th:text="${item.category.name}">Accesorios</p>
+								<a th:href="@{'/items/' + ${item.id}}">View more</a>
 							</figcaption>
 						</figure>
 					</div>
@@ -331,7 +259,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-offset-2 col-md-9">
+					<div class="col-md-offset-2 col-md-8">
 						<form  id="contactForm">
 							<div class="row">
 								<div class="col-md-6">
@@ -375,26 +303,6 @@
 				<img src="images/simbolo-landing.png" th:src="@{/common/img/simbolo-landing.png}" alt="OkTrueque"/>
 			</div>
 		</footer>
-
-		<!-- Modal for portfolio item 1 -->
-		<div class="modal fade" id="Modal-1" tabindex="-1" role="dialog" aria-labelledby="Modal-label-1">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="Modal-label-1">Nombre</h4>
-					</div>
-					<div class="modal-body">
-						<img src="" th:src="@{/common/img/temp/ecommerce/001.jpg}" alt="img01" class="img-responsive" />
-						<div class="modal-works"><span>Tag1</span><span>Tag2</span></div>
-						<p>Descripcion</p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<!--MESSAGES MODAL-->
 		<div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
@@ -442,20 +350,14 @@
             document.addEventListener("DOMContentLoaded", function () {
 
 //         ---------------   CONTACTO   -----------------
-
                 $("#btnSend").on("click", function () {
-
                     let message = 'Hola! Mi nombre es ' +$("#nameAndLastNameInput").val() +' y mi email es ' +$("#emailInput").val() +'. Mi mensaje para ustedes es: ' +$("#messageInput").val();
-
                     let email = {
-
                         mailTo: 'oktrueque@gmail.com',
                         mailSubject: 'Contacto',
                         mailContent: message,
                         contentType: 'text/plain'
-
                     };
-
                     if (isValidated('contactUsForm')) {
                         $.ajax({
                             type: "POST",
