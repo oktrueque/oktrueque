@@ -44,12 +44,7 @@ public class HomeController {
         return "help";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/deleteAccount")
-    public String getDeleteAccountPage(Model model, Principal principal){
-        User user = userService.getUserByUsername(principal.getName());
-        model.addAttribute("user", user);
-        return "deleteAccount";
-    }
+
 
 
 }

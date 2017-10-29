@@ -125,16 +125,17 @@
 AGREGAR ACA EL TOGGLE DEL INFO */
 
 .cui-ecommerce--catalog--item--title {
-    font-size: 16px;
+    font-size: 13px;
     color: black;
     text-transform: uppercase;
     font-weight: bold;
     border-top: 0px solid #dfe4ed;
     padding-top: 10px;
+    line-height: 14px;
 }
 
 .cui-ecommerce-catalog--item--infobox{
-    margin-top: 282px;
+    margin-top: 288px;
     background-color: rgba(255, 255, 255, 0.75);
     position: relative;
     width: inherit;
@@ -163,6 +164,8 @@ AGREGAR ACA EL TOGGLE DEL INFO */
     font-style: italic;
     color: #4A5A5C;
     margin-top: -15px;
+    line-height: 13px;
+    padding-top: 5px;
 }
 
 .cui-ecommerce--catalog--item--descr--sizes {
