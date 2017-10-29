@@ -49,4 +49,6 @@ public interface ItemService {
     Item deleteIfPossible(Long id);
 
     List<Item> getItemsByCategory(Category category, Long id);
+
+    List<Item> getLatestCreatedActiveItems(Pageable pageable);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
@@ -34,4 +35,6 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
     List<Item> findByUserIdAndStatus(Long id, Integer status);
 
     List<Item> findTop4ByCategoryAndIdNot(Category category, Long id);
+
+    Page<Item> findByStatusOrderByCreationDateDesc(int status, Pageable pageable);
 }

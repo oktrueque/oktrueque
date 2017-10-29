@@ -160,4 +160,10 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getItemsByCategory(Category category, Long id) {
         return itemRepository.findTop4ByCategoryAndIdNot(category, id);
     }
+
+    @Override
+    public List<Item> getLatestCreatedActiveItems(Pageable pageable) {
+        return itemRepository.findByStatusOrderByCreationDateDesc(
+                Constants.ITEM_STATUS_ACTIVE, pageable).getContent();
+    }
 }

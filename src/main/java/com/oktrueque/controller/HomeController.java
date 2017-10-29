@@ -1,11 +1,11 @@
 package com.oktrueque.controller;
 
 import com.oktrueque.model.Email;
-import com.oktrueque.model.User;
 import com.oktrueque.service.EmailService;
+import com.oktrueque.service.ItemService;
 import com.oktrueque.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,23 +13,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.security.Principal;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 @Controller
 public class HomeController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final EmailService emailService;
+    private final ItemService itemService;
 
     @Autowired
-    private EmailService emailService;
+    public HomeController(UserService userService, EmailService emailService, ItemService itemService) {
+        this.userService = userService;
+        this.emailService = emailService;
+        this.itemService = itemService;
+    }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String getLandingPage(Model model){
+        model.addAttribute("items", itemService.getLatestCreatedActiveItems(new PageRequest(0,6)));
         return "index";
     }
 

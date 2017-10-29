@@ -4,6 +4,7 @@ package com.oktrueque.model;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,8 @@ public class Item {
     private String photo2;
     @Column(name = "photo3")
     private String photo3;
+    @Column(name = "creation_date")
+    private Date creationDate;
     @Transient
     private List<Tag> tags;
     @Transient
@@ -173,5 +176,13 @@ public class Item {
             case 3: this.setPhoto3(url);
                 break;
         }
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }
