@@ -131,6 +131,7 @@ public class ProfileController {
     public ResponseEntity<Item> newItem(@RequestBody Item item, Principal principal) {
         UserLite user = userService.getUserLiteByUsername(principal.getName());
         item.setStatus(0);
+        item.setCreationDate(new Date());
         item.setUser(user);
         item.setPhoto1(Constants.IMG_PICTURE_DEFAULT);
         Item itemResponse = itemService.saveItem(item);
