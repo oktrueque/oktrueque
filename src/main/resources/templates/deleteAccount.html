@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-    <link rel="stylesheet" type="text/css" href="../../resources/static/common/css/source/custom/help.css"
-          th:href="@{/common/css/source/custom/help.css}"/>
     <div sec:authorize="isAuthenticated()">
         <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
     </div>
@@ -11,15 +9,15 @@
     <section class="page-content">
         <div class="page-content-inner">
             <form  th:action="@{/user/delete}" th:object="${user}" th:method="PUT">
-                <section>
-                    <div class="page-content-inner">
-                        <h5 th:text="${user.name + ', ¿Seguro deseas eliminar tu cuenta?'}"></h5>
-                        <div class="form-actions">
-                                <div class="form-group">
-                                    <button type="sumbit" class="btn btn-primary">SI</button>
-                                    <button type="button" class="btn btn-default" onclick="history.back()">Atras
-                                    </button>
-                                </div>
+                <section class="panel panel-profile panel-with-borders">
+                    <div class="single-page-block">
+                        <div class="margin-auto text-center max-width-500">
+                            <h1>Eliminar Cuenta</h1>
+                            <hr/>
+                            <p>Si crees que no utilizarás más Oktrueque y te gustaría eliminar tu cuenta, nosotros lo hacemos por tí.
+                                Ten en cuenta que no podrás volver a activarla una vez eliminada. Si efectivamente deseas eliminar tu cuenta, haz click en "Eliminar"</p>
+                            <button type="submit" class="btn btn-link">Eliminar</button>
+                            <button type="button" class="btn btn-link" onclick="history.back()">Volver</button>
                         </div>
                     </div>
                 </section>

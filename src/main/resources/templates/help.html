@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
 <head>
-    <link rel="stylesheet" type="text/css" href="../../resources/static/common/css/source/custom/help.css"
-          th:href="@{/common/css/source/custom/help.css}"/>
     <div sec:authorize="isAuthenticated()">
         <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
     </div>
