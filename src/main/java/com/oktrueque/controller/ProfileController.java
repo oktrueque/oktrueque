@@ -222,14 +222,14 @@ public class ProfileController {
             }
         }
         // PENDIENTE A RECHAZADO
-        if (trueque.getStatus().equals("Pendiente")) {
+        if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_PENDING)) {
             trueque.setStatus(2);
             trueque.setRejectionDate(new Date());
             truequeService.updateTrueque(trueque);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         // ACTIVO A CANCELADO
-        if (trueque.getStatus().equals("Activo")) {
+        if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_ACTIVE)) {
             trueque.setStatus(4);
             trueque.setRejectionDate(new Date());
             truequeService.updateTrueque(trueque);

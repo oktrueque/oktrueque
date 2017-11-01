@@ -561,6 +561,9 @@
                                         makeComment(data[x]);
                                     }else{
                                         swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        }, 2000);
                                     }
                                 },
                                 error: function (e) {
@@ -620,6 +623,9 @@
                                         makeComment(data[x]);
                                     }else{
                                         swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
+                                        setTimeout(function(){
+                                            window.location.reload();
+                                        }, 2000);
                                     }
                                 },
                                 error: function (e) {

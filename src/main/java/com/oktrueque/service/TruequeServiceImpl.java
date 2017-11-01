@@ -65,7 +65,7 @@ public class TruequeServiceImpl implements TruequeService {
         List<UserLite> users = new ArrayList<>();
         List<UserTrueque> ut = userTruequeRepository.findByIdTruequeId(id);
         for(UserTrueque userTrueque : ut){
-            if(userTrueque.getId().getUser().getUsername().equals(username)){
+            if(!userTrueque.getId().getUser().getUsername().equals(username)){
                 users.add(userTrueque.getId().getUser());
             }
         }
@@ -87,6 +87,7 @@ public class TruequeServiceImpl implements TruequeService {
         for(UserTrueque ut : userTrueques){
             if(ut.getId().getUser().getUsername().equals(username)){
                 ut.setStatus(status);
+                ut.setShowActions(false);
                 userTruequeRepository.save(ut);
                 me = ut.getId().getUser();
             }
@@ -96,6 +97,8 @@ public class TruequeServiceImpl implements TruequeService {
         }
         if(!usersLeft){
             for(UserTrueque ut : userTrueques){
+                ut.setShowActions(true);
+                userTruequeRepository.save(ut);
                 if(!ut.getId().getUser().getUsername().equals(username)){
                     this.sendUpdateTruequeMail(trueque, me, ut.getId().getUser(), status);
                 }
