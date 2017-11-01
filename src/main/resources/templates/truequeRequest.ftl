@@ -19,7 +19,7 @@
                     <tr>
                         <td>
                             <p>Buenas ${nombreDestino} ${apellidoDestino}</p>
-                            <p>${nombreOrigen} ${apellidoDestino} quiere realizar un trueque contigo.</p>
+                            <p>${nombreOrigen} ${apellidoOrigen} quiere realizar un trueque contigo.</p>
                             </table>
                             <br/>
                             <h5 style="margin-bottom: 20px; color: #24222f; font-weight: 600">Items Propuestos</h5>
