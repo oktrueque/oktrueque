@@ -83,16 +83,54 @@ public class TruequeServiceImpl implements TruequeService {
     private Boolean updateUserTruequeStatus(Trueque trueque, String username, Integer status){
         List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
         Boolean usersLeft = false;
+        UserLite me = null;
         for(UserTrueque ut : userTrueques){
             if(ut.getId().getUser().getUsername().equals(username)){
                 ut.setStatus(status);
                 userTruequeRepository.save(ut);
+                me = ut.getId().getUser();
             }
             if(ut.getStatus() < status){
                 usersLeft = true;
             }
         }
+        if(!usersLeft){
+            for(UserTrueque ut : userTrueques){
+                if(!ut.getId().getUser().getUsername().equals(username)){
+                    this.sendUpdateTruequeMail(trueque, me, ut.getId().getUser(), status);
+                }
+            }
+        }
         return usersLeft;
+    }
+
+    private void sendUpdateTruequeMail(Trueque trueque, UserLite me, UserLite userTarget, Integer status){
+        if(status == Constants.TRUEQUE_STATUS_ACTIVE){
+            sendAcceptTruequeMail(trueque, me, userTarget);
+        }
+        if(status == Constants.TRUEQUE_STATUS_CONFIRMED){
+            sendConfirmTruequeMail(trueque, me, userTarget);
+        }
+    }
+
+    private void sendAcceptTruequeMail(Trueque trueque, UserLite me, UserLite userTarget){
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void sendConfirmTruequeMail(Trueque trueque, UserLite me, UserLite userTarget){
+
     }
 
     private void createChat(Trueque trueque){
