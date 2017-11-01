@@ -116,7 +116,7 @@ public class TruequeServiceImpl implements TruequeService {
     private void sendAcceptTruequeMail(Trueque trueque, UserLite me, UserLite userTarget){
         String url = urlServer + "/profile/messages";
         Email emailObject = new Email();
-        String email="";
+        String email=userTarget.getEmail();
         Map<String,Object> model = new LinkedHashMap<>();
         emailObject.setMailTo(email);
         emailObject.setMailSubject("OkTrueque - Trueque aceptado!");
@@ -131,7 +131,7 @@ public class TruequeServiceImpl implements TruequeService {
     private void sendConfirmTruequeMail(Trueque trueque, UserLite me, UserLite userTarget){
         String url = urlServer + "/profile/messages";
         Email emailObject = new Email();
-        String email="";
+        String email=userTarget.getEmail();
         Map<String,Object> model = new LinkedHashMap<>();
         emailObject.setMailTo(email);
         emailObject.setMailSubject("OkTrueque - Trueque confirmado!");
