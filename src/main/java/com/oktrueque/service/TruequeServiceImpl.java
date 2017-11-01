@@ -60,14 +60,20 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public void confirmTrueque(Long id, String username) {
+    public List<UserLite> confirmTrueque(Long id, String username) {
         Trueque truequeSaved = truequeRepository.findOne(id);
+        List<UserLite> users = new ArrayList<>();
+        List<UserTrueque> ut = userTruequeRepository.findByIdTruequeId(id);
+        ut.forEach(userTrueque -> users.add(userTrueque.getId().getUser()));
+
         if(!this.updateUserTruequeStatus(truequeSaved, username, Constants.TRUEQUE_STATUS_CONFIRMED)){
             truequeSaved.setStatus(Constants.TRUEQUE_STATUS_CONFIRMED);
             truequeSaved.setEndingDate(new Date());
             truequeRepository.save(truequeSaved);
             this.deleteChat(truequeSaved);
         }
+
+        return users;
     }
 
     private Boolean updateUserTruequeStatus(Trueque trueque, String username, Integer status){

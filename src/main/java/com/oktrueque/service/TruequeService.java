@@ -1,10 +1,6 @@
 package com.oktrueque.service;
 
-import com.oktrueque.model.Item;
-import com.oktrueque.model.ItemTrueque;
-import com.oktrueque.model.Trueque;
-import com.oktrueque.model.User;
-import com.oktrueque.model.UserTrueque;
+import com.oktrueque.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -39,5 +35,5 @@ public interface TruequeService {
 
     boolean isTimeToAsk(Trueque trueque);
 
-    void confirmTrueque(Long id, String username);
+    List<UserLite> confirmTrueque(Long id, String username);
 }

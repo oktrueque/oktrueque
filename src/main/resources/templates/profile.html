@@ -664,8 +664,7 @@
         function getNewComment(){
             let commentDescription = $("#commentDescription").val();
             let idUser = $("#idUser").val();
-            let comboBox = document.getElementById('scoreComboBox');
-            let scoreValue = comboBox.selectedIndex;
+            let scoreValue = $('#scoreComboBox').val();
             var comment = {
                 description: commentDescription,
                 userTarget: {id: idUser},
