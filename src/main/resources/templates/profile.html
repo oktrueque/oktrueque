@@ -162,24 +162,31 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="trueque : ${trueques}">
-                                                        <td th:text="${#dates.format(trueque.proposalDate, 'dd-MM-yyyy')}"></td>
-                                                        <td th:text="${trueque.peopleCount}"></td>
-                                                        <td><span class="label label-info" th:text="${trueque.getStatusValue()}"></span></td>
+                                                    <tr th:each="ut : ${userTrueques}">
+                                                        <td th:text="${#dates.format(ut.id.trueque.proposalDate, 'dd-MM-yyyy')}"></td>
+                                                        <td th:text="${ut.id.trueque.peopleCount}"></td>
+                                                        <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
                                                         <td >
-                                                            <div th:if="${trueque.isPendiente()}">
-                                                                <a th:href="@{'/trueques/'+${trueque.id}+'/user/'+ ${user.username} +'/accept'}" class="btn btn-xs btn-success">
-                                                                    <i class="fa fa-check" aria-hidden="true"></i> Aceptar
-                                                                </a>
-                                                                <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
-                                                                    <i class="fa fa-bars" aria-hidden="true"></i> Detalle
-                                                                </a>
-                                                                <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Rechazar</button>
+                                                            <div th:if="${ut.showActions}">
+                                                                <div th:if="${ut.id.trueque.isPendiente()}">
+                                                                    <a th:href="@{'/trueques/'+${ut.id.trueque.id}+'/user/'+ ${user.username} +'/accept'}" class="btn btn-xs btn-success">
+                                                                        <i class="fa fa-check" aria-hidden="true"></i> Aceptar
+                                                                    </a>
+                                                                    <a th:href="'/profile/trueques/' + ${ut.id.trueque.id}" class="btn btn-xs">
+                                                                        <i class="fa fa-bars" aria-hidden="true"></i> Detalle
+                                                                    </a>
+                                                                    <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${ut.id.trueque.id}">Rechazar</button>
+                                                                </div>
+                                                                <div th:if="${ut.id.trueque.isActivo()}">
+                                                                    <button type="button" class="btn btn-xs btn-success confirm" th:attr="data-id=${ut.id.trueque.id}">Confirmar</button>
+                                                                    <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${ut.id.trueque.id}">Cancelar</button>
+                                                                    <a th:href="'/profile/trueques/' + ${ut.id.trueque.id}" class="btn btn-xs">
+                                                                        <i class="fa fa-bars" aria-hidden="true"></i> Detalle
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                            <div th:if="${trueque.isActivo()}">
-                                                                <button type="button" class="btn btn-xs btn-success confirm" th:attr="data-id=${trueque.id}">Confirmar</button>
-                                                                <button type="button" class="btn btn-xs btn-danger cancel" th:attr="data-id=${trueque.id}">Cancelar</button>
-                                                                <a th:href="'/profile/trueques/' + ${trueque.id}" class="btn btn-xs">
+                                                            <div th:if="${!ut.showActions}">
+                                                                <a th:href="'/profile/trueques/' + ${ut.id.trueque.id}" class="btn btn-xs">
                                                                     <i class="fa fa-bars" aria-hidden="true"></i> Detalle
                                                                 </a>
                                                             </div>
