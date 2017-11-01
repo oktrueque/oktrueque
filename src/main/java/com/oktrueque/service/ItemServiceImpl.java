@@ -147,7 +147,13 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item deleteIfPossible(Long id) {
         List<ItemTrueque> itemTrueques = itemTruequeRepository.findById_ItemId(id);
-        if(itemTrueques.size() == 0){
+        Boolean canBeDeleted= false;
+       for(ItemTrueque itemTrueque: itemTrueques){
+           if(itemTrueque.getId().getTrueque().getStatus() > Constants.TRUEQUE_STATUS_ACTIVE){
+            canBeDeleted = true;
+           }
+       }
+        if(itemTrueques.size()==0 || canBeDeleted){
             Item item = itemRepository.findOne(id);
             item.setStatus(Constants.ITEM_STATUS_DELETED);
             itemRepository.save(item);
