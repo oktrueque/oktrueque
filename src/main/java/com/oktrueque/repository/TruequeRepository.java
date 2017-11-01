@@ -12,5 +12,5 @@ import java.util.List;
 public interface TruequeRepository extends CrudRepository<Trueque, Long> {
 
     Trueque findTruequeById(long id);
-    Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses);
+    List<Trueque> findBy(Long id, int[] statuses);
 }

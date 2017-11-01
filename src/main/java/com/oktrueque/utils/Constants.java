@@ -7,15 +7,58 @@ import java.util.Random;
 public class Constants {
 
     public static final int TRUEQUE_STATUS_PENDING = 0;
+    public static final String TRUEQUE_STATUS_NAME_PENDING = "Pendiente";
     public static final int TRUEQUE_STATUS_ACTIVE = 1;
+    public static final String TRUEQUE_STATUS_NAME_ACTIVE = "Activo";
     public static final int TRUEQUE_STATUS_REJECTED = 2;
+    public static final String TRUEQUE_STATUS_NAME_REJECTED = "Rechazado";
     public static final int TRUEQUE_STATUS_CANCELED = 3;
+    public static final String TRUEQUE_STATUS_NAME_CANCELED = "Cancelado";
     public static final int TRUEQUE_STATUS_CONFIRMED = 4;
+    public static final String TRUEQUE_STATUS_NAME_CONFIRMED = "Confirmado";
 
     public static final int ITEM_STATUS_PENDING = 0;
+    public static final String ITEM_STATUS_NAME_PENDING = "Pendiente";
     public static final int ITEM_STATUS_ACTIVE = 1;
+    public static final String ITEM_STATUS_NAME_ACTIVE = "Activo";
     public static final int ITEM_STATUS_DELETED = 2;
+    public static final String ITEM_STATUS_NAME_DELETED = "Borrado";
     public static final int ITEM_STATUS_BANNED = 3;
+    public static final String ITEM_STATUS_NAME_BANNED = "Banneado";
+    public static final int ITEM_STATUS_EXCHANGED = 4;
+    public static final String ITEM_STATUS_NAME_EXCHANGED = "Trocado";
+
+    public static String getTruequeStatusName(int key){
+        switch(key){
+            case TRUEQUE_STATUS_PENDING:
+                return TRUEQUE_STATUS_NAME_PENDING;
+            case TRUEQUE_STATUS_ACTIVE:
+                return TRUEQUE_STATUS_NAME_ACTIVE;
+            case TRUEQUE_STATUS_REJECTED:
+                return TRUEQUE_STATUS_NAME_REJECTED;
+            case TRUEQUE_STATUS_CANCELED:
+                return TRUEQUE_STATUS_NAME_CANCELED;
+            case TRUEQUE_STATUS_CONFIRMED:
+                return TRUEQUE_STATUS_NAME_CONFIRMED;
+        }
+        return "Error";
+    }
+
+    public static String getItemStatusName(int key){
+        switch (key){
+            case ITEM_STATUS_PENDING:
+                return ITEM_STATUS_NAME_PENDING;
+            case ITEM_STATUS_ACTIVE:
+                return ITEM_STATUS_NAME_ACTIVE;
+            case ITEM_STATUS_DELETED:
+                return ITEM_STATUS_NAME_DELETED;
+            case ITEM_STATUS_BANNED:
+                return ITEM_STATUS_NAME_BANNED;
+            case ITEM_STATUS_EXCHANGED:
+                return ITEM_STATUS_NAME_EXCHANGED;
+        }
+        return "Error";
+    }
 
     public static final String IMG_PICTURE_DEFAULT = "https://s3-sa-east-1.amazonaws.com/oktrueque/default/default-image.png";
 

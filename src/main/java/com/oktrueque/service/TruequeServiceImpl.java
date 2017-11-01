@@ -64,7 +64,11 @@ public class TruequeServiceImpl implements TruequeService {
         Trueque truequeSaved = truequeRepository.findOne(id);
         List<UserLite> users = new ArrayList<>();
         List<UserTrueque> ut = userTruequeRepository.findByIdTruequeId(id);
-        ut.forEach(userTrueque -> users.add(userTrueque.getId().getUser()));
+        for(UserTrueque userTrueque : ut){
+            if(userTrueque.getId().getUser().getUsername().equals(username)){
+                users.add(userTrueque.getId().getUser());
+            }
+        }
 
         if(!this.updateUserTruequeStatus(truequeSaved, username, Constants.TRUEQUE_STATUS_CONFIRMED)){
             truequeSaved.setStatus(Constants.TRUEQUE_STATUS_CONFIRMED);
@@ -163,11 +167,6 @@ public class TruequeServiceImpl implements TruequeService {
     @Override
     public List<ItemTrueque> getItemsTruequeById_TruequeId(long id){
         return itemTruequeRepository.findById_TruequeId(id);
-    }
-
-    @Override
-    public Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses) {
-        return truequeRepository.findTruequeByIdAndStatusIsNotIn(id, statuses);
     }
 
     @Override

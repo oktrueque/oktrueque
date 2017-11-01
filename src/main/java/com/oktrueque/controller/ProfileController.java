@@ -63,6 +63,9 @@ public class ProfileController {
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         LinkedList<Trueque> trueques = new LinkedList<>();
         for (UserTrueque userTrueque : userTrueques) {
+            Trueque trueque = userTrueque.getId().getTrueque();
+            if(trueque.getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
+                    trueque.getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
             trueques.add(userTrueque.getId().getTrueque());
         }
         Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));

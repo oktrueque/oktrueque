@@ -17,8 +17,6 @@ public interface TruequeService {
 
     Trueque getTruequeById (long id);
 
-    Trueque findTruequeByIdAndStatusIsNotIn(Long id, int[] statuses);
-
     void acceptTruequeAndGetUsersBelongingTo(Long id, String username);
 
     void updateTrueque (Trueque trueque);

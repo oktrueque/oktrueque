@@ -1,5 +1,6 @@
 package com.oktrueque.model;
 
+import com.oktrueque.utils.Constants;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -48,15 +49,13 @@ public class Trueque {
         this.id = id;
     }
 
-    public String getStatus() {
-        switch (this.status){
-            case 0: return "Pendiente";
-            case 1: return "Activo";
-            case 2: return "Rechazado";
-            case 3: return "Confirmado";
-            case 4: return "Cancelado";
-            default: return "Sin definir";
-    }}
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getStatusValue(){
+        return Constants.getTruequeStatusName(this.status);
+    }
 
     public boolean isPendiente(){return this.status==0;}
 

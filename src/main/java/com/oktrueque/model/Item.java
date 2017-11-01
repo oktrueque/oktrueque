@@ -1,6 +1,7 @@
 package com.oktrueque.model;
 
 
+import com.oktrueque.utils.Constants;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -142,13 +143,7 @@ public class Item {
     }
 
     public String getStatusValue(){
-        switch (this.status){
-            case 0: return "Pendiente";
-            case 1: return "Activo";
-            case 2: return "Eliminado";
-            case 3: return "Bloqueado";
-            default: return "Sin definir";
-        }
+        return Constants.getItemStatusName(this.status);
     }
 
     public List<Tag> getTags() {
