@@ -11,12 +11,13 @@ public class UserTrueque implements Comparable {
 
     @EmbeddedId
     private UserTruequeId id;
-
     @Column(name = "orden")
     private Integer order;
-
     @Column(name= "status")
     private Integer status;
+    @Column(name="show_actions")
+    private Boolean showActions;
+
 
     public UserTrueque() {
     }
@@ -45,6 +46,14 @@ public class UserTrueque implements Comparable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Boolean getShowActions() {
+        return showActions;
+    }
+
+    public void setShowActions(Boolean showActions) {
+        this.showActions = showActions;
     }
 
     @Override
