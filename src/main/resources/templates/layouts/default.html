@@ -87,16 +87,18 @@
 </head>
 <body class="theme-green menu-static">
 
-    <!-- sidebar bar -->
-    <div th:replace="fragments/sidebar :: sidebar"/>
-    <!-- /sidebar bar -->
+<!-- sidebar bar -->
+<div th:replace="fragments/sidebar :: sidebar"/>
+<!-- /sidebar bar -->
 
     <!-- navbar bar -->
     <div th:replace="fragments/navbar :: navbar"/>
     <!-- /navbar bar -->
 
+
+
     <!-- page content -->
-    <div layout:fragment="content"/>
+    <div id="content" layout:fragment="content"/>
     <!-- /page content -->
 
 </body>

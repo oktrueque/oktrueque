@@ -1,11 +1,11 @@
 <th:block xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" th:fragment="navbar">
     <nav class="top-menu">
-        <img height="20px" width="160px" class="margin-left-10 margin-top-30 float-left" alt="Lo Tengo, Lo Tienes" src="../../static/common/img/lotengolotienes.png" th:src="@{/common/img/lotengolotienes.png}"/>
         <div class="menu-icon-container hidden-md-up">
             <div class="animate-menu-button left-menu-toggle">
                 <div><!-- --></div>
             </div>
         </div>
+        <img id="loTengoloTienes" height="20px" width="160px" class="margin-left-10 margin-top-30 float-left" alt="Lo Tengo, Lo Tienes" src="../../static/common/img/lotengolotienes.png" th:src="@{/common/img/lotengolotienes.png}"/>
         <div class="menu">
             <div sec:authorize="isAuthenticated()">
                 <div class="menu-user-block">
@@ -41,7 +41,7 @@
                 </div>
             </div>
                 <div class="menu-info-block">
-                    <div class="right hidden-md-down margin-left-20">
+                    <div class="right margin-left-20">
                         <div class="search-block">
                             <form action="/items" th:method="GET">
                                 <div class="form-input-icon form-input-icon-right">
