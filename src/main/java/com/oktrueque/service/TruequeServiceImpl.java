@@ -291,7 +291,31 @@ public class TruequeServiceImpl implements TruequeService {
         List<ItemTrueque> itemTrueques = new ArrayList<>();
         idItems.forEach(idItem -> itemTrueques.add(new ItemTrueque(new ItemTruequeId(idTrueque, idItem))));
         itemTruequeRepository.save(itemTrueques);
-
+        sendMailTruequeEdit(idTrueque,idUser);
         return null;
+    }
+
+    private void sendMailTruequeEdit(Long idTrueque, Long idUser){
+        String url = urlServer + "profile/trueques/" + idTrueque;
+        Email emailObject = new Email();
+        User user = userRepository.findUserById(idUser);
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(idTrueque);
+        String userTargetEmail = "";
+        Trueque trueque = new Trueque();
+
+        for (UserTrueque UT: userTrueques) {
+            if(UT.getId().getUser().getId()!=idUser){
+                userTargetEmail = UT.getId().getUser().getEmail();
+                trueque = UT.getId().getTrueque();
+            }
+        }
+        Map<String,Object> model = new LinkedHashMap<>();
+        emailObject.setMailTo(userTargetEmail);
+        emailObject.setMailSubject("OkTrueque - Trueque editado");
+        model.put("trueque",trueque);
+        model.put("userWhoEdits",user);
+        model.put("url",url);
+        emailObject.setModel(model);
+        emailService.sendMail(emailObject,"truequeEdited.ftl");
     }
 }
