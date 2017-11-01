@@ -284,20 +284,57 @@ public class ProfileController {
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         LinkedList<User> users = new LinkedList<>();
         User userNuevo;
+        User userOfferer = null;
+        User userTarget = null;
         List<ItemTrueque> itemsTrueques = truequeService.getItemsTruequeById_TruequeId(id);
         LinkedList<Item> items = new LinkedList<>();
+        LinkedList<Item> itemsOfferer = new LinkedList<>();
+        LinkedList<Item> itemsPrincipal = new LinkedList<>();
         Item itemNuevo;
+        LinkedList<User> usersTrueque = new LinkedList<>();
+
         for (ItemTrueque itemTrueque : itemsTrueques) {
             itemNuevo = itemService.getItemById(itemTrueque.getId().getItem().getId());
             items.add(itemNuevo);
         }
         for (UserTrueque userTrueque : userTrueques) {
+            userNuevo = userService.getUserById(userTrueque.getId().getUser().getId());
             if (userTrueque.getId().getUser().getId() != userLogged.getId()) {
-                userNuevo = userService.getUserById(userTrueque.getId().getUser().getId());
                 users.add(userNuevo);
             }
+            usersTrueque.add(userNuevo);
         }
-        model.addAttribute("items", items);
+
+            if (usersTrueque.getFirst().getId() == userLogged.getId()) {
+                userOfferer = usersTrueque.getLast();
+                userTarget = usersTrueque.get(1);
+            } else if (usersTrueque.getLast().getId() == userLogged.getId()){
+                userOfferer = usersTrueque.get(trueque.getPeopleCount()-2);
+                userTarget = usersTrueque.getFirst();
+            }
+            else{
+                for(int i=1;i<trueque.getPeopleCount();i++){
+                    if(usersTrueque.get(i).getId() == userLogged.getId()){
+                        userOfferer = usersTrueque.get(i-1);
+                        userTarget = usersTrueque.get(i+1);
+                    }
+                }
+            }
+
+        for (Item item : items) {
+            if(item.getUser().getId() == userLogged.getId()){
+                itemsPrincipal.add(item);
+            }
+            else if(item.getUser().getId() == userOfferer.getId()){
+                itemsOfferer.add(item);
+            }
+        }
+
+        model.addAttribute("peopleCount", trueque.getPeopleCount());
+        model.addAttribute("userTarget", userTarget);
+        model.addAttribute("userOfferer", userOfferer);
+        model.addAttribute("itemsOfferer", itemsOfferer);
+        model.addAttribute("itemsPrincipal", itemsPrincipal);
         model.addAttribute("users", users);
         model.addAttribute("trueque", trueque);
         return "truequeDetail";

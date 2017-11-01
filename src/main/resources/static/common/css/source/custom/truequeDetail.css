@@ -1,0 +1,40 @@
+.white-background{
+    background-color: #FFFFFF;
+}
+
+.font-title-spans{
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.info-space{
+    padding-left: 10px;
+}
+
+.font-subtitle-spans{
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left !important;
+}
+
+.width-full{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.thirty-percent-width{
+    width: 30% !important;
+    height: 30% !important;
+}
+
+.margin-top-negative-15{
+    margin-top: -15px !important;
+}
+
+.card-title{
+    font-weight: 600;
+}
+
+.height-170{
+    height: 170px;
+}

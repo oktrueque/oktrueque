@@ -22,9 +22,9 @@
                             <div class="pull-right menu-item-dots">
                                 <div sec:authorize="isAuthenticated()" class="dropdown">
                                     <a href="javascript: void(0);"
-                                       data-toggle="dropdown" aria-expanded="false">
-                                        <i class="icmn-more2"></i>
-                                    </a>
+                                            data-toggle="dropdown" aria-expanded="false">
+                                    <i class="icmn-more2"></i>
+                                </a>
                                     <ul th:if="${#authentication.principal.id != user.id}" class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
                                         <a class="dropdown-item" data-toggle="modal" data-target="#modal-complaint" href="javascript:void(0)"><i class="dropdown-icon icmn-compass"></i> Denunciar este item</a>
                                     </ul>
