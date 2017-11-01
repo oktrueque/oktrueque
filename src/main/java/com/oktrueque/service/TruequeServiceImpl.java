@@ -114,23 +114,33 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     private void sendAcceptTruequeMail(Trueque trueque, UserLite me, UserLite userTarget){
-
+        String url = urlServer + "/profile/messages";
+        Email emailObject = new Email();
+        String email="";
+        Map<String,Object> model = new LinkedHashMap<>();
+        emailObject.setMailTo(email);
+        emailObject.setMailSubject("OkTrueque - Trueque aceptado!");
+        model.put("trueque",trueque);
+        model.put("me",me);
+        model.put("userTarget",userTarget);
+        model.put("url",url);
+        emailObject.setModel(model);
+        emailService.sendMail(emailObject,"truequeAceptado.ftl");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     private void sendConfirmTruequeMail(Trueque trueque, UserLite me, UserLite userTarget){
-
+        String url = urlServer + "/profile/messages";
+        Email emailObject = new Email();
+        String email="";
+        Map<String,Object> model = new LinkedHashMap<>();
+        emailObject.setMailTo(email);
+        emailObject.setMailSubject("OkTrueque - Trueque confirmado!");
+        model.put("trueque",trueque);
+        model.put("me",me);
+        model.put("userTarget",userTarget);
+        model.put("url",url);
+        emailObject.setModel(model);
+        emailService.sendMail(emailObject,"truequeConfirmado.ftl");
     }
 
     private void createChat(Trueque trueque){
