@@ -14,12 +14,8 @@
             </table>
             <div style="padding: 40px 40px 20px 40px; background: #fff;">
                 <p>Hola ${userTarget.getName()}!</p>
-                <p>La propuesta ha sido confirmada, puedes comunicarte con ${me.getName()} siguiendo el siguiente enlace.</p>
+                <p>El trueque con ${me.getName()} ha finalizado con exito, gracias por ser parte de OkTrueque.</p>
 
-                <a href="${url}"
-                   style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px">
-                    Ver mensajes
-                </a>
             </div>
             <div style="text-align: center; font-size: 12px; color: #a09bb9; margin-top: 20px">
                 <p>
