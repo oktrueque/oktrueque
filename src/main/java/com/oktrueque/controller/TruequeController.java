@@ -54,11 +54,12 @@ public class TruequeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/trueques")
     public String registerTrueque(@RequestParam(value = "itemsOffer") ArrayList<Item> itemsOffer,
-                                   @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand){
+                                   @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand,
+                                  Principal principal){
         Map<Integer,List<Item>> participants = new LinkedHashMap<>();
         participants.put(1,itemsOffer);
         participants.put(2,itemsDemand);
-        truequeService.saveTrueque(participants);
+        truequeService.saveTrueque(participants, principal.getName());
         return "redirect:/profile";
     }
 

@@ -36,12 +36,12 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public void saveTrueque(Map<Integer, List<Item>> participants) {
+    public void saveTrueque(Map<Integer, List<Item>> participants, String username) {
         Trueque truequeToSave = new Trueque(0);
         truequeToSave.setPeopleCount(participants.size());
         truequeToSave.setProposalDate(new Date());
         Trueque truequeSaved = truequeRepository.save(truequeToSave);
-        saveItemsAndUsers(participants, truequeSaved);
+        saveItemsAndUsers(participants, truequeSaved, username);
         sendMailTo(participants.get(1).get(0).getUser(),participants.get(2).get(0).getUser(),
                 participants.get(1),participants.get(2),truequeSaved);
     }
@@ -162,19 +162,25 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
 
-    private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved) {
+    private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved, String username) {
         participants.entrySet().forEach(entry -> {
-            userTruequeRepository.save(
-                    createUserTrueque(truequeSaved, entry.getValue().get(0).getUser(), entry.getKey()));
+            if(entry.getValue().get(0).getUser().getUsername().equals(username)){
+                userTruequeRepository.save(
+                        createUserTrueque(truequeSaved, entry.getValue().get(0).getUser(), entry.getKey(), false));
+            }else{
+                userTruequeRepository.save(
+                        createUserTrueque(truequeSaved, entry.getValue().get(0).getUser(), entry.getKey(), true));
+            }
+
             entry.getValue().forEach(item ->
                     itemTruequeRepository.save(createItemTrueque(truequeSaved, item)));
         });
     }
 
-    private UserTrueque createUserTrueque(Trueque truequeSaved, UserLite user, Integer orden) {
+    private UserTrueque createUserTrueque(Trueque truequeSaved, UserLite user, Integer orden, Boolean showActions) {
         UserTrueque userTrueque = (orden.equals(1)) ?
-                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, Constants.TRUEQUE_STATUS_ACTIVE) :
-                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, Constants.TRUEQUE_STATUS_PENDING);
+                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, Constants.TRUEQUE_STATUS_ACTIVE, showActions) :
+                new UserTrueque(new UserTruequeId(truequeSaved, user), orden, Constants.TRUEQUE_STATUS_PENDING, showActions);
         return userTrueque;
     }
 
@@ -316,7 +322,7 @@ public class TruequeServiceImpl implements TruequeService {
         emailObject.setMailTo(userTargetEmail);
         emailObject.setMailSubject("OkTrueque - Trueque editado");
         model.put("trueque",trueque);
-        model.put("userWhoEdits",user);
+        model.put("userWhoEdits",user.getName() + " " + user.getLast_name());
         model.put("url",url);
         emailObject.setModel(model);
         emailService.sendMail(emailObject,"truequeEdited.ftl");

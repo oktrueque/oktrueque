@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface TruequeService {
 
-    void saveTrueque(Map<Integer,List<Item>> participants);
+    void saveTrueque(Map<Integer,List<Item>> participants, String username);
 
     List<UserTrueque> getUserTruequeById_UserId(long id);
 

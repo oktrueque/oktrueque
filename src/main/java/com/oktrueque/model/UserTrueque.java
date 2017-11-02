@@ -26,10 +26,11 @@ public class UserTrueque implements Comparable {
         return id;
     }
 
-    public UserTrueque(UserTruequeId id, Integer order, Integer status) {
+    public UserTrueque(UserTruequeId id, Integer order, Integer status, Boolean showActions) {
         this.id = id;
         this.order = order;
         this.status = status;
+        this.showActions = showActions;
     }
 
     public Integer getOrder() {
