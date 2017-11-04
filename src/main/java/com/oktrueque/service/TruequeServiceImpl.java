@@ -270,7 +270,7 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     public boolean isTimeToAsk(Trueque trueque) {
-        if (trueque.getStatus().equals("Activo")) {
+        if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_ACTIVE)) {
             if (itsBeenSevenDays(trueque.getAcceptanceDate())) {
                 return true;
             }
