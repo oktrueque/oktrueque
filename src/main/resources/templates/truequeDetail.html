@@ -37,27 +37,25 @@
                     <div class="col-lg-12 ">
                     <div class="col-lg-12">
                          <div class="col-lg-12 white-background margin margin-bottom-20">
-                            <div class="col-lg-6">
-                                <span th:if="${peopleCount > 2}" class="font-subtitle-spans">Vas a recibir los objetos de parte de:</span>
-                                <span th:if="${peopleCount == 2}" class="font-subtitle-spans">Vas a trocar con:</span> <br/>
+                            <div class="col-lg-6 padding-vertical-10">
+                                <span th:if="${peopleCount > 2}" class="font-subtitle-spans ">Vas a recibir los objetos de parte de:</span>
+                                <span th:if="${peopleCount == 2}" class="font-subtitle-spans ">Vas a trocar con:</span> <br/>
                                 <div class="col-lg-6">
-                                    <span class="col-lg-12">Nombre:<span class="info-space" th:text="${userOfferer.name}"></span></span>
-                                    <span class="col-lg-12">Apellido:<span class="info-space" th:text="${userOfferer.last_name}"></span></span>
+                                    <span class="col-lg-12"><span class="info-space" th:text="${userOfferer.name + ' ' + userOfferer.last_name}"></span></span>
                                 </div>
                                 <div class="col-lg-6">
-                                    <a th:href="@{'/users/' + ${userOfferer.username}}"><img class="avatar thirty-percent-width margin-top-negative-15 float-right" th:src="${userOfferer.photo1}"/></a>
+                                    <a target="_blank" th:href="@{'/users/' + ${userOfferer.username}}"><img class="avatar thirty-percent-width margin-top-negative-15 float-right" th:src="${userOfferer.photo1}"/></a>
                                 </div>
                             </div>
-                              <div th:if="${peopleCount > 2}" class="col-lg-6">
+                              <div th:if="${peopleCount > 2}" class="col-lg-6 padding-vertical-10">
                                   <div class="colg-lg-12">
-                                  <span class="font-subtitle-spans">Vas a entregar los objetos a:</span>
+                                  <span class="font-subtitle-spans ">Vas a entregar los objetos a:</span>
                                   </div>
                                   <div class="col-lg-6">
-                                      <span>Nombre:<span class="info-space" th:text="${userTarget.name}"></span></span>
-                                      <span>Apellido:<span class="info-space" th:text="${userTarget.last_name}"></span></span>
+                                      <span><span class="info-space" th:text="${userTarget.name + ' ' + userTarget.last_name}"></span></span>
                                   </div>
                                   <div class="col-lg-6">
-                                      <a th:href="@{'/users/' + ${userTarget.username}}"><img class="avatar thirty-percent-width margin-top-negative-15 float-right" th:src="${userTarget.photo1}"/></a>
+                                      <a target="_blank" th:href="@{'/users/' + ${userTarget.username}}"><img class="avatar thirty-percent-width margin-top-negative-15 float-right" th:src="${userTarget.photo1}"/></a>
                                   </div>
                               </div>
                             </div>
