@@ -15,25 +15,6 @@ initialize = function(id, photo, name, groups, t, h){
     headers = h;
 };
 
-var vis = (function(){
-    var stateKey, eventKey, keys = {
-        hidden: "visibilitychange",
-        webkitHidden: "webkitvisibilitychange",
-        mozHidden: "mozvisibilitychange",
-        msHidden: "msvisibilitychange"
-    };
-    for (stateKey in keys) {
-        if (stateKey in document) {
-            eventKey = keys[stateKey];
-            break;
-        }
-    }
-    return function(c) {
-        if (c) document.addEventListener(eventKey, c);
-        return !document[stateKey];
-    }
-})();
-
 showLoader = function(){
     $('#conversation').html(
         '<div class="loader-little"></div>'
@@ -224,23 +205,8 @@ appendMessage = function(message){
             '</div>' +
             '</div>'
         );
-        if(!vis()){
-            pushNotification(message);
-        }
     }
     $('#conversation').animate({scrollTop: $('#conversation').prop("scrollHeight")}, 500);
-};
-
-pushNotification = function(message){
-    Push.create(message.user.name, {
-        body: message.message,
-        icon: message.user.photo1,
-        timeout: 4000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
 };
 
 setLastMessage = function(id, message){
@@ -307,6 +273,9 @@ function showMessageOutput(messageOutput) {
     else{
         showNotification(messageOutput);
     }
+    if(!vis()){
+        pushNotification(messageOutput.user.name, messageOutput.message, messageOutput.user.photo1);
+    }
 }
 
 function showGroupMessageOutput(messageOutput) {
@@ -318,6 +287,9 @@ function showGroupMessageOutput(messageOutput) {
         else{
             showNotification(messageOutput);
         }
+    }
+    if(!vis()){
+        pushNotification(messageOutput.user.name, messageOutput.message, messageOutput.user.photo1);
     }
 }
 
