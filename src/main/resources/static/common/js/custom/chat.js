@@ -171,7 +171,7 @@ displayMessageWithConversation = function(conversation, message){
         conversation.append(
             '<div id="message-'+ message.id +'" class="conversation-item you">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/profile">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
