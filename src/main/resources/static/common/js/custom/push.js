@@ -21,7 +21,7 @@ pushNotification = function(name, message, image){
     Push.create(name, {
         body: message,
         icon: image,
-        timeout: 4000,
+        timeout: 10000,
         onClick: function () {
             window.focus();
             this.close();

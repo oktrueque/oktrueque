@@ -28,6 +28,9 @@ function connect(data) {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
+            showReply(JSON.parse(messageOutput.body));
+        });
+        stompClient.subscribe("/user/queue/notification", function(messageOutput) {
             showNotification(JSON.parse(messageOutput.body));
         });
         data.groups.forEach(function(groupId){
@@ -38,7 +41,7 @@ function connect(data) {
     });
 }
 
-showNotification = function(message){
+showReply = function(message){
     let span = $('#sb-messages');
     span.css('display', 'inline');
     let unread = parseInt(span.attr('data-unread'));
@@ -47,6 +50,14 @@ showNotification = function(message){
 
     if(!vis()){
         pushNotification(message.user.name, message.message, message.user.photo1);
+    }
+};
+
+showNotification = function(message){
+    if(!vis()){
+        pushNotification(message.user.name, message.message, message.user.photo1);
+    }else{
+        swal(message.user.name, message.message);
     }
 };
 

@@ -37,8 +37,9 @@ public class Message {
         this.user = user;
     }
 
-    public Message(String message) {
+    public Message(String message, UserLite user) {
         this.message = message;
+        this.user = user;
     }
 
     public Long getId() {
