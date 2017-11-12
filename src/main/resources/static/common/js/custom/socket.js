@@ -14,25 +14,6 @@ $(document).ready(function(){
     });
 });
 
-var vis = (function(){
-    var stateKey, eventKey, keys = {
-        hidden: "visibilitychange",
-        webkitHidden: "webkitvisibilitychange",
-        mozHidden: "mozvisibilitychange",
-        msHidden: "msvisibilitychange"
-    };
-    for (stateKey in keys) {
-        if (stateKey in document) {
-            eventKey = keys[stateKey];
-            break;
-        }
-    }
-    return function(c) {
-        if (c) document.addEventListener(eventKey, c);
-        return !document[stateKey];
-    }
-})();
-
 function displayInSidebar(count){
     let unread = parseInt(count);
     let span = $('#sb-messages');
@@ -65,20 +46,8 @@ showNotification = function(message){
     span.text(unread +1);
 
     if(!vis()){
-        pushNotification(message);
+        pushNotification(message.user.name, message.message, message.user.photo1);
     }
-};
-
-pushNotification = function(response){
-    Push.create(response.user.name, {
-        body: response.message,
-        icon: response.user.photo1,
-        timeout: 4000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
 };
 
 function disconnect() {
