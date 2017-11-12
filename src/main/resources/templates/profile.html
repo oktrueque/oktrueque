@@ -165,17 +165,21 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="ut : ${userTrueques}" th:if="${#authentication.principal.id != ut.id.user.id}">
+                                                    <tr th:each="ut : ${userTrueques}" th:if="${#authentication.principal.id == ut.id.user.id}">
                                                         <td th:text="${#dates.format(ut.id.trueque.proposalDate, 'dd-MM-yyyy')}"></td>
                                                           <td th:text="${ut.id.trueque.peopleCount}"></td>
 
                                                               <td>
-                                                                  <div th:if="${ut.id.trueque.peopleCount == 2}" th:text="${ut.id.user.name}">
+                                                                  <div th:if="${ut.id.trueque.peopleCount == 2}"  th:each="utt : ${userTrueques}">
+                                                                      <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
+                                                                          <div th:text="${utt.id.user.name}">
+                                                                          </div>
+                                                                      </div>
                                                                   </div>
                                                                   <div th:if="${ut.id.trueque.peopleCount == 3}" th:each="utt : ${userTrueques}">
                                                                       <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
                                                                           <div th:if="${utt.id.user.id != #authentication.principal.id}">
-                                                                             <div th:text="${ut.id.user.name + ' y con ' + utt.id.user.name}">
+                                                                             <div th:text="${utt.id.user.name}">
                                                                              </div>
                                                                           </div>
                                                                       </div>
