@@ -37,6 +37,10 @@ public class Message {
         this.user = user;
     }
 
+    public Message(String message) {
+        this.message = message;
+    }
+
     public Long getId() {
         return id;
     }
