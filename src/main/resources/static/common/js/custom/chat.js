@@ -203,7 +203,7 @@ appendMessage = function(message){
         conversation.append(
             '<div class="conversation-item you">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/profile">' +
             '<img src="'+ user.photo +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
@@ -216,7 +216,7 @@ appendMessage = function(message){
         conversation.append(
             '<div class="conversation-item">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/users/'+ message.user.username +'">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
