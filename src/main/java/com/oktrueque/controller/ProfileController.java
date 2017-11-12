@@ -61,16 +61,14 @@ public class ProfileController {
         Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3}, new PageRequest(0,5));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTruequesDB = truequeService.getUserTruequeById_UserId(user.getId());
-        LinkedList<UserTrueque> userTrueques = new LinkedList<>();
+        LinkedList<UserTrueque> userTruequesAll = new LinkedList<>();
+
         for (UserTrueque userTrueque : userTruequesDB) {
             if(userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
                     userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
-                userTrueques.add(userTrueque);
-//            Trueque trueque = userTrueque.getId().getTrueque();
-//            if(trueque.getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
-//                    trueque.getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
-//            trueques.add(userTrueque.getId().getTrueque());
+                     userTruequesAll.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque.getId().getTrueque().getId()));
         }
+
         Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
@@ -83,8 +81,8 @@ public class ProfileController {
         model.addAttribute("tags", tags);
         model.addAttribute("item", new Item(0));
         model.addAttribute("categories", categoryService.getCategories());
-        model.addAttribute("hasTrueques", userTrueques.size() != 0 ? true : false);
-        model.addAttribute("userTrueques", userTrueques);
+        model.addAttribute("hasTrueques", userTruequesAll.size() != 0 ? true : false);
+        model.addAttribute("userTrueques", userTruequesAll);
         model.addAttribute("comments", comments);
         model.addAttribute("hasComments", comments.getTotalElements() != 0 ? true : false);
         model.addAttribute("complaintTypes", complaintTypes);

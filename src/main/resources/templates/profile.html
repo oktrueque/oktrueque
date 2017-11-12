@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layouts/default">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:dt="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/default">
 <head>
     <link rel="stylesheet" type="text/css" href="../static/common/css/source/custom/profile.css" th:href="@{/common/css/source/custom/profile.css}"/>
     <!-- MagicSuggest -->
@@ -157,16 +159,31 @@
                                                     <tr>
                                                         <th>Fecha de Propuesta</th>
                                                         <th>Participantes</th>
+                                                        <th>Realizado con</th>
                                                         <th>Estado</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="ut : ${userTrueques}">
+                                                    <tr th:each="ut : ${userTrueques}" th:if="${#authentication.principal.id != ut.id.user.id}">
                                                         <td th:text="${#dates.format(ut.id.trueque.proposalDate, 'dd-MM-yyyy')}"></td>
-                                                        <td th:text="${ut.id.trueque.peopleCount}"></td>
-                                                        <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
-                                                        <td >
+                                                          <td th:text="${ut.id.trueque.peopleCount}"></td>
+
+                                                              <td>
+                                                                  <div th:if="${ut.id.trueque.peopleCount == 2}" th:text="${ut.id.user.name}">
+                                                                  </div>
+                                                                  <div th:if="${ut.id.trueque.peopleCount == 3}" th:each="utt : ${userTrueques}">
+                                                                      <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
+                                                                          <div th:if="${utt.id.user.id != #authentication.principal.id}">
+                                                                             <div th:text="${ut.id.user.name + ' y con ' + utt.id.user.name}">
+                                                                             </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </td>
+
+                                                          <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
+                                                          <td >
                                                             <div th:if="${ut.showActions}">
                                                                 <div th:if="${ut.id.trueque.isPendiente()}">
                                                                     <a th:href="@{'/trueques/'+${ut.id.trueque.id}+'/user/'+ ${user.username} +'/accept'}" class="btn btn-xs btn-success">
@@ -190,7 +207,7 @@
                                                                     <i class="fa fa-bars" aria-hidden="true"></i> Detalle
                                                                 </a>
                                                             </div>
-                                                        </td>
+                                                         </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

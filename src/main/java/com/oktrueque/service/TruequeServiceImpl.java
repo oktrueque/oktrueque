@@ -162,6 +162,7 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
 
+
     private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved, String username) {
         participants.entrySet().forEach(entry -> {
             if(entry.getValue().get(0).getUser().getUsername().equals(username)){

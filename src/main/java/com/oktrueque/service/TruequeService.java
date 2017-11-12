@@ -2,6 +2,7 @@ package com.oktrueque.service;
 
 import com.oktrueque.model.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public interface TruequeService {
     void acceptTruequeAndGetUsersBelongingTo(Long id, String username);
 
     void updateTrueque (Trueque trueque);
+
 
     Map getTruequeDetail(Long truequeId);
 
