@@ -166,7 +166,6 @@ display = function(messages){
 
 displayMessageWithConversation = function(conversation, message){
     let userPhoto = message.user.photo1;
-    console.log(message);
     if(message.user.id === userId){
         conversation.append(
             '<div id="message-'+ message.id +'" class="conversation-item you">' +
@@ -375,7 +374,6 @@ editTrueque = function(btn){
                 xhr.setRequestHeader(header, token);
             },
             success: function (message) {
-                console.log(message);
                 l.stop();
                 $('#modalTruequeDetail').modal('hide');
                 if(message){
