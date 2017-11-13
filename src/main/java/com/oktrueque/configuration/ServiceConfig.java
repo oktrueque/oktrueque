@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -53,6 +54,8 @@ public class ServiceConfig {
     private UserConversationRepository userConversationRepository;
     @Autowired
     private ConversationRepository conversationRepository;
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
 
 
     @Bean
@@ -122,5 +125,10 @@ public class ServiceConfig {
     @Bean
     public ConversationService conversationService(){
         return new ConversationServiceImpl(conversationRepository, userConversationRepository, messageRepository);
+    }
+
+    @Bean
+    public NotificationService notificationService(){
+        return new NotificationServiceImpl(simpMessagingTemplate);
     }
 }

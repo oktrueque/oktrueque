@@ -14,25 +14,6 @@ $(document).ready(function(){
     });
 });
 
-var vis = (function(){
-    var stateKey, eventKey, keys = {
-        hidden: "visibilitychange",
-        webkitHidden: "webkitvisibilitychange",
-        mozHidden: "mozvisibilitychange",
-        msHidden: "msvisibilitychange"
-    };
-    for (stateKey in keys) {
-        if (stateKey in document) {
-            eventKey = keys[stateKey];
-            break;
-        }
-    }
-    return function(c) {
-        if (c) document.addEventListener(eventKey, c);
-        return !document[stateKey];
-    }
-})();
-
 function displayInSidebar(count){
     let unread = parseInt(count);
     let span = $('#sb-messages');
@@ -47,6 +28,9 @@ function connect(data) {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         stompClient.subscribe("/user/queue/reply", function(messageOutput) {
+            showReply(JSON.parse(messageOutput.body));
+        });
+        stompClient.subscribe("/user/queue/notification", function(messageOutput) {
             showNotification(JSON.parse(messageOutput.body));
         });
         data.groups.forEach(function(groupId){
@@ -57,7 +41,7 @@ function connect(data) {
     });
 }
 
-showNotification = function(message){
+showReply = function(message){
     let span = $('#sb-messages');
     span.css('display', 'inline');
     let unread = parseInt(span.attr('data-unread'));
@@ -65,20 +49,16 @@ showNotification = function(message){
     span.text(unread +1);
 
     if(!vis()){
-        pushNotification(message);
+        pushNotification(message.user.name, message.message, message.user.photo1);
     }
 };
 
-pushNotification = function(response){
-    Push.create(response.user.name, {
-        body: response.message,
-        icon: response.user.photo1,
-        timeout: 4000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
+showNotification = function(message){
+    if(!vis()){
+        pushNotification(message.user.name, message.message, message.user.photo1);
+    }else{
+        swal(message.user.name, message.message);
+    }
 };
 
 function disconnect() {

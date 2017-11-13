@@ -28,6 +28,9 @@ public class Constants {
     public static final int ITEM_STATUS_EXCHANGED = 4;
     public static final String ITEM_STATUS_NAME_EXCHANGED = "Trocado";
 
+    public static final int COMPLAINT_STATUS_PENDING = 0;
+    public static final String COMPLAINT_STATUS_NAME_PENDING = "Pendiente";
+
     public static String getTruequeStatusName(int key){
         switch(key){
             case TRUEQUE_STATUS_PENDING:

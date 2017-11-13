@@ -1,12 +1,7 @@
 package com.oktrueque.controller;
 
-import com.oktrueque.model.Item;
-import com.oktrueque.model.Tag;
-import com.oktrueque.model.User;
-import com.oktrueque.service.ItemService;
-import com.oktrueque.service.TruequeService;
-import com.oktrueque.service.UserService;
-import com.oktrueque.service.UserTagService;
+import com.oktrueque.model.*;
+import com.oktrueque.service.*;
 import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,17 +21,20 @@ import java.util.Map;
 @Controller
 public class TruequeController {
 
-    private ItemService itemService;
-    private TruequeService truequeService;
-    private UserService userService;
-    private UserTagService userTagService;
+    private final ItemService itemService;
+    private final TruequeService truequeService;
+    private final UserService userService;
+    private final UserTagService userTagService;
+    private final NotificationService notificationService;
+
 
     @Autowired
-    public TruequeController(ItemService itemService, TruequeService truequeService, UserService userService, UserTagService userTagService){
+    public TruequeController(ItemService itemService, TruequeService truequeService, UserService userService, UserTagService userTagService, NotificationService notificationService){
         this.itemService = itemService;
         this.truequeService = truequeService;
         this.userService = userService;
         this.userTagService = userTagService;
+        this.notificationService = notificationService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
@@ -64,10 +62,21 @@ public class TruequeController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}/user/{username}/accept")
-    public String confirmTrueque(@PathVariable Long id, @PathVariable String username){
+    public String confirmTrueque(@PathVariable Long id, @PathVariable String username, Principal principal){
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         truequeService.acceptTruequeAndGetUsersBelongingTo(id, username);
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
+        List<String> usernamesToSendNotification = new ArrayList<>();
+        for(UserTrueque ut : userTrueques){
+            if(!ut.getId().getUser().getUsername().equals(user.getUsername())){
+                usernamesToSendNotification.add(ut.getId().getUser().getUsername());
+            }
+        }
+        notificationService.sendTruequeAcceptedNotification(usernamesToSendNotification, user);
         return "redirect:/profile/trueques/" + id;
     }
+
+
 
     @RequestMapping(method = RequestMethod.POST, value = "/trueques/{idTrueque}")
     @Transactional

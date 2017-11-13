@@ -104,6 +104,7 @@ public class UserController {
         complaint.setUser_target(userTarget);
         complaint.setUser_origin(userDemandant);
         complaint.setDate(LocalDateTime.now());
+        complaint.setStatus(Constants.COMPLAINT_STATUS_PENDING);
         complaintService.saveComplaint(complaint);
 
         return new ResponseEntity<>(HttpStatus.OK);

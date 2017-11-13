@@ -30,7 +30,8 @@ public class Complaint {
     @ManyToOne
     @JoinColumn(name = "id_user_origin")
     private User user_origin;
-
+    @Column(name = "status")
+    private Integer status;
 
 
 
@@ -92,5 +93,13 @@ public class Complaint {
 
     public void setUser_target(User user_target) {
         this.user_target = user_target;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

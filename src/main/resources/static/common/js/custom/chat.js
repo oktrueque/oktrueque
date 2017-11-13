@@ -15,25 +15,6 @@ initialize = function(id, photo, name, groups, t, h){
     headers = h;
 };
 
-var vis = (function(){
-    var stateKey, eventKey, keys = {
-        hidden: "visibilitychange",
-        webkitHidden: "webkitvisibilitychange",
-        mozHidden: "mozvisibilitychange",
-        msHidden: "msvisibilitychange"
-    };
-    for (stateKey in keys) {
-        if (stateKey in document) {
-            eventKey = keys[stateKey];
-            break;
-        }
-    }
-    return function(c) {
-        if (c) document.addEventListener(eventKey, c);
-        return !document[stateKey];
-    }
-})();
-
 showLoader = function(){
     $('#conversation').html(
         '<div class="loader-little"></div>'
@@ -170,7 +151,7 @@ displayMessageWithConversation = function(conversation, message){
         conversation.append(
             '<div id="message-'+ message.id +'" class="conversation-item you">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/profile">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
@@ -183,7 +164,7 @@ displayMessageWithConversation = function(conversation, message){
         conversation.append(
             '<div id="message-'+ message.id +'" class="conversation-item">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/users/' + message.user.username +'">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
@@ -202,7 +183,7 @@ appendMessage = function(message){
         conversation.append(
             '<div class="conversation-item you">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/profile">' +
             '<img src="'+ user.photo +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
@@ -215,7 +196,7 @@ appendMessage = function(message){
         conversation.append(
             '<div class="conversation-item">' +
             '<div class="s1">' +
-            '<a class="avatar" href="javascript:void(0);">' +
+            '<a class="avatar" href="/users/'+ message.user.username +'">' +
             '<img src="'+ userPhoto +'" alt="Alternative text to the image"/>' +
             '</a>' +
             '</div>' +
@@ -224,23 +205,8 @@ appendMessage = function(message){
             '</div>' +
             '</div>'
         );
-        if(!vis()){
-            pushNotification(message);
-        }
     }
     $('#conversation').animate({scrollTop: $('#conversation').prop("scrollHeight")}, 500);
-};
-
-pushNotification = function(message){
-    Push.create(message.user.name, {
-        body: message.message,
-        icon: message.user.photo1,
-        timeout: 4000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
 };
 
 setLastMessage = function(id, message){
@@ -307,6 +273,9 @@ function showMessageOutput(messageOutput) {
     else{
         showNotification(messageOutput);
     }
+    if(!vis()){
+        pushNotification(messageOutput.user.name, messageOutput.message, messageOutput.user.photo1);
+    }
 }
 
 function showGroupMessageOutput(messageOutput) {
@@ -318,6 +287,9 @@ function showGroupMessageOutput(messageOutput) {
         else{
             showNotification(messageOutput);
         }
+    }
+    if(!vis()){
+        pushNotification(messageOutput.user.name, messageOutput.message, messageOutput.user.photo1);
     }
 }
 
@@ -374,7 +346,6 @@ editTrueque = function(btn){
                 xhr.setRequestHeader(header, token);
             },
             success: function (message) {
-                console.log(message);
                 l.stop();
                 $('#modalTruequeDetail').modal('hide');
                 if(message){
