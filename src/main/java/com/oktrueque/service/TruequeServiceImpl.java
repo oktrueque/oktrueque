@@ -246,7 +246,7 @@ public class TruequeServiceImpl implements TruequeService {
         model.put("apellidoDestino", userDestino.getLast_name());
         model.put("itemsPropuestos", itemsPropuestos);
         model.put("itemsDemandados", itemsDemandados);
-        model.put("uri_confirm",urlServer + "trueques/"+trueque.getId()+"/user/"+ userDestino.getUsername() +"/accept");
+        model.put("uri_detail",urlServer + "profile/trueques/"+trueque.getId());
         email.setModel(model);
         emailService.sendMail(email,"truequeRequest.ftl");
 
