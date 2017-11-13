@@ -162,16 +162,38 @@ public class TruequeServiceImpl implements TruequeService {
         if(trueque.getStatus().equals(Constants.TRUEQUE_STATUS_REJECTED)){
             for(UserTrueque ut : userTrueques){
                 if(ut.getId().getUser().getId() != user.getId()){
-                    sendRejectedMail(trueque,ut.getId().getUser(),user);
+                    sendRejectedTruequeMail(trueque,ut.getId().getUser(),user);
+                }
+            }
+        }
+        if(trueque.getStatus().equals(Constants.TRUEQUE_STATUS_CANCELED)){
+            for(UserTrueque ut : userTrueques){
+                if(ut.getId().getUser().getId() != user.getId()){
+                    sendCanceledMail(trueque,ut.getId().getUser(),user);
                 }
             }
         }
 
+
         truequeRepository.save(trueque);
     }
 
+    private void sendCanceledMail(Trueque trueque, UserLite userTarget, User me){
 
-    private void sendRejectedMail(Trueque trueque, UserLite userTarget, User me){
+        Email emailObject = new Email();
+        String email=userTarget.getEmail();
+        Map<String,Object> model = new LinkedHashMap<>();
+        emailObject.setMailTo(email);
+        emailObject.setMailSubject("OkTrueque - Trueque Cancelado!");
+        model.put("acceptanceDate",trueque.getAcceptanceDate());
+        model.put("me",me);
+        model.put("userTarget",userTarget);
+        emailObject.setModel(model);
+        emailService.sendMail(emailObject,"truequeCancelado.ftl");
+    }
+
+
+    private void sendRejectedTruequeMail(Trueque trueque, UserLite userTarget, User me){
 
         Email emailObject = new Email();
         String email=userTarget.getEmail();

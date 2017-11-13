@@ -586,12 +586,16 @@
                                         users = data;
                                         x=0;
                                         makeComment(data[x]);
-                                    }else{
+                                    }
+                                    else{
                                         swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
                                         setTimeout(function(){
                                             window.location.reload();
-                                        }, 2000);
+                                        }, 1000);
                                     }
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 1000);
                                 },
                                 error: function (e) {
                                     console.log(e);
