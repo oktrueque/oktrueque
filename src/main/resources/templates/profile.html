@@ -159,35 +159,17 @@
                                                     <tr>
                                                         <th>Fecha de Propuesta</th>
                                                         <th>Participantes</th>
-                                                        <th>Realizado con</th>
                                                         <th>Estado</th>
                                                         <th>Acciones</th>
+                                                        <th>Realizado con</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr th:each="ut : ${userTrueques}" th:if="${#authentication.principal.id == ut.id.user.id}">
                                                         <td th:text="${#dates.format(ut.id.trueque.proposalDate, 'dd-MM-yyyy')}"></td>
                                                           <td th:text="${ut.id.trueque.peopleCount}"></td>
-
-                                                              <td>
-                                                                  <div th:if="${ut.id.trueque.peopleCount == 2}"  th:each="utt : ${userTrueques}">
-                                                                      <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
-                                                                          <div th:text="${utt.id.user.name}">
-                                                                          </div>
-                                                                      </div>
-                                                                  </div>
-                                                                  <div th:if="${ut.id.trueque.peopleCount == 3}" th:each="utt : ${userTrueques}">
-                                                                      <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
-                                                                          <div th:if="${utt.id.user.id != #authentication.principal.id}">
-                                                                             <div th:text="${utt.id.user.name}">
-                                                                             </div>
-                                                                          </div>
-                                                                      </div>
-                                                                  </div>
-                                                              </td>
-
-                                                          <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
-                                                          <td >
+                                                        <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
+                                                        <td >
                                                             <div th:if="${ut.showActions}">
                                                                 <div th:if="${ut.id.trueque.isPendiente()}">
                                                                     <a th:href="@{'/trueques/'+${ut.id.trueque.id}+'/user/'+ ${user.username} +'/accept'}" class="btn btn-xs btn-success">
@@ -211,7 +193,26 @@
                                                                     <i class="fa fa-bars" aria-hidden="true"></i> Detalle
                                                                 </a>
                                                             </div>
-                                                         </td>
+                                                        </td>
+
+                                                              <td>
+                                                                  <div th:if="${ut.id.trueque.peopleCount == 2}"  th:each="utt : ${userTrueques}">
+                                                                      <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
+                                                                          <div th:text="${utt.id.user.name}">
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div th:if="${ut.id.trueque.peopleCount == 3}" th:each="utt : ${userTrueques}">
+                                                                      <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
+                                                                          <div th:if="${utt.id.user.id != #authentication.principal.id}">
+                                                                             <div th:text="${utt.id.user.name}">
+                                                                             </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </td>
+
+
                                                     </tr>
                                                     </tbody>
                                                 </table>
