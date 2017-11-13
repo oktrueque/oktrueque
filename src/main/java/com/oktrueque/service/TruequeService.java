@@ -20,7 +20,7 @@ public interface TruequeService {
 
     void acceptTruequeAndGetUsersBelongingTo(Long id, String username);
 
-    void updateTrueque (Trueque trueque);
+    void updateTrueque (Trueque trueque, User user);
 
 
     Map getTruequeDetail(Long truequeId);

@@ -67,6 +67,7 @@ public class ProfileController {
             if(userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
                     userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
                      userTruequesAll.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque.getId().getTrueque().getId()));
+
         }
 
         Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
@@ -224,16 +225,16 @@ public class ProfileController {
         }
         // PENDIENTE A RECHAZADO
         if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_PENDING)) {
-            trueque.setStatus(2);
+            trueque.setStatus(Constants.TRUEQUE_STATUS_REJECTED);
             trueque.setRejectionDate(new Date());
-            truequeService.updateTrueque(trueque);
+            truequeService.updateTrueque(trueque,user);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         // ACTIVO A CANCELADO
         if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_ACTIVE)) {
-            trueque.setStatus(4);
+            trueque.setStatus(Constants.TRUEQUE_STATUS_CANCELED);
             trueque.setRejectionDate(new Date());
-            truequeService.updateTrueque(trueque);
+            truequeService.updateTrueque(trueque,user);
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);

@@ -157,10 +157,33 @@ public class TruequeServiceImpl implements TruequeService {
     }
 
     @Override
-    public void updateTrueque(Trueque trueque) {
+    public void updateTrueque(Trueque trueque, User user) {
+        List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
+        if(trueque.getStatus().equals(Constants.TRUEQUE_STATUS_REJECTED)){
+            for(UserTrueque ut : userTrueques){
+                if(ut.getId().getUser().getId() != user.getId()){
+                    sendRejectedMail(trueque,ut.getId().getUser(),user);
+                }
+            }
+        }
+
         truequeRepository.save(trueque);
     }
 
+
+    private void sendRejectedMail(Trueque trueque, UserLite userTarget, User me){
+
+        Email emailObject = new Email();
+        String email=userTarget.getEmail();
+        Map<String,Object> model = new LinkedHashMap<>();
+        emailObject.setMailTo(email);
+        emailObject.setMailSubject("OkTrueque - Trueque rechazado!");
+        model.put("proposalDate",trueque.getProposalDate());
+        model.put("me",me);
+        model.put("userTarget",userTarget);
+        emailObject.setModel(model);
+        emailService.sendMail(emailObject,"truequeRechazado.ftl");
+    }
 
 
     private void saveItemsAndUsers(Map<Integer, List<Item>> participants, Trueque truequeSaved, String username) {
