@@ -432,7 +432,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="sendComment" type="button"  class="btn btn-primary s">Enviar</button>
-                    <button  type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button id="notSend" type="button" class="btn" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -594,9 +594,6 @@
                                             window.location.reload();
                                         }, 1000);
                                     }
-                                    setTimeout(function(){
-                                        window.location.reload();
-                                    }, 1000);
                                 },
                                 error: function (e) {
                                     console.log(e);
@@ -626,6 +623,8 @@
                     .columns.adjust()
                     .responsive.recalc();
             });
+
+
 
 
             $('.confirm').on('click', function(){
@@ -659,9 +658,7 @@
                                             window.location.reload();
                                         }, 2000);
                                     }
-                                    setTimeout(function(){
-                                        window.location.reload();
-                                    }, 1000);
+
                                 },
                                 error: function (e) {
                                     console.log(e);
@@ -677,6 +674,12 @@
                 }
 
             });
+        });
+
+        $('#notSend').on('click',function () {
+            setTimeout(function(){
+                window.location.reload();
+            }, 1000);
         });
 
         makeQuestion = function(usersTrueque){
@@ -740,6 +743,9 @@
                 makeComment(users[x]);
             }else{
                 $('#modalCreateComment').modal('hide');
+                setTimeout(function(){
+                    window.location.reload();
+                }, 1000);
             }
         };
 
