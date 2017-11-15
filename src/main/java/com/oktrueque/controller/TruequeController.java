@@ -66,7 +66,7 @@ public class TruequeController {
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}/user/{username}/accept")
     public String confirmTrueque(@PathVariable Long id, @PathVariable String username, Principal principal){
         User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        //truequeService.acceptTruequeAndGetUsersBelongingTo(id, username);
+        truequeService.acceptTruequeAndGetUsersBelongingTo(id, username);
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         List<String> usernamesToSendNotification = new ArrayList<>();
         for(UserTrueque ut : userTrueques){
