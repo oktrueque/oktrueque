@@ -57,8 +57,8 @@ public class TruequeController {
         Map<Integer,List<Item>> participants = new LinkedHashMap<>();
         participants.put(1,itemsOffer);
         participants.put(2,itemsDemand);
-        truequeService.saveTrueque(participants, principal.getName());
-        return "redirect:/profile";
+        Trueque trueque = truequeService.saveTrueque(participants, principal.getName());
+        return "redirect:/profile/trueques/" + trueque.getId();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}/user/{username}/accept")

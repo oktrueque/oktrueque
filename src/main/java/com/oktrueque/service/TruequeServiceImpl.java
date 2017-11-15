@@ -38,7 +38,7 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public void saveTrueque(Map<Integer, List<Item>> participants, String username) {
+    public Trueque saveTrueque(Map<Integer, List<Item>> participants, String username) {
         Trueque truequeToSave = new Trueque(0);
         truequeToSave.setPeopleCount(participants.size());
         truequeToSave.setProposalDate(new Date());
@@ -46,6 +46,7 @@ public class TruequeServiceImpl implements TruequeService {
         saveItemsAndUsers(participants, truequeSaved, username);
         sendMailTo(participants.get(1).get(0).getUser(),participants.get(2).get(0).getUser(),
                 participants.get(1),participants.get(2),truequeSaved);
+        return truequeSaved;
     }
 
     @Override
