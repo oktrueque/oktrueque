@@ -54,22 +54,26 @@ public class TruequeController {
     public String registerTrueque(@RequestParam(value = "itemsOffer") ArrayList<Item> itemsOffer,
                                    @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand,
                                   Principal principal){
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         Map<Integer,List<Item>> participants = new LinkedHashMap<>();
         participants.put(1,itemsOffer);
         participants.put(2,itemsDemand);
         Trueque trueque = truequeService.saveTrueque(participants, principal.getName());
+        notificationService.sendTruequeProposedNotification(itemsDemand.get(0).getUser().getUsername(),user);
         return "redirect:/profile/trueques/" + trueque.getId();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques/{id}/user/{username}/accept")
     public String confirmTrueque(@PathVariable Long id, @PathVariable String username, Principal principal){
         User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        truequeService.acceptTruequeAndGetUsersBelongingTo(id, username);
+        //truequeService.acceptTruequeAndGetUsersBelongingTo(id, username);
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         List<String> usernamesToSendNotification = new ArrayList<>();
         for(UserTrueque ut : userTrueques){
             if(!ut.getId().getUser().getUsername().equals(user.getUsername())){
                 usernamesToSendNotification.add(ut.getId().getUser().getUsername());
+            }else{
+                notificationService.sendTruequeAcceptedByMeNotification(user.getUsername(), user);
             }
         }
         notificationService.sendTruequeAcceptedNotification(usernamesToSendNotification, user);

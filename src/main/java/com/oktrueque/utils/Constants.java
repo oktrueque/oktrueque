@@ -64,6 +64,7 @@ public class Constants {
     }
 
     public static final String IMG_PICTURE_DEFAULT = "https://s3-sa-east-1.amazonaws.com/oktrueque/default/default-image.png";
+    public static final String IMG_LOGO_OKTRUEQUE = "https://s3-sa-east-1.amazonaws.com/oktrueque/utils/simbolo.png";
 
     private static final Map<Integer, String> defaultProfilePictures;
     static

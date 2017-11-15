@@ -10,4 +10,8 @@ public interface NotificationService {
     void sendTruequeAcceptedNotification(List<String> usernames, User userOrigin);
 
     void sendTruequeModifiedForItemTrocadoNotification(List<String> usernames, UserLite userOrigin);
+
+    void sendTruequeAcceptedByMeNotification(String username, User userOrigin);
+
+    void sendTruequeProposedNotification(String username, User userOrigin);
 }
