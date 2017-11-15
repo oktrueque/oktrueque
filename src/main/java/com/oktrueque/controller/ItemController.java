@@ -62,11 +62,13 @@ public class ItemController {
                 LOGGER.info("Busqueda por categoria incorrecta", e);
             }
         }
+        model.addAttribute("usernameSearch", false);
         if (search != null) {
             try {
                 Map<String, Object> map = itemService.searchItems(search, principal, pageable);
                 items = (Page<Item>) map.get("items");
                 if(map.containsKey("loggedIn")) model.addAttribute("loggedIn", map.get("loggedIn"));
+                if(map.containsKey("usernameSearch")) model.addAttribute("usernameSearch", map.get("usernameSearch"));
                 page = new PageWrapper<>(items, "/items?search=" + search);
             } catch (Exception e) {
                 LOGGER.info("Busqueda por name incorrecta", e);

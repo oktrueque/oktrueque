@@ -75,12 +75,15 @@ public class ItemServiceImpl implements ItemService {
                 map.put("items", itemRepository.findByUser_UsernameAndStatusIsNotInOrderByIdDesc(
                         principal.getName(), new int[]{Constants.ITEM_STATUS_DELETED, Constants.ITEM_STATUS_BANNED}, pageable));
                 map.put("loggedIn", true);
+                map.put("usernameSearch", true);
                 return map;
             }
             map.put("items", itemRepository.findByStatusAndUserUsername(Constants.TRUEQUE_STATUS_ACTIVE, matcher.group(2), pageable));
+            map.put("usernameSearch", true);
             return map;
         }
         map.put("items", itemRepository.findByNameContainsAndStatus(name, Constants.ITEM_STATUS_ACTIVE, pageable));
+        map.put("usernameSearch", false);
         return map;
     }
 

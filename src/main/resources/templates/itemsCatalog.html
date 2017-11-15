@@ -11,7 +11,7 @@
 <section class="page-content">
     <div class="page-content-inner">
         <section class="panel panel-with-borders">
-            <div class="panel-heading">
+            <div th:if="${!usernameSearch}" class="panel-heading">
                 <h3>¡Encuentra lo que estás buscando!</h3>
                 <th:block th:each="category : ${categories}">
                     <a th:href="@{/items(id_category=${category.id})}" class="btn btn-oktrueque margin-inline" th:text="${category.name}">
@@ -23,6 +23,14 @@
                 <div class="cui-ecommerce--catalog">
                     <div th:if="${category != null}">
                         <h3 th:text="${category.name}">Category Name</h3>
+                        <hr/>
+                    </div>
+                    <div th:if="${loggedIn and category == null}">
+                        <h3>Tus items</h3>
+                        <hr/>
+                    </div>
+                    <div th:if="${!loggedIn and category == null and usernameSearch}">
+                        <h3>Items del usuario</h3>
                         <hr/>
                     </div>
                     <div th:if="${items.isEmpty()}">
