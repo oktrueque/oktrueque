@@ -23,15 +23,17 @@ public class TruequeServiceImpl implements TruequeService {
     private final UserRepository userRepository;
     private final EmailService emailService;
     private final ConversationService conversationService;
+    private final NotificationService notificationService;
 
     public TruequeServiceImpl(TruequeRepository truequeRepository, ItemTruequeRepository itemTruequeRepository,
-                              UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository, ConversationService conversationService) {
+                              UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository, ConversationService conversationService, NotificationService notificationService) {
         this.truequeRepository = truequeRepository;
         this.itemTruequeRepository = itemTruequeRepository;
         this.userTruequeRepository = userTruequeRepository;
         this.emailService = emailService;
         this.userRepository = userRepository;
         this.conversationService = conversationService;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -63,10 +65,13 @@ public class TruequeServiceImpl implements TruequeService {
     public List<UserLite> confirmTrueque(Long id, String username) {
         Trueque truequeSaved = truequeRepository.findOne(id);
         List<UserLite> users = new ArrayList<>();
+        UserLite user = new UserLite();
         List<UserTrueque> ut = userTruequeRepository.findByIdTruequeId(id);
         for(UserTrueque userTrueque : ut){
             if(!userTrueque.getId().getUser().getUsername().equals(username)){
                 users.add(userTrueque.getId().getUser());
+            }else{
+                user = userTrueque.getId().getUser();
             }
         }
 
@@ -76,8 +81,71 @@ public class TruequeServiceImpl implements TruequeService {
             truequeRepository.save(truequeSaved);
             this.deleteChat(truequeSaved);
         }
-
+        //Check if there are no more trueques with those items, deletes other ItemTrueques
+        Hashtable<UserLite, List<Item>> usersToNotify = this.checkOtherTruequesWithSameItems(id, username);
+        this.notifyUsers(usersToNotify, user);
         return users;
+    }
+
+    private void notifyUsers(Hashtable<UserLite, List<Item>> usersToNotify, UserLite userOrigin) {
+        Enumeration<UserLite> users = usersToNotify.keys();
+        //Lista de usernames para notificaciones push
+        List<String> usernames = new ArrayList<>();
+        while(users.hasMoreElements()){
+            UserLite user = users.nextElement();
+
+            Email emailObject = new Email();
+            String email=user.getEmail();
+            Map<String,Object> model = new LinkedHashMap<>();
+            emailObject.setMailTo(email);
+            emailObject.setMailSubject("OkTrueque - Trueque modificado");
+            model.put("userTargetName",user.getName() != null? user.getName() : "Hola");
+            model.put("userOriginName", userOrigin.getUsername());
+            model.put("items",usersToNotify.get(user));
+            emailObject.setModel(model);
+            emailService.sendMail(emailObject,"truequeModificadoPorItemTrocado.ftl");
+
+            usernames.add(user.getUsername());
+        }
+        notificationService.sendTruequeModifiedForItemTrocadoNotification(usernames, userOrigin);
+    }
+
+    private Hashtable<UserLite, List<Item>> checkOtherTruequesWithSameItems(Long id, String username) {
+        List<ItemTrueque> itemTrueques = itemTruequeRepository.findById_TruequeId(id);
+        List<ItemTrueque> itemTruequesToErase = new ArrayList<>();
+        List<Item> itemTruequeAux = new ArrayList<>();
+        List<UserTrueque> userTrueques;
+        Hashtable<Long, List<Item>> hashTableItemTrueque = new Hashtable<>();
+        Hashtable<UserLite, List<Item>> usersToNotify = new Hashtable<>();
+        for(ItemTrueque it : itemTrueques){
+            List<ItemTrueque> itemsInOtherTrueques = itemTruequeRepository.findAllById_ItemIdAndId_TruequeIdIsNot(it.getId().getItem().getId(), it.getId().getTrueque().getId());
+            itemTruequesToErase.addAll(itemsInOtherTrueques);
+            if(itemsInOtherTrueques.size() > 0){
+                for(ItemTrueque it2 : itemsInOtherTrueques){
+                    if(hashTableItemTrueque.contains(it2.getId().getTrueque().getId())){
+                        itemTruequeAux = hashTableItemTrueque.get(it2.getId().getTrueque().getId());
+                        itemTruequeAux.add(it2.getId().getItem());
+                        hashTableItemTrueque.put(it2.getId().getTrueque().getId(), itemTruequeAux);
+                    }else{
+                        itemTruequeAux.add(it2.getId().getItem());
+                        hashTableItemTrueque.put(it2.getId().getTrueque().getId(), itemTruequeAux);
+                    }
+                    itemTruequeAux = new ArrayList<>();
+                }
+            }
+        }
+        Enumeration trueques = hashTableItemTrueque.keys();
+        while(trueques.hasMoreElements()){
+            Long idTrueque = (Long) trueques.nextElement();
+            userTrueques = userTruequeRepository.findByIdTruequeId(idTrueque);
+            for(UserTrueque userTrueque : userTrueques){
+                if(!userTrueque.getId().getUser().getUsername().equals(username)){
+                    usersToNotify.put(userTrueque.getId().getUser(), hashTableItemTrueque.get(idTrueque));
+                }
+            }
+        }
+        itemTruequeRepository.delete(itemTruequesToErase);
+        return usersToNotify;
     }
 
     private Boolean updateUserTruequeStatus(Trueque trueque, String username, Integer status){

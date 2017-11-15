@@ -27,4 +27,15 @@ public class NotificationServiceImpl implements NotificationService{
                             "Mensajes para que puedan ponerse de acuerdo para realizar el trueque", user));
         }
     }
+
+    public void sendTruequeModifiedForItemTrocadoNotification(List<String> usernames, UserLite userOrigin) {
+        UserLite user = new UserLite();
+        user.setName("Trueque Modificado");
+        user.setPhoto1(userOrigin.getPhoto1());
+        for(String username : usernames){
+            simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
+                    new Message(userOrigin.getName() + " ha confirmado un trueque con uno o más items que ustedes estaban negociando, " +
+                            "revisa tu correo y ponte en contacto con él para volver a coordinar el trueque", user));
+        }
+    }
 }
