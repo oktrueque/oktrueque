@@ -573,7 +573,7 @@
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            $(this).parent().parent().remove();
+                            $(this).parent().parent().parent().parent().remove();
 
                             $.ajax({
                                 type: 'POST',
@@ -590,9 +590,6 @@
                                     }
                                     else{
                                         swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
-                                        setTimeout(function(){
-                                            window.location.reload();
-                                        }, 1000);
                                     }
                                 },
                                 error: function (e) {
@@ -638,7 +635,7 @@
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            $(this).parent().parent().remove();
+                            $(this).parent().parent().parent().parent().remove();
 
                             $.ajax({
                                 type: 'POST',
@@ -654,9 +651,6 @@
                                         makeComment(data[x]);
                                     }else{
                                         swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
-                                        setTimeout(function(){
-                                            window.location.reload();
-                                        }, 2000);
                                     }
 
                                 },
@@ -674,12 +668,6 @@
                 }
 
             });
-        });
-
-        $('#notSend').on('click',function () {
-            setTimeout(function(){
-                window.location.reload();
-            }, 1000);
         });
 
         makeQuestion = function(usersTrueque){
