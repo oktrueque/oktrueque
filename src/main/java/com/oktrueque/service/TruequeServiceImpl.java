@@ -228,19 +228,25 @@ public class TruequeServiceImpl implements TruequeService {
     @Override
     public void updateTrueque(Trueque trueque, User user) {
         List<UserTrueque> userTrueques = userTruequeRepository.findByIdTruequeId(trueque.getId());
+        List<String> usersToNotify = new ArrayList<>();
         if(trueque.getStatus().equals(Constants.TRUEQUE_STATUS_REJECTED)){
             for(UserTrueque ut : userTrueques){
                 if(ut.getId().getUser().getId() != user.getId()){
                     sendRejectedTruequeMail(trueque,ut.getId().getUser(),user);
+                    usersToNotify.add(ut.getId().getUser().getUsername());
                 }
             }
+            notificationService.sendTruequeRejectedByUser(usersToNotify,user);
         }
         if(trueque.getStatus().equals(Constants.TRUEQUE_STATUS_CANCELED)){
             for(UserTrueque ut : userTrueques){
                 if(ut.getId().getUser().getId() != user.getId()){
                     sendCanceledMail(trueque,ut.getId().getUser(),user);
+                    usersToNotify.add(ut.getId().getUser().getUsername());
                 }
             }
+            this.deleteChat(trueque);
+            notificationService.sendTruequeCanceledByUser(usersToNotify,user);
         }
 
 

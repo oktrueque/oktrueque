@@ -56,4 +56,26 @@ public class NotificationServiceImpl implements NotificationService{
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
                 new Message(userOrigin.getName() + " te ha propuesto un trueque", user));
     }
+
+    public void sendTruequeCanceledByUser(List<String> usernames, User userOrigin) {
+        UserLite user = new UserLite();
+        user.setName("Trueque Cancelado");
+        user.setPhoto1(userOrigin.getPhoto1());
+        for(String username : usernames){
+            simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
+                    new Message(userOrigin.getName() + " ha cancelado un trueque con uno o más items que ustedes estaban negociando, " +
+                            "revisa los comentarios en tu perfil para saber el motivo.", user));
+        }
+    }
+
+    @Override
+    public void sendTruequeRejectedByUser(List<String> usernames, User userOrigin) {
+        UserLite user = new UserLite();
+        user.setName("Trueque Rechazado");
+        user.setPhoto1(userOrigin.getPhoto1());
+        for(String username : usernames){
+            simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
+                    new Message(userOrigin.getName() + " ha rechazado un trueque que le habias propuesto.", user));
+        }
+    }
 }

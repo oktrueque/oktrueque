@@ -14,4 +14,8 @@ public interface NotificationService {
     void sendTruequeAcceptedByMeNotification(String username, User userOrigin);
 
     void sendTruequeProposedNotification(String username, User userOrigin);
+
+    void sendTruequeCanceledByUser(List<String> usernames, User userOrigin);
+
+    void sendTruequeRejectedByUser(List<String> usernames, User userOrigin);
 }
