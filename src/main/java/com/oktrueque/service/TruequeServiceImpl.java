@@ -1,10 +1,7 @@
 package com.oktrueque.service;
 
 import com.oktrueque.model.*;
-import com.oktrueque.repository.ItemTruequeRepository;
-import com.oktrueque.repository.TruequeRepository;
-import com.oktrueque.repository.UserRepository;
-import com.oktrueque.repository.UserTruequeRepository;
+import com.oktrueque.repository.*;
 import com.oktrueque.utils.Constants;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -19,6 +16,7 @@ public class TruequeServiceImpl implements TruequeService {
 
     private final TruequeRepository truequeRepository;
     private final ItemTruequeRepository itemTruequeRepository;
+    private final ItemRepository itemRepository;
     private final UserTruequeRepository userTruequeRepository;
     private final UserRepository userRepository;
     private final EmailService emailService;
@@ -26,9 +24,10 @@ public class TruequeServiceImpl implements TruequeService {
     private final NotificationService notificationService;
 
     public TruequeServiceImpl(TruequeRepository truequeRepository, ItemTruequeRepository itemTruequeRepository,
-                              UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository, ConversationService conversationService, NotificationService notificationService) {
+                              ItemRepository itemRepository, UserTruequeRepository userTruequeRepository, EmailService emailService, UserRepository userRepository, ConversationService conversationService, NotificationService notificationService) {
         this.truequeRepository = truequeRepository;
         this.itemTruequeRepository = itemTruequeRepository;
+        this.itemRepository = itemRepository;
         this.userTruequeRepository = userTruequeRepository;
         this.emailService = emailService;
         this.userRepository = userRepository;
@@ -113,12 +112,21 @@ public class TruequeServiceImpl implements TruequeService {
 
     private Hashtable<UserLite, List<Item>> checkOtherTruequesWithSameItems(Long id, String username) {
         List<ItemTrueque> itemTrueques = itemTruequeRepository.findById_TruequeId(id);
+        //Borro los que no son del usuario logueado
+        for (Iterator<ItemTrueque> iterator = itemTrueques.iterator(); iterator.hasNext();) {
+            ItemTrueque it = iterator.next();
+            if (!it.getId().getItem().getUser().getUsername().equals(username)) {
+                iterator.remove();
+            }
+        }
         List<ItemTrueque> itemTruequesToErase = new ArrayList<>();
         List<Item> itemTruequeAux = new ArrayList<>();
+        List<Item> itemsInTrueque = new ArrayList<>();
         List<UserTrueque> userTrueques;
         Hashtable<Long, List<Item>> hashTableItemTrueque = new Hashtable<>();
         Hashtable<UserLite, List<Item>> usersToNotify = new Hashtable<>();
         for(ItemTrueque it : itemTrueques){
+            itemsInTrueque.add(it.getId().getItem());
             List<ItemTrueque> itemsInOtherTrueques = itemTruequeRepository.findAllById_ItemIdAndId_TruequeIdIsNot(it.getId().getItem().getId(), it.getId().getTrueque().getId());
             itemTruequesToErase.addAll(itemsInOtherTrueques);
             if(itemsInOtherTrueques.size() > 0){
@@ -145,8 +153,17 @@ public class TruequeServiceImpl implements TruequeService {
                 }
             }
         }
+        this.updateItemStatus(itemsInTrueque, Constants.ITEM_STATUS_EXCHANGED);
         itemTruequeRepository.delete(itemTruequesToErase);
         return usersToNotify;
+    }
+
+    @Override
+    public void updateItemStatus(List<Item> itemsInTrueque, int itemStatusExchanged) {
+        for(Item item : itemsInTrueque){
+            item.setStatus(itemStatusExchanged);
+        }
+        itemRepository.save(itemsInTrueque);
     }
 
     private Boolean updateUserTruequeStatus(Trueque trueque, String username, Integer status){
