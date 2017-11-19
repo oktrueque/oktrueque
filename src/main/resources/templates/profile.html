@@ -199,14 +199,14 @@
                                                               <td>
                                                                   <div th:if="${ut.id.trueque.peopleCount == 2}"  th:each="utt : ${userTrueques}">
                                                                       <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
-                                                                          <div th:text="${utt.id.user.name}">
+                                                                          <div th:text="${utt.id.user.name + ' ' + utt.id.user.last_name}">
                                                                           </div>
                                                                       </div>
                                                                   </div>
                                                                   <div th:if="${ut.id.trueque.peopleCount == 3}" th:each="utt : ${userTrueques}">
                                                                       <div th:if="${utt.id.trueque.id == ut.id.trueque.id and utt.id.user.id != ut.id.user.id}">
                                                                           <div th:if="${utt.id.user.id != #authentication.principal.id}">
-                                                                             <div th:text="${utt.id.user.name}">
+                                                                             <div th:text="${utt.id.user.name + ' ' + utt.id.user.last_name}">
                                                                              </div>
                                                                           </div>
                                                                       </div>
