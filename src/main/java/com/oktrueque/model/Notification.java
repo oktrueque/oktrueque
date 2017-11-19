@@ -1,5 +1,7 @@
 package com.oktrueque.model;
 
+import com.oktrueque.utils.Constants;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,21 +15,24 @@ public class Notification {
     private Long id;
     @Column(name = "username")
     private String username;
-    @Column(name = "id_message")
-    private Integer messageId;
     @Column(name = "date")
     private Date date;
     @Column(name = "checked")
     private Boolean checked;
-
-    @Transient
+    @Column(name = "title")
+    private String title;
+    @Column(name = "message")
     private String message;
 
-    public Notification(String username, Integer messageId) {
+    public Notification() {
+    }
+
+    public Notification(String username, String title, String message) {
         this.username = username;
-        this.messageId = messageId;
         this.date = new Date();
         this.checked = false;
+        this.title = title;
+        this.message = message;
     }
 
     public Long getId() {
@@ -46,14 +51,6 @@ public class Notification {
         this.username = username;
     }
 
-    public Integer getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(Integer messageId) {
-        this.messageId = messageId;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -70,6 +67,14 @@ public class Notification {
         this.message = message;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Boolean getChecked() {
         return checked;
     }
@@ -77,4 +82,5 @@ public class Notification {
     public void setChecked(Boolean checked) {
         this.checked = checked;
     }
+
 }

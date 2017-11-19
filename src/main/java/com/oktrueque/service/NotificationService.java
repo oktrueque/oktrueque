@@ -1,5 +1,6 @@
 package com.oktrueque.service;
 
+import com.oktrueque.model.Notification;
 import com.oktrueque.model.User;
 import com.oktrueque.model.UserLite;
 
@@ -18,4 +19,6 @@ public interface NotificationService {
     void sendTruequeCanceledByUser(List<String> usernames, User userOrigin);
 
     void sendTruequeRejectedByUser(List<String> usernames, User userOrigin);
+
+    List<Notification> getNotificationsByUsername(String username);
 }

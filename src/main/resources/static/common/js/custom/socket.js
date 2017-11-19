@@ -59,6 +59,27 @@ showNotification = function(message){
     }else{
         swal(message.user.name, message.message);
     }
+
+    //Notification in navbar
+    var list = $('#navbar-notifications');
+    list.prepend('<div class="item">\n' +
+        '<div class="inner">\n' +
+        '<div class="title">\n' +
+        '<span class="pull-right">Justo ahora</span>\n' +
+        '<strong>'+ message.user.name + '  <span class="label label-info font-weight-700">New</span></strong>\n' +
+        '</div>\n' +
+        '<div class="descr">\n' +
+        message.message +
+        '</div>\n' +
+        '</div>\n' +
+        '</div>\n' +
+        '<hr style="margin: 1rem 15px;"/>');
+
+    let span = $('#nav-notificiation');
+    let count = span.data('number');
+    count += 1;
+    span.text(count);
+    span.data('number', count);
 };
 
 function disconnect() {

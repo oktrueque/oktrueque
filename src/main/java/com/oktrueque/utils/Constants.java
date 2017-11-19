@@ -91,35 +91,13 @@ public class Constants {
 
     public static final String NOTIFICATION_TRUEQUE_ACCEPTED = "%s ha aceptado el trueque propuesto, se ha abierto un chat en la pestaña " +
             "Mensajes para que puedan ponerse de acuerdo para realizar el trueque";
-    public static final Integer NOTIFICATION_TRUEQUE_ACCEPTED_KEY = 0;
     public static final String NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM = "%s ha confirmado un trueque con uno o más items que ustedes estaban negociando, " +
             "revisa tu correo y ponte en contacto con él para volver a coordinar el trueque";
-    public static final Integer NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM_KEY = 1;
     public static final String NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME = "Has aceptado el trueque propuesto, se ha abierto un chat en la pestaña " +
             "Mensajes para que puedan ponerse de acuerdo para realizar el trueque";
-    public static final Integer NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME_KEY = 2;
     public static final String NOTIFICATION_TRUEQUE_PROPOSED = "%s te ha propuesto un trueque";
-    public static final Integer NOTIFICATION_TRUEQUE_PROPOSED_KEY = 3;
     public static final String NOTIFICATION_TRUEQUE_CANCELED = "%s ha cancelado un trueque con uno o más items que ustedes estaban negociando, " +
             "revisa los comentarios en tu perfil para saber el motivo.";
-    public static final Integer NOTIFICATION_TRUEQUE_CANCELED_KEY = 4;
     public static final String NOTIFICATION_TRUEQUE_REJECTED = "%s ha rechazado un trueque que le habias propuesto.";
-    public static final Integer NOTIFICATION_TRUEQUE_REJECTED_KEY = 5;
-
-    private static final Map<Integer, String> notificationMessages;
-    static
-    {
-        notificationMessages = new HashMap<>();
-        notificationMessages.put(NOTIFICATION_TRUEQUE_ACCEPTED_KEY, NOTIFICATION_TRUEQUE_ACCEPTED);
-        notificationMessages.put(NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM_KEY, NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM);
-        notificationMessages.put(NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME_KEY, NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME);
-        notificationMessages.put(NOTIFICATION_TRUEQUE_PROPOSED_KEY, NOTIFICATION_TRUEQUE_PROPOSED);
-        notificationMessages.put(NOTIFICATION_TRUEQUE_CANCELED_KEY, NOTIFICATION_TRUEQUE_CANCELED);
-        notificationMessages.put(NOTIFICATION_TRUEQUE_REJECTED_KEY, NOTIFICATION_TRUEQUE_REJECTED);
-    }
-
-    public static String getNotificationMessage(int key){
-        return notificationMessages.get(key);
-    }
 
 }

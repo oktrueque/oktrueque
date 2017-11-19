@@ -30,9 +30,10 @@ public class NotificationServiceImpl implements NotificationService{
         user.setPhoto1(userOrigin.getPhoto1());
         List<Notification> notifications = new ArrayList<>();
         for(String username : usernames){
-            notifications.add(new Notification(username, Constants.NOTIFICATION_TRUEQUE_ACCEPTED_KEY));
+            notifications.add(new Notification(username, "¡Trueque Aceptado!",
+                    String.format(Constants.NOTIFICATION_TRUEQUE_ACCEPTED, userOrigin.getName())));
             simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
-                    new Message(String.format(Constants.getNotificationMessage(Constants.NOTIFICATION_TRUEQUE_ACCEPTED_KEY), userOrigin.getName()), user));
+                    new Message(String.format(Constants.NOTIFICATION_TRUEQUE_ACCEPTED, userOrigin.getName()), user));
         }
         this.notificationRepository.save(notifications);
     }
@@ -44,9 +45,10 @@ public class NotificationServiceImpl implements NotificationService{
         user.setPhoto1(userOrigin.getPhoto1());
         List<Notification> notifications = new ArrayList<>();
         for(String username : usernames){
-            notifications.add(new Notification(username, Constants.NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM_KEY));
+            notifications.add(new Notification(username, "Trueque Modificado",
+                    String.format(Constants.NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM, userOrigin.getName())));
             simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
-                    new Message(String.format(Constants.getNotificationMessage(Constants.NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM_KEY), userOrigin.getName()), user));
+                    new Message(String.format(Constants.NOTIFICATION_TRUEQUE_MODIFIED_CAUSE_CONFIRM, userOrigin.getName()), user));
         }
         this.notificationRepository.save(notifications);
     }
@@ -57,8 +59,8 @@ public class NotificationServiceImpl implements NotificationService{
         user.setName("¡Trueque Aceptado!");
         user.setPhoto1(Constants.IMG_LOGO_OKTRUEQUE);
         simpMessagingTemplate.convertAndSendToUser(userOrigin.getUsername(), "/queue/notification",
-                new Message(String.format(Constants.getNotificationMessage(Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME_KEY), userOrigin.getName()), user));
-        this.notificationRepository.save(new Notification(username, Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME_KEY));
+                new Message(String.format(Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME, userOrigin.getName()), user));
+        this.notificationRepository.save(new Notification(username, "¡Trueque Aceptado!", Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME));
     }
 
     @Override
@@ -67,8 +69,8 @@ public class NotificationServiceImpl implements NotificationService{
         user.setName("¡Trueque Propuesto!");
         user.setPhoto1(userOrigin.getPhoto1());
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
-                new Message(String.format(Constants.getNotificationMessage(Constants.NOTIFICATION_TRUEQUE_PROPOSED_KEY), userOrigin.getName()), user));
-        this.notificationRepository.save(new Notification(username, Constants.NOTIFICATION_TRUEQUE_PROPOSED_KEY));
+                new Message(String.format(Constants.NOTIFICATION_TRUEQUE_PROPOSED, userOrigin.getName()), user));
+        this.notificationRepository.save(new Notification(username, "¡Trueque Propuesto!", Constants.NOTIFICATION_TRUEQUE_PROPOSED));
     }
 
     @Override
@@ -78,9 +80,10 @@ public class NotificationServiceImpl implements NotificationService{
         user.setPhoto1(userOrigin.getPhoto1());
         List<Notification> notifications = new ArrayList<>();
         for(String username : usernames){
-            notifications.add(new Notification(username, Constants.NOTIFICATION_TRUEQUE_CANCELED_KEY));
+            notifications.add(new Notification(username, "Trueque Cancelado",
+                    String.format(Constants.NOTIFICATION_TRUEQUE_CANCELED, userOrigin.getName())));
             simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
-                    new Message(String.format(Constants.getNotificationMessage(Constants.NOTIFICATION_TRUEQUE_CANCELED_KEY), userOrigin.getName()), user));
+                    new Message(String.format(Constants.NOTIFICATION_TRUEQUE_CANCELED, userOrigin.getName()), user));
         }
         this.notificationRepository.save(notifications);
     }
@@ -92,10 +95,16 @@ public class NotificationServiceImpl implements NotificationService{
         user.setPhoto1(userOrigin.getPhoto1());
         List<Notification> notifications = new ArrayList<>();
         for(String username : usernames){
-            notifications.add(new Notification(username, Constants.NOTIFICATION_TRUEQUE_REJECTED_KEY));
+            notifications.add(new Notification(username, "Trueque Rechazado",
+                    String.format(Constants.NOTIFICATION_TRUEQUE_REJECTED, userOrigin.getName())));
             simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
-                    new Message(String.format(Constants.getNotificationMessage(Constants.NOTIFICATION_TRUEQUE_REJECTED_KEY), userOrigin.getName()), user));
+                    new Message(String.format(Constants.NOTIFICATION_TRUEQUE_REJECTED, userOrigin.getName()), user));
         }
         this.notificationRepository.save(notifications);
+    }
+
+    @Override
+    public List<Notification> getNotificationsByUsername(String username){
+        return this.notificationRepository.findAllByUsernameOrderByDateDesc(username);
     }
 }

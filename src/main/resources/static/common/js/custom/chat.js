@@ -303,6 +303,27 @@ showNotification = function(message){
     let unread = parseInt(span.attr('data-unread'));
     span.attr('data-unread', unread+1);
     span.text(unread +1);
+
+    //Notification in navbar
+    var list = $('#navbar-notifications');
+    list.prepend('<div class="item">\n' +
+        '<div class="inner">\n' +
+        '<div class="title">\n' +
+        '<span class="pull-right">Justo ahora</span>\n' +
+        '<strong>'+ message.user.name + '  <span class="label label-info font-weight-700">New</span></strong>\n' +
+        '</div>\n' +
+        '<div class="descr">\n' +
+        message.message +
+        '</div>\n' +
+        '</div>\n' +
+        '</div>\n' +
+        '<hr style="margin: 1rem 15px;"/>');
+
+    let strong = $('#nav-notificiation');
+    let count = span.data('number');
+    count += 1;
+    strong.text(count);
+    strong.data('number', count);
 };
 
 //Edit Trueque methods
