@@ -129,6 +129,6 @@ public class ServiceConfig {
 
     @Bean
     public NotificationService notificationService(){
-        return new NotificationServiceImpl(simpMessagingTemplate);
+        return new NotificationServiceImpl(simpMessagingTemplate, notificationRepository);
     }
 }
