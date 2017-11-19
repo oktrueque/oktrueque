@@ -15,7 +15,7 @@
        <!-- Ecommerce Product Details -->
         <div th:if="${hasTags}" class="col-lg-12 margin-bottom-10 tip-panel">
         <section class="panel panel-with-borders">
-        <div class="col-lg-12 panel-heading" ><span class="tip">Tip!</span> Recuerda que a facundo le interesa: <span th:each="tag : ${tags}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></div>
+            <div class="col-lg-12 panel-heading" ><span class="tip">Tip!</span> <p th:text="'Recuerda que a '+${demandant.name}+' le interesa: '"></p> <span th:each="tag : ${tagsDemandant}" class="label label-default tag-margin" th:text="${tag.name}">Tag</span></div>
         </section>
         </div>
 <div class="col-md-6" id="izquierda-panel">
