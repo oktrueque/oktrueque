@@ -73,6 +73,8 @@ public class ProfileController {
         Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
+
+
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore() != null ? true : false);
         model.addAttribute("hasItems", items.getContent().size() != 0 ? true : false);

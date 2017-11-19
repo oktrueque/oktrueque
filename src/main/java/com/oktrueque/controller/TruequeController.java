@@ -38,7 +38,7 @@ public class TruequeController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/trueques")
-    public String getUsersItems(@RequestParam(value = "username-user-offerer") String UserOfferer, @RequestParam(value = "username-user-demandant") String UserDemandant, Model model){
+    public String getUsersItems(@RequestParam(value = "username-user-offerer") String UserOfferer, @RequestParam(value = "username-user-demandant") String UserDemandant, @RequestParam(value = "id-item-demandant") String idItemDemandant, Model model){
         User user = userService.getUserByUsername(UserOfferer);
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
         model.addAttribute("itemsUserOffer", itemService.getItemsByUserUsernameAndStatus(UserOfferer, Constants.ITEM_STATUS_ACTIVE));
@@ -47,6 +47,7 @@ public class TruequeController {
         model.addAttribute("demandant", userService.getUserByUsername(UserDemandant));
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
         model.addAttribute("tags", tags);
+        model.addAttribute("idItemDemandant", idItemDemandant);
         return "trueque";
     }
 

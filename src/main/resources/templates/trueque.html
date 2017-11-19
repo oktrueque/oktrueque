@@ -74,7 +74,7 @@
                                             <span class="col-lg-12 card-title " th:text="${item.name}"></span>
                                             <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
                                             <div class="col-lg-6 checkbox checkbox-info">
-                                                <input th:id="'item-demand-' + ${item.id}" class="styled" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
+                                                <input th:id="'item-demand-' + ${item.id}" class="styled" th:checked="${item.id} == ${idItemDemandant}" type="checkbox" name="itemsDemand" th:value="${item.id}"/>
                                                 <label th:for="'item-demand-' + ${item.id}">
                                                     Seleccionar
                                                 </label>

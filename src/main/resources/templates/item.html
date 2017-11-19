@@ -106,6 +106,7 @@
                             <form id="form-trueque" action="/trueques" th:method="GET">
                                 <input type="hidden" id="username-user-offerer" name="username-user-offerer" th:value="${#authentication.principal.username}"/>
                                 <input type="hidden" id="username-user-demandant" name="username-user-demandant" th:value="${item.user.username}"/>
+                                <input type="hidden" id="id-item-demandant" name="id-item-demandant" th:value="${item.id}"/>
                                 <button type="sumbit" id="btn-trueque" class="btn btn-icon btn-primary btn-lg margin-right-15 col-lg-offset-1">
                                     <i class="icmn-forward margin-right-5"></i>
                                     Trueque Ya
