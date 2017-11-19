@@ -11,16 +11,24 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private UserLite user;
+    @Column(name = "username")
+    private String username;
     @Column(name = "id_message")
     private Integer messageId;
     @Column(name = "date")
     private Date date;
+    @Column(name = "checked")
+    private Boolean checked;
 
     @Transient
     private String message;
+
+    public Notification(String username, Integer messageId) {
+        this.username = username;
+        this.messageId = messageId;
+        this.date = new Date();
+        this.checked = false;
+    }
 
     public Long getId() {
         return id;
@@ -30,12 +38,12 @@ public class Notification {
         this.id = id;
     }
 
-    public UserLite getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(UserLite user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getMessageId() {
@@ -60,5 +68,13 @@ public class Notification {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

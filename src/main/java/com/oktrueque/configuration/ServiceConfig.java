@@ -55,6 +55,8 @@ public class ServiceConfig {
     @Autowired
     private ConversationRepository conversationRepository;
     @Autowired
+    private NotificationRepository notificationRepository;
+    @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
 

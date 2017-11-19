@@ -49,6 +49,10 @@ public class UserLite{
     public UserLite() {
     }
 
+    public UserLite(Long id){
+        this.id = id;
+    }
+
     public UserLite(String name, String last_name, String email, String password, Integer status, Integer itemsAmount, String photo1, String username, Integer score, String wallpaper, Date registerDate) {
         this.name = name;
         this.last_name = last_name;
