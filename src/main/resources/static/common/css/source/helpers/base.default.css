@@ -2350,14 +2350,14 @@ body.theme-blue .cwt__footer {
 }
 
 .notification-block .item .inner {
-    margin-left: 50px;
+    margin-left: 10px;
     padding-right: 15px;
 }
 
 .notification-block .item .inner .descr {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: unset;
 }
 
 .notification-block .item .inner .title > span {

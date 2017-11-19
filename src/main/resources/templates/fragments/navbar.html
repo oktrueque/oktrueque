@@ -35,9 +35,70 @@
             </div>
             <div sec:authorize="isAnonymous()">
                 <div class="container menu-user-block">
-                    <a id="loginWord" href="/login">
-                        <i class="fa fa-sign-in  fa-3x" aria-hidden="true"></i>
+                    <a id="loginWord" href="/login" data-toggle="popover" data-trigger="hover" title="Ingresar">
+                        <i class="fa fa-sign-in fa-3x" aria-hidden="true"></i>
                     </a>
+                </div>
+            </div>
+            <div class="menu-user-block menu-notifications">
+                <div class="dropdown dropdown-avatar">
+                    <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin:0px 15px">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-bell fa-stack-2x fa-inverse"></i>
+                            <strong id="nav-notificiation" class="fa-stack-1x fa-stack-text"></strong>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="" role="menu" style="right: 4px; left: auto;">
+                        <div class="notification-block">
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="title">
+                                        <span class="pull-right">now</span>
+                                        <strong>Update Status: <span class="label label-info font-weight-700">New</span></strong>
+                                    </div>
+                                    <div class="descr">
+                                        Failed to get available update data. To ensure the proper functioning of your application, update now.
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin: 1rem 15px;"/>
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="title">
+                                        <span class="pull-right">Hace 1 hora</span>
+                                        <strong>Update Status:</strong>
+                                    </div>
+                                    <div class="descr">
+                                        Failed to get available update data. To ensure the proper functioning of your application, update now.
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin: 1rem 15px;"/>
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="title">
+                                        <span class="pull-right">Hace 5 horas</span>
+                                        <strong>Update Status:</strong>
+                                    </div>
+                                    <div class="descr">
+                                        Failed to get available update data. To ensure the proper functioning of your application, update now.
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin: 1rem 15px;"/>
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="title">
+                                        <span class="pull-right">Ayer</span>
+                                        <strong>Update Status:</strong>
+                                    </div>
+                                    <div class="descr">
+                                        Failed to get available update data. To ensure the proper functioning of your application, update now.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
                 </div>
             </div>
                 <div class="menu-info-block">
@@ -55,4 +116,5 @@
                 </div>
         </div>
     </nav>
+
 </th:block>
