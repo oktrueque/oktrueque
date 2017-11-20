@@ -87,12 +87,6 @@
     <script th:src="@{/common/js/custom/push.js}"></script>
     <div sec:authorize="isAuthenticated()">
         <script src="../assets/common/js/custom/notifications.js" th:src="@{/common/js/custom/notifications.js}"></script>
-        <script th:inline="javascript">
-            /*<![CDATA[*/
-            var name =  /*[[${#authentication.principal.username}]]*/ "";
-            initializeNotifications(name);
-            /*]]>*/
-        </script>
     </div>
 </head>
 <body class="theme-green menu-static">

@@ -99,5 +99,6 @@ public class Constants {
     public static final String NOTIFICATION_TRUEQUE_CANCELED = "%s ha cancelado un trueque con uno o más items que ustedes estaban negociando, " +
             "revisa los comentarios en tu perfil para saber el motivo.";
     public static final String NOTIFICATION_TRUEQUE_REJECTED = "%s ha rechazado un trueque que le habias propuesto.";
+    public static final String NOTIFICATION_TRUEQUE_CONFIRMED = "%s ha indicado como Realizado un trueque en el que estaban participando.";
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,8 +23,14 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/notifications/{username}")
-    public ResponseEntity<List<Notification>> getUserNotifications(@PathVariable String username){
-        return new ResponseEntity<>(notificationService.getNotificationsByUsername(username), HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET, value = "/notifications")
+    public ResponseEntity<List<Notification>> getUserNotifications(Principal principal){
+        return new ResponseEntity<>(notificationService.getNotificationsByUsername(principal.getName()), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/notifications/clear")
+    public ResponseEntity<Void> clearNotifications(Principal principal){
+        notificationService.clearNotifications(principal.getName());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

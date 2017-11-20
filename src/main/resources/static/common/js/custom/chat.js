@@ -309,8 +309,8 @@ showNotification = function(message){
     list.prepend('<div class="item">\n' +
         '<div class="inner">\n' +
         '<div class="title">\n' +
-        '<span class="pull-right">Justo ahora</span>\n' +
-        '<strong>'+ message.user.name + '  <span class="label label-info font-weight-700">New</span></strong>\n' +
+        '<span class="pull-right">Recientemente</span>\n' +
+        '<strong>'+ message.user.name + '  <span class="label label-info new font-weight-700">Nuevo</span></strong>\n' +
         '</div>\n' +
         '<div class="descr">\n' +
         message.message +

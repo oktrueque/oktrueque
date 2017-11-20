@@ -21,4 +21,8 @@ public interface NotificationService {
     void sendTruequeRejectedByUser(List<String> usernames, User userOrigin);
 
     List<Notification> getNotificationsByUsername(String username);
+
+    void clearNotifications(String name);
+
+    void sendTruequeConfirmedNotification(List<String> usernames, UserLite user);
 }

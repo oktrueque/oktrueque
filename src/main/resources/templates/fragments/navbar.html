@@ -42,13 +42,13 @@
             </div>
             <div sec:authorize="isAuthenticated()" class="menu-user-block menu-notifications">
                 <div class="dropdown dropdown-avatar">
-                    <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin:0px 15px">
+                    <a id="notifications" href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin:0px 15px">
                         <span class="fa-stack fa-lg">
                             <i class="fa fa-bell fa-stack-2x fa-inverse"></i>
                             <strong id="nav-notificiation" class="fa-stack-1x fa-stack-text"></strong>
                         </span>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="" role="menu" style="right: 4px; left: auto; height: 600px; overflow-y: auto;">
+                    <ul class="dropdown-menu" aria-labelledby="" role="menu" style="right: 4px; left: auto; max-height: 600px; overflow-y: auto;">
                         <div id="navbar-notifications" class="notification-block">
 
                         </div>

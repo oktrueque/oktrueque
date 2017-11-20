@@ -66,10 +66,12 @@ public class TruequeServiceImpl implements TruequeService {
         Trueque truequeSaved = truequeRepository.findOne(id);
         List<UserLite> users = new ArrayList<>();
         UserLite user = new UserLite();
+        List<String> usernames = new ArrayList<>();
         List<UserTrueque> ut = userTruequeRepository.findByIdTruequeId(id);
         for(UserTrueque userTrueque : ut){
             if(!userTrueque.getId().getUser().getUsername().equals(username)){
                 users.add(userTrueque.getId().getUser());
+                usernames.add(userTrueque.getId().getUser().getUsername());
             }else{
                 user = userTrueque.getId().getUser();
             }
@@ -81,6 +83,10 @@ public class TruequeServiceImpl implements TruequeService {
             truequeRepository.save(truequeSaved);
             this.deleteChat(truequeSaved);
         }
+
+        //Notifico a los otros usuarios
+        notificationService.sendTruequeConfirmedNotification(usernames, user);
+
         //Check if there are no more trueques with those items, deletes other ItemTrueques
         Hashtable<UserLite, List<Item>> usersToNotify = this.checkOtherTruequesWithSameItems(id, username);
         this.notifyUsers(usersToNotify, user);

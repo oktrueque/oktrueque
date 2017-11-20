@@ -70,7 +70,7 @@ public class NotificationServiceImpl implements NotificationService{
         user.setPhoto1(userOrigin.getPhoto1());
         simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
                 new Message(String.format(Constants.NOTIFICATION_TRUEQUE_PROPOSED, userOrigin.getName()), user));
-        this.notificationRepository.save(new Notification(username, "¡Trueque Propuesto!", Constants.NOTIFICATION_TRUEQUE_PROPOSED));
+        this.notificationRepository.save(new Notification(username, "¡Trueque Propuesto!", String.format(Constants.NOTIFICATION_TRUEQUE_PROPOSED, userOrigin.getName())));
     }
 
     @Override
@@ -104,7 +104,27 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
+    public void sendTruequeConfirmedNotification(List<String> usernames, UserLite userOrigin) {
+        UserLite user = new UserLite();
+        user.setName("¡Trueque Confirmado!");
+        user.setPhoto1(userOrigin.getPhoto1());
+        List<Notification> notifications = new ArrayList<>();
+        for(String username : usernames){
+            notifications.add(new Notification(username, "¡Trueque Confirmado!",
+                    String.format(Constants.NOTIFICATION_TRUEQUE_CONFIRMED, userOrigin.getName())));
+            simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
+                    new Message(String.format(Constants.NOTIFICATION_TRUEQUE_CONFIRMED, userOrigin.getName()), user));
+        }
+        this.notificationRepository.save(notifications);
+    }
+
+    @Override
     public List<Notification> getNotificationsByUsername(String username){
         return this.notificationRepository.findAllByUsernameOrderByDateDesc(username);
+    }
+
+    @Override
+    public void clearNotifications(String username) {
+        notificationRepository.clearNotifications(username);
     }
 }

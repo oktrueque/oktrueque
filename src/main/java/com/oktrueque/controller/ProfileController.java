@@ -58,7 +58,7 @@ public class ProfileController {
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model) {
         User user = userService.getUserByUsername(principal.getName());
-        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3}, new PageRequest(0,5));
+        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3, 4}, new PageRequest(0,5));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTruequesDB = truequeService.getUserTruequeById_UserId(user.getId());
         LinkedList<UserTrueque> userTruequesAll = new LinkedList<>();
