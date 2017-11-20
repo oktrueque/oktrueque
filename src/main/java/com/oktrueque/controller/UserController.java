@@ -67,31 +67,22 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String addUser(Model model, @ModelAttribute @Valid User user, BindingResult result) {
-        if (!user.checkUsername()) {
-            model.addAttribute("user", user);
-            model.addAttribute("error", "-- El username no caracteres especiales --");
-            return "register";
-        }
-        if (!user.checkEmail()) {
-            model.addAttribute("user", user);
-            model.addAttribute("error", "-- El email ingresado no es válido --");
-            return "register";
-        }
+    public String addUser(Model model, @ModelAttribute User user) {
+        Random r = new Random();
+        int index = r.nextInt(5) + 1;
+
         if (userService.checkIfUserExists(user.getEmail(), user.getUsername())) {
             model.addAttribute("user", user);
             model.addAttribute("error", "-- El email o username ingresado ya existen --");
+            model.addAttribute("background", "common/img/temp/login/login-"+ index +".jpg");
             return "register";
         }
-
         user.setStatus(0);
         user.setItemsAmount(0);
         user.setPhoto1(Constants.returnRandomImage());
         user = userService.addUser(user);
         userService.sendVerificationToken(user);
 
-        Random r = new Random();
-        int index = r.nextInt(5) + 1;
         model.addAttribute("background", "common/img/temp/login/login-"+ index +".jpg");
         return "confirmEmail";
     }
