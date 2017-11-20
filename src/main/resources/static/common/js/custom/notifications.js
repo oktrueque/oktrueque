@@ -40,7 +40,16 @@ function displayNotifications(notifications){
     var list = $('#navbar-notifications');
     let count = 0;
     if(notifications.length === 0){
-        list.append('<p>Parece que no tienes notificaciones</p>');
+        list.append('<div class="item">\n' +
+            '<div class="inner">\n' +
+            '<div class="title">\n' +
+            '<strong>Nada por aquí</strong>\n' +
+            '</div>\n' +
+            '<div class="descr">\n' +
+            'Al parecer no tienes notificaciones. ¡Empieza por proponer un trueque!' +
+            '</div>\n' +
+            '</div>\n' +
+            '</div>\n');
     }
     notifications.forEach(function(notification){
         let date = getDateMessage(notification.date);
