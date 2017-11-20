@@ -1,0 +1,30 @@
+{
+  "name": "Oktrueque",
+  "short_name": "oktrueque",
+  "display": "standalone",
+  "start_url": "/",
+  "theme_color": "#e02404",
+  "background_color": "#111111",
+  "icons": [
+    {
+      "src": "favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ]
+}
