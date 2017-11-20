@@ -65,7 +65,7 @@
                             <div class="row">
                                 <div id="nuevoPass" class="form-group col-lg-6">
                                     <label class="form-control-label" for="nuevoPass">Nueva contraseña</label>
-                                    <input th:field="*{newPassword}"
+                                    <input name="newPassword"
                                            id="pass1"
                                            class="form-control password"
                                            type="password"
@@ -180,9 +180,7 @@
         var ms;
 
         document.addEventListener("DOMContentLoaded", function () {
-            //document.getElementById('passwordInput').setAttribute('value','');
             ms.initializeWithTags(tags);
-
             $("#submit-btn").on("click", function () {
                 $.ajax({
                     type: "POST",
