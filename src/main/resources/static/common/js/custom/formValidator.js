@@ -41,39 +41,26 @@ function checkPass() {
     }
 }
 
+function hasCorrectLength(limite,lentgh){
+    if(limite<lentgh){
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function isEmpty(val) {
-
-    // test results
-    //---------------
-    // []        true, empty array
-    // {}        true, empty object
-    // null      true
-    // undefined true
-    // ""        true, empty string
-    // ''        true, empty string
-    // 0         false, number
-    // true      false, boolean
-    // false     false, boolean
-    // Date      false
-    // function  false
-
     if (val === undefined)
         return true;
-
     if (typeof (val) == 'function' || typeof (val) == 'number' || typeof (val) == 'boolean' || Object.prototype.toString.call(val) === '[object Date]')
         return false;
-
     if (val == null || val.length === 0)        // null or 0 length array
         return true;
-
     if (typeof (val) == "object") {
         // empty object
-
         var r = true;
-
         for (var f in val)
             r = false;
-
         return r;
     }
 
@@ -106,57 +93,71 @@ function hasCharacters(val) {
 
      if(formName==='register-form'){
 
-         let nameInput = $('#nameInput').val();
-         let lastNameInput = $('#lastNameInput').val();
+         let nameInput= $('#nameInput');
+         let nameInputVal = $('#nameInput').val();
+         let nameInputLength = $('#nameInput').val().length;
+
+         let lastNameInput = $('#lastNameInput');
+         let lastNameInputVal = $('#lastNameInput').val();
+         let lastNameInputLength = $('#lastNameInput').val().length;
+
          let emailInput =    $('#emailInput');
-         let emailInputValue =    $('#emailInput').val();
-         let usernameInput = $('#usernameInput').val();
-         let newPassword = $('#pass1').val();
+         let emailInputVal =    $('#emailInput').val();
+         let emailInputLength = $('#emailInput').val().length;
+
+         let usernameInput = $('#usernameInput');
+         let usernameInputVal = $('#usernameInput').val();
+         let userNameInputLength = $('#usernameInput').val().length;
+
+         let firstPassInput = $('#pass1');
+         let firstPassVal = $('#pass1').val();
+         let firstPassLength = $('#pass1').val().length;
+
          let pass2 = $('#pass2');
 
-          if(isEmpty(nameInput)){
+          if(isEmpty(nameInputVal)){
              message = 'Debes escribir tu nombre!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#nameInput").focus();
              return false;
-         } else if(hasOnlyLetterAndSpaces(nameInput)){
+         } else if(hasOnlyLetterAndSpaces(nameInputVal)){
              message = 'El nombre debe contener solo letras!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#nameInput").focus();
              return false;
-         } else if(isEmpty(lastNameInput)){
+         } else if(isEmpty(lastNameInputVal)){
              message = 'Debes escribir tu apellido!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#lastNameInput").focus();
              return false;
-         } else if(hasOnlyLetterAndSpaces(lastNameInput)){
+         } else if(hasOnlyLetterAndSpaces(lastNameInputVal)){
              message = 'El apellido debe contener solo letras!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#lastNameInput").focus();
              return false;
-         } else if(isEmpty(emailInputValue)){
+         } else if(isEmpty(emailInputVal)){
              message = 'Debes escribir tu email!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#emailInput").focus();
              return false;
-         } else if(!emailInputValue.includes('@') || !emailInputValue.includes('.com')){
+         } else if(!emailInputVal.includes('@') || !emailInputVal.includes('.com')){
              message = 'Formato de email invalido!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#emailInput").focus();
              return false;
-         } else if(isEmpty(usernameInput)){
+         } else if(isEmpty(usernameInputVal)){
              message = 'Debes escribir tu nombre de usuario!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#usernameInput").focus();
              return false;
-         } else if(hasCharacters(usernameInput)){
+         } else if(hasCharacters(usernameInputVal)){
              message = 'El nombre de usuario no puede contener carácteres!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -168,7 +169,7 @@ function hasCharacters(val) {
              messageModal.modal('show');
              $("#pass1").focus();
              return false;
-         } else if(newPassword.length<6 || !/[0-9]/g.test(newPassword)){
+         } else if(firstPassVal.length<6 || !/[0-9]/g.test(firstPassVal)){
              message = 'La contraseña debe ser mayor a 6 caracteres, poseer letras y números!';
              messageSpan.textContent = message;
              messageModal.modal('show');
@@ -178,6 +179,36 @@ function hasCharacters(val) {
               message = 'Debes aceptar los terminos y condiciones para registrarte';
               messageSpan.textContent = message;
               messageModal.modal('show');
+              return false;
+          } else if(!hasCorrectLength(45,nameInputLength)){
+              message = 'El nombre es demasiado largo!';
+              messageSpan.textContent = message;
+              messageModal.modal('show');
+              $("#nameInput").focus();
+              return false;
+          } else if(!hasCorrectLength(45,lastNameInputLength)){
+              message = 'El apellido es demasiado largo!';
+              messageSpan.textContent = message;
+              messageModal.modal('show');
+              $("#lastNameInput").focus();
+              return false;
+          } else if(!hasCorrectLength(50,emailInputLength)){
+              message = 'El email es demasiado largo!';
+              messageSpan.textContent = message;
+              messageModal.modal('show');
+              $("#emailInput").focus();
+              return false;
+          } else if(!hasCorrectLength(30,userNameInputLength)){
+              message = 'El nombre de usuario es demasiado largo!';
+              messageSpan.textContent = message;
+              messageModal.modal('show');
+              $("#username").focus();
+              return false;
+          } else if(!hasCorrectLength(30,firstPassLength)){
+              message = 'La contraseña es demasiado larga!';
+              messageSpan.textContent = message;
+              messageModal.modal('show');
+              $("#pass1").focus();
               return false;
           }
          return true;
