@@ -5,7 +5,10 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <div sec:authorize="isAuthenticated()">
         <script src="../assets/common/js/custom/socket.js" th:src="@{/common/js/custom/socket.js}"></script>
+        <!--VALIDATION SCRIPTS-->
+        <script th:src="@{/common/js/custom/formValidator.js}" src="../static/common/js/custom/formValidator.js"></script>
     </div>
+
 </head>
 
 <th:block layout:fragment="content">
@@ -191,6 +194,30 @@
     </div>
 </div>
     <!-- END MODAL COMPLAINT -->
+
+    <!--MESSAGES MODAL-->
+    <div class="modal fade" id="messageModal" data-color="red" tabindex="-1" role="dialog" aria-labelledby=""
+         aria-hidden="true"
+         style="display: none; overflow-y: scroll;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="background-color: #ced5d8">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title">Aviso</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="messageSpan"></span>
+                </div>
+                <div class="row modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END MESSAGES MODAL-->
+
 <!-- Page Scripts -->
     <script th:src="@{/common/js/custom/itemsCatalog.js}" src="../static/common/js/custom/itemsCatalog.js"></script>
     <script th:inline="javascript">
@@ -219,27 +246,30 @@
 
         $(document).ready(function () {
             $('#btn-complaint').on('click', function () {
-                var l = Ladda.create(this);
-                l.start();
-                let complaint = getComplaint();
-                $.ajax({
-                    type: "POST",
-                    url: "/users/complaints/" + username,
-                    contentType : "application/json",
-                    data: JSON.stringify(complaint),
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader(header, token);
-                    },
-                    success: function (data) {
-                        l.stop();
-                        $('#modal-complaint').modal('toggle');
-                        swal("Denuncia enviada", "Nuestro equipo se encargará de aquí en adelante", "success");
-                    },
-                    error: function (e) {
-                        console.log(e);
-                    }
-                });
+                if(isValidated('frm-complaint')){
+                    var l = Ladda.create(this);
+                    l.start();
+                    let complaint = getComplaint();
+                    $.ajax({
+                        type: "POST",
+                        url: "/users/complaints/" + username,
+                        contentType : "application/json",
+                        data: JSON.stringify(complaint),
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },
+                        success: function (data) {
+                            l.stop();
+                            $('#modal-complaint').modal('toggle');
+                            swal("Denuncia enviada", "Nuestro equipo se encargará de aquí en adelante", "success");
+                        },
+                        error: function (e) {
+                            console.log(e);
+                        }
+                    });
+                }
             });
+
         });
 
 
