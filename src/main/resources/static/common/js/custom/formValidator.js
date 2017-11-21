@@ -63,23 +63,17 @@ function isEmpty(val) {
             r = false;
         return r;
     }
-
     if((!val || /^\s*$/.test(val))){return true;}
-
     return false;
 }
 
 function hasOnlyLetterAndSpaces(val) {
-
     if(!/^[a-zA-Z\s]*$/g.test(val)) {return true;}
-
     return false;
 }
 
 function hasCharacters(val) {
-
     if(!/^[a-zA-Z0-9]*$/g.test(val)) {return true;}
-
     return false;
 }
 
@@ -88,8 +82,6 @@ function hasCharacters(val) {
     let message = "";
     let messageSpan = document.getElementById('messageSpan');
     let messageModal = $('#messageModal');
-
-
 
      if(formName==='register-form'){
 
@@ -210,8 +202,7 @@ function hasCharacters(val) {
               messageModal.modal('show');
               $("#pass1").focus();
               return false;
-          }
-         return true;
+          } else return true;
      }
 
      if(formName==='updateProfile-form'){
@@ -265,15 +256,16 @@ function hasCharacters(val) {
              messageSpan.textContent = message;
              messageModal.modal('show');
              return false;
-         }
-     return true;
+         } else return true;
      }
 
     if(formName==='newItemForm'){
 
         let selectValue = document.getElementById('selectCat').value;
-        let itemName = $("#itemName").val();
-        let itemDes = $("#descTextArea").val();
+        let itemNameInputVal = $("#itemName").val();
+        let itemDesInputVal = $("#descTextArea").val();
+        let itemNameInputLength = $("#itemName").val().length;
+        let itemDesInputLength = $("#descTextArea").val().length;
 
         if (selectValue === '-1') {
             message = 'Debes seleccionar una categoría para crear el item!';
@@ -281,23 +273,31 @@ function hasCharacters(val) {
             messageModal.modal('show');
             document.getElementById('selectCat').focus();
             return false;
-
-        } else if (isEmpty(itemName)) {
+        } else if (isEmpty(itemNameInputVal)) {
             message = 'Debes asignar un nombre el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
             $("#itemName").focus();
             return false;
-
-        }  else if (isEmpty(itemDes)){
+        }  else if (isEmpty(itemDesInputVal)){
             message = 'Debes describir el item!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
             $("#descTextArea").focus();
             return false;
-
-        } else return true;
-
+        } else if(!hasCorrectLength(30,itemNameInputLength)){
+            message = 'El nombre del item es demasiado largo!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#itemName").focus();
+            return false;
+        } else if(!hasCorrectLength(200,itemDesInputLength)){
+            message = 'La descripcion es demasiado larga!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#descTextArea").focus();
+            return false;
+        } else  return true;
     }
 
     if(formName==='form-set-images'){
@@ -315,13 +315,13 @@ function hasCharacters(val) {
             $("#photo1").focus();
             return false;
         }
-
     }
 
     if(formName==='frm-complaint'){
 
         let selectValue = document.getElementById('complaint-type').value;
-        let descriptionVal = $('#description').val();
+        let descriptionInputVal = $('#description').val();
+        let descriptionInputLength = $('#description').val().length;
 
         if (selectValue === '-1') {
             message = 'Debes seleccionar un tipo de denuncia para realizarla!';
@@ -329,22 +329,31 @@ function hasCharacters(val) {
             messageModal.modal('show');
             document.getElementById('complaint-type').focus();
             return false;
-        } else if (isEmpty(descriptionVal)) {
+        } else if (isEmpty(descriptionInputVal)) {
             message = 'Debes describir la denuncia!';
             messageSpan.textContent  = message;
             messageModal.modal('show');
             $("#description").focus();
             return false;
+        } else if(!hasCorrectLength(200,descriptionInputLength)){
+            message = 'La descripcion es demasiado larga!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#description").focus();
+            return false;
 
-        }
-            return true;
+        } else return true;
+
     }
 
     if(formName==='contactUsForm'){
 
         let nameAndLastnameInputVal = $("#nameAndLastNameInput").val();
+        let nameAndLastnameInputLength = $("#nameAndLastNameInput").val().length;
         let emailInputVal = $("#emailInput").val();
+        let emailInputLength = $("#emailInput").val().length;
         let messageInputVal = $("#messageInput").val();
+        let messageInputLength = $("#messageInput").val().length;
 
         if (isEmpty(nameAndLastnameInputVal)) {
             message = 'Debes escribir tu nombre!';
@@ -364,18 +373,34 @@ function hasCharacters(val) {
             messageModal.modal('show');
             $("#messageInput").focus();
             return false;
-        }
-        return true;
-
-
+        } else if(!hasCorrectLength(40,nameAndLastnameInputLength)){
+            message = 'El nombre es demasiado largo!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#nameAndLastNameInput").focus();
+            return false;
+        } else if(!hasCorrectLength(40,emailInputLength)){
+            message = 'El mail es demasiado largo!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#emailInput").focus();
+            return false;
+        } else if(!hasCorrectLength(250,messageInputLength)){
+            message = 'El mensaje es demasiado largo!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#messageInput").focus();
+            return false;
+        } else  return true;
     }
 
     if(formName==='commentModal'){
 
       let scoreComboBox = document.getElementById('scoreComboBox').value;
-      let commentDescripcion = $('#commentDescription');
+      let commentDescripcionVal = $('#commentDescription').val();
+      let commentDescripcionLength = $('#commentDescription').val().length;
 
-      if(isEmpty(commentDescripcion.val())){
+      if(isEmpty(commentDescripcionVal)){
           message = 'Debes describir el comentario!';
           messageSpan.textContent  = message;
           messageModal.modal('show');
@@ -387,10 +412,13 @@ function hasCharacters(val) {
           messageModal.modal('show');
           $("#scoreComboBox").focus();
           return false;
-      }
-
-      return true;
-
+      } else if(!hasCorrectLength(150,commentDescripcionLength)){
+          message = 'El comentario es demasiado largo!';
+          messageSpan.textContent  = message;
+          messageModal.modal('show');
+          $("#commentDescription").focus();
+          return false;
+      } else return true;
     }
 
 
