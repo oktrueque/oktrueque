@@ -832,25 +832,25 @@
             });
             if(!page.last){
                 wall.append(btnVerMas);
+                let aux = btnVerMas.data('number');
+                aux += 1;
+                btnVerMas.data('number', aux);
                 $('#comments-more').on('click', function(){
                     var l = Ladda.create(this);
                     l.start();
                     let number = $(this).data('number');
-                    getComments(number);
+                    getComments(number, l);
                 });
             }
         };
 
-        getComments = function(number){
+        getComments = function(number, l){
             $.ajax({
                 type: 'GET',
                 url: 'profile/comments/paginated',
                 data: {
                     "page": number +1,
                 },
-//                beforeSend: function (xhr) {
-//                    xhr.setRequestHeader(header, token);
-//                },
                 success: function (data) {
                     console.log(data);
                     displayComments(data);
@@ -898,6 +898,7 @@
             l.start();
             let number = $(this).data('number');
             getComments(number);
+            l.stop();
         });
 
     });
