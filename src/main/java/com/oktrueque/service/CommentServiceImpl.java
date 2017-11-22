@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<Comment> getCommentsByUserTargetId(Long userTargetId, Pageable pageable) {
-        return commentRepository.findByUserTarget_Id(userTargetId, pageable);
+        return commentRepository.findByUserTarget_IdOrderByDateDesc(userTargetId, pageable);
     }
 
 }

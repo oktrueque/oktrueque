@@ -13,7 +13,7 @@ import java.util.List;
 public interface CommentRepository extends CrudRepository<Comment, Integer> {
 
     List<Comment> findByUserTarget_Id(Long user_id);
-    Page<Comment> findByUserTarget_Id(Long user_id, Pageable pageable);
+    Page<Comment> findByUserTarget_IdOrderByDateDesc(Long user_id, Pageable pageable);
 
 //    Long countCommentsByUserTarget_Id(Long userId);
 

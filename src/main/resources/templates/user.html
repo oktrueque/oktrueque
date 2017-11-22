@@ -222,8 +222,6 @@
     <script th:src="@{/common/js/custom/itemsCatalog.js}" src="../static/common/js/custom/itemsCatalog.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var token = [[${_csrf.token}]];
-        var header = [[${_csrf.headerName}]];
         var score = [[${user.score}]]/2;
         var username = [[${user.username}]];
         var i;
@@ -255,9 +253,6 @@
                         url: "/users/complaints/" + username,
                         contentType : "application/json",
                         data: JSON.stringify(complaint),
-    //                    beforeSend: function (xhr) {
-    //                        xhr.setRequestHeader(header, token);
-    //                    },
                         success: function (data) {
                             l.stop();
                             $('#modal-complaint').modal('toggle');
