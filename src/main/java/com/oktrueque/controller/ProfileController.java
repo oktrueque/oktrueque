@@ -61,19 +61,25 @@ public class ProfileController {
         Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3, 4}, new PageRequest(0,5));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTruequesDB = truequeService.getUserTruequeById_UserId(user.getId());
-        LinkedList<UserTrueque> userTruequesAll = new LinkedList<>();
+        List<UserTrueque> userTruequesAll = new LinkedList<>();
+        LinkedList<Long> misTrueques = new LinkedList<>();
 
         for (UserTrueque userTrueque : userTruequesDB) {
             if(userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
                     userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
-                     userTruequesAll.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque.getId().getTrueque().getId()));
-
+                    misTrueques.add(userTrueque.getId().getTrueque().getId());
         }
+        userTruequesAll = truequeService.getUserTruequesInOrder(misTrueques);
 
+
+//        for (UserTrueque userTrueque : userTruequesDB) {
+//            if(userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
+//                    userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
+//                     userTruequesAll.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque.getId().getTrueque().getId()));
+//
+//        }
         Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
-
-
 
         model.addAttribute("user", user);
         model.addAttribute("hasScore", user.getScore() != null ? true : false);

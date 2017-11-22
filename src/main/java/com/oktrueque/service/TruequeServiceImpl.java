@@ -360,6 +360,13 @@ public class TruequeServiceImpl implements TruequeService {
         return userTruequeRepository.findByIdTruequeId(id);
     }
 
+
+    public List<UserTrueque> getUserTruequesInOrder(List <Long> truequesId){
+        List<UserTrueque> empty = new LinkedList<>();
+        if (truequesId.size()!=0){return userTruequeRepository.findTruequesInOrder(truequesId);}
+        else return empty ;
+    }
+
     @Override
     public Trueque getTruequeById (long id){
        return truequeRepository.findTruequeById(id);

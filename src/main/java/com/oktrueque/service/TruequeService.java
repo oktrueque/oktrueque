@@ -38,4 +38,6 @@ public interface TruequeService {
     List<UserLite> confirmTrueque(Long id, String username);
 
     void updateItemStatus(List<Item> itemsInTrueque, int itemStatusExchanged);
+
+    List<UserTrueque> getUserTruequesInOrder(List<Long> truequesId);
 }
