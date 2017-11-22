@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .formLogin()
                     .loginPage("/login").defaultSuccessUrl("/items").failureUrl("/login-error");
+            http.csrf().disable();
         } catch (Exception e) {
             LOGGER.info(MESSAGE, e);
         }

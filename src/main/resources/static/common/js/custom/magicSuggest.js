@@ -7,9 +7,9 @@ ms.initialize = function(){
         type: "GET",
         contentType: "application/json",
         url: "/tags",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(header, token);
-        },
+        // beforeSend: function (xhr) {
+        //     xhr.setRequestHeader(header, token);
+        // },
         success: function (data) {
             tags = data;
             ms = $("#ms").magicSuggest({
@@ -37,9 +37,9 @@ ms.initializeWithTags = function(item_tags){
         type: "GET",
         contentType: "application/json",
         url: "/tags",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader(header, token);
-        },
+        // beforeSend: function (xhr) {
+        //     xhr.setRequestHeader(header, token);
+        // },
         success: function (data) {
             tags = data;
             ms = $("#ms").magicSuggest({

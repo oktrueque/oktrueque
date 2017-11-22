@@ -363,9 +363,9 @@ editTrueque = function(btn){
             url: "/trueques/" + idTrueque,
             contentType: "application/json",
             data: JSON.stringify(ids),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(header, token);
-            },
+            // beforeSend: function (xhr) {
+            //     xhr.setRequestHeader(header, token);
+            // },
             success: function (message) {
                 l.stop();
                 $('#modalTruequeDetail').modal('hide');
