@@ -348,9 +348,6 @@
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 
-            var token = [[${_csrf.token}]];
-            var header = [[${_csrf.headerName}]];
-
             document.addEventListener("DOMContentLoaded", function () {
 
 //         ---------------   CONTACTO   -----------------
@@ -369,9 +366,9 @@
                             contentType: "application/json",
                             data: JSON.stringify(email),
                             dataType: 'text',
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader(header, token);
-                            },
+//                            beforeSend: function (xhr) {
+//                                xhr.setRequestHeader(header, token);
+//                            },
                             success: function () {
                                 swal("Éxito", "Tu mensaje será respondido a la brevedad", "success");
                             },

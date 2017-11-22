@@ -53,8 +53,8 @@ public class TruequeController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/trueques")
-    public String registerTrueque(@RequestParam(value = "itemsOffer") ArrayList<Item> itemsOffer,
-                                   @RequestParam(value = "itemsDemand") ArrayList<Item> itemsDemand,
+    public String registerTrueque(@RequestParam(value = "itemsOffer", required = false) ArrayList<Item> itemsOffer,
+                                   @RequestParam(value = "itemsDemand", required = false) ArrayList<Item> itemsDemand,
                                   Principal principal){
         User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         Map<Integer,List<Item>> participants = new LinkedHashMap<>();

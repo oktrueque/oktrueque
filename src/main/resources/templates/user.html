@@ -247,17 +247,17 @@
         $(document).ready(function () {
             $('#btn-complaint').on('click', function () {
                 if(isValidated('frm-complaint')){
-                    var l = Ladda.create(this);
-                    l.start();
-                    let complaint = getComplaint();
-                    $.ajax({
+                var l = Ladda.create(this);
+                l.start();
+                let complaint = getComplaint();
+                $.ajax({
                         type: "POST",
                         url: "/users/complaints/" + username,
                         contentType : "application/json",
                         data: JSON.stringify(complaint),
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader(header, token);
-                        },
+    //                    beforeSend: function (xhr) {
+    //                        xhr.setRequestHeader(header, token);
+    //                    },
                         success: function (data) {
                             l.stop();
                             $('#modal-complaint').modal('toggle');
@@ -269,7 +269,6 @@
                     });
                 }
             });
-
         });
 
 
