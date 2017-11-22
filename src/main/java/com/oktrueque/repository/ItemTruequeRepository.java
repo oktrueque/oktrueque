@@ -11,5 +11,5 @@ public interface ItemTruequeRepository extends PagingAndSortingRepository<ItemTr
     List<ItemTrueque> findById_TruequeId(long id);
     List<ItemTrueque> findById_ItemId(long id);
     void deleteAllByIdTruequeIdAndIdItemUserId(Long truequeId, Long userId);
-    List<ItemTrueque> findAllById_ItemIdAndId_TruequeIdIsNot(Long itemId, Long truequeId);
+    List<ItemTrueque> findAllById_ItemIdAndId_TruequeIdIsNotAndId_TruequeStatus(Long itemId, Long truequeId, Integer status);
 }
