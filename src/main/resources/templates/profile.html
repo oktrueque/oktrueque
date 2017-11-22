@@ -787,6 +787,9 @@
           //Borro los eventos para denuncias y Ver mas
           btnVerMas.off('click');
           $('.userTarget').off('click');
+            let aux = btnVerMas.data('number');
+            aux += 1;
+            btnVerMas.attr('data-number', aux);
           btnVerMas.remove();
 
           //Muestro comentarios
@@ -832,13 +835,7 @@
             });
             if(!page.last){
                 wall.append(btnVerMas);
-                let aux = btnVerMas.data('number');
-                console.log(aux);
-                aux += 1;
-                btnVerMas.data('number', aux);
                 $('#comments-more').on('click', function(){
-                    var l = Ladda.create(this);
-                    l.start();
                     let number = $(this).data('number');
                     getComments(number);
                 });
@@ -879,9 +876,6 @@
                     url: "/users/complaints/" + userTarget,
                     contentType : "application/json",
                     data: JSON.stringify(complaint),
-//                    beforeSend: function (xhr) {
-//                        xhr.setRequestHeader(header, token);
-//                    },
                     success: function (data) {
                         l.stop();
                         $('#modal-complaint').modal('toggle');
@@ -895,8 +889,6 @@
         });
 
         $('#comments-more').on('click', function(){
-            var l = Ladda.create(this);
-            l.start();
             let number = $(this).data('number');
             getComments(number);
         });
