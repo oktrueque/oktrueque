@@ -833,18 +833,19 @@
             if(!page.last){
                 wall.append(btnVerMas);
                 let aux = btnVerMas.data('number');
+                console.log(aux);
                 aux += 1;
                 btnVerMas.data('number', aux);
                 $('#comments-more').on('click', function(){
                     var l = Ladda.create(this);
                     l.start();
                     let number = $(this).data('number');
-                    getComments(number, l);
+                    getComments(number);
                 });
             }
         };
 
-        getComments = function(number, l){
+        getComments = function(number){
             $.ajax({
                 type: 'GET',
                 url: 'profile/comments/paginated',
@@ -898,7 +899,6 @@
             l.start();
             let number = $(this).data('number');
             getComments(number);
-            l.stop();
         });
 
     });

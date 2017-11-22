@@ -188,11 +188,9 @@
                     dataType: 'text',
                     cache: false,
                     timeout: 600000,
-//                    beforeSend: function (xhr) {
-//                        xhr.setRequestHeader(header, token);
-//                    },
                     success: function () {
                         console.log("New tags posted succesfully!");
+                        window.location.href = '/profile';
                     },
                     error: function (e) {
                         console.log("ERROR Posting tags ajax: ", JSON.stringify(e));
