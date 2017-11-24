@@ -195,7 +195,7 @@
    <script>
    document.addEventListener("DOMContentLoaded", function () {
        $('#pass1').tooltip({'trigger':'focus', 'title': 'La contraseña debe contener letras, numeros y un minimo de 6 caracteres.'});
-       $('#usernameInput').tooltip({'trigger':'focus', 'title': 'El nombre de usuario no puede contener caracteres o símbolos.'});
+       $('#usernameInput').tooltip({'trigger':'focus', 'title': 'El nombre de usuario no puede contener caracteres especiales o símbolos.'});
        $('#nameInput').focus();
        $('#submit-btn').on("click", function () {
            if (isValidated("register-form")){
