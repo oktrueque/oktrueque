@@ -250,9 +250,9 @@ public class ProfileController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}/confirm")
-    public ResponseEntity<List<UserLite>> confirmTrueque(@PathVariable Long id, Principal principal) {
-        List<UserLite> users = truequeService.confirmTrueque(id, principal.getName());
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> confirmTrueque(@PathVariable Long id, Principal principal) {
+        Map<String, Object> map = truequeService.confirmTrueque(id, principal.getName());
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 

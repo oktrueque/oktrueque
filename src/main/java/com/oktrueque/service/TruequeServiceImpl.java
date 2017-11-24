@@ -62,7 +62,8 @@ public class TruequeServiceImpl implements TruequeService {
 
     @Override
     @Transactional
-    public List<UserLite> confirmTrueque(Long id, String username) {
+    public Map<String, Object> confirmTrueque(Long id, String username) {
+        Map<String, Object> map = new HashMap<>();
         Trueque truequeSaved = truequeRepository.findOne(id);
         List<UserLite> users = new ArrayList<>();
         UserLite user = new UserLite();
@@ -82,6 +83,9 @@ public class TruequeServiceImpl implements TruequeService {
             truequeSaved.setEndingDate(new Date());
             truequeRepository.save(truequeSaved);
             this.deleteChat(truequeSaved);
+            map.put("ready", true);
+        }else{
+            map.put("ready", false);
         }
 
         //Notifico a los otros usuarios
@@ -90,7 +94,8 @@ public class TruequeServiceImpl implements TruequeService {
         //Check if there are no more trueques with those items, deletes other ItemTrueques
         Hashtable<UserLite, List<Item>> usersToNotify = this.checkOtherTruequesWithSameItems(id, username);
         this.notifyUsers(usersToNotify, user);
-        return users;
+        map.put("users", users);
+        return map;
     }
 
     private void notifyUsers(Hashtable<UserLite, List<Item>> usersToNotify, UserLite userOrigin) {

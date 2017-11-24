@@ -165,7 +165,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="ut : ${userTrueques}" th:if="${#authentication.principal.id == ut.id.user.id}">
+                                                    <tr th:id="${'trueque-'+ut.id.trueque.id}" th:each="ut : ${userTrueques}" th:if="${#authentication.principal.id == ut.id.user.id}">
                                                         <td th:text="${#dates.format(ut.id.trueque.proposalDate, 'dd-MM-yyyy')}"></td>
                                                           <td th:text="${ut.id.trueque.peopleCount}"></td>
                                                         <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
@@ -623,7 +623,7 @@
 
             $('.confirm').on('click', function(){
                 var truequeId = $(this).data('id');
-
+                var btn = $(this);
                 swal({
                     title: "¿El trueque se ha realizado con exito?",
                     text: "¿Se ha llevado a cabo el intercambio de objetos con exito?",
@@ -632,7 +632,7 @@
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            $(this).parent().parent().remove();
+                            btn.parent().parent().remove();
                             $('#actions-' + truequeId).append('Esperando a los demás usuarios!\n' +
                                 '<a href="/profile/trueques/'+ truequeId +'" class="btn btn-xs">\n' +
                                 '<i class="fa fa-bars" aria-hidden="true"></i> Detalle\n' +
@@ -641,16 +641,16 @@
                                 type: 'POST',
                                 url: 'profile/trueques/' + truequeId + '/confirm/',
                                 contentType: 'application/json',
-                                success: function (data) {
-                                    if(data){
-                                        users = data;
+                                success: function (map) {
+                                    if(map.ready){
+                                        $('#trueque-' + truequeId).fadeOut(500, function(){ $(this).remove(); })
+                                    }
+                                    if(map.users){
+                                        users = map.users;
                                         x=0;
-                                        makeComment(data[x]);
+                                        makeComment(map.users[x]);
                                     }else{
                                         swal("Trueque Confirmado", "Este trueque ha sido correctamente confirmado", "success");
-                                        setTimeout(function(){
-                                            window.location.reload();
-                                        }, 2000);
                                     }
 
                                 },

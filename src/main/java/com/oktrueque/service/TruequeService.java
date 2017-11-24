@@ -35,7 +35,7 @@ public interface TruequeService {
 
     boolean isTimeToAsk(Trueque trueque);
 
-    List<UserLite> confirmTrueque(Long id, String username);
+    Map<String, Object> confirmTrueque(Long id, String username);
 
     void updateItemStatus(List<Item> itemsInTrueque, int itemStatusExchanged);
 
