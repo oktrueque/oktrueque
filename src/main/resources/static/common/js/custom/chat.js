@@ -2,17 +2,13 @@ var user = {};
 var stompClient = null;
 var conversationId = null;
 var itemsid = [];
-var token = null;
-var header = null;
-initialize = function(id, photo, name, groups, t, h){
+initialize = function(id, photo, name, groups){
     user = {
         id: id,
         photo: photo,
         name: name,
         groups: groups
     };
-    token = t;
-    headers = h;
 };
 
 showLoader = function(){
@@ -363,9 +359,6 @@ editTrueque = function(btn){
             url: "/trueques/" + idTrueque,
             contentType: "application/json",
             data: JSON.stringify(ids),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader(header, token);
-            },
             success: function (message) {
                 l.stop();
                 $('#modalTruequeDetail').modal('hide');
