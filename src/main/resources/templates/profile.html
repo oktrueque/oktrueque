@@ -571,11 +571,9 @@
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            $(this).parent().parent().remove();
-                            $('#actions-' + truequeId).append('Esperando a los demás usuarios!\n' +
-                                '<a href="/profile/trueques/'+ truequeId +'" class="btn btn-xs">\n' +
-                                '<i class="fa fa-bars" aria-hidden="true"></i> Detalle\n' +
-                                '</a>');
+                            $(this).parent().parent().parent().parent().fadeOut(500, function(){
+                                $(this).remove();
+                            });
                             $.ajax({
                                 type: 'POST',
                                 url: 'profile/trueques/' + truequeId,
@@ -720,9 +718,6 @@
                 contentType: "application/json",
                 data: getNewComment(),
                 dataType: "json",
-//                beforeSend: function (xhr) {
-//                    xhr.setRequestHeader(header, token);
-//                },
                 success: function (data) {
                     swal("Comentario Enviado", "Nuestro equipo se encargará de aquí en adelante", "success");
                     checkMoreComments();
