@@ -432,7 +432,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="sendComment" type="button"  class="btn btn-primary s">Enviar</button>
-                    <button id="notSend" type="button" class="btn" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -633,14 +633,14 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             $(this).parent().parent().remove();
-
+                            $('#actions-' + truequeId).append('Esperando a los demás usuarios!\n' +
+                                '<a href="/profile/trueques/'+ truequeId +'" class="btn btn-xs">\n' +
+                                '<i class="fa fa-bars" aria-hidden="true"></i> Detalle\n' +
+                                '</a>');
                             $.ajax({
                                 type: 'POST',
                                 url: 'profile/trueques/' + truequeId + '/confirm/',
                                 contentType: 'application/json',
-//                                beforeSend: function (xhr) {
-//                                    xhr.setRequestHeader(header, token);
-//                                },
                                 success: function (data) {
                                     if(data){
                                         users = data;
@@ -668,12 +668,6 @@
                 }
 
             });
-        });
-
-        $('#notSend').on('click',function () {
-            setTimeout(function(){
-                window.location.reload();
-            }, 1000);
         });
 
         makeQuestion = function(usersTrueque){
@@ -734,9 +728,6 @@
                 makeComment(users[x]);
             }else{
                 $('#modalCreateComment').modal('hide');
-                setTimeout(function(){
-                    window.location.reload();
-                }, 1000);
             }
         };
 
