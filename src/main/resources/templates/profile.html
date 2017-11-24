@@ -169,7 +169,7 @@
                                                         <td th:text="${#dates.format(ut.id.trueque.proposalDate, 'dd-MM-yyyy')}"></td>
                                                           <td th:text="${ut.id.trueque.peopleCount}"></td>
                                                         <td><span class="label label-info" th:text="${ut.id.trueque.getStatusValue()}"></span></td>
-                                                        <td >
+                                                        <td th:id="${'actions-'+ut.id.trueque.id}">
                                                             <div th:if="${ut.showActions}">
                                                                 <div th:if="${ut.id.trueque.isPendiente()}">
                                                                     <a th:href="@{'/trueques/'+${ut.id.trueque.id}+'/user/'+ ${user.username} +'/accept'}" class="btn btn-xs btn-success">
@@ -572,14 +572,14 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             $(this).parent().parent().remove();
-
+                            $('#actions-' + truequeId).append('Esperando a los demás usuarios!\n' +
+                                '<a href="/profile/trueques/'+ truequeId +'" class="btn btn-xs">\n' +
+                                '<i class="fa fa-bars" aria-hidden="true"></i> Detalle\n' +
+                                '</a>');
                             $.ajax({
                                 type: 'POST',
                                 url: 'profile/trueques/' + truequeId,
                                 contentType: 'application/json',
-//                                beforeSend: function (xhr) {
-//                                    xhr.setRequestHeader(header, token);
-//                                },
                                 success: function (data) {
                                     if(data){
                                         users = data;
@@ -588,9 +588,6 @@
                                     }
                                     else{
                                         swal("Trueque Rechazado", "Esta propuesta de trueque ha sido correctamente rechazada", "success");
-                                        setTimeout(function(){
-                                            window.location.reload();
-                                        }, 1000);
                                     }
                                 },
                                 error: function (e) {
