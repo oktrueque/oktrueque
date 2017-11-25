@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class CommentsController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/comments/paginated")
     public ResponseEntity<Page<Comment>> getCommentsProfile(@RequestParam int page, Principal principal){
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         Page<Comment> comments =  commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(page, 5));
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }

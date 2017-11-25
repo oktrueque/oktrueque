@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,7 +58,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model) {
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3, 4}, new PageRequest(0,5));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTruequesDB = truequeService.getUserTruequeById_UserId(user.getId());
@@ -101,7 +102,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/edit")
     public String editProfile(Principal principal, Model model) {
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
@@ -142,10 +143,10 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/items")
     public ResponseEntity<Item> newItem(@RequestBody Item item, Principal principal) {
-        UserLite user = userService.getUserLiteByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         item.setStatus(0);
         item.setCreationDate(new Date());
-        item.setUser(user);
+        item.setUser(new UserLite(user.getId()));
         item.setPhoto1(Constants.IMG_PICTURE_DEFAULT);
         Item itemResponse = itemService.saveItem(item);
         return new ResponseEntity(itemResponse, HttpStatus.OK);
@@ -212,8 +213,8 @@ public class ProfileController {
             item.setStatus(0);
         }
 
-        UserLite user = userService.getUserLiteByUsername(principal.getName());
-        item.setUser(user);
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        item.setUser(new UserLite(user.getId()));
         itemService.updateItem(item);
         return "redirect:/profile/items/" + item.getId();
     }
@@ -223,7 +224,7 @@ public class ProfileController {
     public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal) {
 
         Trueque trueque = truequeService.getTruequeById(id);
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         List<UserLite> users = new ArrayList<>();
         for (UserTrueque ut : userTrueques) {
@@ -271,25 +272,9 @@ public class ProfileController {
         return new ResponseEntity(item, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques")
-    public String getTruequesByUser(Model model, Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
-        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
-        Trueque TruequeNuevo;
-        LinkedList<Trueque> trueques = new LinkedList<>();
-        for (UserTrueque trueque : userTrueques) {
-
-            TruequeNuevo = truequeService.getTruequeById(trueque.getId().getTrueque().getId());
-            trueques.add(TruequeNuevo);
-        }
-        model.addAttribute("trueques", trueques);
-        return "loggedUserTrueques";
-    }
-
-
     @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques/{id}")
     public String getTruequeById(Model model, @PathVariable Long id, Principal principal) {
-        User userLogged = userService.getUserByUsername(principal.getName());
+        User userLogged =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         Trueque trueque = truequeService.getTruequeById(id);
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         LinkedList<User> users = new LinkedList<>();
@@ -353,7 +338,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "profile/trueques/ask")
     public ResponseEntity<UserTrueque> askTrueques(Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         List<UserTrueque> userTruequesToPass = new LinkedList<>();
         for (UserTrueque userTrueque : userTrueques) {
@@ -370,7 +355,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "profile/delete-account")
     public String getDeleteAccountPage(Model model, Principal principal){
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         model.addAttribute("user", user);
         return "deleteAccount";
     }

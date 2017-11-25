@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -47,7 +48,7 @@ public class TagController {
     @RequestMapping(method = RequestMethod.POST, value = "/profile/userTags")
     @Transactional
     public ResponseEntity<Void> saveUserTags(@RequestBody List<Tag> tags, Principal principal){
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         userTagService.deleteAllByUserId(user.getId());
         userTagService.saveUserTags(user.getId(),tags);
         return new ResponseEntity<>(HttpStatus.CREATED);

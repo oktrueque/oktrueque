@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -90,7 +91,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/users/complaints/{username}")
     public ResponseEntity<Complaint> addComplaint(@RequestBody Complaint complaint, Principal principal, @PathVariable String username) {
 
-        User userDemandant = userService.getUserByUsername(principal.getName());
+        User userDemandant =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         User userTarget = userService.getUserByUsername(username);
         complaint.setUser_target(userTarget);
         complaint.setUser_origin(userDemandant);
@@ -156,7 +157,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/delete")
     public String deleteUser(Principal principal,HttpServletRequest request, HttpServletResponse response) {
-        User user = userService.getUserByUsername(principal.getName());
+        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         user.setStatus(2);
         userService.updateUser(user);
         return logout(request, response);
