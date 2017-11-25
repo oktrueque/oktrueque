@@ -20,6 +20,10 @@ public class ComplaintType {
 
     public ComplaintType() { }
 
+    public ComplaintType(Long id) {
+        this.id = id;
+    }
+
     public ComplaintType(long id, String name) {
         this.id = id;
         this.name = name;
