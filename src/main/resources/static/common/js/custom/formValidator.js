@@ -186,7 +186,7 @@ function isAnUsername(val) {
              messageModal.modal('show');
              $("#pass1").focus();
              return false;
-         } else if(firstPassVal.length<6 || !/[0-9]/g.test(firstPassVal)){
+         } else if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g.test(firstPassVal)){
              message = 'La contraseña debe ser mayor a 6 caracteres, poseer letras y números!';
              messageSpan.textContent = message;
              messageModal.modal('show');
