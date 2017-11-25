@@ -1,5 +1,6 @@
 package com.oktrueque.model;
 
+import com.oktrueque.utils.Constants;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -44,8 +45,16 @@ public class Complaint {
     }
 
 
-    public Complaint(){};
+    public Complaint(){}
 
+    public Complaint(String description, ComplaintType complaintType, User user_target, User user_origin) {
+        this.description = description;
+        this.date = LocalDateTime.now();
+        this.complaintType = complaintType;
+        this.user_target = user_target;
+        this.user_origin = user_origin;
+        this.status = Constants.COMPLAINT_STATUS_PENDING;
+    }
 
     public User getUser_origin() {
         return user_origin;

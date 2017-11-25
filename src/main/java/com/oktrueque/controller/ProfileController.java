@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -32,6 +31,7 @@ public class ProfileController {
     private ItemTagService itemTagService;
     private CategoryService categoryService;
     private TruequeService truequeService;
+    private ComplaintService complaintService;
     private AwsS3Service awsS3Service;
     @Value("${aws.s3.fileName.users}")
     private String fileNameUsers;
@@ -43,7 +43,7 @@ public class ProfileController {
     @Autowired
     public ProfileController(UserService userService, CommentService commentService, UserTagService userTagService,
                              ItemService itemService, ItemTagService itemTagService, CategoryService categoryService,
-                             TruequeService truequeService, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
+                             TruequeService truequeService, ComplaintService complaintService1, AwsS3Service awsS3Service, BCryptPasswordEncoder bCryptPasswordEncoder, ComplaintService complaintService, ComplaintTypeService complaintTypeService) {
         this.userService = userService;
         this.commentService = commentService;
         this.userTagService = userTagService;
@@ -51,6 +51,7 @@ public class ProfileController {
         this.itemTagService = itemTagService;
         this.categoryService = categoryService;
         this.truequeService = truequeService;
+        this.complaintService = complaintService1;
         this.awsS3Service = awsS3Service;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.complaintTypeService = complaintTypeService;
@@ -72,13 +73,6 @@ public class ProfileController {
         }
         userTruequesAll = truequeService.getUserTruequesInOrder(misTrueques);
 
-
-//        for (UserTrueque userTrueque : userTruequesDB) {
-//            if(userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
-//                    userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
-//                     userTruequesAll.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque.getId().getTrueque().getId()));
-//
-//        }
         Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
@@ -230,6 +224,12 @@ public class ProfileController {
         for (UserTrueque ut : userTrueques) {
             if (ut.getId().getUser().getId() != user.getId()) {
                 users.add(userService.getUserLiteById(ut.getId().getUser().getId()));
+                if(ut.getStatus() == Constants.TRUEQUE_STATUS_CONFIRMED){
+                    complaintService.saveComplaint(new Complaint("Usuario origen ha cancelado un trueque que previamente usuario destino había confirmado",
+                            new ComplaintType(7L),
+                            new User(ut.getId().getUser().getId()),
+                            user));
+                }
             }
         }
         // PENDIENTE A RECHAZADO

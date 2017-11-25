@@ -21,7 +21,7 @@ public class ComplaintTypeServiceImpl implements ComplaintTypeService {
     @Override
     public List<ComplaintType> getComplaintTypes() {
         List<ComplaintType> complaintTypes = new ArrayList<ComplaintType>();
-        complaintTypeRepository.findAll().forEach(complaintTypes::add);
+        complaintTypeRepository.findAllByIdLessThan(7L).forEach(complaintTypes::add);
         return complaintTypes;
     }
 

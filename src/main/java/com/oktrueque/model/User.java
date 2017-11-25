@@ -72,6 +72,10 @@ public class User implements UserDetails{
     public User() {
     }
 
+    public User(Long id){
+        this.id = id;
+    }
+
     public User(String name, String last_name, String email, String password, Integer status, List<Item> items, Integer itemsAmount, String photo1, String username, List<Comment> comments, Integer score, String wallpaper, List<Complaint> complaints, Date registerDate, List<Tag> tags, String newPassword) {
         this.name = name;
         this.last_name = last_name;
