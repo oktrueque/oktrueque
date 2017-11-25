@@ -254,16 +254,17 @@ nav.top-menu .menu .search-block:hover {
 
 @media only screen and (max-width: 768px) {
 
+
     nav.top-menu .menu .search-block {
-        width: 170px;
+        width: 120px;
     }
 
     nav.top-menu .menu .search-block .form-control {
-        min-width: 170px;
+        min-width: 120px;
     }
 
     nav.top-menu .menu .search-block:hover {
-        width: 170px;
+        width: 120px;
     }
 
     .top-menu{
