@@ -138,7 +138,7 @@ public class TruequeServiceImpl implements TruequeService {
         Hashtable<UserLite, List<Item>> usersToNotify = new Hashtable<>();
         for(ItemTrueque it : itemTrueques){
             itemsInTrueque.add(it.getId().getItem());
-            List<ItemTrueque> itemsInOtherTrueques = itemTruequeRepository.findAllById_ItemIdAndId_TruequeIdIsNotAndId_TruequeStatus(it.getId().getItem().getId(), it.getId().getTrueque().getId(), Constants.TRUEQUE_STATUS_ACTIVE);
+            List<ItemTrueque> itemsInOtherTrueques = itemTruequeRepository.findAllById_ItemIdAndId_TruequeIdIsNotAndId_TruequeStatusIsIn(it.getId().getItem().getId(), it.getId().getTrueque().getId(), new int[]{Constants.TRUEQUE_STATUS_PENDING, Constants.ITEM_STATUS_ACTIVE});
             itemTruequesToErase.addAll(itemsInOtherTrueques);
             if(itemsInOtherTrueques.size() > 0){
                 for(ItemTrueque it2 : itemsInOtherTrueques){
