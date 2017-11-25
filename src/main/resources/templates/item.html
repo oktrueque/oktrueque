@@ -279,7 +279,10 @@
                                 success: function (data) {
                                     if(data){
                                         swal("Item Eliminado", "Item eliminado con éxito", "success");
-                                        window.location.href = "/profile";
+                                        setTimeout(function() {
+                                            window.location.href = "/profile";
+                                        }, 300);
+
                                     }else{
                                         swal("No es posible eliminar", "El item se encuentra en un trueque en proceso", "error");
                                     }
