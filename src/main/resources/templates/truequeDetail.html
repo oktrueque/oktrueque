@@ -22,31 +22,31 @@
                         </div>
                     </div>
                     <div>
-                    <h2 class="inline">
+                    <h2 class="display-method">
                         Detalle del Trueque
                     </h2>
-                        <span class="label inline label-default label-status-trueque tag-margin" th:text="${trueque.getStatusValue()}"></span>
+                        <span class="label display-method label-default label-status-trueque label-status-trueque-cellphones tag-margin" th:text="${trueque.getStatusValue()}"></span>
                     </div>
-                    <div class="col-lg-12" th:if="${peopleCount > 2}">
+                    <div class="col-lg-12 padding-10-top-for-cellphones" th:if="${peopleCount > 2}">
                     <span class="tip">Tip!</span> <span> Estas realizando un trueque entre tres personas. Recibiras los objetos de una persona y deberas entregarles tus objetos a otra!</span>
                     </div>
                     </div>
 
-                <div class="panel-body">
-                    <div class="col-lg-12 ">
-                    <div class="col-lg-12">
-                         <div class="col-lg-12 white-background margin margin-bottom-20">
-                            <div class="col-lg-6 padding-vertical-10">
+                <div class="panel-body col-xs-12 force-backgorund-cellphones">
+                    <div class="col-lg-12 col-xs-12 no-padding-for-cellphones">
+                    <div class="col-lg-12 col-xs-12 no-padding-for-cellphones">
+                         <div class="col-lg-12 col-xs-12 white-background margin margin-bottom-20 no-padding-for-cellphones">
+                            <div class="col-lg-6 col-xs-12 padding-vertical-10">
                                 <span th:if="${peopleCount > 2}" class="font-subtitle-spans ">Vas a recibir los objetos de parte de:</span>
                                 <span th:if="${peopleCount == 2}" class="font-subtitle-spans ">Vas a trocar con:</span> <br/>
                                 <div class="col-lg-6">
                                     <span class="col-lg-12"><span class="info-space" th:text="${userOfferer.name + ' ' + userOfferer.last_name}"></span></span>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 ">
                                     <a target="_blank" th:href="@{'/users/' + ${userOfferer.username}}"><img class="avatar thirty-percent-width margin-top-negative-15 float-right" th:src="${userOfferer.photo1}"/></a>
                                 </div>
                             </div>
-                              <div th:if="${peopleCount > 2}" class="col-lg-6 padding-vertical-10">
+                              <div th:if="${peopleCount > 2}" class="col-lg-6 col-xs-12 padding-vertical-10">
                                   <div class="colg-lg-12">
                                   <span class="font-subtitle-spans ">Vas a entregar los objetos a:</span>
                                   </div>
@@ -62,23 +62,23 @@
                     </div>
                 </div>
 
-                    <div class="panel-body">
-                    <div class="col-lg-12">
-                        <div class="col-lg-6">
-                            <div class="col-lg-12 white-background text-center padding-top-10"><span class="font-title-spans">Te ofrecieron</span>
+                    <div class="panel-body col-xs-12 force-backgorund-cellphones ">
+                    <div class="col-lg-12 col-xs-12 no-padding-for-cellphones">
+                        <div class="col-lg-6 col-xs-12 no-padding-for-cellphones">
+                            <div class="no-padding-for-cellphones col-lg-12 col-xs-12 white-background text-center padding-top-10 "><span class="font-title-spans">Te ofrecieron</span>
                                 <th:block th:each="item : ${itemsOfferer}">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 margin-top-30">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
                                         <div class="card cui-ecommerce--catalog--item height-170">
-                                            <div class="col-lg-6 ">
+                                            <div class="col-lg-6 col-xs-6">
                                                 <div class="col-lg-12 no-padding">
                                                     <span class="col-lg-12 card-title margin-top-20" th:text="${item.name}"></span>
                                                     <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
                                                     <div class="col-lg-12 padding-top-5 ver-mas-label"><a target="_blank" th:href="@{'/items/' + ${item.id}}"><i class="fa fa-info-circle"></i>Ver más</a></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 card-photo">
+                                            <div class="col-lg-6 col-xs-6 card-photo">
                                                 <div class="col-lg-12 ">
-                                                    <div class="col-lg-12 no-padding"><div class="col-lg-12 no-padding"><img class="avatar width-full" th:src="${item.photo1}"/></div></div>
+                                                    <div class="col-lg-12 no-padding"><div class="col-lg-12 no-padding"><img class="avatar width-for-cellphones width-full" th:src="${item.photo1}"/></div></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,20 +86,20 @@
                                 </th:block>
                             </div>
                         </div>
-                             <div class="col-lg-6 white-background text-center padding-top-10"><div class="col-lg-12"><span class="font-title-spans">A cambio de</span></div>
+                             <div class="col-lg-6 col-xs-12 white-background text-center padding-top-10 no-padding-top-for-cellphones margin-top-10-for-cellphones margin-bottom-20-for-cellphones"><div class="col-lg-12"><span class="font-title-spans">A cambio de</span></div>
                                  <th:block th:each="item : ${itemsPrincipal}">
-                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 margin-top-30">
+                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top-30">
                                          <div class="card cui-ecommerce--catalog--item height-170">
-                                             <div class="col-lg-6 ">
-                                                 <div class="col-lg-12 no-padding">
-                                                     <span class="col-lg-12 card-title margin-top-20" th:text="${item.name}"></span>
-                                                     <p class="col-lg-12 card-descr no-padding" th:text="${item.description}"></p>
-                                                     <div class="col-lg-12 padding-top-5 ver-mas-label"><a target="_blank" th:href="@{'/items/' + ${item.id}}"><i class="fa fa-info-circle"></i>Ver más</a></div>
+                                             <div class="col-lg-6 col-xs-6">
+                                                 <div class="col-lg-12 col-xs-12 no-padding">
+                                                     <span class="col-lg-12 col-xs-12 card-title margin-top-20" th:text="${item.name}"></span>
+                                                     <p class="col-lg-12 col-xs-12 card-descr no-padding" th:text="${item.description}"></p>
+                                                     <div class="col-lg-12 col-xs-12 padding-top-5 ver-mas-label"><a target="_blank" th:href="@{'/items/' + ${item.id}}"><i class="fa fa-info-circle"></i>Ver más</a></div>
                                                  </div>
                                              </div>
-                                             <div class="col-lg-6 card-photo">
-                                                 <div class="col-lg-12 ">
-                                                     <div class="col-lg-12 no-padding"><div class="col-lg-12 no-padding"><img class="avatar width-full" th:src="${item.photo1}"/></div></div>
+                                             <div class="col-lg-6 col-xs-6 card-photo">
+                                                 <div class="col-lg-12 col-xs-12">
+                                                     <div class="col-lg-12 col-xs-12 no-padding"><div class="col-lg-12 no-padding"><img class="avatar width-for-cellphones width-full" th:src="${item.photo1}"/></div></div>
                                                  </div>
                                              </div>
                                          </div>

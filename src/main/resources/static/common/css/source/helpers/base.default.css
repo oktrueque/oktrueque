@@ -255,6 +255,49 @@ nav.top-menu .menu .search-block:hover {
 @media only screen and (max-width: 768px) {
 
 
+    .margin-bottom-20-for-cellphones{
+        margin-bottom: 20px !important;
+    }
+
+    .height-170{
+        height: 120px !important;
+    }
+
+    .margin-top-10-for-cellphones{
+        margin-top: 10px !important;
+    }
+
+    .no-padding-top-for-cellphones{
+        padding-top: 0px !important;
+    }
+
+    .padding-10-top-for-cellphones{
+     padding-top: 10px !important;
+    }
+
+    .width-for-cellphones{
+        width: 100% !important;
+    }
+
+    .force-backgorund-cellphones{
+        background: #F8f7e6 !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+    }
+
+    .label-status-trueque-cellphones{
+        top: -5px !important;
+    }
+
+    .no-padding-for-cellphones{
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    #loTengoloTienes{
+        width: 0px !important;
+    }
+
     nav.top-menu .menu .search-block {
         width: 120px;
     }
@@ -2416,16 +2459,12 @@ body.theme-blue .cwt__footer {
     color: #56df4c;
 }
 
-#loTengoloTienes{
-    width: 1px !important;
-}
-
-.inline{
+.display-method{
     display: inline !important;
 }
 
 .label-status-trueque{
-    top:-20px !important;
+    top:-20px;
     background: #f39834 !important;
     position:relative !important;
     font-size: 80% !important;
