@@ -254,6 +254,9 @@ nav.top-menu .menu .search-block:hover {
 
 @media only screen and (max-width: 768px) {
 
+    .card{
+        height: 200px !important;
+    }
 
     .margin-bottom-20-for-cellphones{
         margin-bottom: 20px !important;
@@ -288,6 +291,15 @@ nav.top-menu .menu .search-block:hover {
 
     .label-status-trueque-cellphones{
         top: -5px !important;
+    }
+
+    .derecha-panel{
+        border: none !important;
+    }
+
+    .scroll-items{
+        max-height: 200px !important;
+        overflow-y: auto !important;
     }
 
     .no-padding-for-cellphones{

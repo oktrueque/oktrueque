@@ -1,5 +1,5 @@
 .card{
-    height: 150px !important;
+    height: 150px;
     margin-bottom: 15px !important;
     box-shadow: grey;
 }
@@ -22,7 +22,6 @@
 .derecha-panel{
     border-left: 4px solid rgba(135, 135, 135, 0.4);
 }
-
 
 
 .card-descr{
