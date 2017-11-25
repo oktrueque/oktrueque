@@ -2438,3 +2438,12 @@ body.theme-blue .cwt__footer {
     position: relative !important;
     top:-5px !important;
 }
+
+.card-descr{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 62px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
