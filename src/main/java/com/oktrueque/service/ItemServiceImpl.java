@@ -109,6 +109,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void updateItem(Item item){
+        Item itemDb = itemRepository.findOne(item.getId());
+        item.setCreationDate(itemDb.getCreationDate());
         itemRepository.save(item);
     }
 
