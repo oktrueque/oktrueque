@@ -78,11 +78,6 @@ function isAnUsername(val) {
     return true;
 }
 
-function hasCharacters(val) {
-    if(!/^[a-zA-Z0-9]*$/g.test(val)) {return true;}
-    return false;
-}
-
  function isValidated(formName) {
 
     let message = "";
