@@ -2418,3 +2418,23 @@ body.theme-blue .cwt__footer {
 #loTengoloTienes{
     width: 1px !important;
 }
+
+.inline{
+    display: inline !important;
+}
+
+.label-status-trueque{
+    top:-20px !important;
+    background: #f39834 !important;
+    position:relative !important;
+    font-size: 80% !important;
+}
+
+.font-size-2em{
+    font-size: 2em !important;
+}
+
+.top-minus-20{
+    position: relative !important;
+    top:-5px !important;
+}

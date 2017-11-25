@@ -15,20 +15,19 @@
                 <div class="panel-heading ">
                     <div class="pull-right menu-item-dots">
                         <div class="dropdown">
-                            <a href="javascript: void(0);" data-toggle="dropdown" aria-expanded="false">
-                                <i class="icmn-more2"></i>
+                            <a href="/profile">
+                                <i class="fa fa-chevron-left font-size-2em"></i>
+                                <span class="top-minus-20">Volver al perfil</span>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                                <a class="dropdown-item" href="/profile/items/83/edit"><i class="dropdown-icon icmn-pencil"></i> Aceptar Trueque</a>
-                                <div class="dropdown-divider"></div>
-                                <a id="delete-item" class="dropdown-item" href="javascript:void(0)" data-id="83"><i class="dropdown-icon icmn-bin"></i> Cancelar Trueque</a>
-                            </ul>
                         </div>
                     </div>
-                    <h2>
+                    <div>
+                    <h2 class="inline">
                         Detalle del Trueque
                     </h2>
-                    <div class="colg-lg-12" th:if="${peopleCount > 2}">
+                        <span class="label inline label-default label-status-trueque tag-margin" th:text="${trueque.getStatusValue()}"></span>
+                    </div>
+                    <div class="col-lg-12" th:if="${peopleCount > 2}">
                     <span class="tip">Tip!</span> <span> Estas realizando un trueque entre tres personas. Recibiras los objetos de una persona y deberas entregarles tus objetos a otra!</span>
                     </div>
                     </div>
