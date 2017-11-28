@@ -273,9 +273,6 @@
                                 type: 'DELETE',
                                 url: '/profile/items/' + itemId,
                                 contentType: 'application/json',
-//                                beforeSend: function (xhr) {
-//                                    xhr.setRequestHeader(header, token);
-//                                },
                                 success: function (data) {
                                     if(data){
                                         swal("Item Eliminado", "Item eliminado con éxito", "success");
@@ -305,9 +302,6 @@
                     url: "/users/complaints/" + username,
                     contentType : "application/json",
                     data: JSON.stringify(complaint),
-//                    beforeSend: function (xhr) {
-//                        xhr.setRequestHeader(header, token);
-//                    },
                     success: function (data) {
                         l.stop();
                         $('#modal-complaint').modal('toggle');

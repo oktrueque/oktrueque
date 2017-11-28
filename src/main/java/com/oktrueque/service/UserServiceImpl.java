@@ -7,6 +7,7 @@ import com.oktrueque.model.VerificationToken;
 import com.oktrueque.repository.UserLiteRepository;
 import com.oktrueque.repository.UserRepository;
 import com.oktrueque.repository.VerificationTokenRepository;
+import com.oktrueque.utils.Constants;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
