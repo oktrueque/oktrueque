@@ -403,6 +403,7 @@ nav.left-menu .logo-container {
     top: 0px;
     left: 0px;
     border-bottom: 0px solid #dfe4ed;
+    background: white !important;
 }
 
 nav.left-menu .logo-container .logo {
@@ -419,7 +420,6 @@ nav.left-menu .logo-container .logo img {
 }
 
 nav.left-menu .logo-container .logo img.logo-inverse {
-    display: none;
 }
 
 nav.left-menu .left-menu-inner {
@@ -2498,4 +2498,10 @@ body.theme-blue .cwt__footer {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+}
+
+nav.top-menu {
+    background: #B30227 !important;
+    border-bottom: none;
+    color: #ffffff;
 }
