@@ -59,21 +59,21 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile")
     public String getProfile(Principal principal, Model model) {
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3, 4}, new PageRequest(0,5));
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        Page<Item> items = itemService.findByUser_UsernameAndStatusIsNotInOrderById(user.getUsername(), new int[]{2, 3, 4}, new PageRequest(0, 5));
         List<UserTag> tags = userTagService.getUserTagByUserId(user.getId());
         List<UserTrueque> userTruequesDB = truequeService.getUserTruequeById_UserId(user.getId());
         List<UserTrueque> userTruequesAll = new LinkedList<>();
         LinkedList<Long> misTrueques = new LinkedList<>();
 
         for (UserTrueque userTrueque : userTruequesDB) {
-            if(userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
+            if (userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_PENDING ||
                     userTrueque.getId().getTrueque().getStatus() == Constants.TRUEQUE_STATUS_ACTIVE)
-                    misTrueques.add(userTrueque.getId().getTrueque().getId());
+                misTrueques.add(userTrueque.getId().getTrueque().getId());
         }
         userTruequesAll = truequeService.getUserTruequesInOrder(misTrueques);
 
-        Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0,5));
+        Page<Comment> comments = commentService.getCommentsByUserTargetId(user.getId(), new PageRequest(0, 5));
         List<ComplaintType> complaintTypes = complaintTypeService.getComplaintTypes();
 
         model.addAttribute("user", user);
@@ -96,7 +96,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/edit")
     public String editProfile(Principal principal, Model model) {
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         List<Tag> tags = userTagService.getTagByUserTags(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("hasTags", tags.size() != 0 ? true : false);
@@ -122,7 +122,6 @@ public class ProfileController {
     }
 
 
-
     @RequestMapping(method = RequestMethod.GET, value = "/profile/items/{id}")
     public String getItemById(@PathVariable Long id, Model model) {
         Item item = itemService.getItemById(id);
@@ -137,7 +136,7 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/profile/items")
     public ResponseEntity<Item> newItem(@RequestBody Item item, Principal principal) {
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         item.setStatus(0);
         item.setCreationDate(new Date());
         item.setUser(new UserLite(user.getId()));
@@ -207,7 +206,7 @@ public class ProfileController {
             item.setStatus(0);
         }
 
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         item.setUser(new UserLite(user.getId()));
         itemService.updateItem(item);
         return "redirect:/profile/items/" + item.getId();
@@ -216,15 +215,14 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.POST, value = "profile/trueques/{id}")
     public ResponseEntity<List<UserLite>> updateTrueque(@PathVariable Long id, Principal principal) {
-
         Trueque trueque = truequeService.getTruequeById(id);
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
         List<UserLite> users = new ArrayList<>();
         for (UserTrueque ut : userTrueques) {
             if (ut.getId().getUser().getId() != user.getId()) {
                 users.add(userService.getUserLiteById(ut.getId().getUser().getId()));
-                if(ut.getStatus() == Constants.TRUEQUE_STATUS_CONFIRMED){
+                if (ut.getStatus() == Constants.TRUEQUE_STATUS_CONFIRMED) {
                     complaintService.saveComplaint(new Complaint("Usuario origen ha cancelado un trueque que previamente usuario destino había confirmado",
                             new ComplaintType(7L),
                             new User(ut.getId().getUser().getId()),
@@ -236,14 +234,14 @@ public class ProfileController {
         if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_PENDING)) {
             trueque.setStatus(Constants.TRUEQUE_STATUS_REJECTED);
             trueque.setRejectionDate(new Date());
-            truequeService.updateTrueque(trueque,user);
+            truequeService.updateTrueque(trueque, user);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         // ACTIVO A CANCELADO
         if (trueque.getStatus().equals(Constants.TRUEQUE_STATUS_ACTIVE)) {
             trueque.setStatus(Constants.TRUEQUE_STATUS_CANCELED);
             trueque.setRejectionDate(new Date());
-            truequeService.updateTrueque(trueque,user);
+            truequeService.updateTrueque(trueque, user);
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -274,9 +272,9 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/profile/trueques/{id}")
     public String getTruequeById(Model model, @PathVariable Long id, Principal principal) {
-        User userLogged =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User userLogged = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         Trueque trueque = truequeService.getTruequeById(id);
-        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId(id);
+        List<UserTrueque> userTrueques = truequeService.getUserTruequeById_TruequeId_OrderByOrder(id);
         LinkedList<User> users = new LinkedList<>();
         User userNuevo;
         User userOfferer = null;
@@ -300,27 +298,25 @@ public class ProfileController {
             usersTrueque.add(userNuevo);
         }
 
-            if (usersTrueque.getFirst().getId() == userLogged.getId()) {
-                userOfferer = usersTrueque.getLast();
-                userTarget = usersTrueque.get(1);
-            } else if (usersTrueque.getLast().getId() == userLogged.getId()){
-                userOfferer = usersTrueque.get(trueque.getPeopleCount()-2);
-                userTarget = usersTrueque.getFirst();
-            }
-            else{
-                for(int i=1;i<trueque.getPeopleCount();i++){
-                    if(usersTrueque.get(i).getId() == userLogged.getId()){
-                        userOfferer = usersTrueque.get(i-1);
-                        userTarget = usersTrueque.get(i+1);
-                    }
+        if (usersTrueque.getFirst().getId() == userLogged.getId()) {
+            userOfferer = usersTrueque.getLast();
+            userTarget = usersTrueque.get(1);
+        } else if (usersTrueque.getLast().getId() == userLogged.getId()) {
+            userOfferer = usersTrueque.get(trueque.getPeopleCount() - 2);
+            userTarget = usersTrueque.getFirst();
+        } else {
+            for (int i = 1; i < trueque.getPeopleCount(); i++) {
+                if (usersTrueque.get(i).getId() == userLogged.getId()) {
+                    userOfferer = usersTrueque.get(i - 1);
+                    userTarget = usersTrueque.get(i + 1);
                 }
             }
+        }
 
         for (Item item : items) {
-            if(item.getUser().getId() == userLogged.getId()){
+            if (item.getUser().getId() == userLogged.getId()) {
                 itemsPrincipal.add(item);
-            }
-            else if(item.getUser().getId() == userOfferer.getId()){
+            } else if (item.getUser().getId() == userOfferer.getId()) {
                 itemsOfferer.add(item);
             }
         }
@@ -338,24 +334,24 @@ public class ProfileController {
 
     @RequestMapping(method = RequestMethod.GET, value = "profile/trueques/ask")
     public ResponseEntity<UserTrueque> askTrueques(Principal principal) {
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         List<UserTrueque> userTrueques = truequeService.getUserTruequeById_UserId(user.getId());
         List<UserTrueque> userTruequesToPass = new LinkedList<>();
         for (UserTrueque userTrueque : userTrueques) {
-            if (truequeService.isTimeToAsk(userTrueque.getId().getTrueque())){
+            if (truequeService.isTimeToAsk(userTrueque.getId().getTrueque())) {
                 userTruequesToPass.addAll(truequeService.getUserTruequeById_TruequeId(userTrueque
                         .getId().getTrueque().getId()));
             }
         }
-        if (userTruequesToPass.size()==0){
+        if (userTruequesToPass.size() == 0) {
             return new ResponseEntity(false, HttpStatus.OK);
         }
         return new ResponseEntity(userTruequesToPass, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "profile/delete-account")
-    public String getDeleteAccountPage(Model model, Principal principal){
-        User user =(User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+    public String getDeleteAccountPage(Model model, Principal principal) {
+        User user = (User) ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
         model.addAttribute("user", user);
         return "deleteAccount";
     }

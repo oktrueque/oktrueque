@@ -14,6 +14,8 @@ public interface TruequeService {
 
     List<UserTrueque> getUserTruequeById_TruequeId(long id);
 
+    List<UserTrueque> getUserTruequeById_TruequeId_OrderByOrder(long id);
+
     List<ItemTrueque> getItemsTruequeById_TruequeId(long id);
 
     Trueque getTruequeById (long id);

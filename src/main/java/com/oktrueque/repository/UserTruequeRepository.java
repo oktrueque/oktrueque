@@ -14,6 +14,8 @@ public interface UserTruequeRepository extends PagingAndSortingRepository<UserTr
 
     List<UserTrueque> findByIdTruequeId(Long id);
 
+    List<UserTrueque> findByIdTruequeIdOrderByOrder(Long id);
+
     @Query(value="SELECT * FROM trueques t INNER JOIN users_trueques ut " +
             "ON t.id=ut.id_trueque " +
             "WHERE ut.id_trueque IN :idTrueques" +
