@@ -422,6 +422,53 @@ function isAnUsername(val) {
       } else return true;
     }
 
+    if(formName==='editItemForm'){
+
+        let catComboboxVal = document.getElementById('selectCat').value;
+        let itemNameVal = $('#itemName').val();
+        let itemNameLength = $('#itemName').val().length;
+        let descTextAreaLength = $('#descTextArea').val().length;
+        let descTextAreaVal = $('#descTextArea').val();
+
+        if(isEmpty(itemNameVal)){
+            message = 'El item debe tener un nombre!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#itemName").focus();
+            return false;
+        } else if(hasOnlyLetterAndSpaces(itemNameVal)){
+            message = 'El nombre del items solo debe contener letras y espacios!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#itemName").focus();
+            return false;
+        } else if(!hasCorrectLength(20,itemNameLength)){
+            message = 'El nombre del item es demasiado largo!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#itemName").focus();
+            return false;
+        } else if(catComboboxVal==='-1'){
+            message = 'Debes seleccionar una categoria!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#selectCat").focus();
+            return false;
+        } else if(!hasCorrectLength(200,descTextAreaLength)){
+            message = 'La descripcion es demasiado larga!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#descTextArea").focus();
+            return false;
+        } else if(isEmpty(descTextAreaVal)){
+            message = 'La descripcion no debe estar vacia!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#descTextArea").focus();
+            return false;
+        } else return true;
+    }
+
 
 
 }
