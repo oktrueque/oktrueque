@@ -274,6 +274,12 @@ function isAnUsername(val) {
             messageModal.modal('show');
             $("#itemName").focus();
             return false;
+        } else if (hasOnlyLetterAndSpaces(itemNameInputVal)) {
+            message = 'El nombre debe contener solo letras!';
+            messageSpan.textContent  = message;
+            messageModal.modal('show');
+            $("#itemName").focus();
+            return false;
         }  else if (isEmpty(itemDesInputVal)){
             message = 'Debes describir el item!';
             messageSpan.textContent  = message;
