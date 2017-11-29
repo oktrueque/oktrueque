@@ -8,7 +8,7 @@
 </head>
 <th:block layout:fragment="content">
 <section class="page-content">
-    <form action="/trueques" th:method="POST">
+    <form id="form-trueque" action="/trueques" th:method="POST">
     <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
     <div class="page-content-inner">
 
@@ -97,12 +97,25 @@
         </div>
 
         <div class="panel-footer">
-            <button type="submit" class="col-lg-offset-4 col-lg-4 col-xs-7 col-xs-offset-4 margin-top-50 margin-bottom-50 btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar Oferta</button>
+            <button id="send-trueque" type="button" class="col-lg-offset-4 col-lg-4 col-xs-7 col-xs-offset-4 margin-top-50 margin-bottom-50 btn btn-icon btn-primary btn-lg margin-right-15"><i class="icmn-forward margin-right-5"></i>Enviar Oferta</button>
         </div>
     </div>
     </form>
     </section>
 <script>
+
+    $(document).ready(function(){
+        $('#send-trueque').on('click', function(){
+            let itemsOfferChecked = $("input[name='itemsOffer']:checked").length;
+            let itemsDemandChecked = $("input[name='itemsDemand']:checked").length;
+
+            if(itemsOfferChecked === 0 || itemsDemandChecked === 0){
+                swal('Oops...', 'Debes seleccionar al menos un item de cada grupo', 'error');
+            }else{
+                $('#form-trueque').submit();
+            }
+        });
+    });
 
     $(function () {
 
