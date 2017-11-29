@@ -466,6 +466,7 @@ function isAnUsername(val) {
             messageModal.modal('show');
             $("#descTextArea").focus();
             return false;
+
         } else return true;
     }
 
