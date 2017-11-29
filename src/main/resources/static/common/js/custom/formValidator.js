@@ -169,7 +169,7 @@ function isAnUsername(val) {
              $("#usernameInput").focus();
              return false;
          } else if(!isAnUsername(usernameInputVal)){
-             message = 'El nombre de usuario no puede contener carácteres especiales!';
+             message = 'El nombre de usuario no puede contener carácteres especiales ni mayúsculas!';
              messageSpan.textContent = message;
              messageModal.modal('show');
              $("#usernameInput").focus();
