@@ -34,7 +34,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long> {
 
     List<Item> findByUserIdAndStatus(Long id, Integer status);
 
-    List<Item> findTop4ByCategoryAndIdNot(Category category, Long id);
+    List<Item> findTop4ByCategoryAndIdNotAndStatus(Category category, Long id,Integer status);
 
     Page<Item> findByStatusOrderByCreationDateDesc(int status, Pageable pageable);
 }

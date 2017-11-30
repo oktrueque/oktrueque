@@ -169,7 +169,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getItemsByCategory(Category category, Long id) {
-        return itemRepository.findTop4ByCategoryAndIdNot(category, id);
+        return itemRepository.findTop4ByCategoryAndIdNotAndStatus(category, id,Constants.ITEM_STATUS_ACTIVE);
     }
 
     @Override
