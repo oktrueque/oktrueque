@@ -28,11 +28,5 @@ pushNotification = function(name, message, image){
                 this.close();
             }
         });
-    }else{
-        Push.Permission.request(function(){
-            swal('Éxito!','Recibirá notificaciones push', 'success');
-        }, function(){
-            swal('Éxito!','Las notificaciones han sido bloqueadas', 'success');
-        });
     }
 };
