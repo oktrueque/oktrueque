@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Page<Item> findByStatus(int status, Pageable pageable) {
-        return itemRepository.findByStatus(status,pageable);
+        return itemRepository.findByStatusOrderByCreationDateDesc(status,pageable);
     }
 
     @Override
