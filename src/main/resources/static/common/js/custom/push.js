@@ -18,13 +18,21 @@ var vis = (function(){
 })();
 
 pushNotification = function(name, message, image){
-    Push.create(name, {
-        body: message,
-        icon: image,
-        timeout: 10000,
-        onClick: function () {
-            window.focus();
-            this.close();
-        }
-    });
+    if(Push.Permission.has()){
+        Push.create(name, {
+            body: message,
+            icon: image,
+            timeout: 10000,
+            onClick: function () {
+                window.focus();
+                this.close();
+            }
+        });
+    }else{
+        Push.Permission.request(function(){
+            swal('Éxito!','Recibirá notificaciones push', 'success');
+        }, function(){
+            swal('Éxito!','Las notificaciones han sido bloqueadas', 'success');
+        });
+    }
 };
