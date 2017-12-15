@@ -173,7 +173,7 @@
                                                             <div th:if="${ut.showActions}">
                                                                 <div th:if="${ut.id.trueque.isPendiente()}">
                                                                     <a th:href="@{'/trueques/'+${ut.id.trueque.id}+'/user/'+ ${user.username} +'/accept'}" class="btn btn-xs btn-success">
-                                                                        <i class="fa fa-check" aria-hidden="true"></i> Aceptar
+                                                                        <i class="fa fa-check" aria-hidden="true"></i> Negociar
                                                                     </a>
                                                                     <a th:href="'/profile/trueques/' + ${ut.id.trueque.id}" class="btn btn-xs">
                                                                         <i class="fa fa-bars" aria-hidden="true"></i> Detalle

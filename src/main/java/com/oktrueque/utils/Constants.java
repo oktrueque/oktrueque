@@ -9,7 +9,7 @@ public class Constants {
     public static final int TRUEQUE_STATUS_PENDING = 0;
     public static final String TRUEQUE_STATUS_NAME_PENDING = "Pendiente";
     public static final int TRUEQUE_STATUS_ACTIVE = 1;
-    public static final String TRUEQUE_STATUS_NAME_ACTIVE = "Activo";
+    public static final String TRUEQUE_STATUS_NAME_ACTIVE = "En Negociación";
     public static final int TRUEQUE_STATUS_REJECTED = 2;
     public static final String TRUEQUE_STATUS_NAME_REJECTED = "Rechazado";
     public static final int TRUEQUE_STATUS_CANCELED = 3;

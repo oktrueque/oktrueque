@@ -26,11 +26,11 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public void sendTruequeAcceptedNotification(List<String> usernames, User userOrigin) {
         UserLite user = new UserLite();
-        user.setName("¡Trueque Aceptado!");
+        user.setName("¡Trueque en Negociación!");
         user.setPhoto1(userOrigin.getPhoto1());
         List<Notification> notifications = new ArrayList<>();
         for(String username : usernames){
-            notifications.add(new Notification(username, "¡Trueque Aceptado!",
+            notifications.add(new Notification(username, "¡Trueque en Negociación!",
                     String.format(Constants.NOTIFICATION_TRUEQUE_ACCEPTED, userOrigin.getName())));
             simpMessagingTemplate.convertAndSendToUser(username, "/queue/notification",
                     new Message(String.format(Constants.NOTIFICATION_TRUEQUE_ACCEPTED, userOrigin.getName()), user));
@@ -56,11 +56,11 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public void sendTruequeAcceptedByMeNotification(String username, User userOrigin) {
         UserLite user = new UserLite();
-        user.setName("¡Trueque Aceptado!");
+        user.setName("¡Trueque en Negociación!");
         user.setPhoto1(Constants.IMG_LOGO_OKTRUEQUE);
         simpMessagingTemplate.convertAndSendToUser(userOrigin.getUsername(), "/queue/notification",
                 new Message(String.format(Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME, userOrigin.getName()), user));
-        this.notificationRepository.save(new Notification(username, "¡Trueque Aceptado!", Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME));
+        this.notificationRepository.save(new Notification(username, "¡Trueque en Negociación!", Constants.NOTIFICATION_TRUEQUE_ACCEPTED_BY_ME));
     }
 
     @Override
